@@ -1,0 +1,104 @@
+
+Initial release note Infinity core v0.1.0 based on Nxt 1.8.3
+----------------------------------------------------------------
+
+(short version)
+
+Removals
+--------
+
+- Desktop Wallet
+- Wallet related files/clases
+- Tagged Data complete
+- Digital Goods complete
+- PlugIns
+
+Refactoring
+-----------
+
+- Folder Structure
+- Class structure
+- DBVersion
+- Constants
+- Class Renaming
+- Fee Structure
+- Config Files
+- Logging
+- Client/Server 
+- Cryptohash
+
+Libs added
+----------
+
+- MySQL 
+- PostGreSQL
+- RethinkDB
+- MongoDB
+- IPFS
+- Tendermint
+
+Features added
+--------------
+
+- Subscriptions (Recurring payments)
+- Escrow Service
+- AT (Automated Transactions)
+- Crowdfunding
+- Gateways
+- Proxies
+- DB Backends
+- Dev Shell
+
+
+APIs added
+----------
+
+  *Advanced Transactions
+- sendMoneyEscrow
+- escrowSign 
+- getEscrowTransaction
+- getAccountEscrowTransactions
+- sendMoneySubscription
+- subscriptionCancel
+- getSubscription
+- getAccountSubscriptions
+- getSubscriptionsToAccount
+
+  *Automatic Transactions
+- createATProgram
+- getAT
+- getATDetails
+- getATIds
+- getATLong
+- getAccountATs
+
+  *Misc
+- getPeerState
+- getTransactions
+- sendToken
+- getStatistics
+- getAccounts
+- getLightClientPing
+- getAliasesPublicOffers
+- getAliasesPrivateOffers
+- getAliasesOpenOffers
+- getServices
+- getAllCrowdfundings
+
+  *Storage
+- storageMongoDb
+- storageRethinkDb
+- storageMySqlDb
+
+  *Gateways
+- gatewayIpfs
+- gatewayTenderMint
+
+  *Proxies
+- proxyBitcoin
+- proxyEthereum
+- proxyLiteCoin
+- proxyRipple
+- proxyPoloniex
+
+

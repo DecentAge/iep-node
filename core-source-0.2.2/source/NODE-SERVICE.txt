@@ -1,0 +1,46 @@
+
+Linux core service templates samples
+------------------------------------
+
+Ubuntu
+------
+
+	File: core.conf
+
+		start on filesystem and started networking
+		respawn
+		chdir /root/core/bin
+		exec ./core
+
+	Location: /etc/init
+
+	Manage Service:
+
+		service core start/stop/restart
+
+Debian 
+------
+
+	File: core.service
+
+		[Unit]
+		Description=Core v0.2.2
+		After=network.target
+
+		[Service]
+		Restart=always
+		WorkingDirectory=/root/core/bin
+		ExecStart=/root/core/bin/core
+
+		[Install]
+		WantedBy=default.target
+
+	Location: /etc/systemd/system
+
+	Manage Service:
+
+		systemctl enable core.service
+		systemctl start core.service
+		systemctl status core.service
+
+

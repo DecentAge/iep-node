@@ -1,0 +1,104 @@
+
+Operators Guide
+--------------
+
+How to prepare my computer to run the core?
+--------------------------------
+
+The core needs Java 8 Oracle JVM to run. Please download and install java first.
+https://www.java.com/en/download/help/download_options.xml
+
+
+How to verify the core?
+-----------------------
+
+It is **highly** recommended to verify the SHA256 signature every time you download 
+new version.
+  
+
+How to configure the core?
+-------------------------
+
+There are many configuration parameters that could be changed, but the defaults
+are set so that normally you can run the program immediately after unpacking,
+without any additional configuration. To see what options are there, open the
+conf/custom.properties file. You do not need to delete the defaults packaged in 
+core.jar, the settings in conf/custom.properties override those properties. 
+This way, when upgrading the software, you can safely overwrite those in core.jar
+with the updated file from the new package, while your customizations remain
+safe in the conf/custom.properties file.
+
+
+How to make the core API public accessible?
+-------------------------------------
+To make your node public accessible and allow client connections you have to
+uncomment these three lines (just remove #) and change the admin password in
+your conf/custom.properties file.
+
+ - xin.allowedBotHosts=*; 127.0.0.1; localhost; [0:0:0:0:0:0:0:1];
+ - xin.apiServerHost=0.0.0.0
+ - xin.adminPassword=***yourOwnRandomPassword***
+
+In default mode you can connect your wallet to your local node anytime on the fly 
+by changing the API node in 'options/nodes and connection' to LOCAL_HOST. Some 
+features like block generation and shuffling asking for a local node due to 
+security reasons.
+
+NOTE: Don't forget to set a new admin password and don't use any secret phrase
+from your wallet/account!
+
+
+How long does it take to sync the chain?
+-----------------------------------------
+This depends on your computer, internet connection and block height. At current 
+block height 600000 it takes around 60 min. in average to get in sync with chain.
+
+
+How to update the core?
+-----------------------
+Just unpack a new version over the existing installation directory then run
+the new core. The core will upgrade the database if necessary. Check the custom
+properties file (/core/bin/conf) and adjust as needed.
+
+
+How to allow forging?
+-----------------------
+Open custom.properties in /core/bin/conf and set: 
+
+ xin.allowedToForge=SPECIFIC ACCOUNT or * for all
+ xin.maxNumberOfForgers=100
+
+Restart the node.
+
+
+How to allow ledger view?
+----------------------------
+Open custom.properties in /core/bin/conf and set: 
+
+ xin.ledgerAccounts=SPECIFIC ACCOUNT or * for all
+ xin.ledgerTrimKeep=30000
+
+Restart the node.
+
+
+How to allow shuffling view?
+----------------------------
+Open custom.properties an set the properties: 
+
+ xin.maxNumberOfShufflers=30
+
+Restart the node.
+
+
+How to allow funding monitor?
+----------------------------
+Open custom.properties in /core/bin/conf and set: 
+
+xin.maxNumberOfMonitors=30
+
+Restart the node.
+
+
+
+
+

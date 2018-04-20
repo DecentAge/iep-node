@@ -1,0 +1,31 @@
+
+Open Source Credits
+-------------------
+
+We use alot of open source software at Infiity. We would like to send a big thank you to the 
+following projects and the thousands of conributors that help make open source great!
+
+This application uses Open Source components. You can find the source code of their open source 
+projects along with license information/link below. We acknowledge and are grateful to these 
+developers for their contributions to open source.
+
+NXT 1.8.3
+https://bitbucket.org/JeanLucPicard/nxt/src
+
+BURST 1.0.0
+https://github.com/BurstProject/burstcoin
+
+TenderMint Core
+https://github.com/tendermint/tendermint
+
+Tendermint Socket Protocol (TMSP)
+https://github.com/tendermint/tmsp
+
+IPFS - The Permanent Web
+https://github.com/ipfs/ipfs
+
+ZeroNet - Decentralized Websites 
+https://github.com/HelloZeroNet/ZeroNet
+
+
+

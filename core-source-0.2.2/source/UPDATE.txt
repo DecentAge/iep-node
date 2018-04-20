@@ -1,0 +1,45 @@
+
+How to update the core?
+-----------------------
+Just unpack a new version over the existing installation directory then run
+the new core. The core will upgrade the database if necessary. Check the custom
+properties file (/core/bin/conf) and adjust as needed. Make a backup of your
+current custom.properties file in case you are using non-default settings.
+
+
+How to allow forging?
+-----------------------
+Open custom.properties in /core/bin/conf and set: 
+
+ xin.allowedToForge=SPECIFIC ACCOUNT or * for all
+ xin.maxNumberOfForgers=100
+
+Restart the node.
+
+
+How to allow ledger view?
+----------------------------
+Open custom.properties in /core/bin/conf and set: 
+
+ xin.ledgerAccounts=SPECIFIC ACCOUNT or * for all
+ xin.ledgerTrimKeep=30000
+
+Restart the node.
+
+
+How to allow shuffling view?
+----------------------------
+Open custom.properties an set the properties: 
+
+ xin.maxNumberOfShufflers=30
+
+Restart the node.
+
+
+How to allow funding monitor?
+----------------------------
+Open custom.properties in /core/bin/conf and set: 
+
+xin.maxNumberOfMonitors=30
+
+Restart the node.
