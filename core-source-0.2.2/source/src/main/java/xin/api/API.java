@@ -145,7 +145,7 @@ public final class API {
                 if (!ciphers.isEmpty()) {
                     sslContextFactory.setIncludeCipherSuites(ciphers.toArray(new String[ciphers.size()]));
                 }
-                connector = new ServerConnector(apiServer, new SslConnectionFactory(sslContextFactory, "http/1.1"),
+                connector = new ServerConnector(apiServer, new SslConnectionFactory(sslContextFactory, "api/1.1"),
                         new HttpConnectionFactory(https_config));
                 connector.setPort(sslPort);
                 connector.setHost(host);
