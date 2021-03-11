@@ -91,14 +91,20 @@ public class ConstantsConfigHelper {
             );
 
     private static final Map<String, Object> TESTNET_PROPERTIES = ImmutableMap.<String, Object>builder()
+    		// the creator of the genesis block
             .put(PROPERTY_CREATOR_ID, "9816658139650642618")
-            .put(PROPERTY_GENESIS_BLOCK_ID, "2537533802978479559")
+            
+            // the id of the genesis ID
+            .put(PROPERTY_GENESIS_BLOCK_ID, "2166219047305554761")
+            
+            // the public public key 32 bytes of the creator
             .put(PROPERTY_CREATOR_PUBLIC_KEY, new byte[]{
                     -21, -79, -43, -128, 4, 47, -34, 42, -108, 80, -74, 118, -7, -1, -88, 39, -47, 92, -49,
                     76, -94, 56,
                     16, -86, -20, -123, -97, -53, 112, 14, -28, 8
             })
             .put(PROPERTY_GENESIS_SIGNATURES,
+            		// the 64-byte transaction signature of the payment transaction that allocates the community distribution wallet within the genesis block
                     new byte[][]{{-7, -66, 76, -50, 69, -78, 13, 21, -125, 46, -98, -83, -46, -84, 71, 126, 16, 28, 61,
                             113, 117,
                             58, 113, 8, -128, -81, -72, -29, 104, -118, 42, 10, -126, -106, 69, -17, -27, -76, -91, 83,
@@ -106,12 +112,15 @@ public class ConstantsConfigHelper {
                             -103, 108, 92, -97, 66, -39, -25, -11, 107, 61, 123, -80, -11, 127, -78, 31, -67, -69, -11,
                             -91,
                             -43, -66
-                    }, {104, -3, 43, -4, -47, 102, 72, -74, -12, -128, 12, 98, 105, 97, -37, -45, -79, 41, 50,
+                    }, 
+            		// the 64-byte transaction signature of the payment transaction which allocates the total amount of tokens to the XIN account within the genesis block
+            		{104, -3, 43, -4, -47, 102, 72, -74, -12, -128, 12, 98, 105, 97, -37, -45, -79, 41, 50,
                             89, 30,
                             -120, -76, -127, 36, -36, -32, -48, -43, -124, -117, 2, 74, -50, 85, -61, 51, -6, -101, 68,
                             64, -27,
                             -7, -55, 13, -85, -17, -80, 32, 97, 5, 57, 54, -76, 55, 31, 123, -80, 109, 59, 119, 28, 56,
                             -31}})
+            // the 64-byte block signature of the genesis block
             .put(PROPERTY_GENESIS_BLOCK_SIGNATURE, new byte[]{
                     52, -64, -51, -114, -41, 102, -15, 126, -56, 95, 126, 50, 76, -128, -36, -61, 5, 26, 73, 82,
                     -7,
@@ -120,14 +129,25 @@ public class ConstantsConfigHelper {
                     31, -58, -47, -35, -70, -2, 87, 94, 9, -82, -10, 86, -80, -38, 82, -13, -127, -108, 119,
                     106, 16
             })
+            
+            // the amount which is transfered to the 
             .put(PROPERTY_GENESIS_AMOUNTS, new long[]{
+            		// the wallet to where the XIN's for the community were distributed. From there the XIN's were distributed among the initial community and foundation wallet
                     4500000000L,
+                    
+                    // total token supply
                     4500000000L
             })
+            
+            // 
             .put(PROPERTY_GENESIS_RECIPIENTS, new long[]{
+            		// the id of the account where the tokens for the community and foundation wallet initially was created
                     Long.parseUnsignedLong("16388043638115838282"),
-                    Long.parseUnsignedLong("9166403121853243813")
+                    
+                    // the id of the account where the total amount of tokens was initially created
+                    Long.parseUnsignedLong("2921745148035575168")
             })
+             // 
             .put(PROPERTY_LAST_KNOWN_BLOCK_HEIGHT, 0)
             .put(PROPERTY_LOCKED_BLOCK_MAX_VALUE, 1)
             .put(PROPERTY_AUTOMATED_TRANSACTION_BLOCK, 1)
@@ -153,6 +173,63 @@ public class ConstantsConfigHelper {
                     .build())
             .build();
 
+    
+    private static final Map<String, Object> TESTNET2_PROPERTIES = ImmutableMap.<String, Object>builder()
+    		// the creator of the genesis block
+            .put(PROPERTY_CREATOR_ID, "14474643091275973664")
+            
+            // the id of the genesis ID
+            .put(PROPERTY_GENESIS_BLOCK_ID, "3194996574313676791")
+            
+            // the public public key 32 bytes of the creator
+            .put(PROPERTY_CREATOR_PUBLIC_KEY, new byte[]{
+            		-122, -55, 38, -10, 57, 72, -24, -112, -15, -57, 92, 11, 11, 104, 30, -65, -27, 38, 127, 49, -114, -98, 99, -32, 18, 24, 75, 80, -25, -45, 87, 99
+            })
+            .put(PROPERTY_GENESIS_SIGNATURES,
+            		// the 64-byte transaction signature of the payment transaction that allocates the community distribution wallet within the genesis block
+                    new byte[][]{{89, -18, 125, 110, 33, -116, -58, 24, 40, 92, -87, 69, 54, 27, -60, -119, -95, 89, 12, 82, 40, 15, -103, 94, -42, 98, -58, 22, -124, -13, 103, 5, -93, -85, 54, -107, -35, -27, 126, -19, 31, -77, -123, 119, -122, -16, 32, 52, -86, 30, 72, 93, 83, -10, 84, -9, -122, 127, -13, -78, 52, -92, -112, 103
+            }})
+            // the 64-byte signature of the genesis block
+            .put(PROPERTY_GENESIS_BLOCK_SIGNATURE, new byte[]{
+            		41, -112, -29, -12, 19, -97, -115, -31, 112, 14, 114, -57, 10, 120, 67, 95, -85, -30, -36, -58, -25, 48, -95, -66, 53, -118, -44, -12, -116, -89, 73, 6, 89, -34, -22, 12, -117, 24, -125, -82, -7, -83, -112, 114, 122, 41, 48, -93, 22, -15, -3, -37, 94, -83, -17, -109, 75, -66, 57, 102, -93, -98, -15, 34
+            })
+            
+            // the amount which is transfered in the genesis block
+            .put(PROPERTY_GENESIS_AMOUNTS, new long[]{
+                    // total token supply
+                    4500000000L
+            })
+            
+            // 
+            .put(PROPERTY_GENESIS_RECIPIENTS, new long[]{
+                    // the id of the account where the total amount of tokens was initially created
+                    Long.parseUnsignedLong("15297730923703047674"),
+            })
+            .put(PROPERTY_LAST_KNOWN_BLOCK_HEIGHT, 0)
+            .put(PROPERTY_LOCKED_BLOCK_MAX_VALUE, 1)
+            .put(PROPERTY_AUTOMATED_TRANSACTION_BLOCK, 1)
+            .put(PROPERTY_SUBSCRIPTION_START_BLOCK, 1)
+            .put(PROPERTY_ESCROW_START_BLOCK, 1)
+            .put(PROPERTY_BAD_BLOCK_MAX_HEIGHT, 0)
+            .put(PROPERTY_SHUFFLING_BLOCK, 1)
+            .put(PROPERTY_INCREASED_DIVI_PAYMENT_BLOCK, 1)
+            .put(PROPERTY_ROLLBACK_TAG, false)
+            .put(PROPERTY_ROLLBACK_HEIGHT, 0)
+            .put(PROPERTY_ROLLBACK_BLOCK, "0")
+            .put(PROPERTY_SINGLE_DIVIDEND_PAYMENT_PER_BLOCK_BLOCK, 1)
+            .put(PROPERTY_MAX_DIVIDEND_PER_BLOCKS, 1)
+            .put(PROPERTY_MAX_ACCOUNTS_FOR_DIVIDEND_PAYMENT, 50000)
+            .put(PROPERTY_ASSET_FULLDELETE_START_BLOCK, 1)
+            .put(PROPERTY_SUBSCRIPTION_MIN_FREQ, 5)
+            .put(PROPERTY_SUBSCRIPTION_MAX_FREQ, 31536000)
+            .put(PROPERTY_SHUFFLING_ACTIVATION_BLOCK, 1)
+            .put(PROPERTY_PRUNABLE_MESSAGES_BLOCK, 1)
+            .put(PROPERTY_CROWD_FUNDING_BLOCK, 1)
+            .put(PROPERTY_FUNDING_MONITOR_BLOCK, 1)
+            .put(PROPERTY_BLOCK_CHECKSUMS, ImmutableMap.<Integer, BlockChecksum>builder()
+                    .build())
+            .build();
+    
     private static final Map<String, Object> MAINNET_PROPERTIES = ImmutableMap.<String, Object>builder()
             .put(PROPERTY_CREATOR_ID, "16362770385693468241")
             .put(PROPERTY_GENESIS_BLOCK_ID, "5886376434652814108")
@@ -308,6 +385,9 @@ public class ConstantsConfigHelper {
         if (environment.equalsIgnoreCase("testnet")) {
             return TESTNET_PROPERTIES;
         }
+        if (environment.equalsIgnoreCase("testnet2")) {
+            return TESTNET2_PROPERTIES;
+        }        
         if (environment.equalsIgnoreCase("devnet")) {
             return DEVNET_PROPERTIES;
         }
