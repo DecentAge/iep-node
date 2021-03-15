@@ -179,7 +179,7 @@ public class ConstantsConfigHelper {
             .put(PROPERTY_CREATOR_ID, "14474643091275973664")
             
             // the id of the genesis ID
-            .put(PROPERTY_GENESIS_BLOCK_ID, "3194996574313676791")
+            .put(PROPERTY_GENESIS_BLOCK_ID, "6460575782672493539")
             
             // the public public key 32 bytes of the creator
             .put(PROPERTY_CREATOR_PUBLIC_KEY, new byte[]{
