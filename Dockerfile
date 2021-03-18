@@ -12,17 +12,11 @@ RUN apt-get update \
     && apt-get install --yes --no-install-recommends gettext-base \
     && apt-get install --yes --no-install-recommends curl
 
-# IEP peer conections
-EXPOSE 23456
-
-# IEP user interface
-#EXPOSE 9876
-
-COPY --from=build /build/build/distributions/node.zip /node.zip
+COPY --from=build /build/build/distributions/iep-node.zip /iep-node.zip
 COPY --from=build /build/conf/custom_template.properties /templates/custom_template.properties
-COPY --from=build /build/docker-entrypoint.sh /node/docker-entrypoint.sh
-COPY --from=build /build/wait-for-it.sh /node/wait-for-it.sh
+COPY --from=build /build/docker-entrypoint.sh /iep-node/docker-entrypoint.sh
+COPY --from=build /build/wait-for-it.sh /iep-node/wait-for-it.sh
 
-RUN set -o errexit -o nounset && unzip -q /node.zip
-WORKDIR /node/bin
-ENTRYPOINT ["/node/docker-entrypoint.sh"]
+RUN set -o errexit -o nounset && unzip -q /iep-node.zip
+WORKDIR /iep-node/bin
+ENTRYPOINT ["/iep-node/docker-entrypoint.sh"]

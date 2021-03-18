@@ -19,9 +19,9 @@ envsubst >- '${NETWORK_ENVIRONMENT}
 	${PEER_SERVER_PORT}
 	${DEFAULT_PEER_PORT}
 	${FUNDS_ACCOUNT_PASSPHRASE}
-	${DEBUG}' </templates/custom_template.properties > /node/bin/conf/custom.properties
+	${DEBUG}' </templates/custom_template.properties > /iep-node/bin/conf/custom.properties
 
-cat /node/bin/conf/custom.properties
+cat /iep-node/bin/conf/custom.properties
 
 
 initTestEnvironment() {
@@ -98,8 +98,8 @@ initTestEnvironment() {
 
 export -f initTestEnvironment
 
-# waits until the IEP node API endpoint is ready to receive requests before calling initTestEnvironment
+# waits until the IEP iep-node API endpoint is ready to receive requests before calling initTestEnvironment
 (../wait-for-it.sh localhost:${API_SERVER_PORT} --timeout=30 -- bash -c "initTestEnvironment") &
 
 
-/node/bin/core
+/iep-node/bin/core
