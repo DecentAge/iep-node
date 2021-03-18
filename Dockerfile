@@ -18,11 +18,11 @@ EXPOSE 23456
 # IEP user interface
 #EXPOSE 9876
 
-COPY --from=build /build/build/distributions/core.zip /core.zip
+COPY --from=build /build/build/distributions/node.zip /node.zip
 COPY --from=build /build/conf/custom_template.properties /templates/custom_template.properties
-COPY --from=build /build/docker-entrypoint.sh /core/docker-entrypoint.sh
-COPY --from=build /build/wait-for-it.sh /core/wait-for-it.sh
+COPY --from=build /build/docker-entrypoint.sh /node/docker-entrypoint.sh
+COPY --from=build /build/wait-for-it.sh /node/wait-for-it.sh
 
-RUN set -o errexit -o nounset && unzip -q /core.zip
-WORKDIR /core/bin
-ENTRYPOINT ["/core/docker-entrypoint.sh"]
+RUN set -o errexit -o nounset && unzip -q /node.zip
+WORKDIR /node/bin
+ENTRYPOINT ["/node/docker-entrypoint.sh"]

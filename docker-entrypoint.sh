@@ -19,9 +19,9 @@ envsubst >- '${NETWORK_ENVIRONMENT}
 	${PEER_SERVER_PORT}
 	${DEFAULT_PEER_PORT}
 	${FUNDS_ACCOUNT_PASSPHRASE}
-	${DEBUG}' </templates/custom_template.properties > /core/bin/conf/custom.properties
+	${DEBUG}' </templates/custom_template.properties > /node/bin/conf/custom.properties
 
-cat /core/bin/conf/custom.properties
+cat /node/bin/conf/custom.properties
 
 
 initTestEnvironment() {
@@ -102,4 +102,4 @@ export -f initTestEnvironment
 (../wait-for-it.sh localhost:${API_SERVER_PORT} --timeout=30 -- bash -c "initTestEnvironment") &
 
 
-/core/bin/core
+/node/bin/core
