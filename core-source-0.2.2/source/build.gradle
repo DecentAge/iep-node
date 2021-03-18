@@ -22,7 +22,7 @@ repositories {
 dependencies {
 
     //9.3.9.v20160517
-    compile 'org.bouncycastle:bcprov-jdk15on:1.5+'
+    compile 'org.bouncycastle:bcprov-jdk15on:1.59'
     compile 'com.google.zxing:core:3.2.1'
 
     compile 'com.h2database:h2:1.4.191'

@@ -1,6 +1,11 @@
 #!/bin/bash -e
-
+set -e
 rm -f /core/bin/conf/custom.properties
+
+
+#NETWORK_ENVIRONMENT=${NETWORK_ENVIRONMENT:-mainnet}
+#API_SERVER_SSL_PORT=${API_SERVER_SSL_PORT:}
+RUN_TESTS="${RUN_TESTS:false}"
 
 envsubst >- '${NETWORK_ENVIRONMENT}
 	${API_SERVER_SSL_PORT}
@@ -13,87 +18,88 @@ envsubst >- '${NETWORK_ENVIRONMENT}
 	${WELL_KNOWN_PEERS}
 	${PEER_SERVER_PORT}
 	${DEFAULT_PEER_PORT}
-	${FORGING_PASSPHRASE}
+	${FUNDS_ACCOUNT_PASSPHRASE}
 	${DEBUG}' </templates/custom_template.properties > /core/bin/conf/custom.properties
 
 cat /core/bin/conf/custom.properties
 
 
-export FUNDS_PASSPHRASE="height exotic loud achieve enforce modify uncover debate copper still october piece equal poverty glide hidden price organ"
-
 initTestEnvironment() {
 
+	if [ "testnet2" = "${NETWORK_ENVIRONMENT}" ]; then
+		echo "Initialization ${NETWORK_ENVIRONMENT}"
+	fi
 	
-	local markHostResponse=$(curl --fail "http://localhost:8775/api" \
-	-H "Accept: application/json" \
-	--data "requestType=markHost" \
-	--data "host=core-1" \
-	--data "weight=1" \
-	--data "date=2021-03-12" \
-	--data-urlencode "secretPhrase=${FORGING_PASSPHRASE}" \
-	--data "feeTQT=200000000" \
-	--data "deadline=80")	
-	
-	echo "============================================================================================================================================="
-	echo markHostResponse=${markHostResponse}
-	echo "============================================================================================================================================="	
 
-	local startForgingResponse=$(curl --fail --debug "http://localhost:${API_SERVER_PORT}/api" \
-	--data "requestType=startForging" \
-	--data-urlencode "secretPhrase=${FORGING_PASSPHRASE}")
+	if [ -n "${FUNDS_ACCOUNT_PASSPHRASE+1}" ] && [ -n "${MY_ADDRESS+1}" ]; then
+		local markHostResponse=$(curl --fail "http://localhost:${API_SERVER_PORT}/api" \
+		-H "Accept: application/json" \
+		--data "requestType=markHost" \
+		--data "host=${MY_ADDRESS}" \
+		--data "weight=1" \
+		--data "date=$(date +'%Y-%m-%d')" \
+		--data-urlencode "secretPhrase=${FUNDS_ACCOUNT_PASSPHRASE}" \
+		--data "feeTQT=200000000" \
+		--data "deadline=80")
+		echo ""
+		echo "============================================================================================================================================="
+		echo markHostResponse=${markHostResponse}
+		echo "============================================================================================================================================="	
+	fi
 	
-	echo ""
-	echo "============================================================================================================================================="
-	echo startForgingResponse=${startForgingResponse}
-	echo "============================================================================================================================================="	
+	if [ -n "${FUNDS_ACCOUNT_PASSPHRASE+1}" ]; then
+
+		local startForgingResponse=$(curl --fail "http://localhost:${API_SERVER_PORT}/api" \
+		--data "requestType=startForging" \
+		--data-urlencode "secretPhrase=${FUNDS_ACCOUNT_PASSPHRASE}")	
+		echo ""
+		echo "============================================================================================================================================="
+		echo startForgingResponse=${startForgingResponse}
+		echo "============================================================================================================================================="	
+	fi
 	
-	local account=$(curl --fail --verbose "http://localhost:${API_SERVER_PORT}/api?requestType=getAccount&account=XIN-A7HU-97NF-KBHP-FP5MA" \
-	-H "Accept: application/json" \
-	-H "Content-Type: application/json")
+	if [ "true" == "${RUN_TESTS}" ]; then
+
+		local sendMoneyResponse=$(curl --fail "http://localhost:${API_SERVER_PORT}/api" \
+		-H "Accept: application/json" \
+		--data "requestType=sendMoney" \
+		--data "amountTQT=1000400" \
+		--data "recipient=XIN-WDYP-H647-KPNR-BWWRK" \
+		--data-urlencode "secretPhrase=${FUNDS_ACCOUNT_PASSPHRASE}" \
+		--data "feeTQT=200000000" \
+		--data "deadline=80")
+	
+		echo "============================================================================================================================================="
+		echo sendMoneyResponse=${sendMoneyResponse}
+		echo "============================================================================================================================================="
+	
+		sleep 60;
 		
-	echo ""
-	echo "============================================================================================================================================="
-	echo account=${account}
-	echo "============================================================================================================================================="
-
-	sleep 10;
-
-	local sendMoneyResponse=$(curl --fail --verbose "http://localhost:8775/api" \
-	-H "Accept: application/json" \
-	--data "requestType=sendMoney" \
-	--data "amountTQT=1000400" \
-	--data "recipient=XIN-WDYP-H647-KPNR-BWWRK" \
-	--data-urlencode "secretPhrase=${FUNDS_PASSPHRASE}" \
-	--data "feeTQT=200000000" \
-	--data "deadline=80")
-
-	echo "============================================================================================================================================="
-	echo sendMoneyResponse=${sendMoneyResponse}
-	echo "============================================================================================================================================="
-
-	sleep 20;
+		local account=$(curl --fail \
+		"http://localhost:${API_SERVER_PORT}/api?requestType=getAccount&account=XIN-WDYP-H647-KPNR-BWWRK" \
+		-H "Accept: application/json")
 	
-	local account=$(curl --fail --verbose \
-	"http://localhost:${API_SERVER_PORT}/api?requestType=getAccount&account=XIN-WDYP-H647-KPNR-BWWRK" \
-	-H "Accept: application/json")
-
-
-	echo "============================================================================================================================================="
-	echo account=${account}
-	echo "============================================================================================================================================="
-
-	sleep 70
-
-	local getUnconfirmedTransactions=$(curl --fail --verbose "http://localhost:${API_SERVER_PORT}/api" \
-	-H "Accept: application/json" \
-	--data "requestType=getUnconfirmedTransactions")
-
-	echo "============================================================================================================================================="
-	echo getUnconfirmedTransactions=${getUnconfirmedTransactions}
-	echo "============================================================================================================================================="
-
+	
+		echo "============================================================================================================================================="
+		echo account=${account}
+		echo "============================================================================================================================================="
+	
+	
+		local getUnconfirmedTransactions=$(curl --fail "http://localhost:${API_SERVER_PORT}/api" \
+		-H "Accept: application/json" \
+		--data "requestType=getUnconfirmedTransactions")
+	
+		echo "============================================================================================================================================="
+		echo getUnconfirmedTransactions=${getUnconfirmedTransactions}
+		echo "============================================================================================================================================="
+	
+	fi
 }
 
-(sleep 20; initTestEnvironment) &
+export -f initTestEnvironment
+
+# waits until the IEP node API endpoint is ready to receive requests before calling initTestEnvironment
+(../wait-for-it.sh localhost:${API_SERVER_PORT} --timeout=30 -- bash -c "initTestEnvironment") &
+
 
 /core/bin/core
