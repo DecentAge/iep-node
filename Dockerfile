@@ -1,4 +1,4 @@
-FROM gradle:jdk8 AS build
+FROM gradle:6.8.3-jdk8 AS build
 WORKDIR /build
 
 COPY --chown=gradle:gradle . .
