@@ -1,0 +1,3 @@
+include:
+  - project: 'infinity-economics/iep-infrastructure'
+    file: '/gitlab-ci/docker-build-publish.yml'
