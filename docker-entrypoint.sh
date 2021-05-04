@@ -47,11 +47,11 @@ initTestEnvironment() {
 		echo "============================================================================================================================================="	
 	fi
 	
-	if [ -n "${FUNDS_ACCOUNT_PASSPHRASE+1}" ]; then
+	if [ -n "${IEP_NODE_1_FORGING_ACCOUNT_PASSPHRASE+1}" ]; then
 
 		local startForgingResponse=$(curl --fail "http://localhost:${API_SERVER_PORT}/api" \
 		--data "requestType=startForging" \
-		--data-urlencode "secretPhrase=${FUNDS_ACCOUNT_PASSPHRASE}")	
+		--data-urlencode "secretPhrase=${IEP_NODE_1_FORGING_ACCOUNT_PASSPHRASE}")	
 		echo ""
 		echo "============================================================================================================================================="
 		echo startForgingResponse=${startForgingResponse}
