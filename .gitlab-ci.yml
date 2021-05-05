@@ -1,3 +1,6 @@
+variables:
+  DOCKER_SERVICE_NAME: "node-1"
+
 include:
   - project: 'infinity-economics/iep-infrastructure'
     file: '/gitlab-ci/docker-build-publish.yml'
