@@ -8,6 +8,7 @@ rm -f /core/bin/conf/custom.properties
 RUN_TESTS="${RUN_TESTS:false}"
 
 envsubst >- '${NETWORK_ENVIRONMENT}
+	${XIN_VERSION}
 	${API_SERVER_SSL_PORT}
 	${API_SERVER_PORT}
 	${ADMIN_PASSWORD}

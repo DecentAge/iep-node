@@ -24,7 +24,7 @@ Debian
 	File: core.service
 
 		[Unit]
-		Description=Core v0.2.2
+		Description=Core v3.0.0
 		After=network.target
 
 		[Service]
