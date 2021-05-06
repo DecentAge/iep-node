@@ -26,15 +26,19 @@ cat /iep-node/bin/conf/custom.properties
 
 initTestEnvironment() {
 
+
+	echo "NETWORK_ENVIRONMENT=$NETWORK_ENVIRONMENT"
+	echo "GENESIS_FUNDS_ACCOUNT_PASSPHRASE=$GENESIS_FUNDS_ACCOUNT_PASSPHRASE"
+	echo "FORGING_ACCOUNT_PASSPHRASE=$FORGING_ACCOUNT_PASSPHRASE"
+	echo "CASH_ACCOUNT_PASSPHRASE=$CASH_ACCOUNT_PASSPHRASE"
+
+	
+	
 	sleep 5
 	echo "Initialization ${NETWORK_ENVIRONMENT}"
 
-
 	if [ "${NETWORK_ENVIRONMENT}" == "testnet2" ]; then
-
-
-		
-		if [ -n "${GENESIS_FUNDS_ACCOUNT_PASSPHRASE+1}" ]; then
+		if [ ! -z "${GENESIS_FUNDS_ACCOUNT_PASSPHRASE-}" ]; then
 	
 			echo "Start forging using the Forging Account"
 	
@@ -44,12 +48,13 @@ initTestEnvironment() {
 			echo ""
 			echo "============================================================================================================================================="
 			echo startForgingResponse=${startForgingResponse}
-			echo "============================================================================================================================================="	
+			echo "============================================================================================================================================="
+			sleep 30;	
 		fi
 	
-		sleep 30;
+
 	
-		if [ -n "${FORGING_ACCOUNT_PASSPHRASE+1}" ] && [ -n "${MY_ADDRESS+1}" ]; then
+		if [ ! -z "${FORGING_ACCOUNT_PASSPHRASE-}" ] && [ ! -z "${MY_ADDRESS-}" ]; then
 		
 			echo "Mark node as hallmark using using the Forger Account: host=$MY_ADDRESS, weight=1.."
 		
@@ -69,7 +74,7 @@ initTestEnvironment() {
 			sleep 30;
 		fi
 		
-		if [ -n "${GENESIS_FUNDS_ACCOUNT_PASSPHRASE+1}" ] && [ -n "${CASH_ACCOUNT_PASSPHRASE+1}" ]; then
+		if [ ! -z "${GENESIS_FUNDS_ACCOUNT_PASSPHRASE-}" ] && [ ! -z "${FORGING_ACCOUNT_PASSPHRASE-}" ]; then
 	
 			echo "Sending money from Genesis Funds Recipient Account to Forger Account"
 	
@@ -88,10 +93,7 @@ initTestEnvironment() {
 			sleep 30;
 		fi
 		
-	
-		
-		
-		if [ -n "${GENESIS_FUNDS_ACCOUNT_PASSPHRASE+1}" ] && [ -n "${CASH_ACCOUNT_PASSPHRASE+1}" ]; then
+		if [ ! -z "${GENESIS_FUNDS_ACCOUNT_PASSPHRASE-}" ] && [ ! -z "${CASH_ACCOUNT_PASSPHRASE-}" ]; then
 	
 			echo "Sending money from Genesis Funds Recipient Account to Cash Account"
 	
@@ -109,11 +111,10 @@ initTestEnvironment() {
 			echo "============================================================================================================================================="
 			sleep 60			
 		fi	
-
 			
-		if [ -n "${GENESIS_FUNDS_ACCOUNT_PASSPHRASE+1}" ]; then
+		if [ ! -z "${GENESIS_FUNDS_ACCOUNT_PASSPHRASE-}" ]; then
 	
-			echo "Stop forging using the Forgin Account"
+			echo "Stop forging using the Forging Account"
 	
 			local stopForgingResponse=$(curl --fail "http://localhost:${API_SERVER_PORT}/api" \
 			--data "requestType=stopForging" \
@@ -125,9 +126,7 @@ initTestEnvironment() {
 			sleep 60
 		fi
 	
-		
-	
-		if [ -n "${GENESIS_FUNDS_ACCOUNT_PASSPHRASE+1}" ]; then
+		if [ ! -z "${FORGING_ACCOUNT_PASSPHRASE-}" ]; then
 	
 			echo "Start forging using the Forgin Account"
 	
@@ -139,8 +138,6 @@ initTestEnvironment() {
 			echo startForgingResponse=${startForgingResponse}
 			echo "============================================================================================================================================="	
 		fi	
-			
-			
 	#		local account=$(curl --fail \
 	#		"http://localhost:${API_SERVER_PORT}/api?requestType=getAccount&account=XIN-WDYP-H647-KPNR-BWWRK" \
 	#		-H "Accept: application/json")
