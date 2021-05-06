@@ -47,7 +47,7 @@ initTestEnvironment() {
 			echo "============================================================================================================================================="	
 		fi
 	
-		sleep 10;
+		sleep 30;
 	
 		if [ -n "${FORGING_ACCOUNT_PASSPHRASE+1}" ] && [ -n "${MY_ADDRESS+1}" ]; then
 		
@@ -67,6 +67,8 @@ initTestEnvironment() {
 			echo markHostResponse=${markHostResponse}
 			echo "============================================================================================================================================="	
 		fi
+		
+		sleep 30;
 		
 		if [ -n "${GENESIS_FUNDS_ACCOUNT_PASSPHRASE+1}" ] && [ -n "${CASH_ACCOUNT_PASSPHRASE+1}" ]; then
 	
@@ -107,7 +109,7 @@ initTestEnvironment() {
 			echo "============================================================================================================================================="
 			
 			
-		sleep 60
+
 			
 		if [ -n "${GENESIS_FUNDS_ACCOUNT_PASSPHRASE+1}" ]; then
 	
@@ -122,6 +124,7 @@ initTestEnvironment() {
 			echo "============================================================================================================================================="	
 		fi
 	
+		sleep 60	
 	
 		if [ -n "${GENESIS_FUNDS_ACCOUNT_PASSPHRASE+1}" ]; then
 	
