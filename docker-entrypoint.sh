@@ -38,7 +38,7 @@ initTestEnvironment() {
 	sleep 5
 	echo "Initialization ${NETWORK_ENVIRONMENT}"
 
-	if [ "${NETWORK_ENVIRONMENT}" == "testnet2" ]; then
+	if [ "${NETWORK_ENVIRONMENT}" == "testnet" ]; then
 		if [ ! -z "${GENESIS_FUNDS_ACCOUNT_PASSPHRASE-}" ]; then
 	
 			echo "Start forging using the Forging Account"
