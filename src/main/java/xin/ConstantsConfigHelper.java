@@ -90,91 +90,10 @@ public class ConstantsConfigHelper {
                     PROPERTY_FUNDING_MONITOR_BLOCK
             );
 
-    private static final Map<String, Object> TESTNET_PROPERTIES = ImmutableMap.<String, Object>builder()
-    		// the creator of the genesis block
-            .put(PROPERTY_CREATOR_ID, "9816658139650642618")
-            
-            // the id of the genesis ID
-            .put(PROPERTY_GENESIS_BLOCK_ID, "2166219047305554761")
-            
-            // the public public key 32 bytes of the creator
-            .put(PROPERTY_CREATOR_PUBLIC_KEY, new byte[]{
-                    -21, -79, -43, -128, 4, 47, -34, 42, -108, 80, -74, 118, -7, -1, -88, 39, -47, 92, -49,
-                    76, -94, 56,
-                    16, -86, -20, -123, -97, -53, 112, 14, -28, 8
-            })
-            .put(PROPERTY_GENESIS_SIGNATURES,
-            		// the 64-byte transaction signature of the payment transaction that allocates the community distribution wallet within the genesis block
-                    new byte[][]{{-7, -66, 76, -50, 69, -78, 13, 21, -125, 46, -98, -83, -46, -84, 71, 126, 16, 28, 61,
-                            113, 117,
-                            58, 113, 8, -128, -81, -72, -29, 104, -118, 42, 10, -126, -106, 69, -17, -27, -76, -91, 83,
-                            38, 52,
-                            -103, 108, 92, -97, 66, -39, -25, -11, 107, 61, 123, -80, -11, 127, -78, 31, -67, -69, -11,
-                            -91,
-                            -43, -66
-                    }, 
-            		// the 64-byte transaction signature of the payment transaction which allocates the total amount of tokens to the XIN account within the genesis block
-            		{104, -3, 43, -4, -47, 102, 72, -74, -12, -128, 12, 98, 105, 97, -37, -45, -79, 41, 50,
-                            89, 30,
-                            -120, -76, -127, 36, -36, -32, -48, -43, -124, -117, 2, 74, -50, 85, -61, 51, -6, -101, 68,
-                            64, -27,
-                            -7, -55, 13, -85, -17, -80, 32, 97, 5, 57, 54, -76, 55, 31, 123, -80, 109, 59, 119, 28, 56,
-                            -31}})
-            // the 64-byte block signature of the genesis block
-            .put(PROPERTY_GENESIS_BLOCK_SIGNATURE, new byte[]{
-                    52, -64, -51, -114, -41, 102, -15, 126, -56, 95, 126, 50, 76, -128, -36, -61, 5, 26, 73, 82,
-                    -7,
-                    101, -64, 65, 17, 58, 60, 56, -90, -93, -109, 4, 35, -42, 104, 76, -34, 41, 67, 109, -54,
-                    -57, -84,
-                    31, -58, -47, -35, -70, -2, 87, 94, 9, -82, -10, 86, -80, -38, 82, -13, -127, -108, 119,
-                    106, 16
-            })
-            
-            // the amount which is transfered to the 
-            .put(PROPERTY_GENESIS_AMOUNTS, new long[]{
-            		// the wallet to where the XIN's for the community were distributed. From there the XIN's were distributed among the initial community and foundation wallet
-                    4500000000L,
-                    
-                    // total token supply
-                    4500000000L
-            })
-            
-            // 
-            .put(PROPERTY_GENESIS_RECIPIENTS, new long[]{
-            		// the id of the account where the tokens for the community and foundation wallet initially was created
-                    Long.parseUnsignedLong("16388043638115838282"),
-                    
-                    // the id of the account where the total amount of tokens was initially created
-                    Long.parseUnsignedLong("2921745148035575168")
-            })
-             // 
-            .put(PROPERTY_LAST_KNOWN_BLOCK_HEIGHT, 0)
-            .put(PROPERTY_LOCKED_BLOCK_MAX_VALUE, 1)
-            .put(PROPERTY_AUTOMATED_TRANSACTION_BLOCK, 1)
-            .put(PROPERTY_SUBSCRIPTION_START_BLOCK, 1)
-            .put(PROPERTY_ESCROW_START_BLOCK, 1)
-            .put(PROPERTY_BAD_BLOCK_MAX_HEIGHT, 0)
-            .put(PROPERTY_SHUFFLING_BLOCK, 1)
-            .put(PROPERTY_INCREASED_DIVI_PAYMENT_BLOCK, 1)
-            .put(PROPERTY_ROLLBACK_TAG, false)
-            .put(PROPERTY_ROLLBACK_HEIGHT, 0)
-            .put(PROPERTY_ROLLBACK_BLOCK, "0")
-            .put(PROPERTY_SINGLE_DIVIDEND_PAYMENT_PER_BLOCK_BLOCK, 1)
-            .put(PROPERTY_MAX_DIVIDEND_PER_BLOCKS, 1)
-            .put(PROPERTY_MAX_ACCOUNTS_FOR_DIVIDEND_PAYMENT, 50000)
-            .put(PROPERTY_ASSET_FULLDELETE_START_BLOCK, 1)
-            .put(PROPERTY_SUBSCRIPTION_MIN_FREQ, 5)
-            .put(PROPERTY_SUBSCRIPTION_MAX_FREQ, 31536000)
-            .put(PROPERTY_SHUFFLING_ACTIVATION_BLOCK, 1)
-            .put(PROPERTY_PRUNABLE_MESSAGES_BLOCK, 1)
-            .put(PROPERTY_CROWD_FUNDING_BLOCK, 1)
-            .put(PROPERTY_FUNDING_MONITOR_BLOCK, 1)
-            .put(PROPERTY_BLOCK_CHECKSUMS, ImmutableMap.<Integer, BlockChecksum>builder()
-                    .build())
-            .build();
+
 
     
-    private static final Map<String, Object> TESTNET2_PROPERTIES = ImmutableMap.<String, Object>builder()
+    private static final Map<String, Object> TESTNET_PROPERTIES = ImmutableMap.<String, Object>builder()
     		// the creator of the genesis block
             .put(PROPERTY_CREATOR_ID, "14474643091275973664")
             
@@ -384,10 +303,7 @@ public class ConstantsConfigHelper {
         }
         if (environment.equalsIgnoreCase("testnet")) {
             return TESTNET_PROPERTIES;
-        }
-        if (environment.equalsIgnoreCase("testnet2")) {
-            return TESTNET2_PROPERTIES;
-        }        
+        }    
         if (environment.equalsIgnoreCase("devnet")) {
             return DEVNET_PROPERTIES;
         }
