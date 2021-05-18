@@ -2,5 +2,5 @@ variables:
   DOCKER_SERVICE_NAME: "node-1"
 
 include:
-  - project: 'infinity-economics/iep-infrastructure'
+  - project: 'infinity-economics/iep-docker'
     file: '/gitlab/ci/docker-ci-staging.yml'
