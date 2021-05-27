@@ -1,4 +1,4 @@
-** Release 0.3.0*
+** Release 0.3.0 **
 - Minimale Testumgebung  für das EP  Test- und Mainnet(eigener Genesis)
 - Produktion 10 Node verteilt auf 3 RZ (Hetzner)
 - Minimales Security hardening 
