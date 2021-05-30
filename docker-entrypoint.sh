@@ -34,9 +34,9 @@ initTestEnvironment() {
 #	echo "CASH_ACCOUNT_PASSPHRASE=$CASH_ACCOUNT_PASSPHRASE"
 
 	
-	echo "IEP_INIT_TESTNET=${IEP_INIT_TESTNET}"
+	echo "INIT_TESTNET=${INIT_TESTNET}"
 
-	if [ "${NETWORK_ENVIRONMENT}" == "testnet" ] && [ "${INIT_TESTNET}" == "true"]; then
+	if [ "${NETWORK_ENVIRONMENT}" == "testnet" ] && [ "${INIT_TESTNET}" == "true" ]; then
 		echo "Initialization ${NETWORK_ENVIRONMENT}"
 		if [ ! -z "${GENESIS_FUNDS_ACCOUNT_PASSPHRASE-}" ]; then
 	
