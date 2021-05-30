@@ -34,7 +34,7 @@ initTestEnvironment() {
 #	echo "CASH_ACCOUNT_PASSPHRASE=$CASH_ACCOUNT_PASSPHRASE"
 
 	
-	sleep 5
+	echo "IEP_INIT_TESTNET=${IEP_INIT_TESTNET}"
 
 	if [ "${NETWORK_ENVIRONMENT}" == "testnet" ] && [ "${INIT_TESTNET}" == "true"]; then
 		echo "Initialization ${NETWORK_ENVIRONMENT}"
