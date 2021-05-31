@@ -36,7 +36,7 @@ initTestEnvironment() {
 	
 	echo "INIT_TESTNET=${INIT_TESTNET}"
 
-	if [ "${NETWORK_ENVIRONMENT}" == "testnet" ] && [ "${INIT_TESTNET}" == "true" ]; then
+	if [ "${NETWORK_ENVIRONMENT}" == "testnet2" ] && [ "${INIT_TESTNET}" == "true" ]; then
 		echo "Initialization ${NETWORK_ENVIRONMENT}"
 		if [ ! -z "${GENESIS_FUNDS_ACCOUNT_PASSPHRASE-}" ]; then
 	
