@@ -1,9 +1,18 @@
 ** Release 0.3.0 **
-- Minimale Testumgebung  für das EP  Test- und Mainnet(eigener Genesis)
-- Produktion 10 Node verteilt auf 3 RZ (Hetzner)
-- Minimales Security hardening 
-- Parallelbetrieb zum existierenden Blockchain Verbund (noch keine Kontrolle über das Netz, min. 60'000 XIN)
-- Cloudflare set up mit neuer DNS
-- Minimaler Regressionstest in Test- und Produktion
-
-Versions & Release Management (3.0.0; must, es darf nicht die gleiche versionnummer sein)
+- Added dockerfile to create a docker image used to run the IEP node on
+docker
+- added git ignore file to exclude files from beeing commited
+- changed the blockId for TESTNET in the source code to be the same as the
+current installation (/testnet)
+- Introduced no script which is used to initialize the testnet during
+startup of docker container
+- Added a template (custom.properties) containing placeholders which are
+replaced
+- Introducing docker-entrypoint.sh which is called during container
+startup. Added APT package curl
+- Corrected the blockId for the genesis blockt for testnet2
+- Added wait script to wait for IEP to be started. Changed version of
+dependency 1.5+ to 1.5.9 since the artifact can not be doanloaded from
+jcenter
+- Moved base directory to root
+- Added ci/cd gitlab config
