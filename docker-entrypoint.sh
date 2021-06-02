@@ -114,7 +114,7 @@ initTestEnvironment() {
 			
 		if [ ! -z "${GENESIS_FUNDS_ACCOUNT_PASSPHRASE-}" ]; then
 	
-			echo "Stop forging using the Forging Account"
+			echo "Stop forging using the Genesis Account"
 	
 			local stopForgingResponse=$(curl --fail "http://localhost:${API_SERVER_PORT}/api" \
 			--data "requestType=stopForging" \
