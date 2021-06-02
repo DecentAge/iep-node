@@ -5,7 +5,6 @@ rm -f /core/bin/conf/custom.properties
 
 #NETWORK_ENVIRONMENT=${NETWORK_ENVIRONMENT:-mainnet}
 #API_SERVER_SSL_PORT=${API_SERVER_SSL_PORT:}
-RUN_TESTS="${RUN_TESTS:false}"
 
 envsubst >- '${NETWORK_ENVIRONMENT}
 	${XIN_VERSION}
@@ -22,11 +21,10 @@ envsubst >- '${NETWORK_ENVIRONMENT}
 	${CASH_ACCOUNT_PASSPHRASE}
 	${DEBUG}' </templates/custom_template.properties > /iep-node/bin/conf/custom.properties
 
-cat /iep-node/bin/conf/custom.properties
+#cat /iep-node/bin/conf/custom.properties
 
 
 initTestEnvironment() {
-
 
 #	echo "NETWORK_ENVIRONMENT=$NETWORK_ENVIRONMENT"
 #	echo "GENESIS_FUNDS_ACCOUNT_PASSPHRASE=$GENESIS_FUNDS_ACCOUNT_PASSPHRASE"
@@ -162,7 +160,7 @@ initTestEnvironment() {
 export -f initTestEnvironment
 
 # waits until the IEP iep-node API endpoint is ready to receive requests before calling initTestEnvironment
-(../wait-for-it.sh localhost:${API_SERVER_PORT} --timeout=30 -- bash -c "initTestEnvironment") &
+(./wait-for-it.sh localhost:${API_SERVER_PORT} --timeout=30 -- bash -c "initTestEnvironment") &
 
 
 /iep-node/bin/core
