@@ -18,5 +18,5 @@ COPY --from=build /build/docker-entrypoint.sh /iep-node/docker-entrypoint.sh
 COPY --from=build /build/wait-for-it.sh /iep-node/wait-for-it.sh
 
 RUN set -o errexit -o nounset && unzip -q /iep-node.zip
-WORKDIR /iep-node
+WORKDIR /iep-node/bin
 ENTRYPOINT ["/iep-node/docker-entrypoint.sh"]
