@@ -160,7 +160,6 @@ initTestEnvironment() {
 export -f initTestEnvironment
 
 # waits until the IEP iep-node API endpoint is ready to receive requests before calling initTestEnvironment
-(./wait-for-it.sh localhost:${API_SERVER_PORT} --timeout=30 -- bash -c "initTestEnvironment") &
-
+(../wait-for-it.sh localhost:${API_SERVER_PORT} --timeout=30 -- bash -c "initTestEnvironment") &
 
 /iep-node/bin/core
