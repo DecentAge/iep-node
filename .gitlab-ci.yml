@@ -3,4 +3,4 @@ variables:
 
 include:
   - project: 'infinity-economics/iep-docker'
-    file: '/gitlab/ci/docker-ci-staging.yml'
+    file: '/gitlab/ci/docker-ci-cd.yml'
