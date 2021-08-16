@@ -6,6 +6,12 @@ rm -f /core/bin/conf/custom.properties
 #NETWORK_ENVIRONMENT=${NETWORK_ENVIRONMENT:-mainnet}
 #API_SERVER_SSL_PORT=${API_SERVER_SSL_PORT:}
 export NUMBER_OF_FORK_CONFIRMATIONS=${NUMBER_OF_FORK_CONFIRMATIONS:-2}
+if [ -z "${MY_HALLMARK}" ]
+	export ENABLE_HALLMARK_PROTECTION=false
+else
+	export ENABLE_HALLMARK_PROTECTION=true
+fi
+export NUMBER_OF_FORK_CONFIRMATIONS=${NUMBER_OF_FORK_CONFIRMATIONS:-2}
 
 envsubst >- '${NETWORK_ENVIRONMENT}
 	${XIN_VERSION}
@@ -15,6 +21,7 @@ envsubst >- '${NETWORK_ENVIRONMENT}
 	${MY_ADDRESS}
 	${MY_PLATFORM},
 	${MY_HALLMARK}
+	${ENABLE_HALLMARK_PROTECTION},
 	${DEFAULT_PEERS}
 	${WELL_KNOWN_PEERS}
 	${PEER_SERVER_PORT}
@@ -45,8 +52,6 @@ initTestEnvironment() {
 			echo "============================================================================================================================================="
 			sleep 30;	
 		fi
-	
-
 	
 		if [ ! -z "${FORGING_ACCOUNT_PASSPHRASE-}" ] && [ ! -z "${MY_ADDRESS-}" ]; then
 		
