@@ -1,4 +1,4 @@
-** Release 0.3.0 **
+# Release 0.3.1
 - Added dockerfile to create a docker image used to run the IEP node on
 docker
 - added git ignore file to exclude files from beeing commited
