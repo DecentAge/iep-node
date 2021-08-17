@@ -22,7 +22,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONStreamAware;
 
 import javax.servlet.http.HttpServletRequest;
-
+import static xin.api.JSONResponses.INCORRECT_HOST;
 import static xin.api.JSONResponses.*;
 
 public final class StartFundingMonitor extends APIServlet.APIRequestHandler {
@@ -43,7 +43,10 @@ public final class StartFundingMonitor extends APIServlet.APIRequestHandler {
      */
     @Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
-        API.verifyPassword(req);
+    	if (!API.isAllowed(req.getRemoteHost())) {
+    		return INCORRECT_HOST;
+        }
+    	API.verifyPassword(req);
 
         HoldingType holdingType = ParameterParser.getHoldingType(req);
         long holdingId = ParameterParser.getHoldingId(req, holdingType);
