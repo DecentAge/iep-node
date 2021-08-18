@@ -23,6 +23,7 @@ import xin.Shuffling;
 import org.json.simple.JSONStreamAware;
 
 import javax.servlet.http.HttpServletRequest;
+import static xin.api.JSONResponses.INCORRECT_HOST;
 
 public final class ShufflingCancel extends CreateTransaction {
 
@@ -34,6 +35,9 @@ public final class ShufflingCancel extends CreateTransaction {
 
     @Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
+    	if (!API.isAllowed(req.getRemoteHost())) {
+    		return INCORRECT_HOST;
+        }
         Shuffling shuffling = ParameterParser.getShuffling(req);
         long cancellingAccountId = ParameterParser.getAccountId(req, "cancellingAccount", false);
         byte[] shufflingStateHash = ParameterParser.getBytes(req, "shufflingStateHash", true);

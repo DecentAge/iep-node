@@ -23,6 +23,8 @@ import xin.util.Convert;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONStreamAware;
 
+import static xin.api.JSONResponses.INCORRECT_HOST;
+
 import javax.servlet.http.HttpServletRequest;
 
 public final class GetSharedKey extends APIServlet.APIRequestHandler {
@@ -35,7 +37,9 @@ public final class GetSharedKey extends APIServlet.APIRequestHandler {
 
     @Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
-
+    	if (!API.isAllowed(req.getRemoteHost())) {
+    		return INCORRECT_HOST;
+        }
         String secretPhrase = ParameterParser.getSecretPhrase(req, true);
         byte[] nonce = ParameterParser.getBytes(req, "nonce", true);
         long accountId = ParameterParser.getAccountId(req, "account", true);

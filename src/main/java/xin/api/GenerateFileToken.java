@@ -27,6 +27,7 @@ import java.io.IOException;
 
 import static xin.api.JSONResponses.INCORRECT_FILE;
 import static xin.api.JSONResponses.INCORRECT_TOKEN;
+import static xin.api.JSONResponses.INCORRECT_HOST;
 
 
 public final class GenerateFileToken extends APIServlet.APIRequestHandler {
@@ -39,6 +40,9 @@ public final class GenerateFileToken extends APIServlet.APIRequestHandler {
 
     @Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
+    	if (!API.isAllowed(req.getRemoteHost())) {
+    		return INCORRECT_HOST;
+        }
         String secretPhrase = ParameterParser.getSecretPhrase(req, true);
         byte[] data;
         try {

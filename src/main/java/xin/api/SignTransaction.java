@@ -23,6 +23,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONStreamAware;
 
 import javax.servlet.http.HttpServletRequest;
+import static xin.api.JSONResponses.INCORRECT_HOST;
 
 public final class SignTransaction extends APIServlet.APIRequestHandler {
 
@@ -34,7 +35,9 @@ public final class SignTransaction extends APIServlet.APIRequestHandler {
 
     @Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
-
+    	if (!API.isAllowed(req.getRemoteHost())) {
+    		return INCORRECT_HOST;
+        }
         String transactionJSON = Convert.emptyToNull(req.getParameter("unsignedTransactionJSON"));
         String transactionBytes = Convert.emptyToNull(req.getParameter("unsignedTransactionBytes"));
         String prunableAttachmentJSON = Convert.emptyToNull(req.getParameter("prunableAttachmentJSON"));

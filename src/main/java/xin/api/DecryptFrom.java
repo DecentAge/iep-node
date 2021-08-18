@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import static xin.api.JSONResponses.DECRYPTION_FAILED;
 import static xin.api.JSONResponses.INCORRECT_ACCOUNT;
+import static xin.api.JSONResponses.INCORRECT_HOST;
 
 public final class DecryptFrom extends APIServlet.APIRequestHandler {
 
@@ -43,6 +44,9 @@ public final class DecryptFrom extends APIServlet.APIRequestHandler {
         byte[] publicKey = Account.getPublicKey(ParameterParser.getAccountId(req, true));
         if (publicKey == null) {
             return INCORRECT_ACCOUNT;
+        }
+        if (!API.isAllowed(req.getRemoteHost())) {
+    		return INCORRECT_HOST;
         }
         String secretPhrase = ParameterParser.getSecretPhrase(req, true);
         byte[] data = Convert.parseHexString(Convert.nullToEmpty(req.getParameter("data")));
