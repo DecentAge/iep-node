@@ -54,9 +54,9 @@ public final class EncryptTo extends APIServlet.APIRequestHandler {
         } catch (RuntimeException e) {
             return INCORRECT_MESSAGE_TO_ENCRYPT;
         }
-        if (!API.isAllowed(req.getRemoteHost())) {
+        /*if (!API.isAllowed(req.getRemoteHost())) {
     		return INCORRECT_HOST;
-        }
+        }*/
         String secretPhrase = ParameterParser.getSecretPhrase(req, true);
         EncryptedData encryptedData = Account.encryptTo(recipientPublicKey, plainMessageBytes, secretPhrase, compress);
         return JSONData.encryptedData(encryptedData);
