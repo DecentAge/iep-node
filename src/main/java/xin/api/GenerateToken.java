@@ -38,9 +38,9 @@ public final class GenerateToken extends APIServlet.APIRequestHandler {
 
     @Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
-    	/*if (!API.isAllowed(req.getRemoteHost())) {
+    	if (!API.isAllowedLocalhost(req.getRemoteHost())) {
     		return INCORRECT_HOST;
-        }*/
+        }
         String secretPhrase = ParameterParser.getSecretPhrase(req, true);
         String website = Convert.emptyToNull(req.getParameter("website"));
         if (website == null) {
