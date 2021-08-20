@@ -38,9 +38,9 @@ public final class ShufflingProcess extends CreateTransaction {
 
     @Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
-    	if (!API.isAllowed(req.getRemoteHost())) {
+    	/*if (!API.isAllowed(req.getRemoteHost())) {
     		return INCORRECT_HOST;
-        }
+        }*/
         Shuffling shuffling = ParameterParser.getShuffling(req);
         if (shuffling.getStage() != Shuffling.Stage.PROCESSING) {
             JSONObject response = new JSONObject();

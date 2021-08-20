@@ -267,6 +267,8 @@ public final class API {
     }
 
     static boolean isAllowed(String remoteHost) {
+    	Logger.logMessage("IsAllowed check for removeHost: " + remoteHost);
+    	
         if (API.allowedBotHosts == null || API.allowedBotHosts.contains(remoteHost)) {
             return true;
         }
