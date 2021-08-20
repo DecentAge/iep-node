@@ -36,9 +36,9 @@ public final class StartShuffler extends APIServlet.APIRequestHandler {
 
     @Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
-    	if (!API.isAllowed(req.getRemoteHost())) {
+    	/*if (!API.isAllowed(req.getRemoteHost())) {
     		return INCORRECT_HOST;
-        }
+        }*/
     	byte[] shufflingFullHash = ParameterParser.getBytes(req, "shufflingFullHash", true);
         String secretPhrase = ParameterParser.getSecretPhrase(req, true);
         byte[] recipientPublicKey = ParameterParser.getPublicKey(req, "recipient");
