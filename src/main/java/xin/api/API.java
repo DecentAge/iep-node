@@ -44,6 +44,7 @@ import java.util.*;
 
 import static xin.api.JSONResponses.INCORRECT_ADMIN_PASSWORD;
 import static xin.api.JSONResponses.NO_PASSWORD_IN_CONFIG;
+import static xin.api.JSONResponses.INCORRECT_ACCOUNT;
 
 public final class API {
 
