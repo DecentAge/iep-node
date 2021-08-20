@@ -54,7 +54,9 @@ public final class API {
     public static final List<APITag> disabledAPITags;
 
     private static final Set<String> allowedBotHosts;
+    private static final Set<String> allowedBotLocalhosts;
     private static final List<NetworkAddress> allowedBotNets;
+    private static final List<NetworkAddress> allowedBotLocalNets;
     public static final String adminPassword = Xin.getStringProperty("xin.adminPassword", "", true);
     static final boolean disableAdminPassword;
     static final int maxRecords = Xin.getIntProperty("xin.maxAPIRecords");
@@ -94,6 +96,9 @@ public final class API {
             allowedBotNets = null;
         }
 
+        initAllowedLocalhostList();
+        
+        
         boolean enableAPIServer = Xin.getBooleanProperty("xin.enableAPIServer");
 
         if (enableAPIServer) {
@@ -230,6 +235,26 @@ public final class API {
 
     }
 
+	private static void initAllowedLocalhostList() {
+		List<String> allowedBotLocalHostsList = Xin.getStringListProperty("xin.allowedBotLocalhost");
+        Set<String> hosts = new HashSet<>();
+        List<NetworkAddress> nets = new ArrayList<>();
+        for (String host : allowedBotLocalHostsList) {
+            if (host.contains("/")) {
+                try {
+                    nets.add(new NetworkAddress(host));
+                } catch (UnknownHostException e) {
+                    Logger.logErrorMessage("Unknown network " + host, e);
+                    throw new RuntimeException(e.toString(), e);
+                }
+            } else {
+                hosts.add(host);
+            }
+        }
+        allowedBotLocalhosts = Collections.unmodifiableSet(hosts);
+        allowedBotLocalNets = Collections.unmodifiableList(nets);
+	}
+
     public static void init() {
     }
 
@@ -267,9 +292,28 @@ public final class API {
     }
 
     static boolean isAllowed(String remoteHost) {
-    	Logger.logMessage("IsAllowed check for removeHost: " + remoteHost);
     	
         if (API.allowedBotHosts == null || API.allowedBotHosts.contains(remoteHost)) {
+            return true;
+        }
+        try {
+            BigInteger hostAddressToCheck = new BigInteger(InetAddress.getByName(remoteHost).getAddress());
+            for (NetworkAddress network : API.allowedBotNets) {
+                if (network.contains(hostAddressToCheck)) {
+                    return true;
+                }
+            }
+        } catch (UnknownHostException e) {
+            // can't resolve, disallow
+            Logger.logMessage("Unknown remote host " + remoteHost);
+        }
+        return false;
+
+    }
+    
+    static boolean isAllowedLocalhost(String remoteHost) {
+    	
+        if (API.allowedBotLocalhosts == null || API.allowedBotLocalhosts.contains(remoteHost)) {
             return true;
         }
         try {

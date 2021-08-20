@@ -37,9 +37,9 @@ public final class GetSharedKey extends APIServlet.APIRequestHandler {
 
     @Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
-    	/*if (!API.isAllowed(req.getRemoteHost())) {
+    	if (!API.isAllowedLocalhost(req.getRemoteHost())) {
     		return INCORRECT_HOST;
-        }*/
+        }
         String secretPhrase = ParameterParser.getSecretPhrase(req, true);
         byte[] nonce = ParameterParser.getBytes(req, "nonce", true);
         long accountId = ParameterParser.getAccountId(req, "account", true);
