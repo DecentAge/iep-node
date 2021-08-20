@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import static xin.api.JSONResponses.UNKNOWN_ACCOUNT;
 import static xin.api.JSONResponses.INCORRECT_HOST;
+import static xin.api.JSONResponses.INCORRECT_ACCOUNT;
 
 public final class StartForging extends APIServlet.APIRequestHandler {
 
