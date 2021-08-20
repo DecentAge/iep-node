@@ -96,7 +96,23 @@ public final class API {
             allowedBotNets = null;
         }
 
-        initAllowedLocalhostList();
+        List<String> allowedBotLocalHostsList = Xin.getStringListProperty("xin.allowedBotLocalhost");
+        Set<String> hosts = new HashSet<>();
+        List<NetworkAddress> nets = new ArrayList<>();
+        for (String host : allowedBotLocalHostsList) {
+            if (host.contains("/")) {
+                try {
+                    nets.add(new NetworkAddress(host));
+                } catch (UnknownHostException e) {
+                    Logger.logErrorMessage("Unknown network " + host, e);
+                    throw new RuntimeException(e.toString(), e);
+                }
+            } else {
+                hosts.add(host);
+            }
+        }
+        allowedBotLocalhosts = Collections.unmodifiableSet(hosts);
+        allowedBotLocalNets = Collections.unmodifiableList(nets);
         
         
         boolean enableAPIServer = Xin.getBooleanProperty("xin.enableAPIServer");
@@ -234,26 +250,6 @@ public final class API {
         }
 
     }
-
-	private static void initAllowedLocalhostList() {
-		List<String> allowedBotLocalHostsList = Xin.getStringListProperty("xin.allowedBotLocalhost");
-        Set<String> hosts = new HashSet<>();
-        List<NetworkAddress> nets = new ArrayList<>();
-        for (String host : allowedBotLocalHostsList) {
-            if (host.contains("/")) {
-                try {
-                    nets.add(new NetworkAddress(host));
-                } catch (UnknownHostException e) {
-                    Logger.logErrorMessage("Unknown network " + host, e);
-                    throw new RuntimeException(e.toString(), e);
-                }
-            } else {
-                hosts.add(host);
-            }
-        }
-        allowedBotLocalhosts = Collections.unmodifiableSet(hosts);
-        allowedBotLocalNets = Collections.unmodifiableList(nets);
-	}
 
     public static void init() {
     }
