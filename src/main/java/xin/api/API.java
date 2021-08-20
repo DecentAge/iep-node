@@ -318,7 +318,7 @@ public final class API {
         }
         try {
             BigInteger hostAddressToCheck = new BigInteger(InetAddress.getByName(remoteHost).getAddress());
-            for (NetworkAddress network : API.allowedBotNets) {
+            for (NetworkAddress network : API.allowedBotLocalNets) {
                 if (network.contains(hostAddressToCheck)) {
                     return true;
                 }
