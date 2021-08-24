@@ -43,9 +43,9 @@ public final class StartFundingMonitor extends APIServlet.APIRequestHandler {
      */
     @Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
-    	/*if (!API.isAllowed(req.getRemoteHost())) {
+    	if (!API.isAllowedLocalhost(req.getRemoteHost())) {
     		return INCORRECT_HOST;
-        }*/
+        }
     	API.verifyPassword(req);
 
         HoldingType holdingType = ParameterParser.getHoldingType(req);

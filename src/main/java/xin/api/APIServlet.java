@@ -456,7 +456,16 @@ public final class APIServlet extends HttpServlet {
         try {
 
             long startTime = System.currentTimeMillis();
+            Enumeration<String> headerNames = req.getHeaderNames();
 
+            if (headerNames != null) {
+                    while (headerNames.hasMoreElements()) {
+                            System.out.println("Header: " + req.getHeader(headerNames.nextElement()));
+                    }
+            }
+            
+            System.out.println("**********");
+            System.out.println("req.getremoteaddr() " + req.getRemoteAddr());
             if (!API.isAllowed(req.getRemoteHost())) {
                 response = ERROR_NOT_ALLOWED;
                 return;
