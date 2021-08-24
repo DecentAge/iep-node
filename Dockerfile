@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1
 FROM gradle:6.8.3-jdk8 AS build
 WORKDIR /build
 
@@ -15,6 +16,7 @@ RUN apt-get update \
 COPY --from=build /build/build/distributions/iep-node.zip /iep-node.zip
 COPY --from=build /build/conf/custom_template.properties /templates/custom_template.properties
 COPY --from=build /build/docker-entrypoint.sh /iep-node/docker-entrypoint.sh
+COPY --from=build /build/scripts /iep-node/scripts
 COPY --from=build /build/wait-for-it.sh /iep-node/wait-for-it.sh
 
 RUN set -o errexit -o nounset && unzip -q /iep-node.zip
