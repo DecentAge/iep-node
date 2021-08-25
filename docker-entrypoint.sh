@@ -5,6 +5,7 @@ source /iep-node/scripts/docker_utils.sh
 
 init_secret "ADMIN_PASSWORD"
 
+
 if [ -z "${MY_HALLMARK}" ]; then
 	export ENABLE_HALLMARK_PROTECTION=false
 else
@@ -34,11 +35,10 @@ envsubst >- '${NETWORK_ENVIRONMENT}
 	${NUMBER_OF_FORK_CONFIRMATIONS}
 	${DEBUG}' </templates/custom_template.properties > /iep-node/bin/conf/custom.properties
 
-cat /iep-node/bin/conf/custom.properties
+# cat /iep-node/bin/conf/custom.properties
 
 remove_secret "ADMIN_PASSWORD"
-
-echo "Initializings network ${NETWORK_ENVIRONMENT}"
+echo "Initializing network ${NETWORK_ENVIRONMENT}..."
 
 init_when_ready() {
 	if [ "${NETWORK_ENVIRONMENT}" == "testnet" ]; then
