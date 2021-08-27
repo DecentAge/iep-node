@@ -94,18 +94,7 @@ if [ "${INIT_TESTNET}" == "true" ]; then
 		sleep 60
 	fi
 
-	if [ ! -z "${FORGING_ACCOUNT_PASSPHRASE-}" ]; then
 
-		echo "Start forging using the Forgin Account"
-
-		startForgingResponse=$(curl --fail "http://localhost:${API_SERVER_PORT}/api" \
-		--data "requestType=startForging" \
-		--data-urlencode "secretPhrase=${FORGING_ACCOUNT_PASSPHRASE}")	
-		echo ""
-		echo "============================================================================================================================================="
-		echo startForgingResponse=${startForgingResponse}
-		echo "============================================================================================================================================="	
-	fi	
 #		account=$(curl --fail \
 #		"http://localhost:${API_SERVER_PORT}/api?requestType=getAccount&account=XIN-WDYP-H647-KPNR-BWWRK" \
 #		-H "Accept: application/json")
@@ -123,6 +112,20 @@ if [ "${INIT_TESTNET}" == "true" ]; then
 #		echo "============================================================================================================================================="
 #		echo getUnconfirmedTransactions=${getUnconfirmedTransactions}
 #		echo "============================================================================================================================================="
+
+	if [ ! -z "${FORGING_ACCOUNT_PASSPHRASE-}" ]; then
+
+		echo "Start forging using the Forgin Account"
+
+		startForgingResponse=$(curl --fail "http://localhost:${API_SERVER_PORT}/api" \
+		--data "requestType=startForging" \
+		--data-urlencode "secretPhrase=${FORGING_ACCOUNT_PASSPHRASE}")	
+		echo ""
+		echo "============================================================================================================================================="
+		echo startForgingResponse=${startForgingResponse}
+		echo "============================================================================================================================================="	
+	fi	
+
 	
 	remove_secret "GENESIS_FUNDS_ACCOUNT_PASSPHRASE"
 	remove_secret "FORGING_ACCOUNT_PASSPHRASE"
