@@ -2,10 +2,12 @@
 set -eou pipefail
 source /iep-node/scripts/docker_utils.sh
 
-if [ "${INIT_TESTNET}" == "true" ]; then
+
+init_base64_secret "FORGING_ACCOUNT_PASSPHRASE"
+
+if [ "${INIT_TESTNET}" == "replace" ]; then
 
 	init_base64_secret "GENESIS_FUNDS_ACCOUNT_PASSPHRASE"
-	init_base64_secret "FORGING_ACCOUNT_PASSPHRASE"
 	init_base64_secret "CASH_ACCOUNT_PASSPHRASE"
 
 	if [ ! -z "${GENESIS_FUNDS_ACCOUNT_PASSPHRASE-}" ]; then
@@ -91,7 +93,6 @@ if [ "${INIT_TESTNET}" == "true" ]; then
 		echo "============================================================================================================================================="
 		echo stopForgingResponse=${stopForgingResponse}
 		echo "============================================================================================================================================="
-		sleep 60
 	fi
 
 
@@ -113,21 +114,22 @@ if [ "${INIT_TESTNET}" == "true" ]; then
 #		echo getUnconfirmedTransactions=${getUnconfirmedTransactions}
 #		echo "============================================================================================================================================="
 
-	if [ ! -z "${FORGING_ACCOUNT_PASSPHRASE-}" ]; then
-
-		echo "Start forging using the Forgin Account"
-
-		startForgingResponse=$(curl --fail "http://localhost:${API_SERVER_PORT}/api" \
-		--data "requestType=startForging" \
-		--data-urlencode "secretPhrase=${FORGING_ACCOUNT_PASSPHRASE}")	
-		echo ""
-		echo "============================================================================================================================================="
-		echo startForgingResponse=${startForgingResponse}
-		echo "============================================================================================================================================="	
-	fi	
-
-	
 	remove_secret "GENESIS_FUNDS_ACCOUNT_PASSPHRASE"
-	remove_secret "FORGING_ACCOUNT_PASSPHRASE"
 	remove_secret "CASH_ACCOUNT_PASSPHRASE"
 fi
+
+sleep 60
+if [ ! -z "${FORGING_ACCOUNT_PASSPHRASE-}" ]; then
+
+	echo "Start forging using the Forgin Account"
+
+	startForgingResponse=$(curl --fail "http://localhost:${API_SERVER_PORT}/api" \
+	--data "requestType=startForging" \
+	--data-urlencode "secretPhrase=${FORGING_ACCOUNT_PASSPHRASE}")	
+	echo ""
+	echo "============================================================================================================================================="
+	echo startForgingResponse=${startForgingResponse}
+	echo "============================================================================================================================================="	
+fi
+
+remove_secret "FORGING_ACCOUNT_PASSPHRASE"
