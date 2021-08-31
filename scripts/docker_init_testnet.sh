@@ -5,7 +5,7 @@ source /iep-node/scripts/docker_utils.sh
 
 init_base64_secret "FORGING_ACCOUNT_PASSPHRASE"
 
-if [ "${INIT_TESTNET}" == "replace" ]; then
+if [ "${INIT_TESTNET}" == "true" ]; then
 
 	init_base64_secret "GENESIS_FUNDS_ACCOUNT_PASSPHRASE"
 	init_base64_secret "CASH_ACCOUNT_PASSPHRASE"
