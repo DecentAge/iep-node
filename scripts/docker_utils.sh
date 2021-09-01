@@ -10,7 +10,7 @@ init_secret() {
 	elif [[ -n ${secret_name:-} ]]; then
 		echo "Initializing secret ${secret_name} from variable ${secret_name}"
 	else
-        echo >&2 "error: both ${secret_name} and /run/secrets/${secret_name} are not set"
+        echo >&2 "error: Variable ${secret_name} nor secret file /run/secrets/${secret_name} is set"
 		exit 1		
 	fi	
 }
@@ -19,8 +19,13 @@ init_base64_secret() {
 	local secret_name="$1"
 	local secret_base64_name=${secret_name}_BASE64
 	init_secret $secret_base64_name
-	export ${secret_name}="$(echo ${!secret_base64_name} | base64 -d)"
-	unset secret_base64_name
+	if [[ -z "${secret_base64_name}" ]]; then
+		export ${secret_name}="$(echo ${!che} | base64 -d)"
+		unset secret_base64_name
+	else
+		echo "The provided secret in /run/secrets/${secret_name} is empty. Therfore ignoring secret file."
+	fi
+
 }
 
 remove_secret() {
