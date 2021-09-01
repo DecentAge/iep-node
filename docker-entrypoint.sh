@@ -38,14 +38,16 @@ envsubst >- '${NETWORK_ENVIRONMENT}
 # cat /iep-node/bin/conf/custom.properties
 
 remove_secret "ADMIN_PASSWORD"
-echo "Initializing network ${NETWORK_ENVIRONMENT}..."
+
 
 init_when_ready() {
+	echo "Initializing network ${NETWORK_ENVIRONMENT}..."
 	if [ "${NETWORK_ENVIRONMENT}" == "testnet" ]; then
 		/iep-node/scripts/docker_init_testnet.sh
 	elif [ "${NETWORK_ENVIRONMENT}" == "mainnet" ]; then
 		/iep-node/scripts/docker_init_mainnet.sh
 	fi
+	echo "Network ${NETWORK_ENVIRONMENT} has been initialized..."
 }
 
 export -f init_when_ready
