@@ -99,7 +99,7 @@ if [ "${INIT_TESTNET}" == "true" ]; then
 fi
 
 
-if [ ! -z "${FORGING_ACCOUNT_PASSPHRASE-}" ] && [ "${IEP_NODE_1_START_FORGER}" == "true" ]; then
+if [ ! -z "${FORGING_ACCOUNT_PASSPHRASE-}" ] && [ "${START_FORGER}" == "true" ]; then
 
 	echo "Start forging using the Forging Account"
 
