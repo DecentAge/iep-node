@@ -21,9 +21,8 @@ init_base64_secret() {
 	init_secret $secret_base64_name
 	if [[ -z "${secret_base64_name}" ]]; then
 		echo "The provided secret in /run/secrets/${secret_name} is empty. Therfore ignoring secret file."
-
 	else
-		export ${secret_name}="$(echo ${!che} | base64 -d)"
+		export ${secret_name}="$(echo ${!secret_base64_name} | base64 -d)"
 		unset secret_base64_name
 	fi
 }
