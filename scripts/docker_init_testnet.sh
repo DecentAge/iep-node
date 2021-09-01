@@ -1,8 +1,6 @@
 #!/bin/bash
 set -eou pipefail
 source /iep-node/scripts/docker_utils.sh
-
-
 init_base64_secret "FORGING_ACCOUNT_PASSPHRASE"
 
 if [ "${INIT_TESTNET}" == "true" ]; then
@@ -94,34 +92,16 @@ if [ "${INIT_TESTNET}" == "true" ]; then
 		echo stopForgingResponse=${stopForgingResponse}
 		echo "============================================================================================================================================="
 	fi
-
-
-#		account=$(curl --fail \
-#		"http://localhost:${API_SERVER_PORT}/api?requestType=getAccount&account=XIN-WDYP-H647-KPNR-BWWRK" \
-#		-H "Accept: application/json")
-#	
-#	
-#		echo "============================================================================================================================================="
-#		echo account=${account}
-#		echo "============================================================================================================================================="
-#	
-#	
-#		getUnconfirmedTransactions=$(curl --fail "http://localhost:${API_SERVER_PORT}/api" \
-#		-H "Accept: application/json" \
-#		--data "requestType=getUnconfirmedTransactions")
-#	
-#		echo "============================================================================================================================================="
-#		echo getUnconfirmedTransactions=${getUnconfirmedTransactions}
-#		echo "============================================================================================================================================="
-
+	
+	sleep 30
 	remove_secret "GENESIS_FUNDS_ACCOUNT_PASSPHRASE"
 	remove_secret "CASH_ACCOUNT_PASSPHRASE"
 fi
 
-sleep 60
+
 if [ ! -z "${FORGING_ACCOUNT_PASSPHRASE-}" ]; then
 
-	echo "Start forging using the Forgin Account"
+	echo "Start forging using the Forging Account"
 
 	startForgingResponse=$(curl --fail "http://localhost:${API_SERVER_PORT}/api" \
 	--data "requestType=startForging" \

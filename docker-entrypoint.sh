@@ -51,6 +51,6 @@ init_when_ready() {
 export -f init_when_ready
 
 # waits until the IEP iep-node API endpoint is ready to receive requests before calling initTestEnvironment
-(../wait-for-it.sh localhost:${API_SERVER_PORT} --timeout=30 -- bash -c "init_when_ready") &
+(../wait-for-it.sh localhost:${API_SERVER_PORT} --timeout=30 -- bash -c "sleep 60; init_when_ready") &
 
 /iep-node/bin/core
