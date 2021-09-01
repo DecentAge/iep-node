@@ -4,7 +4,7 @@ source /iep-node/scripts/docker_utils.sh
 
 init_base64_secret "FORGING_ACCOUNT_PASSPHRASE"
 
-if [ ! -z "${FORGING_ACCOUNT_PASSPHRASE-}" ]; then
+if [ ! -z "${FORGING_ACCOUNT_PASSPHRASE-}" ] && [ "${IEP_NODE_1_START_FORGER}" == "true" ]; then
 
 	echo "Start forging using the Forging Account"
 
