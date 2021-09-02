@@ -5,7 +5,6 @@ Infinity Economics is a new kind of cryptocurrency ecosystem equipped with total
 - [Features](#features)
 - [Getting Started](#getting-started)
 - [Prerequisites](#prerequisites)
-- [Contributing](#contributing)
 - [License](#license)
 - [Credits](#credits)
 
@@ -21,49 +20,41 @@ Infinity Economics is a new kind of cryptocurrency ecosystem equipped with total
 	sudo apt update
 	sudo apt install oracle-java11-set-default
 ```
-#### Docker
+#### Sync your clock
 
-Infinity uses https://https://www.docker.com/.
-Docker is an open platform for developing, shipping, and running applications. Docker enables you to separate your applications from your infrastructure so you can deliver software quickly. With Docker, you can manage your infrastructure in the same ways you manage your applications. By taking advantage of Docker’s methodologies for shipping, testing, and deploying code quickly, you can significantly reduce the delay between writing code and running it in production.
-Installing and configuring Docker
+Infinity core uses your computer clock's time, and having the time off too much could cause you to 
+reject legit blocks, or miss out on blocks you could have mined. On linux "sudo ntpd -gq", on windows 
+go to change date/time, and go to internet time and tell it to sync with a time server.
 
-	https://github.com/docker
-	https://www.docker.com/
-	https://www.docker.com/get-started
-
-#### Eclipse
+On Ubuntu
+	apt-get install ntp
+	dpkg-reconfigure tzdata
 
 
-### Installation
-Check out from gitlab following projects:
+#### Build system
 
-	https://gitlab.com/infinity-economics/iep-backend-api.git
-	https://gitlab.com/infinity-economics/iep-blockexplorer-ui.git
-	https://gitlab.com/infinity-economics/iep-cloudflared.git
-	https://gitlab.com/infinity-economics/iep-docker.git
-	https://gitlab.com/infinity-economics/iep-docker-dev.git
-	https://gitlab.com/infinity-economics/iep-infrastructure.git
-	https://gitlab.com/infinity-economics/iep-mcap-backend.git
-	https://gitlab.com/infinity-economics/iep-node.git
-	https://gitlab.com/infinity-economics/iep-node-api.git
-	https://gitlab.com/infinity-economics/iep-peerexplorer-backend.git
-	https://gitlab.com/infinity-economics/iep-peerexplorer-ui.git
-	https://gitlab.com/infinity-economics/iep-servicemonitor-ui.git
-	https://gitlab.com/infinity-economics/iep-static-site.git
-	https://gitlab.com/infinity-economics/iep-testing.git
-	https://gitlab.com/infinity-economics/iep-wallet-ui.git
-	https://gitlab.com/infinity-economics/iep-wiki-site.git
- 
-### Starting
+Infinity uses https://gradle.org/ as its main build tool.
 
-	//add instructions to 
-	
-	/iep-docker-dev/pull-merge-all.sh
-	/iep-docker-dev/build-all.sh
-	/iep-docker-dev/run-testnet.sh
-	 
+Gradle is an open source build automation system that builds upon the concepts of 
+Apache Ant and Apache Maven and introduces a Groovy-based domain-specific language 
+(DSL) instead of the XML form used by Apache Maven of declaring the project 
+configuration.
 
-## Contributing
+Installing and configuring Gradle
+
+	https://github.com/gradle/gradle/blob/master/README.md
+	https://gradle.org/
+	https://gradle.org/install
+	https://gradle.org/docs
+
+
+#### Build
+
+./gradle DistZip
+
+### RUN
+
+
 
 ## License
 Copyright � 2016-2017 Infinity Community.
