@@ -283,5 +283,3 @@ https://github.com/ipfs/ipfs
 
 ZeroNet - Decentralized Websites 
 https://github.com/HelloZeroNet/ZeroNet
-
-## Thanks
