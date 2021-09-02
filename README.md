@@ -3,8 +3,8 @@ Infinity Economics is a new kind of cryptocurrency ecosystem equipped with total
 
 ## Table of Contents
 - [Features](#features)
-- [Getting Started](#getting-started)
 - [Prerequisites](#prerequisites)
+- [Operators Guide](#operators-guide)
 - [Node Services](#node-services)
 - [License](#license)
 - [Credits](#credits)
@@ -12,7 +12,6 @@ Infinity Economics is a new kind of cryptocurrency ecosystem equipped with total
 
 ## Features
 
-## Getting Started
 ### Prerequisites
 #### Java 11 Oracle JVM.
 ```bash
