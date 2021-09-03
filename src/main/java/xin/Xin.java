@@ -45,7 +45,7 @@ import java.util.Properties;
 
 public final class Xin {
 
-    public static final String VERSION = "0.3.1";
+    public static final String VERSION = "0.3.2";
     public static final String APPLICATION = "XIN";
     public static final int STRONG_PASSWORD_LENGTH = 5;
 
