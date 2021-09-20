@@ -22,6 +22,8 @@ echo "Creating node config /core/bin/conf/custom.properties"
 envsubst >- '${NETWORK_ENVIRONMENT}
 	${XIN_VERSION}
 	${API_SERVER_SSL_PORT}
+	${API_SERVER_SSL_ENABLED}
+	${API_SERVER_SSL_KEY_STORE_PASSWORD}
 	${API_SERVER_PORT}
 	${ADMIN_PASSWORD}
 	${MY_ADDRESS}
@@ -33,8 +35,10 @@ envsubst >- '${NETWORK_ENVIRONMENT}
 	${PEER_SERVER_PORT}
 	${DEFAULT_PEER_PORT}
 	${NUMBER_OF_FORK_CONFIRMATIONS}
-	${DEBUG}' </templates/custom_template.properties > /iep-node/bin/conf/custom.properties
+	${DEBUG}' </templates/docker_template.properties> /iep-node/bin/conf/custom.properties
 
+
+# keytool -genkey -alias infinity-economics -keyalg RSA -keystore /iep-node/bin/keystore.jks -dname "CN=${MY_ADDRESS}, OU=IT, O=Infinity Economics, L=Zuerich, S=Zuerich, C=CH" -storepass J87fshewr!_as -keypass J87fshewr!_as
 # cat /iep-node/bin/conf/custom.properties
 
 remove_secret "ADMIN_PASSWORD"
