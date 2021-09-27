@@ -17,7 +17,7 @@
 package xin.api;
 
 import org.apache.commons.lang.math.NumberUtils;
-import org.json.JSONArray;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONStreamAware;
 import xin.*;
@@ -63,14 +63,14 @@ public class GetAccountBalances extends APIServlet.APIRequestHandler {
 
 
         try (DbIterator<Account> accounts = Account.getAccountBalances(firstIndex, lastIndex)) {
-            JSONArray accountsInfo = new JSONArray();
+        	JSONArray accountInfo = new JSONArray();
             if (accounts.hasNext()) {
                 while (accounts.hasNext()) {
                     Account account = accounts.next();
-                    accountsInfo.put(JSONData.accountBalance(account, true));
+                    accountInfo.add(JSONData.accountBalance(account, true));
                 }
             }
-            response.put("balances", accountsInfo);
+            response.put("balances", accountInfo);
         }
 
         if (includeDistributions) {
@@ -90,7 +90,7 @@ public class GetAccountBalances extends APIServlet.APIRequestHandler {
                                 jsonObject.put("distributionStart", i);
                                 jsonObject.put("distributionEnd", currentEndInterval);
                                 jsonObject.put("distribution", currentDistribution);
-                                distributionArray.put(jsonObject);
+                                distributionArray.add(jsonObject);
                             }
                         } catch (SQLException se) {
                             throw new RuntimeException(se.getMessage(), se);
@@ -105,8 +105,9 @@ public class GetAccountBalances extends APIServlet.APIRequestHandler {
             }
             response.put("distributions",distributionArray);
         }
-
         return response;
+    	
+
     }
 
 }
