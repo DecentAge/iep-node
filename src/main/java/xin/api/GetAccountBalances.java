@@ -41,12 +41,15 @@ public class GetAccountBalances extends APIServlet.APIRequestHandler {
     @Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
 
-        API.verifyPassword(req);
-
         int firstIndex = ParameterParser.getFirstIndex(req);
-        int lastIndex  = ParameterParser.getLastIndex(req);
-
-
+        try {
+            firstIndex = firstIndex < 0 ? 0 : firstIndex;
+            firstIndex = firstIndex > 91 ? 91 : firstIndex;
+        } catch (NumberFormatException e) {
+            firstIndex = 0;
+        };
+        int lastIndex = firstIndex + 10;
+        
         boolean includeDistributions = "true".equalsIgnoreCase(req.getParameter("includeDistribution"));
         long startAmountTQT =
                 ParameterParser.getLong(req, "distributionStart",0L, Constants.MAX_BALANCE_TQT, includeDistributions);
