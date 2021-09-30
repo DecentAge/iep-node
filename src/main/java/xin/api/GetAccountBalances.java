@@ -16,53 +16,32 @@
 
 package xin.api;
 
-import org.apache.commons.lang.math.NumberUtils;
+import javax.servlet.http.HttpServletRequest;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONStreamAware;
-import xin.*;
-import xin.db.DbIterator;
 
-import javax.servlet.http.HttpServletRequest;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import xin.Account;
+import xin.XinException;
+import xin.db.DbIterator;
 
 public class GetAccountBalances extends APIServlet.APIRequestHandler {
 
     static final GetAccountBalances instance = new GetAccountBalances();
 
     private GetAccountBalances() {
-        super(new APITag[]{APITag.ACCOUNTS}, "firstIndex", "lastIndex", "includeDistribution", "distributionStart",
-                "distributionEnd", "interval","adminPassword");
+        super(new APITag[]{APITag.ACCOUNTS}, "index", "size");
     }
 
     @Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
-
-        int firstIndex = ParameterParser.getFirstIndex(req);
-        try {
-            firstIndex = firstIndex < 0 ? 0 : firstIndex;
-            firstIndex = firstIndex > 91 ? 91 : firstIndex;
-        } catch (NumberFormatException e) {
-            firstIndex = 0;
-        };
-        int lastIndex = firstIndex + 10;
-        
-        boolean includeDistributions = "true".equalsIgnoreCase(req.getParameter("includeDistribution"));
-        long startAmountTQT =
-                ParameterParser.getLong(req, "distributionStart",0L, Constants.MAX_BALANCE_TQT, includeDistributions);
-        long endAmountTQT = ParameterParser
-                .getLong(req, "distributionEnd", startAmountTQT + 1, Constants.MAX_BALANCE_TQT, includeDistributions);
-
-        long distributionInterval =
-                ParameterParser.getLong(req, "interval", 100*Constants.ONE_XIN, Constants.MAX_BALANCE_TQT, includeDistributions);
-
+        int index = ParameterParser.getInt(req, "index", 0, 1000000000, true);
+        int size = ParameterParser.getInt(req, "size", 0, 1000000000, true);
+        int to = (index + 1) * size;
+        int from = to - size;
         JSONObject response = new JSONObject();
-
-
-        try (DbIterator<Account> accounts = Account.getAccountBalances(firstIndex, lastIndex)) {
+        try (DbIterator<Account> accounts = Account.getAccountBalances(from, to)) {
         	JSONArray accountInfo = new JSONArray();
             if (accounts.hasNext()) {
                 while (accounts.hasNext()) {
@@ -71,43 +50,8 @@ public class GetAccountBalances extends APIServlet.APIRequestHandler {
                 }
             }
             response.put("balances", accountInfo);
-        }
-
-        if (includeDistributions) {
-            String sql = "select count(id) as results from account where latest = true and balance between ? and ?";
-            JSONArray distributionArray=new JSONArray();
-            try (Connection con = Db.db.getConnection()) {
-                for (long i = startAmountTQT; i <= endAmountTQT; i = i + distributionInterval) {
-                    long currentEndInterval =
-                            NumberUtils.min(i + distributionInterval, Constants.MAX_BALANCE_TQT, Long.MAX_VALUE);
-                    try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
-                        preparedStatement.setLong(1, i);
-                        preparedStatement.setLong(2, currentEndInterval);
-                        try (ResultSet rs = preparedStatement.executeQuery()) {
-                            if (rs.next()) {
-                                JSONObject jsonObject          = new JSONObject();
-                                float      currentDistribution = rs.getFloat("results");
-                                jsonObject.put("distributionStart", i);
-                                jsonObject.put("distributionEnd", currentEndInterval);
-                                jsonObject.put("distribution", currentDistribution);
-                                distributionArray.add(jsonObject);
-                            }
-                        } catch (SQLException se) {
-                            throw new RuntimeException(se.getMessage(), se);
-                        }
-                    } catch (SQLException se) {
-                        throw new RuntimeException(se.getMessage(), se);
-                    }
-
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e.toString(), e);
-            }
-            response.put("distributions",distributionArray);
+            response.put("total", Account.getCount());
         }
         return response;
-    	
-
     }
-
 }
