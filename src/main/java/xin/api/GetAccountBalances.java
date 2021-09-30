@@ -38,8 +38,11 @@ public class GetAccountBalances extends APIServlet.APIRequestHandler {
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
         int index = ParameterParser.getInt(req, "index", 0, 1000000000, true);
         int size = ParameterParser.getInt(req, "size", 0, 1000000000, true);
-        int to = (index + 1) * size;
+        
+        int to = (index +1) * size;
         int from = to - size;
+        to = to - 1;
+        
         JSONObject response = new JSONObject();
         try (DbIterator<Account> accounts = Account.getAccountBalances(from, to)) {
         	JSONArray accountInfo = new JSONArray();
