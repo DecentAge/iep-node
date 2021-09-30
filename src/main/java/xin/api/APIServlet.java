@@ -143,6 +143,7 @@ public final class APIServlet extends HttpServlet {
         map.put("getFundingMonitor", GetFundingMonitor.instance);
         map.put("getAccountLedgerEntry", GetAccountLedgerEntry.instance);
         map.put("getAccountBalances", GetAccountBalances.instance);
+        map.put("getDistributions", GetDistributions.instance);
         map.put("getActivationHeights", GetActivationHeights.instance);
 
         map.put("getAllPhasingOnlyControls", GetAllPhasingOnlyControls.instance);
