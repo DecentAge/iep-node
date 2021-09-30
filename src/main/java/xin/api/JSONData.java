@@ -26,6 +26,7 @@ import xin.peer.Hallmark;
 import xin.peer.Peer;
 import xin.util.Convert;
 import xin.util.Filter;
+import xin.util.JSON;
 import xin.util.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -70,6 +71,12 @@ public final class JSONData {
                 json.put("guaranteedBalanceTQT", "0");
             }
         } else {
+        	JSONData.putAccount(json, "account", account.getId());
+
+            byte[] publicKey = Account.getPublicKey(account.getId());
+            if (publicKey != null) {
+               json.put("publicKey", Convert.toHexString(publicKey));
+            }
             json.put("balanceTQT", String.valueOf(account.getBalanceTQT()));
             json.put("unconfirmedBalanceTQT", String.valueOf(account.getUnconfirmedBalanceTQT()));
             json.put("forgedBalanceTQT", String.valueOf(account.getForgedBalanceTQT()));
