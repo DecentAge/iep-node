@@ -47,11 +47,20 @@ public class GetDistributions extends APIServlet.APIRequestHandler {
     	Long endAmountTQT = ParameterParser.getLong(req, "maxAccountBalance", startAmountTQT + 1, Constants.MAX_BALANCE_TQT, true);
     	Long slices = ParameterParser.getLong(req, "slices", 0, Constants.MAX_BALANCE_TQT, true);
     	
+    	if(slices < 3) slices = 3l;
+    	if(slices > 20) slices = 20l;
+    	
     	long distributionInterval = (endAmountTQT - startAmountTQT)/slices;
-    	String sql = "select count(id) as results from account where latest = true and balance between ? and ?";
+    	JSONArray distributionArray = retrieveFromDB(startAmountTQT, endAmountTQT, distributionInterval);
+        response.put("distributions",distributionArray);
+        return response;
+    }
+
+	private JSONArray retrieveFromDB(Long startAmountTQT, Long endAmountTQT, long distributionInterval) {
+		String sql = "select count(id) as results from account where latest = true and balance between ? and ?";
     	JSONArray distributionArray=new JSONArray();
         try (Connection con = Db.db.getConnection()) {
-            for (long i = startAmountTQT; i < endAmountTQT - 1; i = i + distributionInterval) {
+            for (long i = startAmountTQT; i + distributionInterval <= endAmountTQT; i = i + distributionInterval) {
                 long currentEndInterval = NumberUtils.min(i + distributionInterval, Constants.MAX_BALANCE_TQT, Long.MAX_VALUE);
                 try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
                     preparedStatement.setLong(1, i);
@@ -75,8 +84,7 @@ public class GetDistributions extends APIServlet.APIRequestHandler {
         } catch (SQLException e) {
             throw new RuntimeException(e.toString(), e);
         }
-        response.put("distributions",distributionArray);
-        return response;
-    }
+		return distributionArray;
+	}
 
 }
