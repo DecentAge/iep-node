@@ -6,6 +6,8 @@ COPY --chown=gradle:gradle . .
 
 RUN gradle DistZip --no-daemon
 
+
+
 FROM openjdk:8-jre-slim
 
 RUN apt-get update \
@@ -20,5 +22,5 @@ COPY --from=build /build/scripts /iep-node/scripts
 COPY --from=build /build/wait-for-it.sh /iep-node/wait-for-it.sh
 
 RUN set -o errexit -o nounset && unzip -q /iep-node.zip
-WORKDIR /iep-node/bin
+WORKDIR /iep-node
 ENTRYPOINT ["/iep-node/docker-entrypoint.sh"]

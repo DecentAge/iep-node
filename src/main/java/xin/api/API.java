@@ -187,6 +187,18 @@ public final class API {
             HandlerList apiHandlers = new HandlerList();
 
             ServletContextHandler apiHandler = new ServletContextHandler();
+            String apiResourceBase = Xin.getStringProperty("nxt.apiResourceBase");
+            if (apiResourceBase != null) {
+                ServletHolder defaultServletHolder = new ServletHolder(new DefaultServlet());
+                defaultServletHolder.setInitParameter("dirAllowed", "false");
+                defaultServletHolder.setInitParameter("resourceBase", apiResourceBase);
+                defaultServletHolder.setInitParameter("welcomeServlets", "true");
+                defaultServletHolder.setInitParameter("redirectWelcome", "true");
+                defaultServletHolder.setInitParameter("gzip", "true");
+                defaultServletHolder.setInitParameter("etags", "true");
+                apiHandler.addServlet(defaultServletHolder, "/wallet/*");
+                apiHandler.setWelcomeFiles(new String[]{Xin.getStringProperty("nxt.apiWelcomeFile")});
+            }
 
             ServletHolder servletHolder = apiHandler.addServlet(APIServlet.class, "/api");
 

@@ -70,83 +70,33 @@ dependencies {
 }
 
 mainClassName = "xin.Xin"
+applicationName = 'iep-node'
+applicationDefaultJvmArgs = ["-Dmrn.runtime.dirProvider=ENV_DIR_PROVIDER"]
 
-task processConfig(type: Sync) {
-    from('conf/services') {
-        include '**/*'
-    }
-
-    into 'build/conf/services'
+task devStartScripts(type: CreateStartScripts) {
+    mainClassName = 'xin.dev.XinDevTools'
+    applicationName = 'dev'
+	defaultJvmOpts = ["-Dmrn.runtime.dirProvider=ENV_DIR_PROVIDER"]
+    classpath = startScripts.classpath
+    outputDir = startScripts.outputDir    
 }
 
-classes {
-    classes.dependsOn processConfig
-}
+tasks.withType(CreateStartScripts).each { task ->
+    task.doLast {    
+        def winScriptFile = file getWindowsScript()
+        def unixScriptFile = file getUnixScript()
 
-run {
-    classpath += files('build/conf/services')
-}
-
-def createScript(project, mainClass, name) {
-
-    project.tasks.create(name: name, type: CreateStartScripts) {
-        outputDir = new File(project.buildDir, 'scripts')
-        mainClassName = mainClass
-        applicationName = name
-        classpath = project.tasks[JavaPlugin.JAR_TASK_NAME].outputs.files + project.configurations.runtime
-    }
-    project.applicationDistribution.with {
-        into("bin") {
-            from(project.tasks[name])
-            fileMode = 0755
-        }
-    }
-    tasks.withType(CreateStartScripts).each { task ->
-        task.doLast {
-            def winScriptFile = file getWindowsScript()
-            def unixScriptFile = file getUnixScript()
-
-            def winFileText = winScriptFile.text
-            winFileText = winFileText.replaceAll('set CLASSPATH=.*', 'rem original CLASSPATH declaration replaced by:\nset CLASSPATH=%APP_HOME%\\\\lib\\\\\\*;%APP_HOME%\\\\bin\\\\\\conf\\\\\\services')
-            winScriptFile.text = winFileText
-            unixScriptFile.text = unixScriptFile.text.replace('CLASSPATH=', 'CLASSPATH=$APP_HOME/bin/conf/services:')
-
-            applicationDefaultJvmArgs = ["-Dmrn.runtime.dirProvider=ENV_DIR_PROVIDER"]
-            //SET System properties
-            unixScriptFile.text = unixScriptFile.text.replace('ENV_DIR_PROVIDER', 'xin.env.UnixUserDirProvider')
-
-            winScriptFile.text = winScriptFile.text.replace('ENV_DIR_PROVIDER', 'xin.env.WindowsUserDirProvider')
-        }
+        unixScriptFile.text = unixScriptFile.text.replace('ENV_DIR_PROVIDER', 'xin.env.UnixUserDirProvider')
+        winScriptFile.text = winScriptFile.text.replace('ENV_DIR_PROVIDER', 'xin.env.WindowsUserDirProvider')
     }
 }
 
-createScript(project, 'xin.dev.XinDevTools', 'dev');
-createScript(project, 'xin.Xin', 'core');
-
-
-distZip {
-    into(project.name + '/bin/') {
-        from '.'
-        include 'conf/**/*'
-    }
-    duplicatesStrategy = 'exclude'
+applicationDistribution.from("conf") {
+    into "conf"
 }
 
-//startScripts {
-//    doLast {
-//        def winScriptFile = file getWindowsScript()
-//        def unixScriptFile = file getUnixScript()
-//
-//        def winFileText = winScriptFile.text
-//        winFileText = winFileText.replaceAll('set CLASSPATH=.*', 'rem original CLASSPATH declaration replaced by:\nset CLASSPATH=%APP_HOME%\\\\lib\\\\\\*;%APP_HOME%\\\\bin\\\\\\conf\\\\\\services')
-//        winScriptFile.text = winFileText
-//        unixScriptFile.text = unixScriptFile.text.replace('CLASSPATH=', 'CLASSPATH=$APP_HOME/bin/conf/services:')
-//
-//        applicationDefaultJvmArgs = ["-Dmrn.runtime.dirProvider=ENV_DIR_PROVIDER"]
-//        //SET System properties
-//        unixScriptFile.text = unixScriptFile.text.replace('ENV_DIR_PROVIDER', 'xin.env.UnixUserDirProvider')
-//
-//        winScriptFile.text = winScriptFile.text.replace('ENV_DIR_PROVIDER', 'xin.env.WindowsUserDirProvider')
-//    }
-//
-//}
+applicationDistribution.into("bin") {
+    duplicatesStrategy= DuplicatesStrategy.EXCLUDE
+    from(devStartScripts)
+    fileMode = 0755
+}
