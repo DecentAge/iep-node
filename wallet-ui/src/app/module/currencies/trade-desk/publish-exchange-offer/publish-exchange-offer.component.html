@@ -1,0 +1,430 @@
+<div class="row" *ngIf="publishExchangeOfferForm">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-block main-card-block">
+                <div class="border-bt">
+                    <h2 class="main-title">{{'currencies.exchange-offer.title'| translate}}</h2>
+                    <app-breadcrumb></app-breadcrumb>
+                    <h3 class="back-button" (click)="goBack()">
+                        <i class="fa fa-chevron-left"></i>{{'common.back-btn'| translate}}
+                    </h3>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="card-body">
+                    <div class="card-block mr-3 ml-3">
+                        <aw-wizard [navBarLayout]="'large-filled-symbols'">
+                            <aw-wizard-step stepTitle="{{'common.details-step'| translate}}" [navigationSymbol]="{ symbol: '1' }">
+                                <form #f="ngForm" class="form inner-form form-bordered" novalidate>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div>
+                                                <label>{{'common.ticker-label'| translate}}
+                                                    <i class="fa fa-question-circle-o" triggers="mouseenter:mouseleave"
+                                                        placement="right" container="body" ngbPopover="{{'currencies.exchange-offer.ticker-popover'| translate}}">
+                                                    </i>
+                                                </label>
+
+                                                <h4> {{publishExchangeOfferForm.ticker}} </h4>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="">
+                                                <label>{{'common.currency-id-label'| translate}}
+                                                    <i class="fa fa-question-circle-o" triggers="mouseenter:mouseleave"
+                                                        placement="right" container="body" ngbPopover="{{'currencies.exchange-offer.currency-id-popover'| translate}}">
+                                                    </i>
+                                                </label>
+
+                                                <h4> {{publishExchangeOfferForm.currencyId}} </h4>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-md-12">
+                                            <p class=" info">
+                                                <i class="fa fa-info-circle"></i>
+                                                &nbsp;{{'currencies.exchange-offer.note'| translate}}</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div>
+                                                    <label>{{'currencies.exchange-offer.buy-rate-label'| translate}}
+                                                        <i class="fa fa-question-circle-o" triggers="mouseenter:mouseleave"
+                                                            container="body" placement="right" ngbPopover="{{'currencies.exchange-offer.buy-rate-popover'| translate}}">
+                                                        </i>
+                                                    </label>
+                                                    <div class="input-group ml-0 mr-0 sign_in_inputs row form-border-bottom">
+                                                        <div class="col-9 pl-0">
+                                                            <input type="number" placeholder="0" minValue="0" required
+                                                                [(ngModel)]="publishExchangeOfferForm.buyRate" name="buyRate"
+                                                                #buyRate="ngModel" class="pl-0 mb-0 pt-0 pb-0 form-control">
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <span class="input-group-text text-right">
+                                                                {{'common.xin-unit-text'| translate}}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngIf="buyRate?.invalid && (buyRate?.dirty || buyRate?.touched)"
+                                                        class="input-error">
+                                                        <div *ngIf="buyRate?.errors.required">
+                                                            {{'currencies.exchange-offer.buy-rate-required-msg'|
+                                                            translate}}
+                                                        </div>
+                                                        <div *ngIf="buyRate?.errors.minValue && !buyRate?.errors.required">
+                                                            {{'currencies.exchange-offer.buy-rate-greater-msg'|
+                                                            translate}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div>
+                                                    <label>{{'currencies.exchange-offer.sell-rate-label'| translate}}
+                                                        <i class="fa fa-question-circle-o" triggers="mouseenter:mouseleave"
+                                                            container="body" placement="right" ngbPopover="The rate per currency unit at which you are selling.">
+                                                        </i>
+                                                    </label>
+                                                    <div class="input-group ml-0 mr-0 sign_in_inputs row form-border-bottom">
+                                                        <div class="col-9 pl-0">
+                                                            <input type="number" placeholder="0" minValue="0" required
+                                                                [(ngModel)]="publishExchangeOfferForm.sellRate" name="sellRate"
+                                                                #sellRate="ngModel" class="pl-0 mb-0 pt-0 pb-0 form-control">
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <span class="input-group-text text-right">
+                                                                {{'common.xin-unit-text'| translate}}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngIf="sellRate?.invalid && (sellRate?.dirty || sellRate?.touched)"
+                                                        class="input-error">
+                                                        <div *ngIf="sellRate?.errors.required">
+                                                            {{'currencies.exchange-offer.sell-rate-required-msg'|
+                                                            translate}}
+                                                        </div>
+                                                        <div *ngIf="sellRate?.errors.minValue && !sellRate?.errors.required">
+                                                            {{'currencies.exchange-offer.sell-rate-greater-msg'|
+                                                            translate}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div>
+                                                    <label>{{'currencies.exchange-offer.buy-limit-label'| translate}}
+                                                        <i class="fa fa-question-circle-o" triggers="mouseenter:mouseleave"
+                                                            container="body" placement="right" ngbPopover="{{'currencies.exchange-offer.buy-limit-popover'| translate}}">
+                                                        </i>
+                                                    </label>
+                                                    <div class="input-group ml-0 mr-0 sign_in_inputs row form-border-bottom">
+                                                        <div class="col-9 pl-0">
+                                                            <input type="number" placeholder="0" minValue="0" required
+                                                                [(ngModel)]="publishExchangeOfferForm.buyLimit" name="buyLimit"
+                                                                #buyLimit="ngModel" class="pl-0 mb-0 pt-0 pb-0 form-control">
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <span class="input-group-text text-right">
+                                                                {{'common.units-text'| translate}}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngIf="buyLimit?.invalid && (buyLimit?.dirty || buyLimit?.touched)"
+                                                        class="input-error">
+                                                        <div *ngIf="buyLimit?.errors.required">
+                                                            {{'currencies.exchange-offer.buy-limit-required-msg'|
+                                                            translate}}
+                                                        </div>
+                                                        <div *ngIf="buyLimit?.errors.minValue && !buyLimit?.errors.required">
+                                                            {{'currencies.exchange-offer.buy-limit-greater-msg'|
+                                                            translate}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div>
+                                                    <label>{{'currencies.exchange-offer.sell-limit-label'| translate}}
+                                                        <i class="fa fa-question-circle-o" triggers="mouseenter:mouseleave"
+                                                            container="body" placement="right" ngbPopover="{{'currencies.exchange-offer.sell-limit-popover'| translate}}">
+                                                        </i>
+                                                    </label>
+                                                    <div class="input-group ml-0 mr-0 sign_in_inputs row form-border-bottom">
+                                                        <div class="col-9 pl-0">
+                                                            <input type="number" placeholder="0" minValue="0" required
+                                                                [(ngModel)]="publishExchangeOfferForm.sellLimit" name="sellLimit"
+                                                                #sellLimit="ngModel" class="pl-0 mb-0 pt-0 pb-0 form-control">
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <span class="input-group-text text-right">
+                                                                {{'common.units-text'| translate}}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngIf="sellLimit?.invalid && (sellLimit?.dirty || sellLimit?.touched)"
+                                                        class="input-error">
+                                                        <div *ngIf="sellLimit?.errors.required">
+                                                            {{'currencies.exchange-offer.sell-limit-required-msg'|
+                                                            translate}}
+                                                        </div>
+                                                        <div *ngIf="sellLimit?.errors.minValue && !sellLimit?.errors.required">
+                                                            {{'currencies.exchange-offer.sell-limit-greater-msg'|
+                                                            translate}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div>
+                                                    <label>{{'currencies.exchange-offer.inital-buy-supply-label'|
+                                                        translate}}
+                                                        <i class="fa fa-question-circle-o" triggers="mouseenter:mouseleave"
+                                                            container="body" placement="right" ngbPopover="{{'currencies.exchange-offer.inital-buy-supply-popover'| translate}}">
+                                                        </i>
+                                                    </label>
+                                                    <div class="input-group ml-0 mr-0 sign_in_inputs row form-border-bottom">
+                                                        <div class="col-9 pl-0">
+                                                            <input type="number" placeholder="0" minValue="0" required
+                                                                [(ngModel)]="publishExchangeOfferForm.initialBuySupply"
+                                                                name="initialBuySupply" #initialBuySupply="ngModel"
+                                                                class="pl-0 mb-0 pt-0 pb-0 form-control">
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <span class="input-group-text text-right">
+                                                                {{'common.units-text'| translate}}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngIf="initialBuySupply?.invalid && (initialBuySupply?.dirty || initialBuySupply?.touched)"
+                                                        class="input-error">
+                                                        <div *ngIf="initialBuySupply?.errors.required">
+                                                            {{'currencies.exchange-offer.inital-buy-supply-required-msg'|
+                                                            translate}}
+                                                        </div>
+                                                        <div *ngIf="initialBuySupply?.errors.minValue && !initialBuySupply?.errors.required">
+                                                            {{'currencies.exchange-offer.inital-buy-supply-greater-msg'|
+                                                            translate}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div>
+                                                    <label>{{'currencies.exchange-offer.inital-sell-supply-label'|
+                                                        translate}}
+                                                        <i class="fa fa-question-circle-o" triggers="mouseenter:mouseleave"
+                                                            container="body" placement="right" ngbPopover="{{'currencies.exchange-offer.inital-sell-supply-popover'| translate}}">
+                                                        </i>
+                                                    </label>
+                                                    <div class="input-group ml-0 mr-0 sign_in_inputs row form-border-bottom">
+                                                        <div class="col-9 pl-0">
+                                                            <input type="number" placeholder="0" minValue="0" required
+                                                                [(ngModel)]="publishExchangeOfferForm.initialSellSupply"
+                                                                name="initialSellSupply" #initialSellSupply="ngModel"
+                                                                class="pl-0 mb-0 pt-0 pb-0 form-control">
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <span class="input-group-text text-right">
+                                                                {{'common.units-text'| translate}}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngIf="initialSellSupply?.invalid && (initialSellSupply?.dirty || initialSellSupply?.touched)"
+                                                        class="input-error">
+                                                        <div *ngIf="initialSellSupply?.errors.required">
+                                                            {{'currencies.exchange-offer.inital-sell-supply-required'|
+                                                            translate}}
+                                                        </div>
+                                                        <div *ngIf="initialSellSupply?.errors.minValue && !initialSellSupply?.errors.required">
+                                                            {{'currencies.exchange-offer.inital-sell-supply-greater'|
+                                                            translate}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div>
+                                                    <label>{{'common.expiration-height-label'| translate}}
+                                                        <i class="fa fa-question-circle-o" triggers="mouseenter:mouseleave"
+                                                            container="body" placement="right" ngbPopover="{{'common.expiration-height-popover'| translate}}">
+                                                        </i>
+                                                    </label>
+                                                    <div class="input-group ml-0 mr-0 sign_in_inputs row form-border-bottom">
+                                                        <div class="col-2">
+                                                            <span class="input-group-text text-left">
+                                                                {{'common.block-text'| translate}} : {{ currentHeight
+                                                                }}
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-4 pl-0">
+                                                            <input type="number" class="pl-0 mb-0 pt-0 pb-0 form-control"
+                                                                [(ngModel)]="publishExchangeOfferForm.expirationHeight"
+                                                                name="expirationHeight" [minValue]="accountControl.phasingFinishHeight || 10"
+                                                                [maxValue]="14400" #expirationHeight="ngModel" required
+                                                                placeholder="1440">
+                                                        </div>
+                                                        <div class="col-2 pl-0">
+                                                            <span class="input-group-text text-left">
+                                                                {{ publishExchangeOfferForm.days }} {{'common.days-text'| translate}}
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-4 pr-1 text-right btn-icon-group">
+                                                            <a class="btn btn-primary" (click)="min()">
+                                                                <i class="fa fa-fast-backward"></i>
+                                                            </a>
+                                                            <a class="btn btn-primary" (click)="decrement()">
+                                                                <i class="fa fa-minus"></i>
+                                                            </a>
+                                                            <a class="btn btn-primary" (click)="increment()">
+                                                                <i class="fa fa-plus"></i>
+                                                            </a>
+                                                            <a class="btn btn-primary" (click)="max()">
+                                                                <i class="fa fa-fast-forward"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngIf="expirationHeight?.invalid && (expirationHeight?.dirty || expirationHeight?.touched)"
+                                                        class="input-error">
+                                                        <div *ngIf="expirationHeight?.errors.required">
+                                                            {{'common.expiration-height-required'| translate}}
+                                                        </div>
+                                                        <div *ngIf="expirationHeight?.errors.minValue && !expirationHeight?.errors.required">
+                                                            {{'common.expiration-height-greater'| translate}} {{
+                                                            accountControl.phasingFinishHeight || 10 }}
+                                                        </div>
+                                                        <div *ngIf="expirationHeight?.errors.maxValue && !expirationHeight?.errors.required">
+                                                            {{'common.expiration-height-less'| translate}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-4 left">
+                                            <button [disabled]="f.invalid" (click)="publishExchangeOffer()" type="button"
+                                                class="btn btn-gradient mr-1 mb-0 float-right" awNextStep>
+                                                {{'common.next-btn'| translate}} <i class="fa fa-chevron-right"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </aw-wizard-step>
+                            <aw-wizard-step stepTitle="{{'common.confirm-step'| translate}}" [navigationSymbol]="{ symbol: '2' }"
+                                class="form-bordered mt-4">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="ucsb"> {{'common.name-label'| translate}}
+                                        </div>
+                                        <h4> {{publishExchangeOfferForm.name}} </h4>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="ucsb"> {{'common.ticker-label'| translate}}
+                                        </div>
+                                        <h4> {{publishExchangeOfferForm.ticker}} </h4>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="ucsb"> {{'common.currency-id-label'| translate}}
+                                        </div>
+                                        <h4> {{publishExchangeOfferForm.currencyId}} </h4>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="ucsb"> {{'currencies.exchange-offer.buy-rate-label'| translate}}
+                                        </div>
+                                        <h4> {{publishExchangeOfferForm.buyRate}} </h4>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="ucsb"> {{'currencies.exchange-offer.buy-limit-label'| translate}}
+                                        </div>
+                                        <h4> {{publishExchangeOfferForm.buyLimit}} </h4>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="ucsb"> {{'currencies.exchange-offer.inital-buy-supply-label'|
+                                            translate}}
+                                        </div>
+                                        <h4> {{publishExchangeOfferForm.initialBuySupply}} </h4>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="ucsb"> {{'currencies.exchange-offer.sell-rate-label'| translate}}
+                                        </div>
+                                        <h4> {{publishExchangeOfferForm.sellRate}} </h4>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="ucsb"> {{'currencies.exchange-offer.sell-limit-label'| translate}}
+                                        </div>
+                                        <h4> {{publishExchangeOfferForm.sellLimit}} </h4>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="ucsb"> {{'currencies.exchange-offer.inital-sell-supply-label'|
+                                            translate}}
+                                        </div>
+                                        <h4> {{publishExchangeOfferForm.initialSellSupply}} </h4>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="ucsb"> {{'common.expiration-height-label'|
+                                            translate}}
+                                        </div>
+                                        <h4> {{publishExchangeOfferForm.expirationHeight}} </h4>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="ucsb"> {{'common.valid-label'| translate}}
+                                        </div>
+                                        <h4 [innerHTML]="validBytes | txIsValid"> </h4>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="ucsb"> {{'common.service-fee-label'| translate}}
+                                        </div>
+                                        <h4> {{ tx_fee | amountTkn }}
+                                            <small> {{'common.xin-unit-text'| translate}}</small>
+                                        </h4>
+                                    </div>
+                                </div>
+
+                                <button type="button" [ngClass]="{'btn-success': !unsignedTx, 'btn-danger': unsignedTx}"
+                                    class="btn btn-raised mr-1 mb-0" (click)="unsignedTx = !unsignedTx">
+                                    <i class="fa fa-key"></i> {{'common.signed-transaction-label'| translate}}
+                                </button>
+                                <!-- <hr *ngIf="unsignedTx"> -->
+                                <div class="form-group mt-3" *ngIf="unsignedTx">
+                                    <div class="position-relative sign_in_inputs">
+                                        <textarea disabled="true" rows="3" type="text" [(ngModel)]="transactionBytes"
+                                            class="form-control pl-0" name="key"></textarea>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <button type="button" [disabled]="!validBytes" (click)="broadcastTransaction(transactionBytes);"
+                                        class="btn btn-gradient float-right">
+                                        <i class="fa fa-check"></i> {{'common.finish-btn'| translate}}
+                                    </button>
+                                    <button type="button" class="btn btn-gradient mr-1 float-right" awPreviousStep>
+                                        <i class="fa fa-chevron-left"></i> {{'common.previous-btn'| translate}}
+                                    </button>
+                                </div>
+                            </aw-wizard-step>
+                        </aw-wizard>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

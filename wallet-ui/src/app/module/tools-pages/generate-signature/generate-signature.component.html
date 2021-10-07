@@ -1,0 +1,55 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+
+            <div class="card-block main-card-block pb-0">
+                <div class="border-bt">
+                    <h2 class="main-title">{{'navbar.generate-signature'| translate}}</h2>
+                    <app-breadcrumb></app-breadcrumb>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="card-block mr-3 ml-3">
+                    <form #f="ngForm" class="form inner-form" name="generateSignatureForm" novalidate>
+                        <div class="form-body">
+                            <div class="row mt-4">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>{{'common.signature-input-label'| translate}}
+                                            <i class="fa fa-question-circle-o" container="body" placement="right"
+                                                triggers="mouseenter:mouseleave" ngbPopover="{{'tool-pages.generate-signature.signature-input-popover'| translate}}"></i>
+                                        </label>
+                                        <div class="input-group">
+                                            <input type="text" [(ngModel)]="generateSignatureForm.input" name="input"
+                                                class="form-control" placeholder="{{'tool-pages.generate-signature.signature-input-placeholder'| translate}}">
+                                            <div class="mt-2">
+                                                <span class="btn btn-gradient" (click)="generateToken()">
+                                                    {{'tool-pages.generate-signature.generate-btn'| translate}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>{{'tool-pages.generate-signature.signature-output-label'| translate}}
+                                            <i class="fa fa-question-circle-o" container="body" placement="right"
+                                                triggers="mouseenter:mouseleave" ngbPopover="{{'tool-pages.generate-signature.signature-output-popover'| translate}}"></i>
+                                        </label>
+                                        <div class="position-relative">
+                                            <textarea disabled="true" rows="3" type="text" [(ngModel)]="generateSignatureForm.output"
+                                                class="form-control" name="output"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

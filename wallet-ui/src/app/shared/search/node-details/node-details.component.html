@@ -1,0 +1,252 @@
+<div class="row">
+	<div class="col-sm-12">
+		<div class="card">
+			<div class="card-header">
+				<h4 class="card-title">Node Details: {{ node }}</h4>
+				<h5 class="back-button" (click)="goBack()">
+					<i class="fa fa-chevron-left"></i> Back
+				</h5>
+			</div>
+			<div class="card-body">
+				<div class="card-block mr-3 ml-3">
+					<div class="row">
+						<div class="col-md-3">
+							<div class="ucsb"> Single CPU Load <small>(%)</small>
+							</div>
+							<div class="mt-2">
+								<canvas *ngIf="systemLoadAverage.value.length > 0" baseChart class="chart" [datasets]="systemLoadAverage?.value" [labels]="systemLoadAverage?.labels" [options]="barChartOptions" [colors]="barChartColors" [legend]="barChartLegend" [chartType]="barChartType" style="height: 100px"></canvas>
+							</div>
+						</div>
+
+						<div class="col-md-3">
+							<div class="ucsb"> Free Memory <small>(Bytes)</small>
+							</div>
+							<div class="mt-2">
+								<canvas *ngIf="freeMemory.value.length > 0" baseChart class="chart" [datasets]="freeMemory?.value" [labels]="freeMemory?.labels" [options]="barChartOptions" [colors]="barChartColors" [legend]="barChartLegend" [chartType]="barChartType" style="height: 100px"></canvas>
+							</div>
+						</div>
+
+						<div class="col-md-3">
+							<div class="ucsb"> Processing Latency <small>(ms)</small>
+							</div>
+							<div class="mt-2">
+								<canvas *ngIf="requestProcessingTime.value.length > 0" baseChart class="chart" [datasets]="requestProcessingTime?.value" [labels]="requestProcessingTime?.labels" [options]="barChartOptions" [colors]="barChartColors" [legend]="barChartLegend" [chartType]="barChartType" style="height: 100px"></canvas>
+							</div>
+						</div>
+
+						<div class="col-md-3">
+							<div class="ucsb"> Active Peers <small>(#)</small>
+							</div>
+							<div class="mt-2">
+								<canvas *ngIf="numberOfActivePeers.value.length > 0" baseChart class="chart" [datasets]="numberOfActivePeers?.value" [labels]="numberOfActivePeers?.labels" [options]="barChartOptions" [colors]="barChartColors" [legend]="barChartLegend" [chartType]="barChartType" style="height: 100px"></canvas>
+							</div>
+						</div>
+					</div>
+
+					<hr>
+
+					<div class="row">
+						<div class="col-md-3">
+							<div class="ucsb"> Gateway Services
+							</div>
+							<div class="mt-2">
+								<span ngbTooltip="IPFS" placement="top" trigger="mouseenter:mouseleave" [innerHtml]="'IPFS' | gateways : node?.gatewayIPFS "></span>
+								<span ngbTooltip="TenderMint" placement="top" trigger="mouseenter:mouseleave" [innerHtml]="'TenderMint' | gateways : node?.gatewayTendermint "></span>
+								<span ngbTooltip="ZeroNet" placement="top" trigger="mouseenter:mouseleave" [innerHtml]="'ZeroNet' | gateways : node?.gatewayZeroNet "></span>
+							</div>
+						</div>
+
+						<div class="col-md-3">
+							<div class="ucsb"> Proxy Services
+							</div>
+							<div class="mt-2">
+								<span ngbTooltip="BTC" placement="top" trigger="mouseenter:mouseleave" [innerHtml]="'BTC' | proxies : node?.gatewayIPFS "></span>
+								<span ngbTooltip="ETH" placement="top" trigger="mouseenter:mouseleave" [innerHtml]="'ETH' | proxies : node?.gatewayIPFS "></span>
+								<span ngbTooltip="LTC" placement="top" trigger="mouseenter:mouseleave" [innerHtml]="'LTC' | proxies : node?.gatewayIPFS "></span>
+								<span ngbTooltip="XRP" placement="top" trigger="mouseenter:mouseleave" [innerHtml]="'XRP' | proxies : node?.gatewayIPFS "></span>
+								<span ngbTooltip="MKT" placement="top" trigger="mouseenter:mouseleave" [innerHtml]="'MKT' | proxies : node?.gatewayIPFS "></span>
+							</div>
+						</div>
+
+						<div class="col-md-3">
+							<div class="ucsb"> Storage Services
+							</div>
+							<div  class="mt-2">
+								<span ngbTooltip="Mongodb" placement="top" trigger="mouseenter:mouseleave" [innerHtml]="'Mongodb' | storage : node?.storageMongodb "></span>
+								<span ngbTooltip="RethinkDB" placement="top" trigger="mouseenter:mouseleave" [innerHtml]="'RethinkDB' | storage : node?.storageRethink "></span>
+								<span ngbTooltip="PostgreSQL" placement="top" trigger="mouseenter:mouseleave" [innerHtml]="'PostgreSQL' | storage : node?.storagePSQL "></span>
+								<span ngbTooltip="MySQL" placement="top" trigger="mouseenter:mouseleave" [innerHtml]="'MySQL' | storage : node?.storageMySQL "></span>
+							</div>
+						</div>
+
+						<div class="col-md-3">
+							<div class="ucsb"> Community Services
+							</div>
+							<div class="mt-2">
+								<span class="label label-default" > BX </span>&nbsp;
+								<span class="label label-default" > PX </span>&nbsp;
+								<span class="label label-default" > DC </span>
+							</div>
+						</div>
+					</div>
+
+					<hr>
+
+					<div class="row">
+						<div class="col-md-3">
+							<div class="ucsb"> Node Info I
+							</div>
+							<div class="row mt-2">
+
+								<div class="col-5">API SSL </div>
+								<div class="col-7"><span [innerHtml]="node?.apiSSL | isEnabled"></span></div>
+
+								<div class="col-5">API CORS </div>
+								<div class="col-7"><span [innerHtml]="node?.apiServerCORS | isEnabled"></span></div>
+
+								<div class="col-5">API On </div>
+								<div class="col-7"><span [innerHtml]="node?.apiServerEnable | isEnabled"></span></div>
+
+								<div class="col-5">Timeout </div>
+								<div class="col-7"> {{ node?.apiServerIdleTimeout }} </div>
+
+								<div class="col-5">API Port </div>
+								<div class="col-7"> {{ node?.apiServerPort }} </div>
+
+								<div class="col-5">SSL Port </div>
+								<div class="col-7"> {{ node?.apiServerSSLPort }} </div>
+
+								<div class="col-5">Version </div>
+								<div class="col-7"> {{ node?.application }} </div>
+
+								<div class="col-5">Autofee </div>
+								<div class="col-7"><span [innerHtml]="node?.correctInvalidFees | isEnabled"></span></div>
+
+								<div class="col-5">Difficulty </div>
+								<div class="col-7"> {{ node?.cumulativeDifficulty }} </div>
+
+								<div class="col-5">Rollback </div>
+								<div class="col-7"> {{ node?.currentMinRollbackHeight }} </div>
+
+							</div>
+						</div>
+
+						<div class="col-md-3">
+							<div class="ucsb"> Node Info II
+							</div>
+							<div class="row mt-2">
+
+								<div class="col-5">Hallmarked </div>
+								<div class="col-7"><span [innerHtml]="node?.enableHallmarkProtection | isEnabled"></span></div>
+
+								<div class="col-5">Download </div>
+								<div class="col-7"><span [innerHtml]="node?.isDownloading | isEnabled"></span></div>
+
+								<div class="col-5">Scanning </div>
+								<div class="col-7"><span [innerHtml]="node?.isScanning | isEnabled"></span></div>
+
+								<div class="col-5">Ledgertrim </div>
+								<div class="col-7"> {{ node?.ledgerTrimKeep }} </div>
+
+								<div class="col-5">Last Block </div>
+								<div class="col-7"> <small>{{ node?.lastBlock }}</small> </div>
+
+								<div class="col-5">Feeder IP </div>
+								<div class="col-7"> {{ node?.lastBlockchainFeeder }} </div>
+
+								<div class="col-5">Feeder Blk </div>
+								<div class="col-7"> {{ node?.lastBlockchainFeederHeight }} </div>
+
+								<div class="col-5">PLTime </div>
+								<div class="col-7">{{ node?.maxPrunableLifetime }}</div>
+
+								<div class="col-5">Rollback </div>
+								<div class="col-7"> {{ node?.maxRollback }} </div>
+
+								<div class="col-5">MaxUTx </div>
+								<div class="col-7"> {{ node?.maxUnconfirmedTransactions }} </div>
+
+							</div>
+						</div>
+
+						<div class="col-md-3">
+							<div class="ucsb"> Node Info III
+							</div>
+							<div class="row mt-2">
+
+								<div class="col-5">MaxUpload </div>
+								<div class="col-7">{{ node?.maxUploadFileSize }}</div>
+
+								<div class="col-5">Hallmark </div>
+								<div class="col-7">{{ 'none' }}</div>
+
+								<div class="col-5">Active Peers </div>
+								<div class="col-7">{{ node?.numberOfActivePeers }}</div>
+
+								<div class="col-5">Total Peers </div>
+								<div class="col-7"> {{ node?.numberOfPeers }} </div>
+
+								<div class="col-5">Blocks </div>
+								<div class="col-7"> {{ node?.numberOfBlocks }}</div>
+
+								<div class="col-5">Rank </div>
+								<div class="col-7"> {{ node?.rank }} </div>
+
+								<div class="col-5">Version </div>
+								<div class="col-7"> {{ node?.version }} </div>
+
+								<div class="col-5">Websockets </div>
+								<div class="col-7"><span [innerHtml]='node?.useWebsocket | isEnabled'></span></div>
+
+								<div class="col-5">SuperNode </div>
+								<div class="col-7"><span [innerHtml]='node?.superNodeEnable | isEnabled'></span></div>
+
+								<div class="col-5">Uptime </div>
+								<div class="col-7"> {{ node?.Uptime }} </div>
+
+							</div>
+						</div>
+
+						<div class="col-md-3">
+							<div class="ucsb"> Node Info IV
+							</div>
+							<div class="row mt-2">
+
+								<div class="col-5">Processors </div>
+								<div class="col-7"> {{ node?.availableProcessors }} </div>
+
+								<div class="col-5">Threads </div>
+								<div class="col-7"> {{ node?.ThreadCount }} </div>
+
+								<div class="col-5">Uptime </div>
+								<div class="col-7"> {{ node?.Uptime }} </div>
+
+								<div class="col-5">OS Arch </div>
+								<div class="col-7"> {{ node?.osArch }} </div>
+
+								<div class="col-5">OS Name </div>
+								<div class="col-7"> {{ node?.osName }}</div>
+
+								<div class="col-5">OS Version </div>
+								<div class="col-7"> <small>{{ node?.osVersion }}</small> </div>
+
+								<div class="col-5">Total Mem </div>
+								<div class="col-7"> {{ node?.totalMemory }} </div>
+
+								<div class="col-5">Max Mem </div>
+								<div class="col-7"> {{ node?.maxMemory }} </div>
+
+								<div class="col-5">Free Mem </div>
+								<div class="col-7"> {{ node?.freeMemory }} </div>
+
+								<div class="col-5">CPU Load </div>
+								<div class="col-7"> {{ node?.SystemLoadAverage }} </div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

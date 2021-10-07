@@ -1,0 +1,35 @@
+<section>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-block main-card-block">
+                    <div class="border-bt">
+                        <h2 class="main-title">{{'shuffling.shuffling-participants.title'| translate}} </h2>
+                        <app-breadcrumb></app-breadcrumb>
+                        <h3 class="back-button" (click)="goBack()">
+                            <i class="fa fa-chevron-left"></i> {{'common.back-btn'| translate}}
+                        </h3>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-block mr-3 ml-3">
+                        <ngx-datatable class="material" [rows]="rows" [columnMode]="'force'" [rowHeight]="'auto'"
+                            [footerHeight]="50" [externalPaging]="true" [count]="page.totalElements" [offset]="page.pageNumber"
+                            [limit]="page.size" (page)='setPage($event)' (autoRefresh)="reload()">
+                            <ngx-datatable-column prop="state" [name]="'table-header.stage'| translate">
+                                <ng-template let-value="value" ngx-datatable-cell-template>
+                                    {{value | shufflingStage}}
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column prop="accountRS" [name]="'table-header.assigne'| translate">
+                                <ng-template let-value="value" ngx-datatable-cell-template>
+                                    <a (click)="accountDetail(value)" class="hyperlink"><u> {{value}} </u></a>
+                                </ng-template>
+                            </ngx-datatable-column>
+                        </ngx-datatable>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

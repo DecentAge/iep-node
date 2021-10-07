@@ -1,0 +1,81 @@
+<section>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-block main-card-block">
+                    <div class="border-bt">
+                        <h2 class="main-title">{{'assets.order-trade-details.title'| translate}}</h2>
+                        <app-breadcrumb></app-breadcrumb>
+                        <h3 class="back-button" (click)="goBack()">
+                            <i class="fa fa-chevron-left"></i> {{'common.back-btn'| translate}}
+                        </h3>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-block mr-3 ml-3">
+                        <form class="form">
+                            <div class="form-body">
+                                <div class="form-group">
+                                    <div class="position-relative has-icon-left">
+                                        <input type="text" class="form-control" name="form-control-with-icon"
+                                            [(ngModel)]="orderTradesForm.orderId" placeholder="{{'assets.order-trade-details.order-id-placeholder'| translate}} "
+                                            (input)="onSearchChange($event.target.value)">
+                                        <div class="form-control-position">
+                                            <i class="ft-search info"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="card-header">
+                            <div class="pull-right filter-group">
+                                <div class="btn-group btn-group-justified btn-group-raised">
+                                    <a href="javascript:void(0)" class="btn btn-sm btn-grey" (click)="getOrderTrades()"
+                                        trigger="mouseenter:mouseleave" [ngbPopover]="'common.reload-filter-popover' | translate"><i
+                                            class="fa fa-refresh"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <ngx-datatable class="material" [rows]="orderTradeRows" [columnMode]="'force'" [rowHeight]="'auto'"
+                            [footerHeight]="50" [externalPaging]="true" [count]="orderTradesPage.totalElements"
+                            [offset]="orderTradesPage.pageNumber" [limit]="orderTradesPage.size" (page)='getOrderTrades($event)'
+                            (autoRefresh)="getOrderTrades()">
+                            <ngx-datatable-column prop="timestamp" [name]="'table-header.date'| translate">
+                                <ng-template let-value="value" ngx-datatable-cell-template>
+                                    {{value | timestamp}}
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column prop="quantityQNT" [name]="'table-header.quantity'| translate">
+                                <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                    {{value | quantityQnt:row.decimals}}
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column prop="priceTQT" [name]="'table-header.price'| translate">
+                                <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                    {{value | priceTqt:row.decimals}}
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column prop="tradeType" [name]="'table-header.type'| translate">
+                                <ng-template let-value="value" ngx-datatable-cell-template>
+                                    <div [innerHtml]="value | buySell"></div>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column prop="askOrder" [name]="'table-header.action'| translate">
+                                <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                    <a class="btn btn-outline-danger" *ngIf="row.tradeType === 'buy'" (click)="goToTransactionDetails(row.bidOrder)"
+                                        triggers="mouseenter:mouseleave" container="body" placement="top" ngbPopover="{{'common.details-table-action'| translate}}">
+                                        <i class="fa fa-list-ul"></i>
+                                    </a>
+                                    <a class="btn btn-outline-danger" *ngIf="row.tradeType === 'sell'" (click)="goToTransactionDetails(row.askOrder)"
+                                        triggers="mouseenter:mouseleave" container="body" placement="top" ngbPopover="{{'common.details-table-action'| translate}}">
+                                        <i class="fa fa-list-ul"></i>
+                                    </a>
+                                </ng-template>
+                            </ngx-datatable-column>
+                        </ngx-datatable>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,6 @@
+<ul class='breadcrumbs'>
+	<li class="nav-item" *ngFor="let breadcrumb of breadcrumbsArray;let isLast = last;">
+		<a *ngIf="!isLast">{{stateLabel[breadcrumb.split("?")[0]] || breadcrumb.split("?")[0] }}</a><span *ngIf="!isLast" class="seperator">/</span>
+		<span *ngIf="isLast" class="active">{{ stateLabel[breadcrumb.split("?")[0]] || breadcrumb.split("?")[0] }}</span>
+	</li>
+</ul>

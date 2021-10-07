@@ -1,0 +1,256 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.logo-img img{
+    width: 200px;
+}
+.main-bg{
+    background: url(./assets/images/background-login.jpg) no-repeat center center;
+    background-size: cover;
+}
+.main-bg .card-body{
+    padding:40px 35px !important;
+    
+}
+#login .card{
+    max-width: 385px !important;
+    border-radius: 35px;
+        margin-left: auto;
+    margin-right: auto;
+    box-shadow: -3px 7px 10px rgba(0, 0, 0, 0.30);
+
+}
+form label {
+    color: #282322;
+    text-transform: capitalize;
+    letter-spacing: 0;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 25px;
+}
+.btn-primary{
+    color: #fff !important;
+}
+
+.input-error{
+    text-align: left;
+    color: red;
+    font-size: 12px;
+    margin: 5px 0px;
+}
+.wallet-switch ui-switch{
+    float: right;
+    top: 18px;
+    position: absolute;
+    right: 15px;
+}
+.wallet-switch .switch{
+    background: transparent !important;
+}
+.border-bt{    
+        border-bottom: 1px solid #e9dedd;
+}
+.alert-info{
+       background: #ffb356 !important;
+    border-color: #f49928 !important;
+    color: #fff !important;
+    line-height: 30px;
+}
+hr{
+    border-color: #d3dce9;
+}
+
+.nav-tabs .nav-link{
+    color: #485057;
+}
+.back-button{
+    position: absolute;
+    top: 1.5rem;
+    right: 45px;
+    cursor: pointer;
+}
+
+body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
+    overflow-y: visible !important;
+}
+
+/****** Data table CSS ******/
+.ngx-datatable .datatable-header{
+    border-top: 1px solid #dee2e6;
+    border-bottom: 2px solid #dee2e6;
+    padding: 7px;
+    color: #1e6bb8;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+.datatable-body{
+    margin-bottom: 15px;
+}
+.datatable-body-row{
+    border-bottom: 1px solid #dee2e6;
+    padding: 10px 0px;
+}
+.page-count{
+    display: none;
+}
+.ngx-datatable .datatable-footer .datatable-pager{
+    /*text-align: left !important;*/
+}
+
+/****** Data table CSS ends ******/
+
+.filter-group{
+    position: absolute;
+    top: 1.5rem;
+    right: 45px;
+}
+.filter-group .btn.btn-grey{
+    box-shadow: none;
+}
+.filter.active{
+    background-color: #717070 !important;
+}
+.card .card-header{
+    position: relative;
+}
+.tab-pane .filter-group {
+    right: 25px;
+}
+a.hyperlink{
+    color: #f49928 !important;
+    text-decoration: underline !important;
+}
+a.hyperlink:hover{
+    color: #e72d45 !important;
+}
+.badge-warning {
+    color: #fff;
+}
+.progress-bar{
+    position: relative;
+}
+.progress-bar i{
+    position: absolute;
+    left: 5px;
+}
+.progress{
+    margin: 4px 0px;
+    background-color: #d8d8d8;
+}
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+.lowercase{
+    text-transform: lowercase;
+}
+
+.ucsb{
+    display: inline-block;
+    font-weight: 500;
+    font-size: 16px;
+}
+.ucsb + h4{
+    font-weight: 500;
+    font-size: 13px;
+}
+.ucsb + h4 small{
+    font-size: 100%;
+    font-weight: 500;
+}
+.main-content .card{
+    border-radius: 10px;
+}
+.text-success{
+        color: #e72d45 !important;
+}
+.swal2-icon.swal2-info{
+    color: #e72d45 !important;
+    border-color: #e72d45 !important;
+}
+/*.swal2-modal .swal2-confirm {
+    background-color: #4eb800 !important;
+}*/
+/*::-webkit-scrollbar {
+    box-shadow: none;
+    margin: 10px;
+    border-radius: 20px;
+}
+::-webkit-scrollbar-track {
+    background: #fff; 
+}
+
+::-webkit-scrollbar-thumb {
+    background: #d9e0ea; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #d9e0ea; 
+}*/
+/*tabs*/
+.nav-auto li{
+
+  flex: initial !important;
+
+}
+.text-danger{    
+  color: #ea473a !important;
+}
+.text-muted{
+  color: #9d9faf !important;
+}
+
+.btn-disabled-icon{
+    color: #f3931b !important;
+    font-size: 20px;
+    line-height: 50px;
+    height: auto;
+    background: #f1f2f3;
+    padding: 0 40px;
+}
+@media(max-width: 1024px){
+    .full-height-vh {
+    min-height: 100vh !important;
+    height: auto !important;
+}
+}
+@media (max-height: 900px){
+  .full-height-vh {
+    min-height: 100vh !important;
+    height: auto !important;
+}
+}
+@media (min-width: 768px) and (max-width: 1259px){
+    .tab-pane h3{
+        margin-bottom: 10px;
+    }
+    .tab-pane .filter-group {
+    top: 50px;
+    }
+}
+@media(max-width: 767px){
+    .tab-pane .filter-group {
+        position: relative;
+    float: none;
+    left: 0;
+    right: 0;
+    top: auto;
+    margin-top: 10px;
+    }
+     .tab-pane .filter-group .btn-group{
+        display: block;
+    }
+    .ngx-datatable .datatable-footer .datatable-pager{
+        text-align: center;
+    }
+    .nav-tabs .nav-link {
+        padding: 0 10%;
+    }
+
+}

@@ -1,0 +1,105 @@
+.list-group-item{
+    .list-icon{
+        width: 40px;
+        float: left;
+    }
+    .list-description{
+        display: block;
+        margin-left: 40px;
+    }
+}
+.app-container {
+    .list-group-item {
+        padding: 0;
+        line-height: unset;
+    }
+    .custom-control {
+        margin: 0;
+        padding-left: 0;
+    }
+
+    .apps-wrapper {
+        padding: 40px 30px;
+        border-right: 2px solid #eff1f5;
+        border-bottom: 2px solid #eff1f5;        
+        &:hover{
+        box-shadow: 0px 1px 12px rgba(0, 0, 0, 0.1);
+        -webkit-box-shadow: 0px 1px 12px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        transform: scale(1.1);
+        background: #fff !important;
+        z-index: 1;
+        transition: all 0.2s;
+        }
+    }
+    .list-icon {
+        display: block;
+        font-size: 25px;
+        padding: 25px;
+        color: #e72d45;
+        text-align: center;
+    }
+    .app-container-left {
+        /* min-width: 300px;
+        &.enabled{
+            background: #f0f0f0;
+        }*/
+    }
+
+    .app-container-right {
+        /* width: 100%;
+        min-width: 300px;
+        overflow: hidden;*/
+    }
+
+    
+    
+
+    .list-description {
+            font-size: 12px;
+    display: block;
+    line-height: 18px;
+    color: #535353;
+    margin-top: 5px;
+    }
+
+    @media(max-width:767px) {
+        /* phones */
+        .apps-wrapper {
+            display: block;
+        }
+    }
+}
+
+@media(min-width: 768px) and (max-width: 991px){
+        .apps-wrapper {            
+            &:nth-child(3n){
+            border-right: 0px !important;
+            }
+        }
+}
+@media(min-width: 992px){
+   .apps-wrapper {        
+        &:nth-child(4n){
+        border-right: 0px !important;
+        }
+        &:last-child, &:nth-child(9), &:nth-child(10){
+        border-bottom: 0px !important;
+        }
+       
+    } 
+}
+@media (min-width: 576px) and (max-width: 768px){
+   .apps-wrapper {        
+        &:nth-child(2n){
+        border-right: 0px !important;
+        }
+       
+    } 
+}
+@media (max-width: 575px){
+   .apps-wrapper {
+           border-right: 0px !important;  
+           padding: 40px 10px;
+    } 
+}

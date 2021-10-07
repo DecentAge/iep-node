@@ -1,0 +1,84 @@
+<section>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-block main-card-block pb-0">
+                    <div class="border-bt">
+                        <h2 class="main-title">{{'subscriptions.my-subscriptions.title'| translate}} </h2>
+                        <app-breadcrumb></app-breadcrumb>
+                        <div class="pull-right filter-group">
+                            <div class="btn-group btn-group-justified btn-group-raised" (click)="reload()">
+                                <a href="javascript:void(0)" class="btn btn-sm btn-grey" triggers="mouseenter:mouseleave"
+                                    container="body" placement="top" ngbPopover="{{'common.reload-filter-popover'| translate}}"><i
+                                        class="fa fa-refresh"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body mt-4">
+                        <div class="card-block">
+                            <ngx-datatable [rows]="rows" [columnMode]="'standard'" [scrollbarH]="true" [footerHeight]="50"
+                                [rowHeight]="'auto'" [externalPaging]="true" [count]="page.totalElements" [offset]="page.pageNumber"
+                                [limit]="page.size" (page)='setPage($event)' (autoRefresh)="reload()">
+                                <ngx-datatable-column headerClass="width-15-per" cellClass="width-15-per" [name]="'table-header.interval'| translate"
+                                    prop="frequency">
+                                    <ng-template let-value="value" ngx-datatable-cell-template>
+                                        {{(value / 86400).toFixed(4)}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column headerClass="width-25-per" cellClass="width-25-per" [name]="'table-header.next-payment'| translate"
+                                    prop="timeNext">
+                                    <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                        {{value | timestamp}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column headerClass="width-15-per" cellClass="width-15-per" [name]="'table-header.amount'| translate"
+                                    prop="amountTQT">
+                                    <ng-template let-value="value" ngx-datatable-cell-template>
+                                        {{value | amountTqt}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column headerClass="width-30-per" cellClass="width-30-per" [name]="'table-header.recipient'| translate"
+                                    prop="recipientRS">
+                                    <ng-template let-value="value" ngx-datatable-cell-template>
+                                        <a class="hyperlink" (click)="accountDetail(value)">{{value}}</a>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column headerClass="width-15-per" cellClass="width-15-per" [name]="'table-header.actions'| translate">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        <div class="btn-group-raised">
+                                            <a class="btn btn-sm btn-grey btn-icon" (click)="transactionDetail(row);"
+                                                triggers="mouseenter:mouseleave" container="body" placement="top"
+                                                ngbPopover="{{'common.details-table-action'| translate}} ">
+                                                <i class="fa fa-list-ul"></i>
+                                            </a>
+                                            <a class="btn btn-sm btn-grey btn-icon" (click)="cancelSubscription(row.id,row.recipientRS);"
+                                                triggers="mouseenter:mouseleave" container="body" placement="top"
+                                                ngbPopover="{{'subscriptions.my-subscriptions.cancel-subscription-table-action'| translate}} ">
+                                                <i class="fa fa-times"></i>
+                                            </a>
+                                        </div>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                            </ngx-datatable>
+                        </div>
+                    </div>
+
+                    <div class="row" matchHeight="card">
+                        <div class="col-12 mb-4 ">
+                            <div class="card ml-1 mr-1 ml-md-3 mr-md-3 mt-0" (click)="navigateTo('/subscriptions/create-subscription')">
+                                <div class="card-body">
+                                    <div class="btn btn-gradient btn-create">
+                                        <span>{{'common.create-btn'| translate}} <i class="ft ft-plus font-medium-5"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

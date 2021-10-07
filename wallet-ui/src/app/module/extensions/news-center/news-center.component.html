@@ -1,0 +1,65 @@
+<section>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-block main-card-block">
+				<div class="border-bt">
+					<h2 class="main-title"><i class="fa fa-newspaper-o"></i> News - Foundation<</h2>
+					<app-breadcrumb></app-breadcrumb>
+					<div class="pull-right filter-group">
+						<div class="btn-group btn-group-justified btn-group-raised">
+							<a href="javascript:void(0)" class="btn btn-sm btn-grey btn-icon" container="body" triggers="mouseenter:mouseleave" placement="top" ngbPopover="Reload" (click)="reload()">
+								<i class="fa fa-refresh"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+				
+				<div class="card-body mt-4">
+					<div class="card-block mr-3 ml-3">
+						<ngx-datatable
+								[rows]="rows"
+								[columnMode]="'standard'"
+								[scrollbarH]="true"
+								[footerHeight]="50"
+								[rowHeight]="'auto'"
+								[externalPaging]="true"
+								[count]="page.totalElements"
+								[offset]="page.pageNumber"
+								[limit]="page.size"
+								(page)='setPage($event)'>
+							<ngx-datatable-column headerClass="width-25-per" cellClass="width-25-per" name="Date" prop="date" >
+								<ng-template let-value="value" ngx-datatable-cell-template>
+									{{ value }}
+								</ng-template>
+							</ngx-datatable-column>
+							<ngx-datatable-column headerClass="width-20-per" cellClass="width-20-per" name="Priority" prop="priority" >
+								<ng-template let-value="value" ngx-datatable-cell-template>
+									<div [innerHtml]=" value | newsPriority "></div>
+								</ng-template>
+							</ngx-datatable-column>
+							<ngx-datatable-column headerClass="width-25-per" cellClass="width-25-per" name="Title" prop="title" >
+								<ng-template let-value="value" ngx-datatable-cell-template>
+									{{ value }}
+								</ng-template>
+							</ngx-datatable-column>
+							<ngx-datatable-column headerClass="width-20-per" cellClass="width-20-per" name="Section" prop="section" >
+								<ng-template let-value="value" ngx-datatable-cell-template>
+									<div [innerHtml]=" value | newsSection "></div>
+								</ng-template>
+							</ngx-datatable-column>
+							<ngx-datatable-column headerClass="width-10-per" cellClass="width-10-per" name="Action" prop="_id" >
+								<ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+									<a class="btn btn-sm btn-grey" (click)="openReadNews({ action: 'readNews', news: row })" triggers="mouseenter:mouseleave" container="body" placement="top" ngbPopover="Read News">
+										<i class="fa fa-envelope-o"></i>
+									</a>
+								</ng-template>
+							</ngx-datatable-column>
+						</ngx-datatable>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+	</div>
+</section>

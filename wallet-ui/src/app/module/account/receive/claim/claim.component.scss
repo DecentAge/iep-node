@@ -1,0 +1,29 @@
+.font-small-1{
+  font-size: 12px !important;
+  line-height: 22px;
+  font-weight: 400;
+}
+.readonly-note{
+  font-size: 12px;
+  line-height: 50px;
+  border: none;
+  border-left: 3px solid #d4d4d4;
+  color: #535353;
+  padding-left: 20px;
+  padding-right: 20px;
+  letter-spacing: 1.2px;
+  background: #f1f2f3;
+}
+.btn-inline{
+  color: #9092a5;
+  border-radius: 10px !important;
+  border-color: #9092a5;
+  font-size: 14px;
+  line-height: 18px;
+  padding: 12px 20px !important;
+}
+@media(max-width: 1320px){
+  .btn-inline{
+    padding: 8px 10px !important;
+  }
+}

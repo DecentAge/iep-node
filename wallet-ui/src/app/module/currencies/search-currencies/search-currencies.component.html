@@ -1,0 +1,70 @@
+<section>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-block main-card-block">
+                    <div class="border-bt">
+                        <h2 class="main-title">{{'currencies.search-currencies.title'| translate}} </h2>
+                        <app-breadcrumb></app-breadcrumb>
+                    </div>
+
+                    <div class="card-body mt-4">
+                        <div class="card-block">
+                            <form class="form">
+                                <div class="form-body">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <h3>{{'currencies.search-currencies.search-account-info-label'| translate}}
+                                                <i class="fa fa-question-circle-o" aria-hidden="true" triggers="mouseenter:mouseleave"
+                                                    placement="right" container="body" ngbPopover="{{'currencies.search-currencies.search-account-info-popover'| translate}}"></i>
+                                            </h3>
+                                            <div class="position-relative mt-4">
+                                                <input type="text" class="form-control input-search pb-2" placeholder="{{ 'common.search-palceholder' | translate}}"
+                                                    name="form-control-with-icon" [(ngModel)]="searchQuery" (input)="onSearchChange($event.target.value)">
+                                                <div class="form-control-position btn-search">
+                                                    <i class="ft-search info mr-2"></i>{{'common.search-btn'|
+                                                    translate}}
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </form>
+                            <ngx-datatable class="material" [rows]="rows" [columnMode]="'force'" [rowHeight]="'auto'"
+                                [footerHeight]="50">
+                                <ngx-datatable-column prop="code" [name]="'table-header.ticker'| translate">
+                                    <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                        {{value}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column prop="accountRS" [name]="'table-header.issuer'| translate">
+                                    <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                        <a class="hyperlink" (click)="openAccountDetails(value)">{{value}}</a>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column prop="currency" [name]="'table-header.actions'| translate">
+                                    <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                        <div class="btn-group-raised">
+                                            <a class="btn btn-sm btn-grey btn-icon" (click)="openCurrencyDetails(row.code)"
+                                                triggers="mouseenter:mouseleave" container="body" placement="top"
+                                                ngbPopover="{{'common.details-table-action'| translate}}">
+                                                <i class="fa fa-info-circle"></i>
+                                            </a>
+                                            <a class="btn btn-sm btn-grey btn-icon" (click)="openTradeDesk(value, row.decimals)"
+                                                triggers="mouseenter:mouseleave" container="body" placement="top"
+                                                ngbPopover="{{'common.tradeDesk-table-action'| translate}}">
+                                                <i class="fa fa-bar-chart"></i>
+                                            </a>
+                                        </div>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                            </ngx-datatable>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

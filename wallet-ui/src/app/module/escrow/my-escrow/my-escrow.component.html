@@ -1,0 +1,88 @@
+<section>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+
+                <div class="card-block main-card-block pb-0">
+                    <div class="border-bt">
+                        <h2 class="main-title">{{'escrow.my-escrow.title'| translate}} </h2>
+                        <app-breadcrumb></app-breadcrumb>
+                        <div class="pull-right filter-group">
+                            <div class="btn-group btn-group-justified btn-group-raised" (click)="reload()">
+                                <a href="javascript:void(0)" class="btn btn-sm btn-grey" triggers="mouseenter:mouseleave"
+                                    container="body" placement="top" ngbPopover="{{'common.reload-filter-popover'| translate}}"><i
+                                        class="fa fa-refresh"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body mt-4">
+                        <div class="card-block ml-1 mr-1 ml-md-3 mr-md-3">
+                            <ngx-datatable [rows]="rows" [columnMode]="'standard'" [scrollbarH]="true" [footerHeight]="50"
+                                [rowHeight]="'auto'" [externalPaging]="true" [count]="page.totalElements" [offset]="page.pageNumber"
+                                [limit]="page.size" (page)='setPage($event)' (autoRefresh)="reload()">
+                                <ngx-datatable-column headerClass="width-25-per" cellClass="width-25-per" [name]="'table-header.role'| translate">
+                                    <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                        {{row | escrowRole: accountRs}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column headerClass="width-25-per" cellClass="width-25-per" [name]="'table-header.expires'| translate"
+                                    prop="deadline">
+                                    <ng-template let-value="value" ngx-datatable-cell-template>
+                                        {{value | timestamp}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column headerClass="width-25-per" cellClass="width-25-per" [name]="'table-header.deadline'| translate"
+                                    prop="deadlineAction">
+                                    <ng-template let-value="value" ngx-datatable-cell-template>
+                                        {{value.toString().toUpperCase()}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column headerClass="width-25-per" cellClass="width-25-per" [name]="'table-header.sender'| translate"
+                                    prop="senderRS">
+                                    <ng-template let-value="value" ngx-datatable-cell-template>
+                                        <a style="color: #337ab7;" (click)="accountDetail(value)"><u> {{value}} </u></a>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column headerClass="width-25-per" cellClass="width-25-per" [name]="'table-header.amount'| translate"
+                                    prop="amountTQT">
+                                    <ng-template let-value="value" ngx-datatable-cell-template>
+                                        {{value | amountTqt}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column headerClass="width-25-per" cellClass="width-25-per" [name]="'table-header.recipient'| translate"
+                                    prop="recipientRS">
+                                    <ng-template let-value="value" ngx-datatable-cell-template>
+                                        <a style="color: #337ab7;" (click)="accountDetail(value)"><u> {{value}} </u></a>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column headerClass="width-15-per" cellClass="width-15-per" [name]="'table-header.actions'| translate"
+                                    prop="id">
+                                    <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                        <div class="btn-group-raised">
+                                            <a class="btn btn-sm btn-grey btn-icon" (click)="goToDetails(value)"
+                                                triggers="mouseenter:mouseleave" container="body" placement="top"
+                                                ngbPopover="{{'common.details-table-action'| translate}} ">
+                                                <i class="fa fa-list-ul"></i>
+                                            </a>
+                                            <a class="btn btn-sm btn-grey btn-icon" [ngClass]="{'disabled':isEditEnabled(row)}"
+                                                ngbPopover="{{'escrow.my-escrow.sign-escrow-table-action'| translate}}"
+                                                (click)="goToSignEscrow(value)" triggers="mouseenter:mouseleave"
+                                                container="body" placement="top">
+                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                            </a>
+                                            <a class="btn btn-sm btn-grey btn-icon" (click)="goToEscrowStatus(value)"
+                                                triggers="mouseenter:mouseleave" container="body" placement="top"
+                                                ngbPopover="{{'escrow.my-escrow.escrow-status-table-action'| translate}} ">
+                                                <i class="fa fa-question-circle-o" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                            </ngx-datatable>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,50 @@
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="centering text-left">
+      <form #f="ngForm" novalidate>
+        <div class="col-md-12 card-inner">
+          <br />
+          <div class="form-group sign_in_inputs">
+            <h3>{{ "signup.passphrase.passphrase-text" | translate }}</h3>
+            <input
+              type="password"
+              name="passPhrase"
+              [(ngModel)]="model.passPhrase"
+              #passPhrase="ngModel"
+              class="form-control p_input"
+              required
+              placeholder="{{
+                'signup.confirm.passphrase_placeholder' | translate
+              }}"
+            />
+            <div
+              *ngIf="
+                passPhrase?.invalid &&
+                (passPhrase?.dirty || passPhrase?.touched)
+              "
+              class="input-error"
+            >
+              <div *ngIf="passPhrase?.invalid">
+                {{ "signup.confirm.error_passphrase_required" | translate }}
+              </div>
+            </div>
+          </div>
+
+          <div class="note sign-up-note">
+            <span>{{ "common.note-text" | translate }}: </span>
+            <small [innerHTML]="'signup.confirm.note' | translate"></small>
+          </div>
+        </div>
+        <div class="col-md-12 text-center mt-1">
+          <button
+            class="btn btn-primary btn-gradient mt-4"
+            [disabled]="f.invalid"
+            (click)="confirmAndLogin()"
+          >
+            {{ "signup.confirm.confirm_and_login_btn" | translate }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

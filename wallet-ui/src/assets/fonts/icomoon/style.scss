@@ -1,0 +1,553 @@
+$icomoon-path: "../../assets/fonts/icomoon/fonts" !default;
+$icomoon-font-family: icomoon !default;
+
+@font-face {
+    font-family: '#{$icomoon-font-family}';
+    src:url('#{$icomoon-path}/#{$icomoon-font-family}.eot');
+    src:url('#{$icomoon-path}/#{$icomoon-font-family}.eot#iefix') format("embedded-opentype"),
+        url('#{$icomoon-path}/#{$icomoon-font-family}.ttf') format("truetype"),
+        url('#{$icomoon-path}/#{$icomoon-font-family}.woff') format("woff"),
+        url('#{$icomoon-path}/#{$icomoon-font-family}.svg#icomoon') format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+[class^="icon-"], [class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-table-icon3:before {
+	content: "\e93c";
+	color: #4eb800;
+}
+.icon-table-icon4:before {
+	content: "\e93d";
+	color: #e62f43;
+}
+.icon-table-icon5:before {
+	content: "\e93e";
+	color: #a0a0a0;
+}
+.icon-type_icon1:before {
+	content: "\e93f";
+	color: #b3b4c1;
+}
+.icon-type_icon2:before {
+	content: "\e940";
+	color: #b3b4c1;
+}
+.icon-account_info:before {
+	content: "\e941";
+}
+.icon-Aliases:before {
+	content: "\e942";
+	color: #e63043;
+}
+.icon-assets:before {
+	content: "\e943";
+	color: #e63043;
+}
+.icon-AT:before {
+	content: "\e944";
+	color: #e63043;
+}
+.icon-Crowdfunding:before {
+	content: "\e945";
+	color: #e63043;
+}
+.icon-currencies:before {
+	content: "\e946";
+	color: #e63043;
+}
+.icon-encrypted_message:before {
+	content: "\e947";
+	color: #e63043;
+}
+.icon-Escrow:before {
+	content: "\e948";
+	color: #e63043;
+}
+.icon-Ordinary_Payments:before {
+	content: "\e949";
+	color: #e63043;
+}
+.icon-shuffling-create:before {
+	content: "\e94a";
+	color: #e72d45;
+}
+.icon-Shuffling:before {
+	content: "\e94b";
+	color: #e63043;
+}
+.icon-Subscription:before {
+	content: "\e94c";
+	color: #e63043;
+}
+.icon-tools:before {
+	content: "\e94d";
+	color: #e72d45;
+}
+.icon-Voting:before {
+	content: "\e94e";
+	color: #e63043;
+}
+.icon-Copy:before {
+	content: "\e94f";
+	color: #f3931b;
+}
+.icon-next:before {
+	content: "\e950";
+	color: #fff;
+}
+.icon-language:before {
+	content: "\e951";
+	color: #e62f43;
+}
+.icon-passphrase:before {
+	content: "\e952";
+	color: #e72d45;
+}
+.icon-icon1:before {
+	content: "\e953";
+	color: #4eb800;
+}
+.icon-icon2:before {
+	content: "\e954";
+	color: #e62f43;
+}
+.icon-messages:before {
+	content: "\e955";
+}
+.icon-payment:before {
+	content: "\e956";
+}
+.icon-reload:before {
+	content: "\e957";
+}
+.icon-remove_filter:before {
+	content: "\e958";
+}
+.icon-send:before {
+	content: "\e959";
+}
+.icon-show_action1:before {
+	content: "\e95a";
+}
+.icon-show_action2:before {
+	content: "\e95b";
+}
+.icon-show_action3:before {
+	content: "\e95c";
+}
+.icon-type:before {
+	content: "\e95d";
+	color: #9d9faf;
+}
+.icon-confirm:before {
+	content: "\e95e";
+}
+.icon-details:before {
+	content: "\e95f";
+}
+.icon-next_arrow:before {
+	content: "\e960";
+}
+.icon-Send_Messages-icon1:before {
+	content: "\e961";
+	color: #909090;
+}
+.icon-Send_Messages-icon2:before {
+	content: "\e962";
+	color: #909090;
+}
+.icon-Node_and_connections:before {
+	content: "\e963";
+	color: #e94f60;
+}
+.icon-automated-_trading:before {
+	content: "\e964";
+	color: #868e96;
+}
+.icon-Blockexplorer:before {
+	content: "\e965";
+	color: #0cc27e;
+}
+.icon-business_directory:before {
+	content: "\e966";
+	color: #1cbcd8;
+}
+.icon-Digital-Notary:before {
+	content: "\e967";
+	color: #868e96;
+}
+.icon-Digital_goods_store:before {
+	content: "\e968";
+	color: #1cbcd8;
+}
+.icon-Distributed_hosting:before {
+	content: "\e969";
+	color: #1cbcd8;
+}
+.icon-Distributed_storage:before {
+	content: "\e96a";
+	color: #1cbcd8;
+}
+.icon-events:before {
+	content: "\e96b";
+	color: #1cbcd8;
+}
+.icon-market_data:before {
+	content: "\e96c";
+	color: #ff8d60;
+}
+.icon-message_center:before {
+	content: "\e96d";
+	color: #ff8d60;
+}
+.icon-Multigateway:before {
+	content: "\e96e";
+	color: #868e96;
+}
+.icon-OTC_Market:before {
+	content: "\e96f";
+	color: #ff8d60;
+}
+.icon-Peerexplorer:before {
+	content: "\e970";
+	color: #0cc27e;
+}
+.icon-Portfolio_manager:before {
+	content: "\e971";
+	color: #868e96;
+}
+.icon-rating_agency:before {
+	content: "\e972";
+	color: #868e96;
+}
+.icon-Reputation-System:before {
+	content: "\e973";
+	color: #868e96;
+}
+.icon-secure_contacts:before {
+	content: "\e974";
+	color: #1cbcd8;
+}
+.icon-Service-Monitor .path1:before {
+	content: "\e975";
+	color: rgb(255, 255, 255);
+}
+.icon-Service-Monitor .path2:before {
+	content: "\e976";
+	margin-left: -1em;
+	color: rgb(12, 194, 126);
+}
+.icon-service_marketplace:before {
+	content: "\e977";
+	color: #1cbcd8;
+}
+.icon-social_lending:before {
+	content: "\e978";
+	color: #868e96;
+}
+.icon-social_trading:before {
+	content: "\e979";
+	color: #868e96;
+}
+.icon-buy:before {
+	content: "\e97a";
+}
+.icon-details1:before {
+	content: "\e97b";
+}
+.icon-reload1:before {
+	content: "\e97c";
+}
+.icon-remove_filter1:before {
+	content: "\e97d";
+}
+.icon-sort_date:before {
+	content: "\e97e";
+}
+.icon-sort_name:before {
+	content: "\e97f";
+}
+.icon-sort_price:before {
+	content: "\e980";
+}
+.icon-toggle_AtoZ:before {
+	content: "\e981";
+}
+.icon-bookmark-icon1:before {
+	content: "\e982";
+	color: #ccc;
+}
+.icon-bookmark-icon2:before {
+	content: "\e983";
+	color: #e72d45;
+}
+.icon-bookmark-icon3:before {
+	content: "\e984";
+	color: #fff;
+}
+.icon-auction_AT:before {
+	content: "\e985";
+	color: #e63043;
+}
+.icon-Certificate_of_Deposite_AT:before {
+	content: "\e986";
+	color: #e63043;
+}
+.icon-Croudfunding_AT:before {
+	content: "\e987";
+	color: #e63043;
+}
+.icon-Dormants_funds_AT:before {
+	content: "\e988";
+	color: #e63043;
+}
+.icon-Icon1:before {
+	content: "\e989";
+	color: #e94f60;
+}
+.icon-Icon2:before {
+	content: "\e98a";
+	color: #f28720;
+}
+.icon-lottery_AT:before {
+	content: "\e98b";
+	color: #e63043;
+}
+.icon-lottery_repeat_AT:before {
+	content: "\e98c";
+	color: #e63043;
+}
+.icon-simple_AT:before {
+	content: "\e98d";
+	color: #e63043;
+}
+.icon-sleep_AT:before {
+	content: "\e98e";
+	color: #e63043;
+}
+.icon-copy:before {
+	content: "\e928";
+	color: #f3931b;
+}
+.icon-account:before {
+	content: "\e929";
+}
+.icon-alias:before {
+	content: "\e92a";
+}
+.icon-asset:before {
+	content: "\e92b";
+}
+.icon-AT1:before {
+	content: "\e92c";
+}
+.icon-currency:before {
+	content: "\e92d";
+}
+.icon-escrow:before {
+	content: "\e92e";
+}
+.icon-messages1:before {
+	content: "\e92f";
+}
+.icon-multisig:before {
+	content: "\e930";
+}
+.icon-payment1:before {
+	content: "\e931";
+}
+.icon-reload2:before {
+	content: "\e932";
+}
+.icon-remove_filter2:before {
+	content: "\e933";
+}
+.icon-shuffles:before {
+	content: "\e934";
+}
+.icon-subscription:before {
+	content: "\e935";
+}
+.icon-voting:before {
+	content: "\e936";
+}
+.icon-icon11:before {
+	content: "\e937";
+	color: #909090;
+}
+.icon-icon21:before {
+	content: "\e938";
+	color: #909090;
+}
+.icon-confirm1:before {
+	content: "\e939";
+}
+.icon-details2:before {
+	content: "\e93a";
+}
+.icon-next_arrow1:before {
+	content: "\e93b";
+}
+.icon-broadcast_transaction:before {
+	content: "\e900";
+	color: #e63043;
+}
+.icon-calculate_hash:before {
+	content: "\e901";
+	color: #e63043;
+}
+.icon-chain_statistics:before {
+	content: "\e902";
+	color: #e63043;
+}
+.icon-generate_signature:before {
+	content: "\e903";
+	color: #e63043;
+}
+.icon-parse_transaction:before {
+	content: "\e904";
+	color: #e63043;
+}
+.icon-service_fees:before {
+	content: "\e905";
+	color: #e63043;
+}
+.icon-transaction_types:before {
+	content: "\e906";
+	color: #e63043;
+}
+.icon-user_guide:before {
+	content: "\e907";
+	color: #e63043;
+}
+.icon-validate_signature:before {
+	content: "\e908";
+	color: #e63043;
+}
+.icon-active_subscriptions:before {
+	content: "\e909";
+}
+.icon-bookmark:before {
+	content: "\e90a";
+}
+.icon-forum:before {
+	content: "\e90b";
+}
+.icon-logout:before {
+	content: "\e90c";
+}
+.icon-menu:before {
+	content: "\e90d";
+}
+.icon-pending_approvals_to_sign:before {
+	content: "\e90e";
+}
+.icon-pending_escrow_to_sign:before {
+	content: "\e90f";
+}
+.icon-send_assets:before {
+	content: "\e910";
+}
+.icon-send_currency:before {
+	content: "\e911";
+}
+.icon-send_message:before {
+	content: "\e912";
+}
+.icon-account_info1:before {
+    content: "\e913";
+    color: #fff;
+}
+.icon-menu1:before {
+	content: "\e914";
+	color: #fff;
+}
+.icon-receive:before {
+	content: "\e915";
+}
+.icon-send1:before {
+    content: "\e916";
+    color: #fff;
+}
+.icon-transactions:before {
+	content: "\e917";
+}
+.icon-Account:before {
+	content: "\e918";
+	color: #e63043;
+}
+.icon-Aliases1:before {
+	content: "\e919";
+	color: #e63043;
+}
+.icon-assets1:before {
+	content: "\e91a";
+	color: #e63043;
+}
+.icon-AT2:before {
+	content: "\e91b";
+	color: #e63043;
+}
+.icon-Crowdfunding1:before {
+	content: "\e91c";
+	color: #e63043;
+}
+.icon-currencies1:before {
+	content: "\e91d";
+	color: #e63043;
+}
+.icon-Dashboard:before {
+	content: "\e91e";
+	color: #e63043;
+}
+.icon-Escrow1:before {
+	content: "\e91f";
+	color: #e63043;
+}
+.icon-Extensions:before {
+	content: "\e920";
+	color: #e63043;
+}
+.icon-messages2:before {
+	content: "\e921";
+	color: #e63044;
+}
+.icon-options:before {
+	content: "\e922";
+	color: #e63043;
+}
+.icon-Shuffling1:before {
+	content: "\e923";
+	color: #e63043;
+}
+.icon-Subscription1:before {
+	content: "\e924";
+	color: #e63043;
+}
+.icon-SWApps:before {
+	content: "\e925";
+	color: #e63043;
+}
+.icon-Voting1:before {
+	content: "\e926";
+	color: #e63043;
+}
+.icon-wallet:before {
+	content: "\e927";
+	color: #e63043;
+}

@@ -1,0 +1,55 @@
+<section>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+              <div class="card-block main-card-block pb-0">
+                    <div class="border-bt">
+                        <h2 class="main-title">{{'assets.my-open-orders.title' | translate}}</h2>
+                        <app-breadcrumb></app-breadcrumb>
+                    </div>
+               
+                <div class="card-body">
+                    <div class="card-block main-card-block">
+                          <div class="row">
+                            <div class="col-md-6">
+                                <app-open-orders [offerTypeInput]="'Buy'"></app-open-orders>
+                            </div>
+                            <div class="col-md-6">
+                                <app-open-orders [offerTypeInput]="'Sell'"></app-open-orders>
+                            </div>
+                          </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+<!--<section>-->
+  <!--<div class="row">-->
+    <!--<div class="col-md-12">-->
+      <!--<div class="card">-->
+         <!--<div class="card-block main-card-block">-->
+            <!--<div class="border-bt">-->
+              <!--<h2 class="main-title">My Open Orders</h2>-->
+                <!--<app-breadcrumb [routeChange]="routeChange"></app-breadcrumb>-->
+               <!--</div>-->
+                <!--<ul class="nav nav-tabs nav-fill">-->
+                  <!--<li class="nav-item">-->
+                    <!--<a class="nav-link" routerLinkActive="active" [routerLink]="['buy']">Buy</a>-->
+                  <!--</li>-->
+                  <!--<li class="nav-item">-->
+                    <!--<a class="nav-link" routerLinkActive="active" [routerLink]="['sell']">Sell</a>-->
+                  <!--</li>-->
+                <!--</ul>-->
+                <!--<div class="tab-content">-->
+                  <!--<div class="tab-pane active">-->
+                    <!--<router-outlet></router-outlet>-->
+                  <!--</div>-->
+                <!--</div>-->
+      <!--</div>-->
+
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</section>-->

@@ -1,0 +1,118 @@
+.navbar {
+  padding: 22px 30px 10px;
+  .dropdown-toggle::after {
+    content: none;
+  }
+  .btn-raised {
+    font-size: 12px;
+    color: #ea473a !important;
+    background: #fff !important;
+    border: none !important;
+    line-height: 34px;
+    padding: 0 20px;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-right: 15px;
+    letter-spacing: 1.2px;
+  }
+  .dropdown-menu {
+    padding: 15px 0;
+    box-shadow: 0 6px 0px 0 rgba(0, 0, 0, 0.01), 0 15px 32px 0 rgba(0, 0, 0, 0.06);
+    -webkit-box-shadow: 0 6px 0px 0 rgba(0, 0, 0, 0.01), 0 15px 32px 0 rgba(0, 0, 0, 0.06);
+    border-radius: 10px;
+    border: none;
+    .dropdown-item {
+      padding: 0 25px;
+      font-weight: 500;
+      color: #4a5469;
+      font-size: 13px;
+      line-height: 42px;
+      border-bottom: 1px solid #e9dedd;
+      letter-spacing: 1.2px;
+      
+      i {
+        color: #e72d45 !important;
+        margin-right: 15px;
+        font-size: 15px;
+        margin-right: 10px;
+      }
+      &:last-child {
+        border: none;
+      }
+      &:hover, &:active, &:focus, &.active {
+        color: #e72d45;
+      }
+    }
+  }
+}
+
+.navbar .navbar-container {
+  padding-left: unset;
+}
+
+.btn-default.navbar-btn.nav-item {
+  background-color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 0;
+  margin: 0px;
+  color: #ed622f;
+  min-width: 34px;
+  height: 34px;
+  margin-right: 15px;
+  padding: 0 8px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+ul.navbar-nav li {
+  margin-right: 5px;
+}
+
+.notification-badge {
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0;
+  display: block;
+  padding: 0 8px;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 100%;
+  position: absolute;
+  top: -11px;
+  line-height: 25px;
+  right: -14px;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+  color: #fff !important;
+}
+
+.btn-default.navbar-btn.nav-item {
+  padding: 0;
+  [class^="icon-"] {
+    font-size: 1.1rem;
+    line-height: 34px;
+  }
+}
+
+.btn-circle {
+  /* padding: 5px !important;
+  width: 40px; */
+}
+
+@media (max-width: 992px) {
+  .navbar-header .navbar-toggle {
+    color: #fff;
+  }
+}
+
+@media (max-width: 740px) {
+  .btn-default.navbar-btn.nav-item {
+    margin-right: 8px;
+    margin-bottom: 10px;
+  }
+}

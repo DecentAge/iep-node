@@ -1,0 +1,75 @@
+<section>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-header">
+					<h4 class="card-title">Read News</h4>
+					<h5 class="back-button" (click)="goBack()">
+						<i class="fa fa-chevron-left"></i> Back
+					</h5>
+				</div>
+				<div class="card-body">
+					<div class="card-block mr-3 ml-3">
+						<div class="row">
+							<div class="col-md-4 col-lg-4">
+								<div class="ucsb"> Date </div>
+								<h4> {{ news.date }} </h4>
+							</div>
+
+							<div class="col-md-4 col-lg-4">
+								<div class="ucsb"> Type </div>
+								<h4 [innerHtml]=" news.section | newsSection "></h4>
+							</div>
+
+							<div class="col-md-4 col-lg-4">
+								<div class="ucsb"> Priority </div>
+								<h4 [innerHtml]=" news.priority | newsPriority "></h4>
+							</div>
+
+							<div class="col-md-12 col-lg-12">
+								<hr>
+							</div>
+
+							<div class="col-md-12 col-lg-12">
+								<div class="ucsb"> Title </div>
+								<h4>{{ news.title }}</h4>
+							</div>
+
+							<div class="col-md-12 col-lg-12">
+								<hr>
+							</div>
+
+							<div class="col-md-12 col-lg-12">
+								<div class="ucsb"> Message </div>
+								<h4>{{ news.body }}</h4>
+							</div>
+
+							<div class="col-md-12 col-lg-12">
+								<hr>
+							</div>
+
+							<div class="col-md-4 col-lg-4">
+								<div class="ucsb"> Author </div>
+								<h4> {{ news.author }} </h4>
+							</div>
+
+							<div class="col-md-4 col-lg-4">
+								<div class="ucsb"> Credits </div>
+								<h4>{{ news.credits }}</h4>
+							</div>
+
+							<div class="col-md-4 col-lg-4">
+								<div class="ucsb"> Score </div>
+								<h4>{{ news.score }}</h4>
+							</div>
+
+							<div class="col-md-12 col-lg-4">
+								<small>{{ news._id }}</small>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

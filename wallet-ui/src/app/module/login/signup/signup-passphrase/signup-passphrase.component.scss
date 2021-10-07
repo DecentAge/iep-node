@@ -1,0 +1,38 @@
+.card-inner {
+  h3 {
+    font-weight: 600;
+    color: #f49928;
+    font-size: 16px;
+    line-height: 20px;
+  }
+  h4 {
+    font-size: 13px;
+    line-height: 18px;
+    color: #333;
+    font-weight: 500;
+    &.key-wrapper {
+      word-wrap: break-word;
+      word-break: break-all;
+    }
+  }
+}
+
+.sign-up-note {
+  padding: 0 !important;
+  small {
+    font-size: 100%;
+  }
+}
+
+.phrase {
+  position: relative;
+  padding-right: 55px;
+  .fa {
+    position: absolute;
+    color: #f49928;
+    font-weight: 600;
+    font-size: 18px;
+    top: 5px;
+    right: 0;
+  }
+}

@@ -1,0 +1,44 @@
+<section>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-block main-card-block">
+                    <div class="border-bt">
+                        <h2 class="main-title">{{'shuffling.show-shufflings.title'| translate}} </h2>
+                        <app-breadcrumb [routeChange]="routeChange"></app-breadcrumb>
+                    </div>
+
+                    <ul class="nav nav-tabs nav-fill nav-auto mt-4" (click)="onTabChange();">
+                        <li class="nav-item">
+                            <a class="nav-link" routerLinkActive="active" [routerLink]="['all']">{{'common.all'|
+                                translate}} </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLinkActive="active" [routerLink]="['my']">{{'common.my'|
+                                translate}}</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active">
+                            <router-outlet></router-outlet>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row" matchHeight="card">
+                    <div class="col-12 mb-4 ">
+                        <div class="card ml-1 mr-1 ml-md-3 mr-md-3 mt-0" (click)="navigateTo('/shuffling/create-shuffling')">
+                            <div class="card-body">
+                                <div class="btn btn-gradient btn-create">
+                                    <span>{{'common.create-btn'| translate}} <i class="ft ft-plus font-medium-5"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

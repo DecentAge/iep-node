@@ -1,0 +1,97 @@
+<div class="card-header">
+    <h3 class="card-title" *ngIf="pollType=='MY'">{{ 'voting.show-polls.my.title' | translate}}</h3>
+    <h3 class="card-title" *ngIf="pollType=='ALL'">{{ 'voting.show-polls.all.title' | translate}}</h3>
+    <div class="pull-right filter-group">
+        <div class="btn-group btn-group-justified btn-group-raised">
+            <a href="javascript:void(0)" class="btn btn-sm btn-grey btn-icon" (click)="removeFilter()" triggers="mouseenter:mouseleave"
+                container="body" placement="top" [ngbPopover]="'common.remove-filter-popover' | translate">
+                <i class="fa fa-history"></i>
+            </a>
+            <a href="javascript:void(0)" *ngFor="let filter of filters" (click)="applyFilter(filter)" class="btn btn-sm btn-grey btn-icon filter"
+                [ngClass]="{'active':filter.isEnabled}" triggers="mouseenter:mouseleave" container="body" placement="top"
+                [ngbPopover]="'common.'+filter.popoverText | translate">
+                <i [class]="'fa ' + filter.icon"></i>
+            </a>
+            <a href="javascript:void(0)" class="btn btn-sm btn-grey btn-icon" (click)="reload()" triggers="mouseenter:mouseleave"
+                container="body" placement="top" [ngbPopover]="'common.reload-filter-popover' | translate">
+                <i class="fa fa-refresh"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="card-body">
+    <div class="card-block pt-0">
+        <form class="form  inner-form" *ngIf="pollType=='ALL'">
+            <div class="form-body">
+                <div class="form-group">
+                    <div class="position-relative">
+                        <input type="text" placeholder="{{ 'common.search-palceholder' | translate}}" class="form-control input-search pb-2"
+                            name="form-control-with-icon" [(ngModel)]="searchQuery" (input)="onSearchChange($event.target.value)">
+                        <div class="form-control-position btn-search">
+                            <i class="ft-search info mr-2"></i>{{ 'common.search-btn' | translate}}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+        <ngx-datatable class="
+                            material" [rows]="polls" [columnMode]="'force'" [rowHeight]="'auto'"
+            [footerHeight]="50" [externalPaging]="true" [count]="page.totalElements" [offset]="page.pageNumber" [limit]="page.size"
+            (page)='setPage($event)' (autoRefresh)="reload()">
+            <ngx-datatable-column prop="name" [name]="'table-header.name' | translate">
+                <ng-template let-value="value" ngx-datatable-cell-template>
+                    {{value}}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="votingModel" [name]="'table-header.model' | translate">
+                <ng-template let-value="value" ngx-datatable-cell-template>
+                    <div [innerHTML]="value | votingModelLabel" ngbPopover="{{value | votingModel}}" triggers="mouseenter:mouseleave"></div>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="options" [name]="'table-header.options' | translate">
+                <ng-template let-value="value" ngx-datatable-cell-template>
+                    {{value.length}}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="finished" [name]="'table-header.finished' | translate">
+                <ng-template let-value="value" ngx-datatable-cell-template>
+                    <div [innerHTML]="value | isEnabled">
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="finishHeight" [name]="'table-header.height' | translate">
+                <ng-template let-value="value" ngx-datatable-cell-template>
+                    {{value}}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="finishHeight" [name]="'table-header.days' | translate">
+                <ng-template let-value="value" ngx-datatable-cell-template>
+                    <div [innerHTML]="getDays(value) | pollDays"></div>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="poll" [name]="'table-header.actions' | translate">
+                <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                    <div class="btn-group btn-group-justified btn-group-raised">
+                        <a class="btn btn-sm btn-grey btn-icon" (click)="onCustom({action: 'details', poll: value})"
+                            triggers="mouseenter:mouseleave" container="body" placement="top" [ngbPopover]="'common.details-table-action' | translate">
+                            <i class="fa fa-list-ul"></i>
+                        </a>
+                        <a class="btn btn-sm btn-grey btn-icon" (click)="onCustom({action: 'result', poll: value})"
+                            triggers="mouseenter:mouseleave" container="body" placement="top" [ngbPopover]="'common.result-table-action' | translate">
+                            <i class="fa fa-area-chart"></i>
+                        </a>
+                        <a class="btn btn-sm btn-grey btn-icon" [ngClass]="{'disabled':row.finished}" (click)="onCustom({action: 'vote', poll: value})"
+                            triggers="mouseenter:mouseleave" container="body" placement="top" [ngbPopover]="'common.vote-table-action' | translate">
+                            <i class="fa fa-signal"></i>
+                        </a>
+                        <a class="btn btn-sm btn-grey btn-icon" [ngClass]="{'disabled':row.finished}" (click)="onCustom({action: 'voters', poll: value})"
+                            triggers="mouseenter:mouseleave" container="body" placement="top" [ngbPopover]="'common.voters-table-action' | translate">
+                            <i class="fa fa-user"></i>
+                        </a>
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
+        </ngx-datatable>
+    </div>
+</div>

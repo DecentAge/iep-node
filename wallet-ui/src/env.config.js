@@ -1,0 +1,45 @@
+window.envConfig = {
+    RELEASE_VERSION: '',
+
+    NETWORK_ENVIRONMENT: '',
+
+    APP_BASE_HREF:      '' || '',
+
+    CONNECTION_MODE: 	'',
+    FALLBACK_HOST_URL: 	'',
+    USER_NODE_URL: 		'',
+    LOCALTESTNET_URL: 	'',
+    HTTPS_URL: 			'',
+    FOUNDATION_URL: 	'',
+    TESTNET_URL: 		'',
+    DEVTESTNET_URL: 	'',
+
+    PEER_ENDPOINTS_DEFAULT: 		[],
+    PEER_ENDPOINTS_DEVTESTNET: 		[],
+    PEER_ENDPOINTS_TESTNET: 		[],
+    PEER_ENDPOINTS_LOCALTESTNET:	[],
+
+    BTC_ENDPOINT: '',
+    XIN_ENDPOINT: '',
+
+    MARKET_DATA_BASE_URL: '',
+
+    EXCHANGE_BLOCKR_URL_ENDPOINT: '',
+
+    AT_COMPILER_URL: '',
+    
+    SEARCH_PEER_URL: '',
+
+    MACAP_URL: '',
+
+    NEWS_URL: '',
+
+    CHAINVIEWER_API_URL: '',
+    CHAINVIEWER_PEER_URL: 'http://199.127.137.169:8888',
+
+    SESSION_STORAGE_EXPIRATION: 60 * 60 * 1000, // 1 hour
+
+    EPOCH:  || 1484046000,
+    TX_HEIGHT:  || 7 * 1440,
+    LEASING_OFFSET_BLOCK:  || 3000,
+}

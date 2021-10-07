@@ -1,0 +1,55 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-block main-card-block">
+                <div class="border-bt">
+                    <h2 class="main-title">{{'messages.read-message.title'| translate}}</h2>
+                    <app-breadcrumb></app-breadcrumb>
+                    <h3 class="back-button" (click)="goBack()">
+                        <i class="fa fa-chevron-left"></i> {{'common.back-btn'| translate}}
+                    </h3>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="card-block mr-3 ml-3">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="ucsb"> {{'messages.read-message.date-label'| translate}}
+                            </div>
+                            <h4> {{params.timestamp|timestamp}} </h4>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="ucsb"> {{'common.type-label'| translate}}
+                            </div>
+                            <h4 [innerHTML]="params.type | transactionType">
+                            </h4>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="ucsb"> {{'messages.read-message.sender-label'| translate}}
+                            </div>
+                            <h4> {{params.senderRS}} </h4>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="ucsb">
+                                {{'common.recipient-label'| translate}}
+                            </div>
+                            <h4> {{params.recipientRS}} </h4>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="ucsb">
+                                {{'common.message-label'| translate}}
+                            </div>
+                            <h4> {{message}} </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

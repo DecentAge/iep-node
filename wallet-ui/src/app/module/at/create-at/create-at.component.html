@@ -1,0 +1,371 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-block main-card-block">
+                <div class="border-bt">
+                    <h2 class="main-title">{{'at.create-at.title'| translate}} </h2>
+                    <app-breadcrumb></app-breadcrumb>
+                </div>
+
+            </div>
+            <div class="card-body">
+                <div class="card-block ml-3 mr-3">
+                    <aw-wizard [navBarLayout]="'large-filled-symbols'">
+                        <aw-wizard-step stepTitle="{{'common.details-step'| translate}}" [navigationSymbol]="{ symbol: '1' }">
+                            <form class="form inner-form mt-4" #f1="ngForm" novalidate>
+                                <div class="form-body">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>{{'common.name-label'| translate}}
+                                                    <i class="fa fa-question-circle-o" placement="right" triggers="mouseenter:mouseleave"
+                                                        container="body" ngbPopover="{{'at.create-at.at-name-popover'| translate}}">
+                                                    </i>
+                                                </label>
+                                                <input type="text" class="form-control" [(ngModel)]="createAtForm.name"
+                                                    name="name" #name="ngModel" minlength="3" maxlength="30"
+                                                    placeholder="{{'common.name-label'| translate}}" required>
+                                                <div *ngIf="name?.invalid && (name?.dirty || name?.touched)" class="input-error">
+                                                    <div *ngIf="name?.errors.required">
+                                                        {{'at.create-at.at-name-required'| translate}}
+                                                    </div>
+                                                    <div *ngIf="name?.errors.minlength && !name?.errors.required">
+                                                        {{'at.create-at.at-name-greater'| translate}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>{{'at.create-at.minimum-activation-amount-label'| translate}}
+                                                    <i class="fa fa-question-circle-o  ml-1 info-yellow" placement="right"
+                                                        triggers="mouseenter:mouseleave" container="body" ngbPopover="{{'at.create-at.minimum-activation-amount-popover'| translate}}">
+                                                    </i>
+                                                </label>
+                                                <div class="input-group m-0 sign_in_inputs row form-border-bottom pb-0">
+                                                    <div class="col-10 pl-0">
+                                                        <input type="number" class="l-0 mb-0 pt-0 pb-0 form-control"
+                                                            [(ngModel)]="createAtForm.minActivationAmount" name="minActivationAmount"
+                                                            #minActivationAmount="ngModel" minValue="0" maxValue="100"
+                                                            required>
+                                                    </div>
+                                                    <div class="col-2 text-right pl-0">
+                                                        <div class="row input-single-group">
+                                                            <div class="col-md-12">
+                                                                <span class="input-group-text text-right">{{'common.xin-unit-text'|
+                                                                    translate}} </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div *ngIf="minActivationAmount?.invalid && (minActivationAmount?.dirty || minActivationAmount?.touched)"
+                                                    class="input-error">
+                                                    <div *ngIf="minActivationAmount?.errors.required">
+                                                        {{'at.create-at.minimum-activation-amount-required'|
+                                                        translate}}
+                                                    </div>
+                                                    <div *ngIf="minActivationAmount?.errors.minValue && !minActivationAmount?.errors.required">
+                                                        {{'at.create-at.minimum-activation-amount-greater'| translate}}
+                                                    </div>
+                                                    <div *ngIf="minActivationAmount?.errors.maxValue && !minActivationAmount?.errors.required">
+                                                        {{'at.create-at.minimum-activation-amount-less'| translate}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label>{{'common.description-label'| translate}}
+                                                    <i class="fa fa-question-circle-o" placement="right" triggers="mouseenter:mouseleave"
+                                                        container="body" ngbPopover="{{'at.create-at.description-popover'| translate}}">
+                                                    </i>
+                                                </label>
+                                                <div class="position-relative sign_in_inputs">
+                                                    <textarea rows="5" class="form-control pl-0" [(ngModel)]="createAtForm.description"
+                                                        name="description" #description="ngModel" maxlength="1000"
+                                                        placeholder="{{'common.description-label'| translate}}"
+                                                        required></textarea>
+                                                </div>
+                                                <div *ngIf="description?.invalid && (description?.dirty || description?.touched)"
+                                                    class="input-error">
+                                                    <div *ngIf="description?.errors.required">
+                                                        {{'common.description-required'| translate}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mt-4 left">
+                                                <button type="button" [disabled]="f1.invalid" class="btn btn-gradient mr-1 mb-0 float-right"
+                                                    awNextStep>
+                                                    <i class="fa fa-chevron-right"></i> {{'common.next-btn'|
+                                                    translate}}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </aw-wizard-step>
+                        <aw-wizard-step stepTitle="{{'common.options-step'| translate}}" [navigationSymbol]="{ symbol: '2' }">
+                            <form class="form inner-form mt-4" #f2="ngForm" novalidate>
+                                <div class="form-body">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group m-0">
+                                                <label>{{'common.code-label'| translate}}
+                                                    <i class="fa fa-question-circle-o" placement="right" triggers="mouseenter:mouseleave"
+                                                        container="body" ngbPopover="{{'at.create-at.code-popover'| translate}}">
+                                                    </i>
+                                                </label>
+                                                <div class="position-relative sign_in_inputs">
+                                                    <textarea rows="5" class="form-control pl-0" [(ngModel)]="createAtForm.code"
+                                                        name="code" #code="ngModel" minlength="10" maxlength="1000"
+                                                        placeholder="{{'common.code-label'| translate}}" required></textarea>
+                                                    <div *ngIf="code?.invalid && (code?.dirty || code?.touched)" class="input-error">
+                                                        <div *ngIf="code?.errors.required">
+                                                            {{'common.code-required'| translate}}
+                                                        </div>
+                                                        <div *ngIf="code?.errors.minlength && !code?.errors.required">
+                                                            {{'at.create-at.code-greater'| translate}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button type="button" [ngClass]="{'btn-success': !hasMachineData, 'btn-danger': hasMachineData}"
+                                        class="btn btn-raised mb-0" (click)="hasMachineData=!hasMachineData" placement="top"
+                                        triggers="mouseenter:mouseleave" container="body" ngbPopover="{{'at.create-at.machine-data-btn-popover'| translate}}">
+                                        <i class="fa fa-code"></i> {{'at.create-at.machine-data-btn'| translate}}
+                                    </button>
+                                    <button type="button" [ngClass]="{'btn-success': !hasCreationBytes, 'btn-danger': hasCreationBytes}"
+                                        class="btn btn-raised mb-0 ml-1" (click)="hasCreationBytes=!hasCreationBytes">
+                                        <i class="fa fa-code"></i> {{'at.create-at.creation-bytes-btn'| translate}}
+                                    </button>
+
+                                    <div class="form-group mt-3" *ngIf="hasMachineData">
+                                        <div class="position-relative sign_in_inputs">
+                                            <label>{{'at.create-at.machine-data-label'| translate}}</label>
+                                            <textarea rows="5" class="form-control pl-0" [(ngModel)]="createAtForm.data"
+                                                name="data" #data="ngModel" maxlength="1000"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" *ngIf="hasCreationBytes">
+                                        <div class="position-relative sign_in_inputs">
+                                            <label>{{'at.create-at.creation-bytes-label'| translate}} </label>
+                                            <textarea rows="5" class="form-control pl-0" [(ngModel)]="createAtForm.bytes"
+                                                name="bytes" #bytes="ngModel" maxlength="1000"></textarea>
+                                        </div>
+                                    </div>
+                                    <!-- <hr *ngIf="hasCreationBytes || hasMachineData"> -->
+                                    <div class="row mt-4">
+                                        <div class="col-sm-4">
+                                            <div class="form-group m-0">
+                                                <label>{{'at.create-at.data-label'| translate}}
+                                                    <i class="fa fa-question-circle-o" placement="right" triggers="mouseenter:mouseleave"
+                                                        container="body" ngbPopover="{{'at.create-at.data-popover'| translate}}">
+                                                    </i>
+                                                </label>
+                                                <div class="input-group m-0 sign_in_inputs row form-border-bottom pb-1">
+                                                    <div class="col-8 pl-0">
+                                                        <input type="number" class="pl-0 mb-0 pt-0 pb-0 form-control"
+                                                            [(ngModel)]="createAtForm.dpages" name="dpages" #dpages="ngModel"
+                                                            minValue="0" maxValue="10" required>
+                                                    </div>
+                                                    <div class="col-4 text-right pl-0">
+                                                        <span class="input-group-text text-right">{{'at.create-at.pages-text'|
+                                                            translate}} </span>
+                                                    </div>
+                                                </div>
+
+                                                <div *ngIf="dpages?.invalid && (dpages?.dirty || dpages?.touched)"
+                                                    class="input-error">
+                                                    <div *ngIf="dpages?.errors.required">
+                                                        {{'at.create-at.pages-required'| translate}}
+                                                    </div>
+                                                    <div *ngIf="dpages?.errors.minValue && !dpages?.errors.required">
+                                                        {{'at.create-at.pages-greater'| translate}}
+                                                    </div>
+                                                    <div *ngIf="dpages?.errors.maxValue && !dpages?.errors.required">
+                                                        {{'at.create-at.pages-less'| translate}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group m-0">
+                                                <label>{{'at.create-at.call-stack-label'| translate}}
+                                                    <i class="fa fa-question-circle-o" placement="right" triggers="mouseenter:mouseleave"
+                                                        container="body" ngbPopover="{{'at.create-at.call-stack-popover'| translate}}">
+                                                    </i>
+                                                </label>
+                                                <div class="input-group m-0 sign_in_inputs row form-border-bottom pb-1">
+                                                    <div class="col-8 pl-0">
+                                                        <input type="number" class="pl-0 mb-0 pt-0 pb-0 form-control"
+                                                            [(ngModel)]="createAtForm.cspages" name="cspages" #cspages="ngModel"
+                                                            minValue="0" maxValue="10" required>
+                                                    </div>
+                                                    <div class="col-4 text-right pl-0">
+                                                        <span class="input-group-text text-right">{{'at.create-at.pages-text'|
+                                                            translate}} </span>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="cspages?.invalid && (cspages?.dirty || cspages?.touched)"
+                                                    class="input-error">
+                                                    <div *ngIf="cspages?.errors.required">
+                                                        {{'at.create-at.call-stack-required'| translate}}
+                                                    </div>
+                                                    <div *ngIf="cspages?.errors.minValue && !cspages?.errors.required">
+                                                        {{'at.create-at.call-stack-greater'| translate}}
+                                                    </div>
+                                                    <div *ngIf="cspages?.errors.maxValue && !cspages?.errors.required">
+                                                        {{'at.create-at.call-stack-less'| translate}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group m-0">
+                                                <label>{{'at.create-at.user-stack-label'| translate}}
+                                                    <i class="fa fa-question-circle-o" placement="right" triggers="mouseenter:mouseleave"
+                                                        container="body" ngbPopover="{{'at.create-at.user-stack-popover'| translate}}">
+                                                    </i>
+                                                </label>
+                                                <div class="input-group m-0 sign_in_inputs row form-border-bottom pb-1">
+                                                    <div class="col-8 pl-0">
+                                                        <input type="number" class="pl-0 mb-0 pt-0 pb-0 form-control"
+                                                            [(ngModel)]="createAtForm.uspages" name="uspages" #uspages="ngModel"
+                                                            minValue="0" maxValue="10" required>
+                                                    </div>
+                                                    <div class="col-4 text-right pl-0">
+                                                        <span class="input-group-text text-right">{{'at.create-at.pages-text'|
+                                                            translate}}</span>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="uspages?.invalid && (uspages?.dirty || uspages?.touched)"
+                                                    class="input-error">
+                                                    <div *ngIf="uspages?.errors.required">
+                                                        {{'at.create-at.user-stack-required'| translate}}
+                                                    </div>
+                                                    <div *ngIf="uspages?.errors.minValue && !uspages?.errors.required">
+                                                        {{'at.create-at.user-stack-greater'| translate}}
+                                                    </div>
+                                                    <div *ngIf="uspages?.errors.maxValue && !uspages?.errors.required">
+                                                        {{'at.create-at.user-stack-less'| translate}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4">
+                                        <button type="button" [disabled]="f2.invalid" class="btn btn-gradient mr-3 mb-0 float-right"
+                                            (click)="createAT()" awNextStep>
+                                            <i class="fa fa-chevron-right"></i> {{'common.next-btn'| translate}}
+                                        </button>
+                                        <button type="button" class="btn btn-gradient mr-1 float-right" awPreviousStep>
+                                            <i class="fa fa-chevron-left"></i> {{'common.previous-btn'| translate}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </aw-wizard-step>
+                        <aw-wizard-step stepTitle="{{'common.confirm-step'| translate}}" [navigationSymbol]="{ symbol: '3' }"
+                            class="form-bordered mt-4">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="ucsb"> {{'common.name-label'| translate}}
+                                    </div>
+                                    <h4> {{createAtForm.name}} </h4>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="ucsb"> {{'common.description-label'| translate}}
+                                    </div>
+                                    <h4> {{createAtForm.description}} </h4>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="ucsb"> {{'at.create-at.activation-amount-label'| translate}}
+                                    </div>
+                                    <h4> {{createAtForm.minActivationAmount|amountTkn}}
+                                        <small> {{'common.xin-unit-text'| translate}} </small>
+                                    </h4>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="ucsb"> {{'common.service-fee-label'| translate}}
+                                    </div>
+                                    <h4> {{ tx_fee | amountTkn }}
+                                        <small>{{'common.xin-unit-text'| translate}}</small>
+                                    </h4>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="ucsb"> {{'common.valid-label'| translate}}
+                                    </div>
+                                    <h4 [innerHTML]="validBytes | txIsValid"> </h4>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="ucsb"> {{'at.create-at.data-label'| translate}}
+                                    </div>
+                                    <h4> {{ createAtForm.dpages}}
+                                        <small> {{'at.create-at.page-text'| translate}} </small>
+                                    </h4>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="ucsb"> {{'at.create-at.user-stack-label'| translate}}
+                                    </div>
+                                    <h4> {{ createAtForm.uspages}}
+                                        <small> {{'at.create-at.page-text'| translate}} </small>
+                                    </h4>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="ucsb"> {{'at.create-at.call-stack-label'| translate}}
+                                    </div>
+                                    <h4> {{ createAtForm.cspages}}
+                                        <small> {{'at.create-at.page-text'| translate}} </small>
+                                    </h4>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="ucsb"> {{'at.create-at.code-size-label'| translate}}
+                                    </div>
+                                    <h4> {{ createAtForm.code.length}}
+                                        <small> {{'at.create-at.bytes-text'| translate}} </small>
+                                    </h4>
+                                </div>
+                            </div>
+
+                            <button type="button" [ngClass]="{'btn-success': !unsignedTx, 'btn-danger': unsignedTx}"
+                                class="btn btn-raised mr-1 mb-0" (click)="unsignedTx = !unsignedTx">
+                                <i class="fa fa-key"></i> {{'common.signed-transaction-label'| translate}}
+                            </button>
+                            <hr *ngIf="unsignedTx">
+                            <div class="form-group" *ngIf="unsignedTx">
+                                <div class="position-relative sign_in_inputs">
+                                    <textarea disabled="true" rows="3" type="text" [(ngModel)]="transactionBytes" class="form-control pl-0"
+                                        name="key"></textarea>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <button type="button" [disabled]="!validBytes" (click)="broadcastTransaction(transactionBytes)"
+                                    class="btn btn-gradient float-right">
+                                    <i class="fa fa-check"></i> {{'common.finish-btn'| translate}}
+                                </button>
+                                <button type="button" class="btn btn-gradient mr-1 float-right" awPreviousStep>
+                                    <i class="fa fa-chevron-left"></i> {{'common.previous-btn'| translate}}
+                                </button>
+                            </div>
+                        </aw-wizard-step>
+                    </aw-wizard>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

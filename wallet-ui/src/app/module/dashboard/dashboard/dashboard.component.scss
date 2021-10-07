@@ -1,0 +1,178 @@
+.valuation-xin{
+    font-size: 35px;
+    line-height: 50px;
+    font-weight: 700;
+    letter-spacing: 0;
+    margin-bottom: 0;
+    small{
+        font-size: 100%;
+    font-weight: 300;
+    }
+}
+.valuation-usd{
+    font-size: 24px;
+    margin: 10px 0px;
+    font-weight: 300;
+    letter-spacing: 0;
+    margin-top: 0;
+    small{
+        font-size: 100%;
+    font-weight: 300;
+    }
+}
+.account-address{
+        text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+}
+.btn.btn-lg{
+    width: 150px;
+    margin-bottom: 50px;
+}
+.btn-send{
+    float: right;
+}
+.coin{
+    text-align: center;
+    img{
+        /*width: 75px;
+        padding: 50px 40px 40px 40px;*/
+    }
+}
+.card{
+    .main-card-block{
+    padding: 40px 25px;        
+        h2{
+            color: #9092a5;
+            font-weight: 500;
+            font-size: 24px;
+            line-height: 35px;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: 5px;
+        }
+        h4{
+            font-size: 16px; 
+            line-height: 18px;
+            color: #e6433a;
+            font-weight: 500; 
+        }
+    
+    }
+}
+.coin-row{
+    margin-top: 45px;
+}
+.coin-box{
+   padding: 60px;
+}
+.shadow-bottom{
+     
+   box-shadow: 0px 7px 20px #ddd;
+    border-radius: 20px;
+}
+.card-right{
+    .card{
+    margin: 0;
+    }
+
+    .card-icon{
+       background: #e72d45;
+        background: -moz-linear-gradient(left, #e72d45 0%, #f3931b 75%);
+        background: -webkit-linear-gradient(left, #e72d45 0%,#f3931b 75%);
+        background: linear-gradient(to right, #e72d45 0%,#f3931b 75%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e72d45', endColorstr='#f3931b',GradientType=1 );
+        color: #fff;    
+        font-size: 25px;
+        padding: 12px;
+        border-radius: 50px;
+    }
+    .card-title{
+        font-size: 16px;
+        font-weight: 600;
+        color: rgba(0, 0, 0, 0.9);
+        margin-top: 20px;
+        display: block;
+            margin-bottom: 0;
+    }
+    .media-box {
+        padding: 30px;
+        cursor: pointer;
+        border-radius: 20px;
+        box-shadow: 0px 7px 20px #ddd;
+        &:hover{
+        background: #e72d45;
+        background: -moz-linear-gradient(left, #e72d45 0%, #f3931b 75%);
+        background: -webkit-linear-gradient(left, #e72d45 0%,#f3931b 75%);
+        background: linear-gradient(to right, #e72d45 0%,#f3931b 75%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e72d45', endColorstr='#f3931b',GradientType=1 );
+            .card-icon{
+                background: #fff;
+                color: #ed622f;
+            }
+            .card-title {
+            color: #fff !important;
+            }
+        }
+    }
+}
+@media(min-width: 1800px){
+    .custom-lg{
+        max-width: 91.66666667%;
+    }
+}
+@media(min-width: 768px) and (max-width: 1567px){
+    .coin-box {
+    padding: 10%;
+    }
+    .valuation-xin{
+    font-size: 22px;
+    }
+    .valuation-usd{
+    font-size: 20px;
+    }
+}
+@media(max-width: 767px){
+    .coin-box{
+    margin-bottom: 15px;
+    padding: 30px 15%;
+    }
+    .valuation-usd, .valuation-xin{
+    text-align: center !important;
+    }
+    .valuation-xin{
+    font-size: 24px;
+    line-height: 40px;
+        margin-top: 15px;
+    }
+    .valuation-usd {
+    font-size: 20px;
+    }
+    #chartdiv{
+    height: 200px !important;
+    }
+    .account-address{
+    margin-top: 40px !important;
+    }
+    .card-right  .media-box{
+    padding: 25px 15px 15px;
+    }
+    .card-right .card-title{
+    font-size: 13px;
+    }
+}
+@media (max-width: 480px){
+.coin-box{
+        padding: 25px;
+    }
+}
+@media (max-width: 1478px) and (min-width: 1190px){
+.coin-box{
+    padding: 50px 10%;
+}
+}
+@media(min-width: 1479px) and (max-width: 1567px){
+.coin-box{
+    padding: 60px 10%;
+}
+}

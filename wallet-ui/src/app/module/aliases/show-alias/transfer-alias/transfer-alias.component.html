@@ -1,0 +1,166 @@
+<div class="row" *ngIf="!openBookMarks">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-block main-card-block">
+                <div class="border-bt">
+                    <h2 class="main-title">{{'aliases.transfer-alias.title'| translate}}</h2>
+                    <app-breadcrumb></app-breadcrumb>
+                    <h3 class="back-button" (click)="goBack()">
+                        <i class="fa fa-chevron-left"></i> {{'common.back-btn'| translate}}
+                    </h3>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="card-block ml-1 mr-1 ml-md-3 mr-md-3">
+                    <aw-wizard [navBarLayout]="'large-filled-symbols'">
+                        <aw-wizard-step stepTitle="{{'common.details-step'| translate}}" [navigationSymbol]="{ symbol: '1' }">
+                            <form class="form" #f="ngForm" novalidate>
+                                <div class="form-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group m-0">
+                                                <label>{{'common.name-label'| translate}}
+                                                    <i class="fa fa-question-circle-o" aria-hidden="true" triggers="mouseenter:mouseleave"
+                                                        placement="right" container="body" ngbPopover="{{'aliases.transfer-alias.name-popover'| translate}}">
+                                                    </i>
+                                                </label>
+                                                <div>
+                                                    <h6> {{data.aliasName}} </h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group m-0">
+                                                <label>{{'common.uri-label'| translate}}
+                                                    <i class="fa fa-question-circle-o" aria-hidden="true" triggers="mouseenter:mouseleave"
+                                                        placement="right" container="body" ngbPopover="{{'aliases.transfer-alias.uri-popover'| translate}}">
+                                                    </i>
+                                                </label>
+                                                <div>
+                                                    <h6> {{data.aliasURI}} </h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group m-0">
+                                                <label>{{'common.recipient-account-label'| translate}}
+                                                    <i class="fa fa-question-circle-o" aria-hidden="true" triggers="mouseenter:mouseleave"
+                                                        placement="right" container="body" ngbPopover="{{'aliases.transfer-alias.recipient-account-popover'| translate}}">
+                                                    </i>
+                                                </label>
+                                                <div class="input-group m-0">
+                                                    <div class="input-group-prepend" *isAppEnabled="'Aliases'">
+                                                        <span class="btn btn-primary" (click)="searchAliases()"
+                                                            triggers="mouseenter:mouseleave" placement="top" container="body"
+                                                            ngbPopover="{{'common.alias-connect-tooltip'| translate}}">
+                                                            <i class="fa fa-share-alt"></i>
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" name="recipientRS"
+                                                        #recipientRS="ngModel" placeholder="{{ 'common.xin-account-key-placeholder' | translate}}"
+                                                        [(ngModel)]="transferAliasForm.recipientRS" required>
+                                                    <div class="input-group-append" *isExpertView="true">
+                                                        <span class="btn btn-primary" triggers="mouseenter:mouseleave"
+                                                            placement="top" (click)="loadBookmarkView()" container="body"
+                                                            ngbPopover="{{'common.open-bookmark-tooltip'| translate}}">
+                                                            <i class="fa fa-address-card"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="recipientRS?.invalid && (recipientRS?.dirty || recipientRS?.touched)"
+                                                    class="input-error">
+                                                    <div *ngIf="recipientRS?.errors.required">
+                                                        {{'common.recipient-required'| translate}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-actions left">
+                                    <button type="button" (click)="transferAlias()" [disabled]="f.invalid" class="btn btn-primary mr-1 mb-0 float-right"
+                                        awNextStep>
+                                        <i class="fa fa-chevron-right"></i> {{'common.next-btn'| translate}}
+                                    </button>
+                                </div>
+                            </form>
+                        </aw-wizard-step>
+                        <aw-wizard-step stepTitle="{{'common.confirm-step'| translate}} " [navigationSymbol]="{ symbol: '2' }">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="ucsb"> {{'common.name-label'| translate}}
+                                    </div>
+                                    <h4>{{data.aliasName}}</h4>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="ucsb">{{'common.recipient-label'| translate}}
+                                    </div>
+                                    <h4>{{transferAliasForm.recipientRS}}</h4>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="ucsb"> {{'common.valid-label'| translate}}
+                                    </div>
+                                    <h4>
+                                        <h4 [innerHTML]="validBytes | txIsValid"></h4>
+                                    </h4>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="ucsb"> {{'common.service-fee-label'| translate}}
+                                    </div>
+                                    <h4>{{tx_fee | amountTkn}}
+                                        <small>{{'common.xin-unit-text'| translate}} </small>
+                                    </h4>
+                                </div>
+                            </div>
+                            <hr>
+                            <button type="button" [ngClass]="{'btn-success': !unsignedTx, 'btn-danger': unsignedTx}"
+                                class="btn btn-raised mr-1 mb-0" (click)="unsignedTx = !unsignedTx">
+                                <i class="fa fa-key"></i> {{'common.signed-transaction-label'| translate}}
+                            </button>
+                            <hr *ngIf="unsignedTx">
+                            <div class="form-group" *ngIf="unsignedTx">
+                                <div class="position-relative">
+                                    <textarea disabled="true" rows="3" type="text" [(ngModel)]="transactionBytes" class="form-control"
+                                        name="key"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" [disabled]="!validBytes" class="btn btn-primary float-right"
+                                    (click)="broadcastTransaction(transactionBytes)">
+                                    <i class="fa fa-check"></i> {{'common.finish-btn'| translate}}
+                                </button>
+                                <button type="button" class="btn btn-primary mr-1 float-right" awPreviousStep>
+                                    <i class="fa fa-chevron-left"></i> {{'common.previous-btn'| translate}}
+                                </button>
+                            </div>
+                        </aw-wizard-step>
+                    </aw-wizard>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" *ngIf="openBookMarks">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">My Bookmarks</h4>
+                <h5 class="back-button" (click)="hideBookmark()">
+                    <i class="fa fa-chevron-left"></i> Back
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="card-block ml-1 mr-1 ml-md-3 mr-md-3">
+                    <h5 class="mb-1">Bookmark List</h5>
+                    <app-bookmark-list [viewFor]="'sendxin'" (selectEvent)="bookmarkSelected($event)"></app-bookmark-list>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,87 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-block main-card-block">
+                <div class="border-bt">
+                    <h2 class="main-title">{{'assets.my-open-orders.cancel-order-confirmation-label'| translate}}</h2>
+                    <app-breadcrumb></app-breadcrumb>
+                    <h3 class="back-button" (click)="goBack()">
+                        <i class="fa fa-chevron-left"></i> {{'common.back-btn'| translate}}
+                    </h3>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="card-block ml-3 mr-3">
+                    <aw-wizard [navBarLayout]="'large-filled-symbols'">
+                        <aw-wizard-step stepTitle="{{'common.confirm-step'| translate}}" [navigationSymbol]="{ symbol: '1' }">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="ucsb" *ngIf="cancelOrderForm.type == 'bid'"> {{'assets.my-open-orders.bid-order-id-label'| translate}}
+                                    </div>
+                                    <div class="ucsb" *ngIf="cancelOrderForm.type == 'ask'"> {{'assets.my-open-orders.ask-order-id-label'| translate}}
+                                    </div>
+                                    <h4>{{cancelOrderForm.order}}</h4>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="ucsb">{{'common.asset-label'| translate}}
+                                    </div>
+                                    <h4>{{cancelOrderForm.name}}</h4>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="ucsb"> {{'common.price-label'| translate}}
+                                    </div>
+                                    <h4>{{cancelOrderForm.priceTQT | amountTqt |
+                                        amountToDecimal:cancelOrderForm.decimals }}
+                                        <small>{{'common.xin-unit-text'| translate}}</small></h4>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="ucsb">{{'common.quantity-label'| translate}}
+                                    </div>
+                                    <h4>{{cancelOrderForm.quantityQNT | supply:cancelOrderForm.decimals}}</h4>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="ucsb"> {{'common.valid-label'| translate}}
+                                    </div>
+                                    <h4>
+                                        <h4 [innerHTML]="validBytes | txIsValid"></h4>
+                                    </h4>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="ucsb"> {{'common.service-fee-label'| translate}}
+                                    </div>
+                                    <h4>{{tx_fee | amountTkn}}
+                                        <small>{{'common.xin-unit-text'| translate}}</small>
+                                    </h4>
+                                </div>
+                            </div>
+                            <hr>
+                            <button type="button" [ngClass]="{'btn-success': !unsignedTx, 'btn-danger': unsignedTx}"
+                                class="btn btn-raised mr-1 mb-0" (click)="unsignedTx = !unsignedTx">
+                                <i class="fa fa-key"></i> {{'common.signed-transaction-label'| translate}}
+                            </button>
+                            <hr *ngIf="unsignedTx">
+                            <div class="form-group" *ngIf="unsignedTx">
+                                <div class="position-relative">
+                                    <textarea disabled="true" rows="3" type="text" [(ngModel)]="transactionBytes" class="form-control"
+                                        name="key"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" [disabled]="!validBytes" class="btn btn-primary float-right"
+                                    (click)="broadcastTransaction(transactionBytes)">
+                                    <i class="fa fa-check"></i> {{'common.finish-btn'| translate}}
+                                </button>
+                            </div>
+                        </aw-wizard-step>
+                    </aw-wizard>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

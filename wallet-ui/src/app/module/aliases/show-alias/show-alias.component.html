@@ -1,0 +1,92 @@
+<section>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-block main-card-block pb-0">
+                    <div class="border-bt">
+                        <h2 class="main-title">{{'aliases.show-aliases.title'| translate}} </h2>
+                        <app-breadcrumb></app-breadcrumb>
+                    </div>
+                    <div class="row mt-4 ml-1 mr-1 ml-md-2 mr-md-2">
+                        <div class="col-12 col-md-11">
+                            <form class="form inner-form">
+                                <div class="form-body">
+                                    <div class="form-group">
+                                        <div class="position-relative">
+                                            <input type="text" class="form-control input-search pb-2" name="form-control-with-icon"
+                                                [(ngModel)]="searchText" placeholder="{{'aliases.show-aliases.search-alias' | translate}}">
+                                            <div class="form-control-position btn-search">
+                                                <i class="ft-search info mr-2"></i>{{'common.search-btn'| translate}}
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-12 col-md-1">
+                            <div class="text-left text-sm-center">
+                                <div class="btn-group btn-group-justified btn-group-raised" (click)="resetSearch();">
+                                    <a href="javascript:void(0)" class="btn btn-sm btn-grey btn-icon" ngbPopover="{{'common.search-btn'| translate}}" 
+                                    triggers="mouseenter:mouseleave" container="body"><i class="fa fa-refresh"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="card-block mr-3 ml-3">
+
+                        <ngx-datatable class="material" [rows]="rows" [columnMode]="'force'" [rowHeight]="'auto'"
+                            [footerHeight]="50" [externalPaging]="true" [count]="page.totalElements" [offset]="page.pageNumber"
+                            [limit]="page.size" (page)='setPage($event)' (autoRefresh)="reload()">
+                            <ngx-datatable-column prop="aliasName" [name]="'table-header.name'| translate">
+                                <ng-template let-value="value" ngx-datatable-cell-template>
+                                    {{value}}
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column prop="aliasURI" [name]="'table-header.uri'| translate">
+                                <ng-template let-value="value" ngx-datatable-cell-template>
+                                    <a class="hyperlink" (click)="routeUri(value)">{{value}}</a>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column prop="poll" [name]="'table-header.actions'| translate">
+                                <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                    <div class="btn-group-raised">
+                                        <a class="btn btn-sm btn-grey btn-icon" (click)="transactionDetail(row);"
+                                            triggers="mouseenter:mouseleave" container="body" placement="top"
+                                            ngbPopover="{{'common.details-table-action'| translate}}">
+                                            <i class="fa fa-list-ul"></i>
+                                        </a>
+                                        <a class="btn btn-sm btn-grey btn-icon" (click)="editAlias(row.alias,row.aliasName,row.aliasURI);"
+                                            triggers="mouseenter:mouseleave" container="body" placement="top"
+                                            ngbPopover="{{'common.edit-table-action'| translate}}">
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                        </a>
+                                        <a class="btn btn-sm btn-grey btn-icon" (click)="transferAlias(row.alias,row.aliasName,row.aliasURI);"
+                                            triggers="mouseenter:mouseleave" container="body" placement="top"
+                                            ngbPopover="{{'aliases.show-aliases.transfer-table-action'| translate}}">
+                                            <i class="fa fa-user font-medium-1"></i>
+                                        </a>
+                                        <a class="btn btn-sm btn-grey btn-icon" (click)="sellAlias(row.alias,row.aliasName,row.aliasURI);"
+                                            triggers="mouseenter:mouseleave" container="body" placement="top"
+                                            ngbPopover="{{'aliases.show-aliases.sell-table-action'| translate}}">
+                                            <i class="fa fa-dollar" aria-hidden="true"></i>
+                                        </a>
+                                        <a class="btn btn-sm btn-grey btn-icon" (click)="deleteAlias(row.alias,row.aliasName,row.aliasURI);"
+                                            triggers="mouseenter:mouseleave" container="body" placement="top"
+                                            ngbPopover="{{'common.delete-table-action'| translate}}">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </div>
+                                </ng-template>
+                            </ngx-datatable-column>
+                        </ngx-datatable>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

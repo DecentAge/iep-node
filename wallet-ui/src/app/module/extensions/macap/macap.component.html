@@ -1,0 +1,88 @@
+<section id="macap">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-block main-card-block">
+				<div class="border-bt">
+					<h2 class="main-title"><i class="fa fa-usd"></i> Crypto Market Capitalization</h2>
+					<app-breadcrumb></app-breadcrumb>
+					<div class="pull-right filter-group">
+						<div class="btn-group btn-group-justified btn-group-raised">
+							<a href="javascript:void(0)" (click)="reload()" class="btn btn-sm btn-grey btn-icon mt-2" container="body" triggers="mouseenter:mouseleave" placement="top" ngbPopover="Reload">
+								<i class="fa fa-refresh"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+				
+				<div class="card-body mt-4">
+					<div class="card-block mr-3 ml-3">
+						<ngx-datatable
+								[rows]="rows"
+								[columnMode]="'standard'"
+								[scrollbarH]="true"
+								[footerHeight]="50"
+								[rowHeight]="'auto'"
+								[externalPaging]="true"
+								[count]="page.totalElements"
+								[offset]="page.pageNumber"
+								[limit]="page.size"
+								(page)='setPage($event)'>
+							<ngx-datatable-column headerClass="width-5-per" cellClass="width-5-per" name="Rank" prop="rank" >
+								<ng-template let-value="value" ngx-datatable-cell-template>
+									{{ value }}
+								</ng-template>
+							</ngx-datatable-column>
+							<ngx-datatable-column headerClass="width-7-per" cellClass="width-7-per" name="Symbol" prop="symbol" >
+								<ng-template let-value="value" ngx-datatable-cell-template>
+									<strong>{{ value }}</strong>
+								</ng-template>
+							</ngx-datatable-column>
+							<ngx-datatable-column headerClass="width-15-per" cellClass="width-15-per" name="Name" prop="name" >
+								<ng-template let-value="value" ngx-datatable-cell-template>
+									{{ value }}
+								</ng-template>
+							</ngx-datatable-column>
+							<ngx-datatable-column headerClass="width-10-per" cellClass="width-10-per" name="Price USD" prop="price_usd" >
+								<ng-template let-value="value" ngx-datatable-cell-template>
+									{{ value.toLocaleString('en-US', {maximumFractionDigits: 4, minimumFractionDigits: 4}) }}
+								</ng-template>
+							</ngx-datatable-column>
+							<ngx-datatable-column headerClass="width-11-per" cellClass="width-11-per" name="Price BTC" prop="price_btc" >
+								<ng-template let-value="value" ngx-datatable-cell-template>
+									{{ value.toLocaleString('en-US', {maximumFractionDigits: 8, minimumFractionDigits: 8}) }}
+								</ng-template>
+							</ngx-datatable-column>
+							<ngx-datatable-column headerClass="width-15-per" cellClass="width-15-per" name="Market Cap USD" prop="market_cap_usd" >
+								<ng-template let-value="value" ngx-datatable-cell-template>
+									{{ value.toLocaleString('en-US', {maximumFractionDigits: 0, minimumFractionDigits: 0}) }}
+								</ng-template>
+							</ngx-datatable-column>
+							<ngx-datatable-column headerClass="width-15-per" cellClass="width-15-per" name="Supply" prop="total_supply" >
+								<ng-template let-value="value" ngx-datatable-cell-template>
+									{{ value.toLocaleString('en-US', {maximumFractionDigits: 0, minimumFractionDigits: 0}) }}
+								</ng-template>
+							</ngx-datatable-column>
+							<ngx-datatable-column headerClass="width-7-per" cellClass="width-7-per" name="1 H" prop="percent_change_1h" >
+								<ng-template let-value="value" ngx-datatable-cell-template>
+									<div class="highlight" [innerHtml]=" value | upDown "></div>
+								</ng-template>
+							</ngx-datatable-column>
+							<ngx-datatable-column headerClass="width-7-per" cellClass="width-7-per" name="24 H" prop="percent_change_24h" >
+								<ng-template let-value="value" ngx-datatable-cell-template>
+									<div class="highlight" [innerHtml]=" value | upDown "></div>
+								</ng-template>
+							</ngx-datatable-column>
+							<ngx-datatable-column headerClass="width-8-per" cellClass="width-8-per" name="7 D" prop="percent_change_7d" >
+								<ng-template let-value="value" ngx-datatable-cell-template>
+									<div class="highlight" [innerHtml]=" value | upDown "></div>
+								</ng-template>
+							</ngx-datatable-column>
+						</ngx-datatable>
+					</div>
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

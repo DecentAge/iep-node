@@ -1,0 +1,332 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"po",
+				"postsAjaxUrl"
+			],
+			[
+				"con",
+				"console"
+			],
+			[
+				"the",
+				"the_title"
+			],
+			[
+				"backg",
+				"background-position\tproperty"
+			],
+			[
+				"bac",
+				"background-size\tproperty"
+			],
+			[
+				"ba",
+				"background-repeat\tproperty"
+			],
+			[
+				"text",
+				"text-decoration\tproperty"
+			],
+			[
+				"breed",
+				"breed_text"
+			],
+			[
+				"inl",
+				"inline-block\tdisplay"
+			],
+			[
+				"font-s",
+				"font-size\tproperty"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/webwerks2/Documents/InfinityEconomicsWorkspace/Wallet/src/assets/sass/scss/core/_sidebar-content.scss",
+		"/Users/webwerks2/Documents/InfinityEconomicsWorkspace/Wallet/src/assets/i18n/en.json",
+		"/Users/webwerks2/Documents/InfinityEconomicsWorkspace/Wallet/src/app/module/login/login/login.component.scss",
+		"/Users/webwerks2/Documents/InfinityEconomicsWorkspace/Wallet/src/assets/sass/scss/core/_misc.scss",
+		"/Users/webwerks2/Documents/InfinityEconomicsWorkspace/Wallet/src/styles.css",
+		"/Users/webwerks2/Documents/InfinityEconomicsWorkspace/Wallet/src/app/layouts/full/full-layout.component.html",
+		"/Users/webwerks2/Documents/InfinityEconomicsWorkspace/Wallet/src/app/shared/sidebar/sidebar.component.html",
+		"/Users/webwerks2/Documents/InfinityEconomicsWorkspace/Wallet/src/assets/sass/app.scss",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/templates/page-gallery.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/templates/loop/item-gallery.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/assets/js/components/GalleryCarousel.js",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/assets/js/components/PostsLoader.js",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/templates/taxonomy-gallery-categories.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/templates/all-gallery.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/assets/js/components/Gallery.js",
+		"/Applications/MAMP/htdocs/vivo/ppm/src/templates/components/gallery.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/assets/css/pages/all.scss",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/templates/single-gallery.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/inc/fx-meta.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/inc/fx-functions.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/inc/fx-admin.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/dist/wp-config.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/functions.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/inc/fx-customize.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/composer.json",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/templates/page-about.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/templates/page-sires.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/inc/fx-sections.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/inc/fx-enqueue.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/templates/components/gallery.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/templates/single-sires.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/templates/page-home.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/templates/footer.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/templates/header.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/templates/galleryold.php",
+		"/Users/webwerks2/Desktop/reen/footer.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/templates/single-litters.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/assets/js/main.js",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/assets/css/partials/gallery-carousel.scss",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/assets/css/style.scss",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/assets/css/utils/variables.scss",
+		"/Applications/MAMP/htdocs/vivo/ppm/src/templates/loop/item-gallery.php",
+		"/Users/webwerks2/Desktop/reen/includes/functions/customize.php",
+		"/Users/webwerks2/Desktop/reen/header.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/inc/fx-cpt.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/assets/js/news.js",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/assets/js/components/bxSlider.js",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/inc/fx-taxonomies.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/dist/wp-content/themes/rivergum-puppies/components/gallery.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/dist/wp-content/themes/rivergum-puppies/page-news.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/assets/js/components/SireCarousel.js",
+		"/Applications/MAMP/htdocs/vivo/ppm/src/inc/fx-taxonomies.php",
+		"/Applications/MAMP/htdocs/vivo/ppm/src/inc/fx-cpt.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/assets/css/partials/sire-carousel.scss",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/assets/js/sire.js",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/templates/meta.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/package.json",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/templates/components/home-sections.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/dist/wp-content/themes/rivergum-puppies/assets/js/home.js",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/dist/wp-content/themes/rivergum-puppies/assets/js/sire.js",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/assets/js/components/Header.js",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/assets/css/partials/home-carousel.scss",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/templates/page-news.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/templates/components/home-carousel.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/templates/components/home-bottom-carousel.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/assets/css/pages/home.scss",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/templates/single-breeds.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/templates/untitled.js",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/assets/js/components/HomeCarousel.js",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/node_modules/swiper/package.json",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/templates/loop/item-sire-image.php",
+		"/Applications/MAMP/htdocs/vivo/ppm/src/inc/fx-functions.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/dist/wp-content/themes/rivergum-puppies/assets/css/ninja-slider.scss",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/dist/wp-content/themes/rivergum-puppies/assets/css/ninja-slider.css",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/node_modules/ninja-slider/package.json",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/assets/js/components/ninjaslider.js",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/assets/js/components/ninja-slider.js",
+		"/Applications/MAMP/htdocs/vivo/ppm/src/templates/page-about.php",
+		"/Users/webwerks2/Documents/thumbnailSlider/demo3.html",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/assets/css/pages/about.scss",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/templates/single.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/templates/single-news.php",
+		"/Applications/MAMP/htdocs/vivo/ppm/dist/wp-content/themes/ppm/single-projects.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/assets/css/base/reset.scss",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/templates/page-current-litter.php",
+		"/Applications/MAMP/htdocs/vivo/ppm/dist/wp-content/themes/ppm/inc/fx-meta.php",
+		"/Applications/MAMP/htdocs/vivo/ppm/dist/wp-content/themes/ppm/page-about.php",
+		"/Users/webwerks2/Documents/terminallatest.html",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/templates/components/bottom-contact.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/assets/css/utils/mixins.scss",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/assets/css/layout/main.scss",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/assets/css/pages/contact.scss",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/templates/page-contact.php",
+		"/Users/webwerks2/Documents/ViVO-Neha/17-7-2018/dist/wp-content/themes/rivergum-puppies/components/home-sections.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/inc/fx-appearance.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/inc/fx-widgets.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/dist/wp-content/themes/rivergum-puppies/inc/fx-cpt.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/dist/wp-content/themes/rivergum-puppies/inc/fx-appearance.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/dist/wp-content/themes/rivergum-puppies/inc/fx-admin.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/dist/wp-content/themes/rivergum-puppies/inc/widgets/widget-subscribe.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/dist/wp-content/themes/rivergum-puppies/inc/widgets/widget-contact-details.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/dist/wp-content/themes/rivergum-puppies/inc/fx-widgets.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/dist/wp-content/themes/rivergum-puppies/inc/widgets/widget-bottom-section.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/dist/wp-content/themes/rivergum-puppies/inc/fx-meta.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/dist/wp-content/themes/rivergum-puppies/components/home-sections.php",
+		"/Applications/MAMP/htdocs/vivo/ppm/dist/wp-content/themes/ppm/inc/widgets/widget-contact-details.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/dist/wp-content/themes/rivergum-puppies/header.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/dist/wp-content/themes/rivergum-puppies/footer.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/assets/css/layout/header.scss",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/assets/css/layout/nav.scss",
+		"/Applications/MAMP/htdocs/vivo/ppm/dist/wp-content/themes/ppm/header.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/dist/wp-content/themes/rivergum-puppies/components/newsletter-form.php",
+		"/Applications/MAMP/htdocs/vivo/ppm/dist/wp-content/themes/ppm/inc/widgets/widget-quick-contact.php",
+		"/Applications/MAMP/htdocs/vivo/ppm/dist/wp-content/themes/ppm/footer.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/dist/wp-content/themes/rivergum-puppies/inc/widgets/widget-opening-hours.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/dist/wp-content/themes/rivergum-puppies/components/contact-form.php",
+		"/Applications/MAMP/htdocs/vivo/ppm/dist/wp-content/themes/ppm/inc/fx-admin.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/dist/wp-content/themes/rivergum-puppies/inc/widgets/widget-opening_hours.php",
+		"/Applications/MAMP/htdocs/vivo/ppm/dist/wp-content/themes/ppm/components/contact-form-career.php",
+		"/Applications/MAMP/htdocs/vivo/ppm/dist/wp-content/themes/ppm/inc/widgets/widget-career-contact.php",
+		"/Applications/MAMP/htdocs/vivo/ppm/dist/wp-content/themes/ppm/inc/fx-widgets.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/dist/wp-content/themes/rivergum-puppies/page-about.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/assets/css/partials/nav-icon.scss",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/src/assets/css/layout/footer.scss",
+		"/Applications/MAMP/htdocs/vivo/ppm/dist/wp-content/themes/ppm/components/home-quicklinks.php",
+		"/Applications/MAMP/htdocs/vivo/rivergum-puppies/dist/wp-content/themes/rivergum-puppies/components/home-carousel.php",
+		"/Applications/MAMP/htdocs/vivo/ppm/src/assets/css/layout/header.scss",
+		"/Applications/MAMP/htdocs/vivo/ppm/src/assets/css/layout/nav.scss"
+	],
+	"find":
+	{
+		"height": 39.0
+	},
+	"find_in_files":
+	{
+		"height": 101.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": false,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 24.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "fee.service.sublime-project",
+	"replace":
+	{
+		"height": 44.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 346.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

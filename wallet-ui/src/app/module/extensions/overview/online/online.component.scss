@@ -1,0 +1,66 @@
+.tool-boxes {
+  .card{
+    box-shadow: 0px 8px 20px #ddd;
+    border-radius: 20px !important;
+    height: 100%;
+    .card-header {
+      position: relative;
+      padding: 0 10px;
+      background: #ededed;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      h4{
+        font-size: 15px;
+        line-height: 18px;
+        color: #333;
+        font-weight: 600;
+        letter-spacing: 1.2px;
+        margin-bottom:0;
+        i{
+          color: #0cc27e;
+          padding: 20px;
+          font-size: 20px;
+        }
+      }
+    }
+    .card-body{
+      padding: 25px 30px;
+      .card-block{
+        padding:0;
+        p{
+          font-size: 12px;
+          letter-spacing: 1.2px;
+          color: #535353;
+          line-height: 19px;
+          font-weight: 500;
+          margin-bottom: 0;
+        }
+      }
+
+    }
+  }
+
+}
+.orange-boxes{
+  .card{
+    .card-header {
+      h4{
+        i{
+          color: #fc9e79;
+        }
+      }
+    }
+  }
+}
+
+.blue-boxes{
+  .card{
+    .card-header {
+      h4{
+        i{
+          color: #fc9e79;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+<section>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-block main-card-block pb-0">
+                    <div class="border-bt">
+                        <h2 class="main-title">{{'aliases.buy-offers.title'| translate}} </h2>
+                        <app-breadcrumb [routeChange]="routeChange"></app-breadcrumb>
+                    </div>
+                    <ul class="nav nav-tabs nav-fill nav-auto mt-4" (click)="onTabChange();">
+                        <li class="nav-item">
+                            <a class="nav-link" routerLinkActive="active" [routerLink]="['private']">{{'aliases.buy-offers.private-tab'|
+                                translate}}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLinkActive="active" [routerLink]="['public']">{{'aliases.buy-offers.public-tab'|
+                                translate}}</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active">
+                            <router-outlet></router-outlet>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,44 @@
+<section>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-block main-card-block">
+                    <div class="border-bt">
+                        <h2 class="main-title">{{'assets.expected-asset-delete.title'| translate}} </h2>
+                        <app-breadcrumb></app-breadcrumb>
+                        <h3 class="back-button" (click)="goBack()">
+                            <i class="fa fa-chevron-left"></i> {{'common.back-btn'| translate}}
+                        </h3>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-block mr-3 ml-3">
+                        <ngx-datatable class="material" [rows]="deletes" [columnMode]="'force'" [rowHeight]="'auto'"
+                            [footerHeight]="50" [externalPaging]="true">
+                            <ngx-datatable-column prop="name" [name]="'table-header.name'| translate">
+                                <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                    <a class="hyperlink" (click)="goToAssetDetails(row.asset)">{{value}}</a>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column prop="accountRS" [name]="'table-header.account'| translate">
+                                <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                    <a class="hyperlink" (click)="goToAccountDetails(value)">{{value}}</a>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column prop="assetDelete" [name]="'table-header.transaction'| translate">
+                                <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                    <a class="hyperlink" (click)="goToAccountDetails(value)">{{value}}</a>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column prop="quantityQNT" [name]="'table-header.quantity'| translate">
+                                <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                    {{value | quantityToShare:row.decimals | numericalString}}
+                                </ng-template>
+                            </ngx-datatable-column>
+                        </ngx-datatable>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,131 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-block main-card-block">
+                <div class="border-bt">
+                    <h2 class="main-title">{{'currencies.currency-details.title'| translate}}</h2>
+                    <app-breadcrumb></app-breadcrumb>
+                    <h3 class="back-button" (click)="goBack()">
+                        <i class="fa fa-chevron-left"></i>{{'common.back-btn'| translate}}
+                    </h3>
+                </div>
+            </div>
+            <div class="card-body" *ngIf="currencyDetails">
+                <div class="card-block mr-3 ml-3">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="ucsb"> {{'common.name-label'| translate}}
+                            </div>
+                            <h4> {{currencyDetails.name}} </h4>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="ucsb"> {{'common.description-label'| translate}}
+                            </div>
+                            <h4> {{currencyDetails.description}} </h4>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="ucsb"> {{'common.issuer-label'| translate}}
+                            </div>
+                            <h4> {{currencyDetails.accountRS}} </h4>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="ucsb"> {{'common.ticker-label'| translate}}
+                            </div>
+                            <h4> {{currencyDetails.code}} </h4>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="ucsb"> {{'common.currency-id-label'| translate}}
+                            </div>
+                            <h4> {{currencyDetails.currency}} </h4>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="ucsb"> {{'currencies.currency-details.creation-block-height-label'| translate}}
+                            </div>
+                            <h4> {{currencyDetails.creationHeight}} </h4>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="ucsb"> {{'currencies.currency-details.issuance-block-height-label'| translate}}
+                            </div>
+                            <h4> {{currencyDetails.issuanceHeight}} </h4>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="ucsb"> {{'currencies.currency-details.decimals-label'| translate}}
+                            </div>
+                            <h4> {{currencyDetails.decimals}} </h4>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="ucsb"> {{'common.initial-supply-label'| translate}}
+                            </div>
+                            <h4> {{currencyDetails.initialSupply |
+                                quantityToShare:currencyDetails.decimals|numericalString}} </h4>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="ucsb"> {{'currencies.currency-details.max-supply-label'| translate}}
+                            </div>
+                            <h4> {{currencyDetails.maxSupply |
+                                quantityToShare:currencyDetails.decimals|numericalString}} </h4>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="ucsb"> {{'currencies.currency-details.reserve-supply-label'| translate}}
+                            </div>
+                            <h4> {{currencyDetails.reserveSupply |
+                                quantityToShare:currencyDetails.decimals|numericalString}} </h4>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="ucsb"> {{'currencies.currency-details.current-supply-label'| translate}}
+                            </div>
+                            <h4> {{currencyDetails.currentSupply |
+                                quantityToShare:currencyDetails.decimals|numericalString}} </h4>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="ucsb"> {{'currencies.currency-details.current-reserve-u/t-label'| translate}}
+                            </div>
+                            <h4> {{currencyDetails.currentReservePerUnitTQT|quantToAmount|numericalString}} </h4>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="ucsb"> {{'currencies.currency-details.min-reserve-u/t-label'| translate}}
+                            </div>
+                            <h4> {{currencyDetails.minReservePerUnitTQT|quantToAmount|numericalString}} </h4>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="ucsb"> {{'currencies.currency-details.total-exchanges-label'| translate}}
+                            </div>
+                            <h4> {{currencyDetails.numberOfExchanges}} </h4>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="ucsb"> {{'currencies.currency-details.total-transfers-label'| translate}}
+                            </div>
+                            <h4> {{currencyDetails.numberOfTransfers}} </h4>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="ucsb"> {{'currencies.currency-details.properties-label'| translate}}
+                            </div>
+                            <ul>
+                                <li *ngFor="let spec of currencyDetails.types">
+                                    <p> {{'currencies.currency-types.'+ spec| translate}} </p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

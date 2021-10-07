@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="col-sm-12">
+      <div class="card">
+          <div class="card-header">
+              <h4 class="card-title">Alias BTC Details</h4>
+              <h5 class="back-button" (click)="goBack()">
+                  <i class="fa fa-chevron-left"></i> Back
+              </h5>
+          </div>
+          <div class="card-body" *ngIf="addrStr">
+              <div class="card-block mr-3 ml-3">
+                  <div class="row">
+                      <div class="col-md-6">
+                          <div class="ucsb"> Address
+                          </div>
+                          <h4> {{addrStr}} </h4>
+                      </div>
+
+                      <div class="col-md-6">
+                          <div class="ucsb"> Balance
+                          </div>
+                          <h4> {{balance}}
+                            <small> BTC</small>
+                          </h4>
+                      </div>
+                  </div>
+                  <hr/>
+                  <div class="row">
+                      <div class="col-md-6">
+                          <div class="ucsb"> Total Received
+                          </div>
+                          <h4> {{totalReceived}} </h4>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="ucsb"> Total Sent
+                          </div>
+                          <h4> {{totalSent}} </h4>
+                      </div>
+                  </div>
+                  <hr/>
+                  <div class="row">
+                    <div class="col-md-6">
+                        <div class="ucsb"> Unconfirmed Balance
+                        </div>
+                        <h4> {{unconfirmedBalance}} </h4>
+                    </div>
+                </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

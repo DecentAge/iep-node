@@ -1,0 +1,108 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-block main-card-block">
+                <div class="border-bt">
+                    <h2 class="main-title">{{'aliases.delete-alias.title'| translate}} </h2>
+                    <app-breadcrumb></app-breadcrumb>
+                    <h3 class="back-button" (click)="goBack()">
+                        <i class="fa fa-chevron-left"></i> {{'common.back-btn'| translate}}
+                    </h3>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="card-block ml-1 mr-1 ml-md-3 mr-md-3">
+                    <aw-wizard [navBarLayout]="'large-filled-symbols'">
+                        <aw-wizard-step stepTitle="{{'common.details-step'| translate}}" [navigationSymbol]="{ symbol: '1' }">
+                            <form class="form" #deleteAliasForm="ngForm" novalidate>
+                                <div class="form-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group m-0">
+                                                <label>{{'common.alias-label'| translate}}
+                                                    <i class="fa fa-question-circle-o" aria-hidden="true" triggers="mouseenter:mouseleave"
+                                                        placement="right" container="body" ngbPopover="{{'aliases.delete-alias.alias-popover'| translate}} ">
+                                                    </i>
+                                                </label>
+                                                <div>
+                                                    <h6> {{aliase.name}} </h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group m-0">
+                                                <label>{{'common.uri-label'| translate}}
+                                                    <i class="fa fa-question-circle-o" aria-hidden="true" triggers="mouseenter:mouseleave"
+                                                        placement="right" container="body" ngbPopover="{{'aliases.delete-alias.uri-popover'| translate}}">
+                                                    </i>
+                                                </label>
+                                                <div>
+                                                    <h6> {{aliase.uri}} </h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <button type="button" (click)="deleteAlias()" class="btn btn-primary mr-1 mb-0 float-right"
+                                        awNextStep>
+                                        <i class="fa fa-chevron-right"></i> {{'common.next-btn'| translate}}
+                                    </button>
+                                </div>
+                            </form>
+                        </aw-wizard-step>
+                        <aw-wizard-step stepTitle="{{'common.confirm-step'| translate}}" [navigationSymbol]="{ symbol: '2' }">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="ucsb"> {{'common.name-label'| translate}}
+                                    </div>
+                                    <h4>{{aliase.name}}</h4>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="ucsb"> {{'common.uri-label'| translate}}
+                                    </div>
+                                    <h4>{{aliase.uri}} </h4>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="ucsb"> {{'common.valid-label'| translate}}
+                                    </div>
+                                    <h4 [innerHTML]="validBytes | txIsValid"></h4>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="ucsb"> {{'common.service-fee-label'| translate}}
+                                    </div>
+                                    <h4>{{tx_fee | amountTkn}}
+                                        <small>{{'common.xin-unit-text'| translate}} </small>
+                                    </h4>
+                                </div>
+                            </div>
+                            <hr>
+                            <button type="button" [ngClass]="{'btn-success': !unsignedTx, 'btn-danger': unsignedTx}"
+                                class="btn btn-raised mr-1 mb-0" (click)="unsignedTx = !unsignedTx">
+                                <i class="fa fa-key"></i> {{'common.signed-transaction-label'| translate}}
+                            </button>
+                            <hr *ngIf="unsignedTx">
+                            <div class="form-group" *ngIf="unsignedTx">
+                                <div class="position-relative">
+                                    <textarea disabled="true" rows="3" type="text" [(ngModel)]="transactionBytes" class="form-control"
+                                        name="key"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" [disabled]="!validBytes" class="btn btn-primary float-right"
+                                    (click)="broadcastTransaction(transactionBytes)">
+                                    <i class="fa fa-check"></i> {{'common.finish-btn'| translate}}
+                                </button>
+                                <button type="button" class="btn btn-primary mr-1 float-right" awPreviousStep>
+                                    <i class="fa fa-chevron-left"></i> {{'common.previous-btn'| translate}}
+                                </button>
+                            </div>
+                        </aw-wizard-step>
+                    </aw-wizard>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

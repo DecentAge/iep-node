@@ -1,0 +1,50 @@
+<div class="card-header">
+    <h3 class="card-title">{{'account.receive-xin.receive-xin-title'| translate}}</h3>
+</div>
+<div class="card-body">
+    <div class="card-block ml-1 mr-1 ml-md-3 mr-md-3">
+        <div class="row" id="print-section">
+            <div class="col-sm-12">
+                <qrcode [qrdata]="accountRs" [size]="160" [level]="'M'"></qrcode>
+                <p class="font-medium-1 text-center text-danger qr-address mt-4 mb-1">{{'account.receive-xin.xin-wallet-address-label'|
+                    translate}}</p>
+                <p class="font-small-1 text-center mt-1 mb-0 qr-note text-muted mb-5">{{'account.receive-xin.only-send-xin-text'|
+                    translate}}</p>
+            </div>
+
+            <div class="col-sm-12 mt-2 mb-2 col-md-8 mlmr-auto mb-4" style="background: #f0f0f0"></div>
+
+            <div class="col-sm-12">
+                <p class="font-small-1 text-center text-muted ">{{'account.receive-xin.other-digital-label'|
+                    translate}}</p>
+                <a class="card-link danger"></a>
+                <fieldset>
+                    <div class="input-group mt-3">
+                        <input type="text" readonly [ngModel]="receiveAddress" class="form-control readonly-note"
+                            [placeholder]="receiveAddress" aria-describedby="button-addon2" #publicKey>
+                        <div class="input-group-append">
+                            <a class="btn btn-disabled-icon" (click)="copyText(publicKey, tooltip);" ngbPopover="{{'common.copied-popover'| translate}}"
+                                #tooltip="ngbPopover" triggers="manual">
+                                <i class="icon-copy"></i>
+                            </a>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 mt-4 text-center">
+                <div class="pl-1 border-top-lighten-5 text-muted">
+                    <div class="flat-outline">
+                        <a class="btn btn-gradient mr-3" (click)="print();">
+                            <i class="fa fa-print"></i> {{'account.receive-xin.print-btn'| translate}}
+                        </a>
+                        <a class="btn btn-border ml-3" [href]="mailTo">
+                            <i class="fa fa-envelope"></i> {{'account.receive-xin.email-btn'| translate}}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

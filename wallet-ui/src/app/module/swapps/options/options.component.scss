@@ -1,0 +1,46 @@
+:host ::ng-deep {
+  #options {
+    h5 {
+      margin-bottom: 0;
+      span {
+        .accordion:before {
+          content: '\f054';
+        }
+        .accordion {
+          -webkit-transform: rotate(0deg);
+          -moz-transform: rotate(0deg);
+          -ms-transform: rotate(0deg);
+          -o-transform: rotate(0deg);
+          transform: rotate(0deg);
+          transition:  transform 0.3s;
+        }
+      }
+    }
+    .card-body {
+      transition: all 0.3s;
+    }
+    .card-header {
+      &.active {
+        h5 {
+          span {
+            .accordion {
+              -webkit-transform: rotate(90deg);
+              -moz-transform: rotate(90deg);
+              -ms-transform: rotate(90deg);
+              -o-transform: rotate(90deg);
+              transform: rotate(90deg);
+              transition:  transform 0.3s;
+            }
+          }
+        }
+      }
+    }
+
+    hr {
+      margin-top: 0;
+    }
+  }
+}
+.short-links.disabled{
+  pointer-events: none;
+}

@@ -1,0 +1,133 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-block main-card-block">
+                <div class="border-bt">
+                    <h2 class="main-title">{{'navbar.chain-statistics'| translate}}</h2>
+                    <app-breadcrumb></app-breadcrumb>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="card-block mr-md-3 ml-md-3  row mb-4" *ngIf="chainStatistics">
+                    <div class="col-md-6">
+                        <table class="table-striped text-left">
+                            <tbody>
+                                <tr>
+                                    <th class="text-left"> {{'tool-pages.chain-statistics.account-leases'| translate}}
+                                    </th>
+                                    <td> {{chainStatistics.numberOfAccountLeases}} </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-left"> {{'tool-pages.chain-statistics.active-account-leases'|
+                                        translate}} </th>
+                                    <td> {{chainStatistics.numberOfActiveAccountLeases}} </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-left"> Aliases {{'tool-pages.chain-statistics.aliases'| translate}}
+                                    </th>
+                                    <td> {{chainStatistics.numberOfAliases}} </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-left"> {{'tool-pages.chain-statistics.asks'| translate}} </th>
+                                    <td> {{chainStatistics.numberOfAsks}} </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-left"> {{'tool-pages.chain-statistics.bid-orders'| translate}} </th>
+                                    <td> {{chainStatistics.numberOfBidOrders}} </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-left"> {{'tool-pages.chain-statistics.blocks'| translate}} </th>
+                                    <td> {{chainStatistics.numberOfBlocks}} </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-left"> {{'tool-pages.chain-statistics.currency-transfers'|
+                                        translate}} </th>
+                                    <td> {{chainStatistics.numberOfCurrencyTransfers}} </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-left"> {{'tool-pages.chain-statistics.exchanges'| translate}} </th>
+                                    <td> {{chainStatistics.numberOfExchanges}} </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-left"> {{'tool-pages.chain-statistics.orders'| translate}}
+                                    </th>
+                                    <td> {{chainStatistics.numberOfOrders}} </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-left"> {{'tool-pages.chain-statistics.controlled-accounts'|
+                                        translate}} </th>
+                                    <td> {{chainStatistics.numberOfPhasingOnlyAccounts}} </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-left"> {{'tool-pages.chain-statistics.trades'| translate}} </th>
+                                    <td> {{chainStatistics.numberOfTrades}} </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-left"> {{'tool-pages.chain-statistics.transfers'| translate}} </th>
+                                    <td> {{chainStatistics.numberOfTransfers}} </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <table class="border-top table-striped text-left">
+                            <tbody>
+                                <tr>
+                                    <th class="text-left"> {{'tool-pages.chain-statistics.accounts'| translate}} </th>
+                                    <td> {{chainStatistics.numberOfAccounts}} </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-left"> {{'tool-pages.chain-statistics.active-peers'| translate}}
+                                    </th>
+                                    <td> {{chainStatistics.numberOfActivePeers}} </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-left"> {{'tool-pages.chain-statistics.ask-orders'| translate}} </th>
+                                    <td> {{chainStatistics.numberOfAskOrders}} </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-left"> {{'tool-pages.chain-statistics.assets'| translate}} </th>
+                                    <td> {{chainStatistics.numberOfAssets}} </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-left"> {{'tool-pages.chain-statistics.bids'| translate}} </th>
+                                    <td> {{chainStatistics.numberOfBids}} </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-left"> {{'tool-pages.chain-statistics.currencies'| translate}} </th>
+                                    <td> {{chainStatistics.numberOfCurrencies}} </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-left"> {{'tool-pages.chain-statistics.exchange-requests'|
+                                        translate}} </th>
+                                    <td> {{chainStatistics.numberOfExchangeRequests}} </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-left"> {{'tool-pages.chain-statistics.offers'| translate}} </th>
+                                    <td> {{chainStatistics.numberOfOffers}} </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-left"> {{'tool-pages.chain-statistics.peers'| translate}} </th>
+                                    <td> {{chainStatistics.numberOfPeers}} </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-left"> {{'tool-pages.chain-statistics.polls'| translate}}</th>
+                                    <td> {{chainStatistics.numberOfPolls}} </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-left"> {{'tool-pages.chain-statistics.transactions'| translate}}
+                                    </th>
+                                    <td> {{chainStatistics.numberOfTransactions}} </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-left"> {{'tool-pages.chain-statistics.votes'| translate}} </th>
+                                    <td> {{chainStatistics.numberOfVotes}} </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

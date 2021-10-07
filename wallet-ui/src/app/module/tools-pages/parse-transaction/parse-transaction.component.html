@@ -1,0 +1,57 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-block main-card-block pb-0">
+                <div class="border-bt">
+                    <h2 class="main-title">{{'navbar.parse-transaction'| translate}} </h2>
+                    <app-breadcrumb></app-breadcrumb>
+                </div>
+                <div class="card-body mt-4 mb-4">
+                    <div class="card-block ml-1 mr-1 ml-md-3 mr-md-3">
+                        <form #f="ngForm" class="form inner-form" name="parseTransactionForm" novalidate>
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>{{'tool-pages.parse-transaction.transaction-bytes-label'|
+                                                translate}}
+                                                <i class="fa fa-question-circle-o" container="body" placement="right"
+                                                    triggers="mouseenter:mouseleave" ngbPopover="{{'tool-pages.parse-transaction.transaction-bytes-popover'| translate}}"></i>
+                                            </label>
+                                            <div class="position-relative">
+                                                <textarea rows="5" type="text" [(ngModel)]="parseTransactionForm.bytes"
+                                                    placeholder="{{'tool-pages.parse-transaction.transaction-bytes-label'|
+                                                translate}}"
+                                                    class="form-control" name="bytes"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group mb-2">
+                                            <label>{{'tool-pages.parse-transaction.transaction-json-label'| translate}}
+                                                <i class="fa fa-question-circle-o" container="body" placement="right"
+                                                    triggers="mouseenter:mouseleave" ngbPopover="{{'tool-pages.parse-transaction.transaction-json-popover'| translate}}"></i>
+                                            </label>
+                                            <div class="position-relative">
+                                                <textarea rows="5" type="text" [(ngModel)]="parseTransactionForm.json"
+                                                    placeholder="{{'tool-pages.parse-transaction.transaction-json-label'| translate}}"
+                                                    class="form-control" name="json"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="left mb-4">
+                                    <button type="button" (click)="parseTransaction()" class="btn btn-gradient mr-1 mb-0 float-right">{{'tool-pages.parse-transaction.parse-btn'|
+                                        translate}}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

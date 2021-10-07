@@ -1,0 +1,72 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-block main-card-block">
+                <div class="border-bt">
+                    <h2 class="main-title">Delete Property Details</h2>
+                    <app-breadcrumb></app-breadcrumb>
+                    <h3 class="back-button" (click)="goBack()">
+                        <i class="fa fa-chevron-left"></i> Back
+                    </h3>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="card-block ml-1 mr-1 ml-md-3 mr-md-3">
+                    <aw-wizard [navBarLayout]="'large-filled-symbols'">
+                        <aw-wizard-step stepTitle="Confirm" [navigationSymbol]="{ symbol: '&#xe93a;', fontFamily: 'icomoon' }"
+                            class="form-bordered mt-4">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="ucsb"> Account
+                                    </div>
+                                    <h4>{{deletePropertyForm.account}}</h4>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="ucsb">Property
+                                    </div>
+                                    <h4>{{deletePropertyForm.property}}</h4>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="ucsb"> Valid
+                                    </div>
+                                    <h4>
+                                        <h4 [innerHTML]="validBytes | txIsValid"></h4>
+                                    </h4>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="ucsb"> Service Fee
+                                    </div>
+                                    <h4>{{tx_fee | amountTkn}}
+                                        <small>{{'common.xin-unit-text'| translate}}</small>
+                                    </h4>
+                                </div>
+                            </div>
+
+                            <button type="button" [ngClass]="{'btn-success': !unsignedTx, 'btn-danger': unsignedTx}"
+                                class="btn btn-raised mr-1 mb-0" (click)="unsignedTx = !unsignedTx">
+                                <i class="fa fa-key"></i> Signed Transaction
+                            </button>
+                            <hr *ngIf="unsignedTx">
+                            <div class="form-group" *ngIf="unsignedTx">
+                                <div class="position-relative sign_in_inputs">
+                                    <textarea disabled="true" rows="3" type="text" [(ngModel)]="transactionBytes" class="form-control pl-0"
+                                        name="key"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" [disabled]="!validBytes" class="btn btn-primary float-right"
+                                    (click)="broadcastTransaction(transactionBytes)">
+                                    <i class="fa fa-check"></i> Finish
+                                </button>
+                            </div>
+                        </aw-wizard-step>
+                    </aw-wizard>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

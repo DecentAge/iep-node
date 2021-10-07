@@ -1,0 +1,81 @@
+<div class="card-header">
+    <!-- <h3 class="card-title">{{campaignType}} {{'crowdfunding.show-campaigns.campaigns-tab-title'| translate}} </h3> -->
+    <h3 class="card-title" *ngIf="campaignType=== 'ALL'">{{'common.all'| translate}} {{'crowdfunding.show-campaigns.campaigns-tab-title'| translate}} </h3>
+    <h3 class="card-title" *ngIf="campaignType=== 'MY'">{{'common.my'| translate}} {{'crowdfunding.show-campaigns.campaigns-tab-title'| translate}} </h3>
+    <div class="pull-right filter-group">
+        <div class="btn-group btn-group-justified btn-group-raised">
+            <a href="javascript:void(0)" class="btn btn-sm btn-grey btn-icon" (click)="reload()" triggers="mouseenter:mouseleave"
+                container="body" placement="top" ngbPopover="{{'common.reload-filter-popover'| translate}}">
+                <i class="fa fa-refresh"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="card-body">
+    <div class="card-block">
+        <ngx-datatable class="material" [rows]="rows" [columnMode]="'force'" [rowHeight]="'auto'" [footerHeight]="50"
+            [externalPaging]="true" [count]="page.totalElements" [offset]="page.pageNumber" [limit]="page.size" (page)='setPage($event)'
+            (autoRefresh)="reload()">
+            <ngx-datatable-column prop="code" [name]="'table-header.ticker'| translate">
+                <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                    <a class="hyperlink" (click)="openCurrencyDetails(row.code)">{{value}}</a>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="issuanceHeight" [name]="'table-header.blocks'| translate">
+                <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                    {{calculateHeightDiff(value,row)}}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="issuanceHeight" [name]="'table-header.days'| translate">
+                <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                    <div [innerHTML]="calculateDays(value,row) | pollDays">
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="reserveSupply" [name]="'table-header.supply'| translate">
+                <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                    {{value | supply:row.decimals }}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="decimals" [name]="'table-header.status'| translate">
+                <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                    <div class="custom-progress">
+                        <app-progress [progressOptions]="value | pollProgress:row"></app-progress>
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="currentReservePerUnitTQT" [name]="'table-header.raised'| translate">
+                <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                    {{value * row.reserveSupply | amountTqt}}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="reserveSupply" [name]="'table-header.goal'| translate">
+                <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                    {{value * row.minReservePerUnitTQT | amountTqt}}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="currency" [name]="'table-header.actions'| translate">
+                <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                    <div class="btn-group-raised">
+                        <a class="btn btn-sm btn-grey btn-icon" (click)="goToDetails(value)" triggers="mouseenter:mouseleave"
+                            container="body" placement="top" ngbPopover="{{'common.details-table-action'| translate}} ">
+                            <i class="fa fa-list-ul"></i>
+                        </a>
+                        <a class="btn btn-sm btn-grey btn-icon" [ngClass]="{'disabled':isTradeEnabled(row)}" (click)="openTradeDesk(value)"
+                            triggers="mouseenter:mouseleave" container="body" placement="top" ngbPopover="{{'common.tradeDesk-table-action'| translate}}">
+                            <i class="fa fa-bar-chart"></i>
+                        </a>
+                        <a class="btn btn-sm btn-grey btn-icon" (click)="openFoundersCampaign(value)" triggers="mouseenter:mouseleave"
+                            container="body" placement="top" ngbPopover="{{'crowdfunding.show-campaigns.reserve-founders-table-action'| translate}}">
+                            <i class="fa fa-user"></i>
+                        </a>
+                        <a class="btn btn-sm btn-grey btn-icon" [ngClass]="{'disabled':isReserveEnabled(row)}" (click)="openReserveCampaign(value,row.decimals,row.minReservePerUnitTQT,row.code,row.reserveSupply)"
+                            triggers="mouseenter:mouseleave" container="body" placement="top" ngbPopover="{{'crowdfunding.show-campaigns.reserve-units-table-action'| translate}}">
+                            <i class="fa fa-bus"></i>
+                        </a>
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
+        </ngx-datatable>
+    </div>
+</div>

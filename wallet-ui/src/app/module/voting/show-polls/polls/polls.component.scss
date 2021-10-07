@@ -1,0 +1,36 @@
+:host ::ng-deep {
+    span.label {
+        color: #ffffff;
+        padding: 0.1rem 0.4rem;
+
+        &.label-primary {
+            background-color: #337ab7;
+            border-color: #2e6da4;
+        }
+        &.label-success {
+            background-color: #5cb85c;
+            border-color: #4cae4c;
+        }
+        &.label-info {
+            background-color: #5bc0de;
+            border-color: #46b8da;
+        }
+        &.label-warning {
+            background-color: #f0ad4e;
+            border-color: #eea236;
+        }
+        &.label-danger {
+            background-color: #d9534f;
+            border-color: #d43f3a;
+        }
+        &.label-default {
+            background-color: #fff;
+            border-color: #ccc;
+        }
+    }
+
+    .actionBtn {
+        margin: 0;
+        padding: 0 .375rem;
+    }
+}

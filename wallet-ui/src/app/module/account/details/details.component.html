@@ -1,0 +1,393 @@
+<div class="row" (autoRefresh)="getAccountDetails()">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-block main-card-block">
+                <div class="border-bt">
+                    <h2 class="main-title">{{'account.account-title'| translate}}</h2>
+                    <app-breadcrumb></app-breadcrumb>
+                </div>
+                <div class="card-body">
+                    <div class="card-block mr-md-2 ml-md-2 mt-4 form-bordered">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="ucsb">
+                                    {{'account.account-address-label'| translate}}
+                                    <i class="fa fa-question-circle-o ml-1 info-yellow" placement="right" triggers="mouseenter:mouseleave"
+                                        container="body" ngbPopover="{{'account.account-address-tooltip'| translate}}"></i>
+                                </div>
+                                <h4> {{account.accountRS}} </h4>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="ucsb">
+                                    {{'account.account-type-label'| translate}}
+                                    <i class="fa fa-question-circle-o ml-1 info-yellow" placement="right" triggers="mouseenter:mouseleave"
+                                        container="body" ngbPopover="{{'account.account-type-tooltip'| translate}}"></i>
+                                </div>
+                                <h4 class="border-0">
+                                    <span *ngIf="multisig === 'standard'">Standard</span>
+                                    <span *ngIf="multisig === 'controlled'">Controlled</span>
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="ucsb">
+                                    {{'account.confirmed-balance-label'| translate}}
+                                    <i class="fa fa-question-circle-o ml-1 info-yellow" placement="right" triggers="mouseenter:mouseleave"
+                                        container="body" ngbPopover="{{'account.confirmed-balance-tooltip'| translate}}"></i>
+                                </div>
+                                <h4> {{account.balanceTQT | amountTqt }}
+                                    <small> {{'common.xin-unit-text'| translate}}</small>
+                                </h4>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="ucsb">
+                                    {{'account.unconfirmed-balance-label'| translate}}
+                                    <i class="fa fa-question-circle-o ml-1 info-yellow" placement="right" triggers="mouseenter:mouseleave"
+                                        container="body" ngbPopover="{{'account.unconfirmed-balance-tooltip'| translate}}"></i>
+                                </div>
+                                <h4> {{account.unconfirmedBalanceTQT | amountTqt}}
+                                    <small> {{'common.xin-unit-text'| translate}}</small>
+                                </h4>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="ucsb">
+                                    {{'account.effective-balance-label'| translate}}
+                                    <i class="fa fa-question-circle-o ml-1 info-yellow" placement="right" triggers="mouseenter:mouseleave"
+                                        container="body" ngbPopover="{{'account.effective-balance-tooltip'| translate}}"></i>
+                                </div>
+                                <h4> {{account.effectiveBalance | amountTkn}}
+                                    <small> {{'common.xin-unit-text'| translate}}</small>
+                                </h4>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="ucsb">
+                                    {{'account.earned-fees-balance-label'| translate}}
+                                    <i class="fa fa-question-circle-o ml-1 info-yellow" placement="right" triggers="mouseenter:mouseleave"
+                                        container="body" ngbPopover="{{'account.earned-fees-balance-tooltip'| translate}}"></i>
+                                </div>
+                                <h4> {{account.forgedBalanceTQT | amountTqt }}
+                                    <small> {{'common.xin-unit-text'| translate}}</small>
+                                </h4>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="ucsb">
+                                    {{'account.balance-assets-label'| translate}}
+                                    <i class="fa fa-question-circle-o ml-1 info-yellow" placement="right" triggers="mouseenter:mouseleave"
+                                        container="body" ngbPopover="{{'account.balance-assets-tooltip'| translate}}"></i>
+                                </div>
+                                <h4>
+                                    {{accountAssetXmcValue | numericalString}}
+                                    <small> {{'common.xin-unit-text'| translate}}</small>
+                                </h4>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="ucsb">
+                                    {{'account.balance-currencies-label'| translate}}
+                                    <i class="fa fa-question-circle-o ml-1 info-yellow" placement="right" triggers="mouseenter:mouseleave"
+                                        container="body" ngbPopover="{{'account.balance-currencies-tooltip'| translate}}"></i>
+                                </div>
+                                <h4>
+                                    {{accountCurrencyXmcValue | numericalString}}
+                                    <small> {{'common.xin-unit-text'| translate}}</small>
+                                </h4>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="ucsb">
+                                    {{'account.balance-total-label'| translate}}
+                                    <i class="fa fa-question-circle-o ml-1 info-yellow" placement="right" triggers="mouseenter:mouseleave"
+                                        container="body" ngbPopover="{{'account.balance-total-tooltip'| translate}}"></i>
+                                </div>
+                                <h4>
+                                    {{((account.balanceTQT | quantToAmount) + accountCurrencyXmcValue +
+                                    accountAssetXmcValue ) | numericalString}}
+                                    <small> {{'common.xin-unit-text'| translate}}</small>
+                                </h4>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="ucsb">
+                                    {{'account.fiat-balance-account-label'| translate}}
+                                    <i class="fa fa-question-circle-o ml-1 info-yellow" placement="right" triggers="mouseenter:mouseleave"
+                                        container="body" ngbPopover="{{'account.fiat-balance-account-tooltip'| translate}}"></i>
+                                </div>
+                                <h4>
+                                    <app-fiat [amountTqt]="account.balanceTQT" [amount]="undefined"></app-fiat>
+                                    <small> USD</small>
+                                </h4>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="ucsb">
+                                    {{'account.fiat-balance-assets-label'| translate}}
+                                    <i class="fa fa-question-circle-o ml-1 info-yellow" placement="right" triggers="mouseenter:mouseleave"
+                                        container="body" ngbPopover="{{'account.fiat-balance-assets-tooltip'| translate}}"></i>
+                                </div>
+                                <h4>
+                                    <app-fiat [amountTqt]="undefined" [amount]="accountAssetXmcValue"></app-fiat>
+                                    <small> USD</small>
+                                </h4>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="ucsb">
+                                    {{'account.fiat-balance-currencies-label'| translate}}
+                                    <i class="fa fa-question-circle-o ml-1 info-yellow" placement="right" triggers="mouseenter:mouseleave"
+                                        container="body" ngbPopover="{{'account.fiat-balance-currencies-tooltip'| translate}}"></i>
+                                </div>
+                                <h4>
+                                    <app-fiat [amountTqt]="undefined" [amount]="accountCurrencyXmcValue"></app-fiat>
+                                    <small> USD</small>
+                                </h4>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="ucsb">
+                                    {{'account.fiat-balance-total-label'| translate}}
+                                    <i class="fa fa-question-circle-o ml-1 info-yellow" placement="right" triggers="mouseenter:mouseleave"
+                                        container="body" ngbPopover="{{'account.fiat-balance-total-tooltip'| translate}}"></i>
+                                </div>
+                                <h4>
+                                    <app-fiat [amountTqt]="undefined" [amount]="(account.balanceTQT | quantToAmount) + accountCurrencyXmcValue + accountAssetXmcValue"></app-fiat>
+                                    <small> USD</small>
+                                </h4>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="ucsb">
+                                    {{'account.account-name-label'| translate}}
+                                    <i class="fa fa-question-circle-o ml-1 info-yellow" placement="right" triggers="mouseenter:mouseleave"
+                                        container="body" ngbPopover="{{'account.account-name-tooltip'| translate}}"></i>
+                                </div>
+                                <h4>
+                                    <div class="dont-break-out">{{account.name | notSet}}</div>
+                                </h4>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="ucsb" placement="right">
+                                    {{'account.account-description-label'| translate}}
+                                    <i class="fa fa-question-circle-o ml-1 info-yellow" placement="right" triggers="mouseenter:mouseleave"
+                                        container="body" ngbPopover="{{'account.account-description-tooltip'| translate}}"></i>
+                                </div>
+                                <h4>
+                                    <div class="dont-break-out">{{account.description | notSet}}</div>
+                                </h4>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-block mr-2 ml-2 mr-md-3 ml-md-3 nav-gradient">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 pl-0 pr-0">
+                                <ul class="nav nav-pills">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" (click)="openPublicKey = !openPublicKey">{{'account.public-key-btn'|
+                                            translate}}</a>
+                                    </li>
+                                    <li class="nav-item">
+
+                                        <a class="nav-link" [ngClass]="{'disabled': !leasesDetected}" (click)="(leasesDetected) ? openBL = !openBL : null">{{'account.balance-lease-btn'|
+                                            translate}}</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" [ngClass]="{'disabled': !controlDetected}" (click)="(controlDetected) ? openCM = !openCM : null">{{'account.control-mode-btn'|
+                                            translate}}</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active">
+                                        <div class="form-group mt-2" *ngIf="openPublicKey">
+                                            <div class="position-relative">
+                                                <input disabled="true" type="text" value="{{account.publicKey | noOutbound }}"
+                                                    class="form-control readonly-note">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane active">
+                                        <table class="table mt-2" *ngIf="openBL">
+                                            <thead>
+                                                <tr>
+                                                    <th>Account</th>
+                                                    <th>Height From</th>
+                                                    <th>Height To</th>
+                                                    <th>Duration</th>
+                                                </tr>
+                                            </thead>
+                                            <tr>
+                                                <td>
+                                                    <div compile="account.currentLesseeRS | searchTerm"></div>
+                                                </td>
+                                                <td>{{ account.currentLeasingHeightFrom }}</td>
+                                                <td>{{ account.currentLeasingHeightTo }}</td>
+                                                <td>{{ account.currentLeasingHeightTo -
+                                                    account.currentLeasingHeightFrom }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div compile="account.nextLesseeRS | searchTerm"></div>
+                                                </td>
+                                                <td>{{ account.nextLeasingHeightFrom || 0 }}</td>
+                                                <td>{{ account.nextLeasingHeightTo || 0 }}</td>
+                                                <td>{{ account.nextLeasingHeightTo - account.nextLeasingHeightFrom }}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="tab-pane active">
+                                        <table class="table mt-2" *ngIf="openCM">
+                                            <thead>
+                                                <tr>
+                                                    <th> Key</th>
+                                                    <th> Value</th>
+                                                </tr>
+                                            </thead>
+                                            <tr>
+                                                <td> Model</td>
+                                                <td> {{ controlVotingModel | controlModel}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td> Quorum</td>
+                                                <td> {{ controlQuorum }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td> Max. Fees</td>
+                                                <td> {{ maxFees }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td> Min. Approval Balance</td>
+                                                <td> {{ minBalance }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td> Accounts</td>
+                                                <td> {{ WhitelistAccountRS }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td> Whitelisted</td>
+                                                <td>
+                                                    <p [innerHTML]="whitelistedRS"></p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" *isExpertView="true">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-block main-card-block">
+                <div class="border-bt">
+                    <h2 class="main-title">{{'account.set-account-info-label' | translate}}</h2>
+                </div>
+                <div class="card-header"></div>
+                <div class="card-body">
+                    <div class="card-block ml-1 mr-1 ml-md-3 mr-md-3">
+                        <aw-wizard [navBarLayout]="'large-filled-symbols'">
+                            <aw-wizard-step stepTitle="{{'common.details-step'| translate}}" [navigationSymbol]="{ symbol: '&#xe93a;', fontFamily: 'icomoon' }">
+                                <form class="form">
+                                    <div class="form-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>{{'account.account-name-label' | translate}}
+                                                        <i class="fa fa-question-circle-o ml-1 info-yellow" placement="right"
+                                                            triggers="mouseenter:mouseleave" container="body"
+                                                            ngbPopover="Account name max. 100 characters."></i>
+                                                    </label>
+                                                    <div class="input-group m-0 sign_in_inputs row form-border-bottom pb-1">
+                                                        <input type="text" name="name" [(ngModel)]="setAccountParams.name"
+                                                            (ngModelChange)="onChangeAccountInfo($event)" class="pl-0 mb-0 pt-0 pb-0 form-control"
+                                                            placeholder="{{'account.account-name-placeholder'| translate}}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>{{'account.account-description-label' | translate}}
+                                                        <i class="fa fa-question-circle-o ml-1 info-yellow" placement="right"
+                                                            triggers="mouseenter:mouseleave" container="body"
+                                                            ngbPopover="Account description with max. 1'000 characters"></i>
+                                                    </label>
+                                                    <div class="input-group m-0 sign_in_inputs row form-border-bottom pb-1">
+                                                        <input type="text" name="description" [(ngModel)]="setAccountParams.description"
+                                                            (ngModelChange)="onChangeAccountInfo($event)" class="pl-0 mb-0 pt-0 pb-0 form-control"
+                                                            placeholder="{{'account.account-description-placeholder'| translate}}" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2"></div>
+                                        <button type="button" class="btn btn-gradient mr-1 mb-0 float-right" (click)="createSetAccountInfoTransaction();"
+                                            awNextStep>
+                                            {{'common.next-btn' | translate}}<i class="icon-next_arrow"></i>
+                                        </button>
+                                    </div>
+                                </form>
+                            </aw-wizard-step>
+                            <aw-wizard-step stepTitle="{{'common.confirm-step'| translate}}" [navigationSymbol]="{ symbol: '&#xe939;', fontFamily: 'icomoon' }"
+                                class="form-bordered mt-4">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="ucsb"> {{'account.account-name-label'| translate}}
+                                        </div>
+                                        <h4> {{setAccountParams.name || " " }} </h4>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="ucsb"> {{'account.account-description-label'| translate}}
+                                        </div>
+                                        <h4> {{setAccountParams.description}} </h4>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="ucsb"> {{'common.valid-label'| translate}}
+                                        </div>
+                                        <h4 [innerHTML]="validBytes | txIsValid"></h4>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="ucsb"> {{'common.service-fee-label'| translate}}
+                                        </div>
+                                        <h4> {{tx_fee | amountTkn }}
+                                            <small>{{'common.xin-unit-text'| translate}}</small>
+                                        </h4>
+                                    </div>
+                                </div>
+
+                                <button type="button" [ngClass]="{'btn-success': !signedTx, 'btn-danger': signedTx}"
+                                    class="btn btn-raised mr-1 mb-0" (click)="signedTx = !signedTx">
+                                    <i class="fa fa-envelope-o"></i> {{'common.signed-transaction-label'| translate}}
+                                </button>
+                                <hr *ngIf="signedTx">
+                                <div class="form-group" *ngIf="signedTx">
+                                    <div class="position-relative">
+                                        <textarea rows="5" name="transactionBytes" class="form-control" disabled="true"
+                                            [ngModel]="transactionBytes"></textarea>
+                                    </div>
+                                </div>
+
+                                <button type="button" [disabled]="!validBytes" (click)="broadcastTransaction(transactionBytes)"
+                                    class="btn btn-gradient float-right">
+                                    <i class="fa fa-check"></i> {{'common.finish-btn'| translate}}
+                                </button>
+                                <button type="button" class="btn btn-gradient mr-1 float-right" awPreviousStep>
+                                    <i class="fa fa-chevron-left"></i> {{'common.previous-btn'| translate}}
+                                </button>
+                            </aw-wizard-step>
+                        </aw-wizard>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

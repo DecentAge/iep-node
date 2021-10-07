@@ -1,0 +1,29 @@
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="centering text-justify">
+            <div class="col-md-12 card-inner">
+
+                <h3> {{'signup.passphrase.passphrase-text'| translate}} </h3>
+                <h4 class="phrase"> {{ secret }} <i class="fa fa-clone" aria-hidden="true" (click)="copyText(secret, tooltip);"
+                        ngbTooltip="Copied!!" #tooltip="ngbTooltip" triggers="manual"></i></h4>
+
+                <hr>
+
+                <h3> {{'signup.passphrase.account-text'| translate}} </h3>
+                <h4> {{accountRs}} </h4>
+
+                <hr>
+
+                <h3> {{'common.public-key-label'| translate}} </h3>
+                <h4 class="key-wrapper"> {{publicKey}} </h4>
+
+                <hr>
+
+                <div class="note sign-up-note">
+                    <span>{{'common.note-text'| translate}}: </span>
+                    <small [innerHTML]="'signup.passphrase.note' | translate"></small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

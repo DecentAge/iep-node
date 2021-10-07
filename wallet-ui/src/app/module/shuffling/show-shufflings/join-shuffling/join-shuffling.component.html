@@ -1,0 +1,148 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-block main-card-block">
+                <div class="border-bt">
+                    <h2 class="main-title">{{'shuffling.join-shuffling.title'| translate}} </h2>
+                    <app-breadcrumb></app-breadcrumb>
+                    <h3 class="back-button" (click)="goBack()">
+                        <i class="fa fa-chevron-left"></i> {{'common.back-btn'| translate}}
+                    </h3>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="card-body">
+                    <div class="card-block mr-3 ml-3">
+                        <aw-wizard [navBarLayout]="'large-filled-symbols'">
+                            <aw-wizard-step stepTitle="{{'common.details-step'| translate}}" [navigationSymbol]="{ symbol: '1' }">
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <p class="alert alert-warning"> {{'shuffling.join-shuffling.warning-note'|
+                                            translate}}
+                                        </p>
+                                    </div>
+                                </div>
+                                <form class="form" #f="ngForm" novalidate>
+                                    <div class="form-body">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group m-0">
+                                                    <label>{{'shuffling.join-shuffling.shuffling-label'| translate}}
+                                                        <i class="fa fa-question-circle-o" triggers="mouseenter:mouseleave"
+                                                            placement="right" container="body" ngbPopover="{{'shuffling.join-shuffling.shuffling-popover'| translate}}">
+                                                        </i>
+                                                    </label>
+                                                    <div>
+                                                        <h6> {{joinShuffleForm.shuffling}} </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group m-0">
+                                                    <label>{{'common.holding-type-label'| translate}}
+                                                        <i class="fa fa-question-circle-o" triggers="mouseenter:mouseleave"
+                                                            placement="right" container="body" ngbPopover="{{'shuffling.join-shuffling.holding-type-popover'| translate}}">
+                                                        </i>
+                                                    </label>
+                                                    <div>
+                                                        <h6> {{joinShuffleForm.holding | holdingType}} </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group m-0">
+                                                    <label>{{'common.amount-label'| translate}}
+                                                        <i class="fa fa-question-circle-o" triggers="mouseenter:mouseleave"
+                                                            placement="right" container="body" ngbPopover="{{'shuffling.join-shuffling.amount-popover'| translate}}">
+                                                        </i>
+                                                    </label>
+                                                    <div>
+                                                        <h6> {{joinShuffleForm.amount | amountTqt}} </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group m-0">
+                                                    <label>{{'shuffling.stop-shuffling.shuffle-full-hash-label'|
+                                                        translate}}
+                                                        <i class="fa fa-question-circle-o" triggers="mouseenter:mouseleave"
+                                                            placement="right" container="body" ngbPopover="{{'shuffling.stop-shuffling.shuffle-full-hash-label'| translate}}">
+                                                        </i>
+                                                    </label>
+                                                    <div>
+                                                        <h6> {{joinShuffleForm.shufflingFullHash}} </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-actions">
+                                        <button type="button" [disabled]="f.invalid" class="btn btn-primary mr-1 mb-3 float-right"
+                                            (click)="joinShuffle()" awNextStep>
+                                            <i class="fa fa-chevron-right"></i> {{'common.next-btn'| translate}}
+                                        </button>
+                                    </div>
+                                </form>
+                            </aw-wizard-step>
+                            <aw-wizard-step stepTitle="{{'common.confirm-step'| translate}}" [navigationSymbol]="{ symbol: '2' }">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="ucsb"> {{'common.holding-type-label'| translate}}
+                                        </div>
+                                        <h4> {{joinShuffleForm.holding | holdingType}} </h4>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="ucsb"> {{'common.amount-label'| translate}}
+                                        </div>
+                                        <h4> {{joinShuffleForm.amount | amountTqt}} </h4>
+                                    </div>
+
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="ucsb"> {{'common.service-fee-label'| translate}}
+                                        </div>
+                                        <h4> {{ tx_fee | amountTkn }}
+                                            <small> {{'common.xin-unit-text'| translate}} </small>
+                                        </h4>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="ucsb"> {{'common.valid-label'| translate}}
+                                        </div>
+                                        <h4 [innerHTML]="validBytes | txIsValid"> </h4>
+                                    </div>
+                                </div>
+                                <hr>
+                                <button type="button" [ngClass]="{'btn-success': !unsignedTx, 'btn-danger': unsignedTx}"
+                                    class="btn btn-raised mr-1 mb-0" (click)="unsignedTx = !unsignedTx">
+                                    <i class="fa fa-key"></i> {{'common.signed-transaction-label'| translate}}
+                                </button>
+                                <hr *ngIf="unsignedTx">
+                                <div class="form-group" *ngIf="unsignedTx">
+                                    <div class="position-relative">
+                                        <textarea disabled="true" rows="3" type="text" [(ngModel)]="transactionBytes"
+                                            class="form-control" name="key"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="button" [disabled]="!validBytes" (click)="broadcastTransaction(transactionBytes)"
+                                        class="btn btn-primary float-right">
+                                        <i class="fa fa-check"></i> {{'common.finish-btn'| translate}}
+                                    </button>
+                                    <button type="button" class="btn btn-primary mr-1 float-right" awPreviousStep>
+                                        <i class="fa fa-chevron-left"></i> {{'common.previous-btn'| translate}}
+                                    </button>
+                                </div>
+                            </aw-wizard-step>
+                        </aw-wizard>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

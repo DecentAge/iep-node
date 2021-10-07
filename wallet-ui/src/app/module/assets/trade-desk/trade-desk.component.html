@@ -1,0 +1,446 @@
+<div class="row form-bordered">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-block main-card-block pb-0">
+                <div class="border-bt">
+                    <h2 class="main-title">{{'assets.trade-desk.title' | translate}}</h2>
+                    <app-breadcrumb></app-breadcrumb>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">{{'assets.trade-desk.asset-detail-title' | translate}}</h3>
+                            </div>
+                            <div class="card-body form-bordered">
+                                <div class="card-block">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="ucsb"> {{'assets.trade-desk.name' | translate}} </div>
+                                            <h4> {{assetDetails.name}} </h4>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="ucsb"> {{'assets.trade-desk.issuer' | translate}} </div>
+                                            <h4>
+                                                <a class="hyperlink" (click)="openAccountDetails(assetDetails.accountRS)">{{assetDetails.accountRS}}</a>
+                                            </h4>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="ucsb"> {{'assets.trade-desk.asset-id' | translate}} </div>
+                                            <h4>
+                                                <a class="hyperlink" (click)="goToDetails(assetDetails.asset)">{{assetDetails.asset}}</a>
+                                            </h4>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="ucsb"> {{'assets.trade-desk.last-price' | translate}} </div>
+                                            <h4>
+                                                {{lastTrade.priceTQT|shareToQuantity:assetDetails.decimals|quantToAmount|numericalString}}
+                                                <small> {{'common.xin-unit-text'| translate}}</small>
+                                            </h4>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="ucsb"> {{'assets.trade-desk.trades' | translate}} </div>
+                                            <h4> {{assetDetails.numberOfTrades}} </h4>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="ucsb"> {{'assets.trade-desk.transfers' | translate}} </div>
+                                            <h4> {{assetDetails.numberOfTransfers}} </h4>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="ucsb"> {{'assets.trade-desk.shareholders' | translate}} </div>
+                                            <h4>
+                                                {{assetDetails.numberOfAccounts}}
+                                            </h4>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="ucsb"> {{'assets.trade-desk.decimals' | translate}}</div>
+                                            <h5>
+                                                <div> {{assetDetails.decimals}}</div>
+                                            </h5>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="ucsb"> {{'assets.trade-desk.supply' | translate}} </div>
+                                            <h4>
+                                                <a class="hyperlink" (click)="openAssetDetails(assetDetails.asset)">
+                                                    {{'assets.trade-desk.detail-link' | translate}} </a>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">{{'assets.trade-desk.asset-chart-title' | translate}}</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="card-block">
+                                    <div id="assetChartDiv" [hidden]="!lastTrade.priceTQT" [style.width.%]="100"
+                                        [style.height.px]="300"></div>
+                                    <div [hidden]="lastTrade.priceTQT">
+                                        <p class="text-center">{{'common.no-data-available-text' | translate}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="mt-0 mb-0 ml-3 mr-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title border-0">{{'assets.trade-desk.buy-title' | translate}} >
+                                    {{assetDetails.name}}</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="card-block">
+                                    <div class="form-actions box-header box-header-green">
+                                        <span class="btn-group-raised">
+                                            <button type="button" class="btn mb-0 btn-icon btn-grey" (click)="getSellOrders()">
+                                                <i class="fa fa-refresh"></i> </button>
+                                        </span>
+                                        <span class="pull-right"><strong> {{balanceTQT | amountTqt}}
+                                                {{'common.xin-unit-text'| translate}} </strong></span>
+                                    </div>
+
+                                    <form class="form inner-form mt-3" #f1="ngForm" novalidate>
+                                        <div class="form-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group m-0">
+                                                        <label>{{'common.price-label' | translate}}</label>
+                                                        <div class="input-group ml-0 mr-0 sign_in_inputs row form-border-bottom">
+                                                            <div class="col-9">
+                                                                <input type="number" placeholder="{{'common.price-label' | translate}}"
+                                                                    class="pl-0 mb-0 pt-0 pb-0 form-control" (input)="buyFormOnChange()"
+                                                                    [(ngModel)]="buyOrderForm.price" name="price"
+                                                                    #price_buy="ngModel" minValue="0" required>
+                                                            </div>
+                                                            <div class="col-3">
+
+                                                                <span class="input-group-text text-yellow">{{'common.xin-unit-text'
+                                                                    | translate}}</span>
+
+                                                            </div>
+                                                        </div>
+                                                        <div *ngIf="price_buy?.invalid && (price_buy?.dirty || price_buy?.touched)"
+                                                            class="input-error">
+                                                            <div *ngIf="price_buy?.errors.required">
+                                                                {{'common.price-required' | translate}}
+                                                            </div>
+                                                            <div *ngIf="price_buy?.errors.minValue && !price_buy?.errors.required">
+                                                                {{'common.price-greater' | translate}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group m-0">
+                                                        <label>{{'common.quantity-label' |
+                                                            translate}}</label>
+                                                        <div class="input-group ml-0 mr-0">
+                                                            <input type="number" placeholder="{{'common.quantity-label' | translate}}"
+                                                                class="form-control" (input)="buyFormOnChange()"
+                                                                [(ngModel)]="buyOrderForm.quantity" name="quantity"
+                                                                #quantity_buy="ngModel" minValue="0" required>
+                                                        </div>
+                                                        <div *ngIf="quantity_buy?.invalid && (quantity_buy?.dirty || quantity_buy?.touched)"
+                                                            class="input-error">
+                                                            <div *ngIf="quantity_buy?.errors.required">
+                                                                {{'common.quantity-required'| translate}}
+                                                            </div>
+                                                            <div *ngIf="quantity_buy?.errors.minValue && !quantity_buy?.errors.required">
+                                                                {{'assets.issue-asset.quantity-greater'| translate}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group m-0">
+                                                        <label>{{'common.total-text' | translate}}</label>
+                                                        <div class="input-group ml-0 mr-0 sign_in_inputs row form-border-bottom">
+                                                            <div class="col-9 pl-0">
+                                                                <input type="text" placeholder="{{'common.total-text' | translate}}"
+                                                                    disabled class="pl-0 mb-0 pt-0 pb-0 form-control"
+                                                                    [(ngModel)]="buyOrderForm.totalPrice" name="totalPrice"
+                                                                    #totalPrice_buy="ngModel">
+                                                            </div>
+                                                            <div class="col-3">
+
+                                                                <span class="input-group-text text-yellow">{{'common.xin-unit-text'
+                                                                    | translate}}</span>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <button type="button" [disabled]="f1.invalid && !enableBuy" class="btn btn-raised mt-4 btn-gradient btn-green btn-create"
+                                                        (click)="placeOrderClick(buyOrderForm,'bid')">
+                                                        {{'assets.trade-desk.buy-btn' | translate}}
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <h3 class="card-title mb-3 mt-3">{{'assets.trade-desk.sell-orders-title' |
+                                        translate}}</h3>
+                                    <ngx-datatable [rows]="sellOrdersRows" [columnMode]="'standard'" [scrollbarH]="true"
+                                        [footerHeight]="50" [rowHeight]="'auto'" [externalPaging]="true" [count]="sellOrdersPage.totalElements"
+                                        [offset]="sellOrdersPage.pageNumber" [limit]="sellOrdersPage.size" (page)='getSellOrders($event)'
+                                        (autoRefresh)="getSellOrders()">
+                                        <ngx-datatable-column prop="priceTQT" [name]="'table-header.price-per-share' | translate">
+                                            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                                {{(value | pricePerShareSellOrder:decimals) * (value | quantToAmount) |
+                                                numericalString}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column prop="quantityQNT" [name]="'table-header.quantity' | translate">
+                                            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                                {{value | quantityToShare:decimals | numericalString}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column prop="priceTQT" [name]="'table-header.sum' | translate">
+                                            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                                {{(value | quantToAmount) * row.quantityQNT | numericalString}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column prop="priceTQT" [name]="'table-header.actions' | translate">
+                                            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                                <div class="btn-group-raised">
+                                                    <a class="btn btn-sm btn-grey btn-icon" (click)="fillBuyOrderForm(row)">
+                                                        <i class="fa fa-check-circle"></i>
+                                                    </a>
+                                                </div>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                    </ngx-datatable>
+
+                                    <!-- <p *ngIf="!hasSellOffers()">
+									   <i class="fa fa-info-circle" aria-hidden="true"></i> &nbsp; No open sell offers. You cannot buy this currency now, but you could publish an exchange offer
+									   instead, and wait for others to fill it.
+									 </p>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title border-0">{{'assets.trade-desk.sell-title' | translate}} >
+                                    {{assetDetails.name}}</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="card-block">
+                                    <div class="form-actions box-header  box-header-red">
+                                        <span class="btn-group-raised">
+                                            <button type="button" class="btn mb-0 btn-icon btn-grey" (click)="getBuyOrders()">
+                                                <i class="fa fa-refresh"></i> </button>
+                                        </span>
+                                        <span class="pull-right"><strong> {{unconfirmedQuantityQNT
+                                                |quantityToShare:assetDetails.decimals | amountTkn }} </strong><small>{{assetDetails.name}}</small></span>
+                                    </div>
+
+                                    <form class="form inner-form mt-3" #f2="ngForm" novalidate>
+                                        <div class="form-body">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group m-0">
+                                                        <label>{{'common.price-label' | translate}}</label>
+                                                        <div class="input-group ml-0 mr-0  sign_in_inputs row form-border-bottom">
+                                                            <div class="col-9">
+                                                                <input type="number" placeholder="{{'common.price-label' | translate}}"
+                                                                    class="pl-0 mb-0 pt-0 pb-0 form-control" (input)="sellFormOnChange()"
+                                                                    [(ngModel)]="askOrderForm.price" name="price"
+                                                                    #price="ngModel" minValue="0" required>
+                                                            </div>
+                                                            <div class="col-3">
+
+                                                                <span class="input-group-text text-yellow">{{'common.xin-unit-text'
+                                                                    | translate}}</span>
+
+                                                            </div>
+
+                                                        </div>
+                                                        <div *ngIf="price?.invalid && (price?.dirty || price?.touched)"
+                                                            class="input-error">
+                                                            <div *ngIf="price?.errors.required">
+                                                                {{'common.price-required' | translate}}
+                                                            </div>
+                                                            <div *ngIf="price?.errors.minValue && !price?.errors.required">
+                                                                {{'common.price-greater' | translate}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group m-0">
+                                                        <label>{{'common.quantity-label' | translate}}</label>
+                                                        <div class="input-group ml-0 mr-0 ">
+                                                            <input type="number" placeholder="{{'common.quantity-label' | translate}}"
+                                                                class="form-control" (input)="sellFormOnChange()"
+                                                                [(ngModel)]="askOrderForm.quantity" name="quantity"
+                                                                #quantity="ngModel" minValue="0" required>
+                                                        </div>
+                                                        <div *ngIf="quantity?.invalid && (quantity?.dirty || quantity?.touched)"
+                                                            class="input-error">
+                                                            <div *ngIf="quantity?.errors.required">
+                                                                {{'common.quantity-required'| translate}}
+                                                            </div>
+                                                            <div *ngIf="quantity?.errors.minValue && !quantity?.errors.required">
+                                                                {{'assets.issue-asset.quantity-greater'| translate}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group m-0">
+                                                        <label>{{'common.total-text' | translate}}</label>
+                                                        <div class="input-group ml-0 mr-0  sign_in_inputs row form-border-bottom">
+                                                            <div class="col-9 pl-0">
+                                                                <input type="text" placeholder="{{'common.total-text' | translate}}"
+                                                                    disabled class="pl-0 mb-0 pt-0 pb-0 form-control"
+                                                                    [(ngModel)]="askOrderForm.totalPrice" name="totalPrice"
+                                                                    #totalPrice="ngModel">
+                                                            </div>
+                                                            <div class="col-3">
+
+                                                                <span class="input-group-text text-yellow">{{'common.xin-unit-text'
+                                                                    | translate}}</span>
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <button type="button" [disabled]="f2.invalid && !enableSell" class="btn btn-raised mt-4 btn-gradient btn-red btn-create"
+                                                        (click)="placeOrderClick(askOrderForm,'ask')">
+                                                        {{'assets.trade-desk.sell-btn' | translate}}
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </form>
+                                    <h3 class="card-title mb-3 mt-3">{{'assets.trade-desk.buy-orders-title' |
+                                        translate}}</h3>
+                                    <ngx-datatable [rows]="buyOrdersRows" [columnMode]="'standard'" [scrollbarH]="true"
+                                        [footerHeight]="50" [rowHeight]="'auto'" [externalPaging]="true" [count]="buyOrdersPage.totalElements"
+                                        [offset]="buyOrdersPage.pageNumber" [limit]="buyOrdersPage.size" (page)='getBuyOrders($event)'
+                                        (autoRefresh)="getBuyOrders()">
+                                        <ngx-datatable-column prop="priceTQT" [name]="'table-header.price-per-share' | translate">
+                                            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                                {{value | pricePerShareBuyOrder:decimals}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column prop="quantityQNT" [name]="'table-header.quantity' | translate">
+                                            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                                {{value | quantityToShare:decimals | numericalString}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column prop="priceTQT" [name]="'table-header.sum' | translate">
+                                            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                                {{((value | quantToAmount) | shareToQuantity: decimals) *
+                                                (row.quantityQNT | quantityToShare : decimals) | numericalString }}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column prop="priceTQT" [name]="'table-header.actions' | translate">
+                                            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                                <div class="btn-group-raised">
+                                                    <a class="btn btn-sm btn-grey btn-icon" (click)="fillSellOrderForm(row)">
+                                                        <i class="fa fa-check-circle"></i>
+                                                    </a>
+                                                </div>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                    </ngx-datatable>
+
+                                    <!--<p *ngIf="!hasBuyOffers()">
+									  <i class="fa fa-info-circle" aria-hidden="true"></i> &nbsp; No open buy offers. You cannot sell this currency now, but you could publish an exchange offer instead, and wait for others to fill it.
+									</p>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="mt-0 mb-0 ml-3 mr-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">{{'assets.last-trades.title' | translate}}</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="card-block">
+                                    <ngx-datatable [rows]="tradesRows" [columnMode]="'standard'" [scrollbarH]="true"
+                                        [footerHeight]="50" [rowHeight]="'auto'" [externalPaging]="true" [count]="tradesPage.totalElements"
+                                        [offset]="tradesPage.pageNumber" [limit]="tradesPage.size" (page)='getAssetLastTrades($event)'
+                                        (autoRefresh)="getAssetLastTrades()">
+                                        <ngx-datatable-column prop="timestamp" [name]="'table-header.date' | translate">
+                                            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                                {{value | timestamp}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column prop="quantityQNT" [name]="'table-header.quantity' | translate">
+                                            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                                {{value | unitsToQuantity:row.decimals}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column prop="priceTQT" [name]="'table-header.price' | translate">
+                                            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                                {{value | rateTqtToPrice:row.decimals}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column prop="priceTQT" [name]="'table-header.sum' | translate">
+                                            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                                {{value | priceTqtToSum:row}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column prop="buyerRS" [name]="'table-header.buyer' | translate">
+                                            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                                <a class="hyperlink" (click)="openAccountDetails(value)">{{value}}</a>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column prop="sellerRS" [name]="'table-header.seller' | translate">
+                                            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                                <a class="hyperlink" (click)="openAccountDetails(value)">{{value}}</a>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column prop="tradeType" [name]="'table-header.type' | translate">
+                                            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                                <div [innerHtml]="value | buySell"></div>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column prop="transaction" [name]="'table-header.actions' | translate">
+                                            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                                <div class="btn-group-raised">
+                                                    <a class="btn btn-sm btn-grey btn-icon" (click)="goToDetails(row.askOrder)"
+                                                        *ngIf="row.tradeType === 'buy'" triggers="mouseenter:mouseleave"
+                                                        container="body" placement="top" [ngbPopover]="'common.details-table-action' | translate">
+                                                        <i class="fa fa-list-ul"></i>
+                                                    </a>
+                                                    <a class="btn btn-sm btn-grey btn-icon" (click)="goToDetails(row.bidOrder)"
+                                                        *ngIf="row.tradeType === 'sell'" triggers="mouseenter:mouseleave"
+                                                        container="body" placement="top" [ngbPopover]="'common.details-table-action' | translate">
+                                                        <i class="fa fa-list-ul"></i>
+                                                    </a>
+                                                </div>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                    </ngx-datatable>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

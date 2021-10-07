@@ -1,0 +1,94 @@
+<div class="card-header">
+    <h3 class="card-title">{{'account.transactions.completed-transactions-title'| translate}}</h3>
+    <div class="pull-right filter-group">
+        <div class="btn-group btn-group-justified btn-group-raised">
+            <a href="javascript:void(0)" class="btn btn-sm btn-grey btn-icon" (click)="removeFilter()"
+               triggers="mouseenter:mouseleave" container="body"
+               placement="top" ngbPopover="{{'common.remove-filter-popover'| translate}}">
+                <i class="icon-remove_filter"></i>
+            </a>
+            <ng-container *ngFor="let filter of filters">
+                <a href="javascript:void(0)" (click)="applyFilter(filter)"
+                   class="btn btn-sm btn-grey filter btn-icon"
+                   [ngClass]="{'active':filter.isEnabled}" triggers="mouseenter:mouseleave" container="body"
+                   *isAppEnabled="filter.appName"
+                   placement="top" ngbPopover="{{'account.transactions.'+ filter.popoverText | translate}}">
+                    <i [class]="filter.icon"></i>
+                </a>
+            </ng-container>
+            <a href="javascript:void(0)" class="btn btn-sm btn-grey btn-icon" (click)="reload()" triggers="mouseenter:mouseleave"
+               container="body"
+               placement="top" ngbPopover="{{'common.reload-filter-popover'| translate}}">
+                <i class="icon-reload"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="card-body">
+    <div class="card-block">
+        <ngx-datatable class="material" [rows]="rows" [columnMode]="'force'" [rowHeight]="'auto'" [footerHeight]="50"
+                       [externalPaging]="true"
+                       [count]="page.totalElements" [offset]="page.pageNumber" [limit]="page.size"
+                       (page)='setPage($event)' (autoRefresh)="reload()">
+            <ngx-datatable-column prop="timestamp" [name]="'table-header.date'| translate" headerClass="width-10-per" cellClass="width-10-per">
+                <ng-template let-value="value" ngx-datatable-cell-template>
+                    {{value | timestamp}}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="type" [name]="'table-header.type'| translate" headerClass="width-5-per" cellClass="width-5-per">
+                <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                    <div [innerHTML]="value | transactionIconSubType: row.subtype">
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="amountTQT" [name]="'table-header.amount'| translate" headerClass="width-7-per" cellClass="width-7-per">
+                <ng-template let-value="value" ngx-datatable-cell-template>
+                    {{value | amountTqt }}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="senderRS" name="" headerClass="width-5-per" cellClass="width-5-per">
+                <ng-template let-value="value" ngx-datatable-cell-template>
+                    <div [innerHTML]="value | txDirection: accountRs">
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="feeTQT" [name]="'table-header.fee'| translate" headerClass="width-7-per" cellClass="width-7-per">
+                <ng-template let-value="value" ngx-datatable-cell-template>
+                    {{value | amountTqt }}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'table-header.conf'| translate" prop="confirmations" headerClass="width-6-per" cellClass="width-6-per">
+                <ng-template let-value="value" ngx-datatable-cell-template>
+                    <div [innerHTML]="value | transactionConf">
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="senderRS" [name]="'table-header.sender'| translate" headerClass="width-25-per" cellClass="width-25-per">
+                <ng-template let-value="value" ngx-datatable-cell-template>
+                    <a class="hyperlink" (click)="accountDetail(value)">{{value}}</a>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="phased" [name]="'table-header.msg'| translate" headerClass="width-5-per" cellClass="width-5-per">
+                <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                    <div [innerHTML]="row | hasMessage: accountRs">
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="recipientRS" [name]="'table-header.recipient'| translate" headerClass="width-25-per" cellClass="width-25-per">
+                <ng-template let-value="value" ngx-datatable-cell-template>
+                    <a class="hyperlink" (click)="accountDetail(value)">{{value}}</a>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="timestamp" [name]="'table-header.actions'| translate" headerClass="width-5-per" cellClass="width-5-per">
+                <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                    <div class="btn-group-raised text-center">
+                        <a class="btn btn-sm btn-grey btn-icon" (click)="goToDetails(row)" triggers="mouseenter:mouseleave"
+                           container="body" placement="top" ngbPopover="{{'common.details-table-action'| translate}}">
+                            <i class="fa fa-list-ul"></i>
+                        </a>
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
+        </ngx-datatable>
+    </div>
+</div>

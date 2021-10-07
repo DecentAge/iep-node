@@ -1,0 +1,113 @@
+@import "scss/variables";
+@import "../../../node_modules/bootstrap/scss/bootstrap";
+@import "scss/core/palette";
+@import "scss/app-variables";
+@import "scss/mixins";
+@import "scss/custom-bootstrap";
+@import "scss/core";
+@import "scss/fonts/weather-icons";
+@import "scss/plugins";
+@import "scss/demo";  // Remove this SCSS from production
+@import "scss/custom";  // Remove this SCSS from production
+
+aw-wizard-navigation-bar.horizontal.large-filled-symbols ul.steps-indicator li:after{
+  background-color: #f1f2f3 !important;
+  color: #cacaca !important;
+      font-size: 20px !important;
+}
+aw-wizard-navigation-bar.horizontal.large-filled-symbols ul.steps-indicator li.current:after {
+ @include set-gradient-background-color(#e72d45, #f3931b);
+  color: #ffffff !important;
+}
+aw-wizard-navigation-bar.horizontal.large-filled-symbols ul.steps-indicator li.default:after {
+  color: #ffffff !important;
+}
+aw-wizard-navigation-bar.horizontal.large-filled-symbols ul.steps-indicator li.done:after {
+  background-color: #e72d45 !important;
+  color: #ffffff !important;
+}
+aw-wizard-navigation-bar.horizontal.large-filled-symbols ul.steps-indicator li.editing:after {
+  background-color: theme-color("danger") !important;
+  color: #ffffff !important;
+}
+aw-wizard-navigation-bar.horizontal.large-filled-symbols ul.steps-indicator li:not(:last-child):before {
+    background-color: #f1f2f3 !important;
+    height: 6px!important;
+    top: -29px!important;
+}
+aw-wizard-navigation-bar.horizontal ul.steps-indicator li div a {
+    color: #333 !important;
+    line-height: 20px !important;
+    font-size: 15px !important;
+    text-transform: none !important;
+    font-weight: 500 !important;
+    letter-spacing: 1.2px !important;
+}
+.app-sidebar .sidebar-content, .off-canvas-sidebar .sidebar-content {
+  height: calc(100vh - 115px);
+}
+.btn-outline-danger {
+  padding: 3px 6px;
+}
+
+.datatable-header-cell-template-wrap, .datatable-body-cell-label {
+  text-align: center;
+}
+
+.ngx-datatable .datatable-body .datatable-scroll,
+.ngx-datatable.fixed-header .datatable-header .datatable-header-inner,
+.ngx-datatable .datatable-body .datatable-body-row,
+.ngx-datatable .datatable-row-center{
+  width: 100% !important;
+}
+.ngx-datatable .datatable-header {
+  height: auto !important;
+}
+.ngx-datatable .datatable-header .datatable-header-cell.sortable .datatable-header-cell-wrapper {
+  white-space: normal;
+}
+.short-links{
+  cursor: pointer;
+  &:hover {
+    box-shadow: 0 0px 0px 0 rgb(255, 255, 255), 0 5px 15px 0 theme-color("primary") !important;
+  }
+  .media-body.text-center{
+    font-size: 18px;
+    line-height: 47px;
+  }
+}
+//TODO: remove class ng2-smart-table-title after smart table removed from app
+.datatable-header-cell-label, .ng2-smart-title a {
+  color: theme-color("dark") !important;
+}
+.nav-tabs .nav-link.active {
+  border-top: 3px solid theme-color("primary") !important;
+}
+
+
+.ngx-datatable {
+  .empty-row {
+    padding: 0.5rem 1rem;
+    text-align: center;
+    color: #9d9faf;
+  }
+  .datatable-body-cell{
+    border-right: 1px solid #f5f5f0;
+    padding: 15px 5px;
+  }
+  .datatable-body-cell, .datatable-header-cell{
+    -webkit-box-align: center; 
+    -ms-flex-align: center;
+    align-items: center; 
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center; 
+    display: -webkit-box !important;
+      display: -ms-flexbox !important;
+    display: flex !important; 
+  }
+  .datatable-body .datatable-body-row {
+    border-left: 1px solid #f5f5f0;
+  }
+
+}

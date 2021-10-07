@@ -1,0 +1,360 @@
+<div class="row" [hidden]="openBookMarks">
+    <div class="col-md-12">
+           
+        <div class="card">
+
+            <div class="card-block main-card-block" *ngIf="!hasControl">
+                <div class="border-bt">
+                    <h2 class="main-title">{{'account.control.control-title'| translate}}</h2>
+                    <app-breadcrumb></app-breadcrumb>
+                </div>
+            </div>
+            <div class="card-block main-card-block" *ngIf="hasControl">
+                    <div class="border-bt">
+                        <h2 class="main-title">Remove Account Control Details</h2>
+                        <app-breadcrumb></app-breadcrumb>
+                    </div>
+                </div>
+            <div class="card-body">
+                    <div class="block-button">
+                        <a class="btn btn-gradient ml-4 mb-0" *ngIf="hasControl && !removeControlModalFlag" (click)="removeControlModal();" href="javascript:void(0)">
+                            <i class="fa fa-times"></i>Remove Account Control</a>
+                    </div>
+                <div class="card-block ml-md-3 mr-md-3 ml-1 mr-1 mt-0">
+                    <aw-wizard [navBarLayout]="'large-filled-symbols'" *ngIf="!hasControl">
+                        <aw-wizard-step stepTitle="{{'common.details-step'| translate}}" [navigationSymbol]="{ symbol: '1' }">
+                            <form class="form inner-form" #f="ngForm" novalidate>
+                                <div class="form-body">
+                                    <div class="block-button">
+                                                            <a class="btn btn-gradient mt-3 mb-0" *ngIf="!hasControl" (click)="addNewAccount();" href="javascript:void(0)">
+                                                                <i class="fa fa-user-plus"></i>{{'account.control.add-approval-account-btn'|
+                                                                    translate}}</a>
+                                                        </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mt-3" *ngFor="let account of setAccountControlForm.approveAccounts; trackBy:indexTracker; index as i">
+                                            <div class="form-group mb-0">
+                                                <div class="input-group m-0 sign_in_inputs row form-border-bottom pb-1">
+                                                    <div class="col-10 col-lg-11">
+                                                        <input type="text" class="pl-0 mb-0 pt-0 pb-0 form-control"
+                                                            placeholder="{{ 'common.xin-account-key-placeholder' | translate}}"
+                                                            name="account-{{i}}" [(ngModel)]="setAccountControlForm.approveAccounts[i].value"
+                                                            #accountRs="ngModel" required>
+                                                    </div>
+                                                    <div class="col-2 col-lg-1 pl-0">
+                                                        <span class="btn btn-grey input-group-text" triggers="mouseenter:mouseleave"
+                                                            placement="top" (click)="loadBookmarkView(i)" container="body"
+                                                            [ngbPopover]="'common.open-bookmark-tooltip' | translate">
+                                                            <i class="fa fa-address-card"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <div *ngIf="accountRs?.invalid && (accountRs?.dirty || accountRs?.touched)"
+                                                    class="input-error">
+                                                    <div *ngIf="accountRs?.errors.required">
+                                                        Account RS is required
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-3">
+                                        <div class="col-md-6">
+                                            <div class="form-group m-0">
+                                                <label>{{'account.control.minimum-approval-account-label'| translate}}
+                                                    <i class="fa fa-question-circle-o" triggers="mouseenter:mouseleave"
+                                                        placement="right" container="body" ngbPopover="{{'account.control.minimum-approval-account-label-popover'| translate}}">
+                                                    </i>
+                                                </label>
+                                                <div class="input-group m-0 sign_in_inputs row form-border-bottom pb-1">
+                                                    <div class="col-11">
+                                                        <input type="number" class="pl-0 mb-0 pt-0 pb-0 form-control"
+                                                            [(ngModel)]="setAccountControlForm.quorum" name="quorum"
+                                                            #quorum="ngModel" placeholder="2" required minValue="2"
+                                                            maxValue="9">
+                                                    </div>
+
+                                                    <div class="col-1 pl-0">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-users"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="quorum?.invalid && (quorum?.dirty || quorum?.touched)"
+                                                    class="input-error">
+                                                    <div *ngIf="quorum?.errors.required">
+                                                        {{'account.control.quorum-required-smg'| translate}}
+                                                    </div>
+                                                    <div *ngIf="quorum?.errors.minValue && !quorum?.errors.required">
+                                                        {{'account.control.quorum-greater-smg'| translate}}
+                                                    </div>
+                                                    <div *ngIf="quorum?.errors.maxValue && !quorum?.errors.required">
+                                                        {{'account.control.quorum-less-smg'| translate}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="left mt-4">
+                                    <button [disabled]="f.invalid" type="button" class="btn btn-gradient mr-1 mb-0 float-right"
+                                        (click)="validateForm()" awNextStep>
+                                        <i class="fa fa-chevron-right"></i>{{'common.next-btn'| translate}}
+                                    </button>
+                                </div>
+                            </form>
+                        </aw-wizard-step>
+                        <aw-wizard-step stepTitle="{{'common.confirm-step'| translate}}" [navigationSymbol]="{ symbol: '2' }"
+                            class="form-bordered mt-4">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="ucsb">{{'account.control.control-model-label'| translate}}
+                                    </div>
+                                    <h4> Account Approval </h4>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="ucsb">{{'account.control.control-approval-accounts-label'| translate}}
+                                    </div>
+                                    <div>
+                                        <h4 *ngFor="let account of setAccountControlForm.approveAccounts">
+                                            {{account.value}}
+                                        </h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="ucsb">{{'account.control.quorum-label'| translate}}
+                                    </div>
+                                    <h4> {{setAccountControlForm.quorum}} </h4>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="ucsb">{{'common.valid-label'| translate}}
+                                    </div>
+                                    <h4 [innerHTML]="validBytes | txIsValid"></h4>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="ucsb">{{'common.service-fee-label'| translate}}
+                                    </div>
+                                    <h4>{{tx_fee | amountTkn}}
+                                        <small> {{'common.xin-unit-text'| translate}}</small>
+                                    </h4>
+                                </div>
+                            </div>
+
+                            <button type="button" [ngClass]="{'btn-success': !unsignedTx, 'btn-danger': unsignedTx}"
+                                class="btn btn-raised mr-1 mb-0" (click)="unsignedTx = !unsignedTx">
+                                <i class="fa fa-key"></i> {{'common.signed-transaction-label'| translate}}
+                            </button>
+
+                            <div class="form-group mt-4" *ngIf="unsignedTx">
+                                <div class="position-relative sign_in_inputs">
+                                    <textarea disabled="true" rows="3" type="text" [(ngModel)]="transactionBytes" class="form-control pl-0"
+                                        name="key"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" [disabled]="!validBytes" class="btn btn-gradient float-right"
+                                    (click)="broadcastTransaction(transactionBytes)">
+                                    <i class="fa fa-check"></i>{{'common.finish-btn'| translate}}
+                                </button>
+                                <button type="button" class="btn btn-gradient mr-1 float-right" awPreviousStep>
+                                    <i class="fa fa-chevron-left"></i>{{'common.previous-btn'| translate}}
+                                </button>
+                            </div>
+                        </aw-wizard-step>
+                    </aw-wizard>
+                    <aw-wizard [navBarLayout]="'large-filled-symbols'" *ngIf="removeControlModalFlag">
+                            <aw-wizard-step stepTitle="{{'common.details-step'| translate}}" [navigationSymbol]="{ symbol: '1' }">
+                                <form class="form inner-form" #f1="ngForm" novalidate>
+                                    <div class="form-body mt-4 form-bordered">
+                                        <div class="row">
+                                                <div class="col-md-6">
+                                                        <div class="ucsb">Controlled Account
+                                                        </div>
+                                                        <h4> {{ jsonControl.accountRS }} </h4>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="ucsb">Control Model
+                                                        </div>
+                                                        <div>
+                                                            <h4> {{ jsonControl.votingModel|controlModel }} Approval </h4>
+                                                        </div>
+                                                    </div>
+                                        </div>
+                                    </div>
+                                    <div class="left mt-4">
+                                        <button [disabled]="f1.invalid" type="button" class="btn btn-gradient mr-1 mb-0 float-right"
+                                            (click)="removeAccountControl()" awNextStep>
+                                            <i class="fa fa-chevron-right"></i>{{'common.next-btn'| translate}}
+                                        </button>
+                                    </div>
+                                </form>
+                            </aw-wizard-step>
+                            <aw-wizard-step stepTitle="{{'common.confirm-step'| translate}}" [navigationSymbol]="{ symbol: '2' }"
+                                class="form-bordered mt-4">
+                                <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="ucsb">Controlled Account
+                                            </div>
+                                            <h4> {{removeAccountControlForm.jsonControl.accountRS }} </h4>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="ucsb">Control Model
+                                            </div>
+                                            <div>
+                                                <h4>{{ removeAccountControlForm.jsonControl.votingModel|controlModel }} Approval
+                                                </h4>
+                                            </div>
+                                        </div>
+                                </div>
+    
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="ucsb">{{'common.valid-label'| translate}}
+                                        </div>
+                                        <h4 [innerHTML]="validBytes | txIsValid"></h4>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="ucsb">{{'common.service-fee-label'| translate}}
+                                        </div>
+                                        <h4>{{tx_fee | amountTkn}}
+                                            <small> {{'common.xin-unit-text'| translate}}</small>
+                                        </h4>
+                                    </div>
+                                </div>
+    
+                                <button type="button" [ngClass]="{'btn-success': !unsignedTx, 'btn-danger': unsignedTx}"
+                                    class="btn btn-raised mr-1 mb-0" (click)="unsignedTx = !unsignedTx">
+                                    <i class="fa fa-key"></i> {{'common.signed-transaction-label'| translate}}
+                                </button>
+    
+                                <div class="form-group mt-4" *ngIf="unsignedTx">
+                                    <div class="position-relative sign_in_inputs">
+                                        <textarea disabled="true" rows="3" type="text" [(ngModel)]="transactionBytes" class="form-control pl-0"
+                                            name="key"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="button" [disabled]="!validBytes" class="btn btn-gradient float-right"
+                                        (click)="broadcastTransaction(transactionBytes)">
+                                        <i class="fa fa-check"></i>{{'common.finish-btn'| translate}}
+                                    </button>
+                                    <button type="button" class="btn btn-gradient mr-1 float-right" awPreviousStep>
+                                        <i class="fa fa-chevron-left"></i>{{'common.previous-btn'| translate}}
+                                    </button>
+                                </div>
+                            </aw-wizard-step>
+                        </aw-wizard>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" *ngIf="openBookMarks">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">{{'account.my-bookmarks.my-bookmark-title'| translate}}</h4>
+                <h5 class="back-button" (click)="goBack()">
+                    <i class="fa fa-chevron-left"></i> {{'common.back-btn'| translate}}
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="card-block ml-1 mr-1 ml-md-3 mr-md-3">
+                    <h5 class="mb-1">{{'account.my-bookmarks.bookmark-list-label'| translate}}</h5>
+                    <app-bookmark-list [viewFor]="'control'" (selectEvent)="bookmarkSelected($event)"></app-bookmark-list>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" *ngIf="!openBookMarks">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">{{'account.control.pending-approval-request-title'| translate}}</h4>
+                <div class="pull-right filter-group">
+                    <div class="btn-group btn-group-justified btn-group-raised">
+                        <a href="javascript:void(0)" class="btn btn-sm btn-grey" (click)="reload()" triggers="mouseenter:mouseleave"
+                            container="body" placement="top" ngbPopover="{{'common.reload-filter-popover'| translate}}">
+                            <i class="fa fa-refresh"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="card-block">
+                    <ngx-datatable class="material" [rows]="rows" [columnMode]="'force'" [rowHeight]="'auto'"
+                        [footerHeight]="50" [externalPaging]="true" [count]="page.totalElements" [offset]="page.pageNumber"
+                        [limit]="page.size" (page)='setPage($event)' (autoRefresh)="reload()">
+                        <ngx-datatable-column prop="timestamp" [name]="'table-header.date'| translate">
+                            <ng-template let-value="value" ngx-datatable-cell-template>
+                                {{value | timestamp}}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column prop="type" [name]="'table-header.type'| translate">
+                            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                <div [innerHTML]="value | transactionIconSubType: row.subtype">
+                                </div>
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column prop="amountTQT" [name]="'table-header.amount'| translate">
+                            <ng-template let-value="value" ngx-datatable-cell-template>
+                                {{value | amountTqt }}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column prop="confirmations" [name]="'table-header.conf'| translate">
+                            <ng-template let-value="value" ngx-datatable-cell-template>
+                                <div [innerHTML]="value | transactionConf">
+                                </div>
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column prop="confirmations" [name]="'table-header.message'| translate">
+                            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                <div [innerHTML]="value | isMessage: row.subtype">
+                                </div>
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column prop="attachment.phasingFinishHeight" [name]="'table-header.height'| translate">
+                            <ng-template let-value="value" ngx-datatable-cell-template>
+                                {{value}}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column prop="senderRS" [name]="'table-header.sender'| translate">
+                            <ng-template let-value="value" ngx-datatable-cell-template>
+                                <a class="hyperlink" (click)="accountDetail(value)">{{value}}</a>
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column prop="recipientRS" [name]="'table-header.recipient'| translate">
+                            <ng-template let-value="value" ngx-datatable-cell-template>
+                                <a class="hyperlink" (click)="accountDetail(value)">{{value}}</a>
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column prop="approvals" [name]="'table-header.approvals'| translate">
+                            <ng-template let-value="value" ngx-datatable-cell-template>
+                                <a>{{value}}</a>
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column prop="timestamp" [name]="'table-header.actions'| translate">
+                            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                <div class="btn-group-raised">
+                                    <a class="btn btn-sm btn-grey btn-icon" (click)="goToDetails(row)" triggers="mouseenter:mouseleave"
+                                        container="body" placement="top" ngbPopover="{{'common.details-table-action'| translate}}">
+                                        <i class="fa fa-list-ul"></i>
+                                    </a>
+                                    <a class="btn btn-sm btn-grey btn-icon" (click)="goToApproveRequest(row)" triggers="mouseenter:mouseleave"
+                                        container="body" placement="top" ngbPopover="{{'account.control.approve-request-popover'| translate}}">
+                                        <i class="fa fa-unlock"></i>
+                                    </a>
+                                </div>
+                            </ng-template>
+                        </ngx-datatable-column>
+                    </ngx-datatable>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

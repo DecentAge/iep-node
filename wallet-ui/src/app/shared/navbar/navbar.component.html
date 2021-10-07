@@ -1,0 +1,154 @@
+<!-- Navbar (Header) Starts -->
+<nav class="navbar navbar-expand navbar-light bg-faded" (autoRefresh)="ngOnInit">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle navbar-toggle-1 d-lg-none float-left" data-toggle="collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-container">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li *isExpertView="true">
+                        <a class="btn btn-default btn-md navbar-btn pull-left nav-item nav-link position-relative"
+                            triggers="mouseenter:mouseleave" container="body" placement="bottom" ngbPopover="{{'navbar.pending-approvals-popover'| translate}}"
+                            (click)="acconutControl()">
+                            <i class="icon-pending_approvals_to_sign" aria-hidden="true"></i>
+                            <span class="badge-success notification-badge">{{approvals}} </span>
+                        </a>
+                    </li>
+                    <li *isAppEnabled="'Escrow'">
+                        <a class="btn btn-default btn-md navbar-btn pull-left nav-item nav-link position-relative"
+                            triggers="mouseenter:mouseleave" container="body" placement="bottom" ngbPopover="{{'navbar.pending-escrow-popover'| translate}}"
+                            (click)="myEscrow()">
+                            <i class="icon-pending_escrow_to_sign" aria-hidden="true"></i>
+                            <span class="notification-badge badge-success"> {{escrows}} </span>
+                        </a>
+                    </li>
+                    <li *isAppEnabled="'Subscriptions'">
+                        <a class="btn btn-default btn-md navbar-btn pull-left nav-item nav-link position-relative"
+                            triggers="mouseenter:mouseleave" container="body" placement="bottom" ngbPopover="{{'navbar.active-subscriptions-popover'| translate}}"
+                            (click)="mySubscription()">
+                            <i class="icon-active_subscriptions" aria-hidden="true"></i>
+                            <span class="badge-success notification-badge"> {{subscriptions}} </span>
+                        </a>
+                    </li>
+                    <!--<li *isExpertView="true">-->
+                    <!--<a class="btn btn-default btn-md navbar-btn pull-left nav-item nav-link position-relative" (click)="newFoundation()">-->
+                    <!--<i class="fa fa-newspaper-o" aria-hidden="true"></i>-->
+                    <!--<span *ngIf="news_content[0]">{{news_content[0].title | characters: 30}}</span>-->
+                    <!--<span *ngIf="!news_content[0]">No news available</span>-->
+                    <!--</a>-->
+                    <!--</li>-->
+                    <li class="d-none">
+                        <a class=" btn btn-default btn-md btn-circle navbar-btn pull-left nav-item nav-link position-relative"
+                            href="http://forum.infinity-economics.org" triggers="mouseenter:mouseleave" container="body"
+                            placement="bottom" ngbPopover="{{'navbar.forum-popover'| translate}}" target="_blank">
+                            <i class="icon-forum"></i>
+                        </a>
+                    </li>
+                    <!--<li>-->
+                    <!--<a class="btn btn-default btn-md btn-circle navbar-btn pull-left nav-item nav-link position-relative" triggers="mouseenter:mouseleave"-->
+                    <!--container="body" placement="bottom" ngbPopover="Send Token" (click)="sendToken()">-->
+                    <!--<i class="fa fa-eur"></i>-->
+                    <!--</a>-->
+                    <!--</li>-->
+                    <li>
+                        <a class="btn btn-default btn-md btn-circle navbar-btn pull-left nav-item nav-link position-relative"
+                            triggers="mouseenter:mouseleave" container="body" placement="bottom" ngbPopover="{{'navbar.send-message-popover'| translate}}"
+                            (click)="sendMessage()">
+                            <i class="icon-send_message"></i>
+                        </a>
+                    </li>
+                    <li *isAppEnabled="'Assets'">
+                        <a class="btn btn-default btn-md btn-circle navbar-btn pull-left nav-item nav-link position-relative"
+                            triggers="mouseenter:mouseleave" container="body" placement="bottom" ngbPopover="{{'navbar.send-assets-popover'| translate}} "
+                            (click)="sendAssets()">
+                            <i class="icon-send_assets"></i>
+                        </a>
+                    </li>
+                    <li *isAppEnabled="'Currencies'">
+                        <a class="btn btn-default btn-md btn-circle navbar-btn pull-left nav-item nav-link position-relative"
+                            triggers="mouseenter:mouseleave" container="body" placement="bottom" ngbPopover="{{'navbar.send-currency-popover'| translate}}"
+                            (click)="sendCurrency()">
+                            <i class="icon-send_currency"></i>
+                        </a>
+                    </li>
+                    <li *isExpertView="true">
+                        <a class="btn btn-default btn-md btn-circle navbar-btn pull-left nav-item nav-link position-relative"
+                            triggers="mouseenter:mouseleave" container="body" placement="bottom" ngbPopover="{{'navbar.bookmarks-popover'| translate}}"
+                            (click)="openBookMarks()">
+                            <i class="icon-bookmark"></i>
+                        </a>
+                    </li>
+                    <!--<li class="nav-item" *ngIf="connectionMode !== 'TESTNET' && connectionMode !== 'DEVTESTNET'">-->
+                    <!--<a class="btn btn-sm mt-1 btn-round btn-primary" href="javascript:void(0)" triggers="mouseenter:mouseleave" container="body"-->
+                    <!--placement="bottom" ngbPopover="You are connected to MAINNET">MAINNET</a>-->
+                    <!--</li>-->
+                    <!--<li class="nav-item" *ngIf="connectionMode == 'DEVTESTNET'">-->
+                    <!--<a class="btn btn-sm btn-raised btn-round btn-info" href="javascript:void(0)" triggers="mouseenter:mouseleave" container="body"-->
+                    <!--placement="bottom" ngbPopover="You are connected to DEVTESTNET">DEVTESTNET</a>-->
+                    <!--</li>-->
+                    <!--<li class="nav-item" *ngIf="connectionMode == 'HTTPS'">-->
+                    <!--<a class="btn btn-sm btn-raised btn-round btn-success" href="javascript:void(0)" triggers="mouseenter:mouseleave" container="body"-->
+                    <!--placement="bottom" ngbPopover="You are connected to a https node">SSL</a>-->
+                    <!--</li>-->
+                    <!--<li class="nav-item" *ngIf="connectionMode == 'TESTNET'">-->
+                    <!--<a class="btn btn-sm btn-raised btn-round btn-infinity-primary" href="javascript:void(0)" triggers="mouseenter:mouseleave"-->
+                    <!--container="body" placement="bottom" ngbPopover="You are connected to TESTNET">TESTNET</a>-->
+                    <!--</li>-->
+                    <li ngbDropdown placement="bottom-right">
+                        <a class="btn btn-default btn-md navbar-btn pull-left nav-item nav-link position-relative"
+                            ngbDropdownToggle>
+                            <i class="icon-menu"></i>
+                            <p class="d-none">Tools</p>
+                        </a>
+                        <div ngbDropdownMenu>
+                            <a class="dropdown-item lang" [routerLink]="['/tool/transaction-types']">
+                                <i class="icon-transaction_types"></i> &nbsp;{{'navbar.transaction-types'| translate}}
+                            </a>
+                            <a class="dropdown-item lang border-bottom" [routerLink]="['/tool/service-fees']">
+                                <i class="icon-service_fees"></i> &nbsp;{{'navbar.service-fees'| translate}}
+                            </a>
+                            <a class="dropdown-item lang" [routerLink]="['/tool/generate-signature']">
+                                <i class="icon-generate_signature"></i> &nbsp;{{'navbar.generate-signature'|
+                                translate}}
+                            </a>
+                            <a class="dropdown-item lang border-bottom" [routerLink]="['/tool/validate-signature']">
+                                <i class="icon-validate_signature"></i> &nbsp;{{'navbar.validate-signature'|
+                                translate}}
+                            </a>
+                            <a class="dropdown-item lang" [routerLink]="['/tool/parse-transaction']">
+                                <i class="icon-parse_transaction"></i> &nbsp;{{'navbar.parse-transaction'| translate}}
+                            </a>
+                            <a class="dropdown-item lang border-bottom" [routerLink]="['/tool/broadcast-transaction']">
+                                <i class="icon-broadcast_transaction"></i> &nbsp;{{'navbar.broadcast-transaction'|
+                                translate}}
+                            </a>
+                            <a class="dropdown-item lang" [routerLink]="['/tool/calculate-hash']">
+                                <i class="icon-calculate_hash"></i> &nbsp;{{'navbar.calculate-hash'| translate}}
+                            </a>
+                            <a class="dropdown-item lang border-bottom" [routerLink]="['/tool/chain-statistics']">
+                                <i class="icon-chain_statistics"></i> &nbsp;{{'navbar.chain-statistics'| translate}}
+                            </a>
+                            <a class="dropdown-item lang" [routerLink]="['/tool/user-guide']">
+                                <i class="icon-user_guide"></i> &nbsp;{{'navbar.user-guide'| translate}}
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <a class="btn btn-default btn-md btn-circle navbar-btn pull-left nav-item nav-link position-relative"
+                            (click)="logout()">
+                            <i class="icon-logout"></i>
+                            <p class="d-none">Logout</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+<!-- Navbar (Header) Ends -->

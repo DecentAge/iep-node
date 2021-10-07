@@ -1,0 +1,78 @@
+<div id="activeNodes">
+	<div class="card-header">
+		<h4 class="card-title">Active Nodes</h4>
+		<div class="pull-right filter-group">
+			<div class="btn-group btn-group-justified btn-group-raised">
+				<a href="javascript:void(0)" class="btn btn-sm btn-grey" container="body" triggers="mouseenter:mouseleave" placement="top" ngbPopover="Reload" (click)="reload()">
+					<i class="fa fa-refresh"></i>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="card-body">
+		<div class="card-block">
+			<ngx-datatable
+					[rows]="rows"
+					[columnMode]="'standard'"
+					[scrollbarH]="true"
+					[footerHeight]="50"
+					[rowHeight]="'auto'"
+					[externalPaging]="true"
+					[count]="page.totalElements"
+					[offset]="page.pageNumber"
+					[limit]="page.size"
+					(page)='setPage($event)'>
+				<ngx-datatable-column headerClass="width-10-per" cellClass="width-10-per" name="Ranks" prop="rank">
+					<ng-template let-value="value" ngx-datatable-cell-template>
+						{{ value | numericalString }}
+					</ng-template>
+				</ngx-datatable-column>
+				<ngx-datatable-column headerClass="width-10-per" cellClass="width-10-per" name="Node Details" prop="_id">
+					<ng-template let-value="value" ngx-datatable-cell-template>
+						<a class="btn btn-primary" (click)="searchValue(value)">{{ value }}</a>
+					</ng-template>
+				</ngx-datatable-column>
+				<ngx-datatable-column headerClass="width-10-per" cellClass="width-10-per" name="Peers" prop="numberOfActivePeers">
+					<ng-template let-value="value" ngx-datatable-cell-template>
+						{{ value }}
+					</ng-template>
+				</ngx-datatable-column>
+				<ngx-datatable-column headerClass="width-10-per" cellClass="width-10-per" name="CPU" prop="SystemLoadAverage">
+					<ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+						{{ getCPULoad(value, row) }}
+					</ng-template>
+				</ngx-datatable-column>
+				<ngx-datatable-column headerClass="width-20-per" cellClass="width-20-per" name="CPU Load History" prop="history_SystemLoadAverage">
+					<ng-template let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+						<canvas baseChart class="chart" [datasets]="barChartData[rowIndex]" [labels]="barChartLabels[rowIndex]" [options]="barChartOptions" [colors]="barChartColors" [legend]="barChartLegend" [chartType]="barChartType" style="height: 100px"></canvas>
+					</ng-template>
+				</ngx-datatable-column>
+				<ngx-datatable-column headerClass="width-15-per" cellClass="width-15-per" name="Last Feeder" prop="lastBlockchainFeeder">
+					<ng-template let-value="value" ngx-datatable-cell-template>
+						{{ value }}
+					</ng-template>
+				</ngx-datatable-column>
+				<ngx-datatable-column headerClass="width-10-per" cellClass="width-10-per" name="Blocks" prop="numberOfBlocks">
+					<ng-template let-value="value" ngx-datatable-cell-template>
+						{{ value }}
+					</ng-template>
+				</ngx-datatable-column>
+				<ngx-datatable-column headerClass="width-10-per" cellClass="width-10-per" name="Versions" prop="version">
+					<ng-template let-value="value" ngx-datatable-cell-template>
+						{{ value }}
+					</ng-template>
+				</ngx-datatable-column>
+				<ngx-datatable-column headerClass="width-5-per" cellClass="width-5-per" name="Services" prop="superNodeEnable">
+					<ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+						<div [innerHtml]=" getTickMarkUiModel(value)" placement="top" triggers="mouseenter:mouseleave" container="body" ngbTooltip="SuperNode Services Enabled"></div>
+					</ng-template>
+				</ngx-datatable-column>
+				<ngx-datatable-column headerClass="width-5-per" cellClass="width-5-per" name="API" prop="apiServerEnable">
+					<ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+						<div [innerHtml]=" getTickMarkUiModel(value)" placement="top" triggers="mouseenter:mouseleave" container="body" ngbTooltip="API Enabled"></div>
+					</ng-template>
+				</ngx-datatable-column>
+			</ngx-datatable>
+		</div>
+	</div>
+</div>

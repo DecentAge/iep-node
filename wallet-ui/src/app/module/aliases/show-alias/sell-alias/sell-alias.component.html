@@ -1,0 +1,187 @@
+<div class="row" *ngIf="!openBookMarks">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-block main-card-block">
+                <div class="border-bt">
+                    <h2 class="main-title">{{'aliases.sell-alias.title'| translate}} </h2>
+                    <app-breadcrumb></app-breadcrumb>
+                    <h3 class="back-button" (click)="goBack()">
+                        <i class="fa fa-chevron-left"></i> {{'common.back-btn'| translate}}
+                    </h3>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="card-block ml-1 mr-1 ml-md-3 mr-md-3">
+                    <aw-wizard [navBarLayout]="'large-filled-symbols'">
+                        <aw-wizard-step stepTitle="{{'common.details-step'| translate}}" [navigationSymbol]="{ symbol: '1' }">
+                            <form class="form" #f="ngForm" novalidate>
+                                <div class="form-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group m-0">
+                                                <label>{{'common.alias-label'| translate}}
+                                                    <i class="fa fa-question-circle-o" aria-hidden="true" triggers="mouseenter:mouseleave"
+                                                        placement="right" container="body" ngbPopover="{{'aliases.sell-alias.alias-popover'| translate}}">
+                                                    </i>
+                                                </label>
+                                                <div>
+                                                    <h6> {{sellAliasForm.name}} </h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group m-0">
+                                                <label>{{'common.uri-label'| translate}}
+                                                    <i class="fa fa-question-circle-o" aria-hidden="true" triggers="mouseenter:mouseleave"
+                                                        placement="right" container="body" ngbPopover="{{'aliases.sell-alias.uri-popover'| translate}}">
+                                                    </i>
+                                                </label>
+                                                <div>
+                                                    <h6> {{sellAliasForm.uri}} </h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group m-0">
+                                                <label>{{'aliases.sell-alias.recipient-private-sell-label'| translate}}
+                                                    <i class="fa fa-question-circle-o" aria-hidden="true" triggers="mouseenter:mouseleave"
+                                                        placement="right" container="body" ngbPopover="{{'aliases.sell-alias.recipient-private-sell-popover'| translate}}">
+                                                    </i>
+                                                </label>
+                                                <div class="input-group m-0">
+                                                    <div class="input-group-prepend">
+                                                        <span class="btn btn-primary" (click)="searchAliases()"
+                                                            triggers="mouseenter:mouseleave" placement="top" container="body"
+                                                            ngbPopover="{{'common.alias-connect-tooltip'| translate}}">
+                                                            <i class="fa fa-share-alt"></i>
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" name="recipient" #recipient="ngModel"
+                                                        placeholder="{{'aliases.sell-alias.recipient-placeholder'| translate}}"
+                                                        [(ngModel)]="sellAliasForm.recipientRS">
+                                                    <div class="input-group-append">
+                                                        <span class="btn btn-primary" triggers="mouseenter:mouseleave"
+                                                            placement="top" (click)="loadBookmarkView()" container="body"
+                                                            ngbPopover="{{'common.open-bookmark-tooltip'| translate}}">
+                                                            <i class="fa fa-address-card"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group m-0">
+                                                <label>{{'common.price-label'| translate}}
+                                                    <i class="fa fa-question-circle-o" aria-hidden="true" triggers="mouseenter:mouseleave"
+                                                        placement="right" container="body" ngbPopover="{{'aliases.sell-alias.price-popover'| translate}}">
+                                                    </i>
+                                                </label>
+                                                <div class="input-group m-0">
+                                                    <input type="number" class="form-control" name="price" #price="ngModel"
+                                                        [(ngModel)]="sellAliasForm.price" placeholder=" {{'aliases.sell-alias.price-placeholder'| translate}} "
+                                                        required minValue="1">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">
+                                                            {{'common.xin-unit-text'| translate}}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="price?.invalid && (price?.dirty || price?.touched)" class="input-error">
+                                                    <div *ngIf="price?.errors.required">
+                                                        {{'common.price-required'| translate}}
+                                                    </div>
+                                                    <div *ngIf="price?.errors.minValue && !price?.errors.required">
+                                                        {{'aliases.sell-alias.price-greater'| translate}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr>
+                                    <button type="button" [disabled]="f.invalid" (click)="sellAlias()" class="btn btn-primary mr-1 mb-0 float-right"
+                                        awNextStep>
+                                        <i class="fa fa-chevron-right"></i> {{'common.next-btn'| translate}}
+                                    </button>
+                                </div>
+                            </form>
+                        </aw-wizard-step>
+                        <aw-wizard-step stepTitle="{{'common.confirm-step'| translate}}" [navigationSymbol]="{ symbol: '2' }">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="ucsb"> {{'common.name-label'| translate}}
+                                    </div>
+                                    <h4>{{sellAliasForm.name}}</h4>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="ucsb"> {{'common.uri-label'| translate}}
+                                    </div>
+                                    <h4>{{sellAliasForm.uri}} </h4>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="ucsb"> {{'common.valid-label'| translate}}
+                                    </div>
+                                    <h4 [innerHTML]="validBytes | txIsValid"></h4>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="ucsb"> {{'common.service-fee-label'| translate}}
+                                    </div>
+                                    <h4>{{tx_fee | amountTkn}}
+                                        <small>{{'common.xin-unit-text'| translate}} </small>
+                                    </h4>
+                                </div>
+                            </div>
+                            <hr>
+                            <button type="button" [ngClass]="{'btn-success': !unsignedTx, 'btn-danger': unsignedTx}"
+                                class="btn btn-raised mr-1 mb-0" (click)="unsignedTx = !unsignedTx">
+                                <i class="fa fa-key"></i> {{'common.signed-transaction-label'| translate}}
+                            </button>
+                            <hr *ngIf="unsignedTx">
+                            <div class="form-group" *ngIf="unsignedTx">
+                                <div class="position-relative">
+                                    <textarea disabled="true" rows="3" type="text" [(ngModel)]="transactionBytes" class="form-control"
+                                        name="key"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" [disabled]="!validBytes" class="btn btn-primary float-right"
+                                    (click)="broadcastTransaction(transactionBytes)">
+                                    <i class="fa fa-check"></i> {{'common.finish-btn'| translate}}
+                                </button>
+                                <button type="button" class="btn btn-primary mr-1 float-right" awPreviousStep>
+                                    <i class="fa fa-chevron-left"></i> {{'common.previous-btn'| translate}}
+                                </button>
+                            </div>
+                        </aw-wizard-step>
+                    </aw-wizard>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" *ngIf="openBookMarks">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">My Bookmarks</h4>
+                <h5 class="back-button" (click)="hideBookmark()">
+                    <i class="fa fa-chevron-left"></i> Back
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="card-block ml-1 mr-1 ml-md-3 mr-md-3">
+                    <h5 class="mb-1">Bookmark List</h5>
+                    <app-bookmark-list [viewFor]="'sendxin'" (selectEvent)="bookmarkSelected($event)"></app-bookmark-list>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

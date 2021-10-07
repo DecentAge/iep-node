@@ -1,0 +1,63 @@
+<div id="recentBlocks">
+	<div class="card-header">
+		<h4 class="card-title">Recent Blocks</h4>
+		<div class="pull-right filter-group">
+			<div class="btn-group btn-group-justified btn-group-raised">
+				<a href="javascript:void(0)" class="btn btn-sm btn-grey" container="body" triggers="mouseenter:mouseleave" placement="top" ngbPopover="Reload" (click)="reload()">
+					<i class="fa fa-refresh"></i>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="card-body">
+		<div class="card-block">
+			<ngx-datatable
+					[rows]="rows"
+					[columnMode]="'standard'"
+					[scrollbarH]="true"
+					[footerHeight]="50"
+					[rowHeight]="'auto'"
+					[externalPaging]="true"
+					[count]="page.totalElements"
+					[offset]="page.pageNumber"
+					[limit]="page.size"
+					(page)='setPage($event)'>
+				<ngx-datatable-column headerClass="width-15-per" cellClass="width-15-per" name="Details" prop="height" >
+					<ng-template let-value="value" ngx-datatable-cell-template>
+						<a class="btn btn-primary" (click)="searchValue(value)">{{ value }}</a>
+					</ng-template>
+				</ngx-datatable-column>
+				<ngx-datatable-column headerClass="width-15-per" cellClass="width-15-per" name="Id" prop="block" >
+					<ng-template let-value="value" ngx-datatable-cell-template>
+						{{ value }}
+					</ng-template>
+				</ngx-datatable-column>
+				<ngx-datatable-column headerClass="width-6-per" cellClass="width-6-per" name="Txs" prop="numberOfTransactions" >
+					<ng-template let-value="value" ngx-datatable-cell-template>
+						<div [innerHtml]=" value | blockTransactions "></div>
+					</ng-template>
+				</ngx-datatable-column>
+				<ngx-datatable-column headerClass="width-7-per" cellClass="width-7-per" name="Amount" prop="totalAmountTQT" >
+					<ng-template let-value="value" ngx-datatable-cell-template>
+						<div [innerHtml]=" value | amountTqt "></div>
+					</ng-template>
+				</ngx-datatable-column>
+				<ngx-datatable-column headerClass="width-7-per" cellClass="width-7-per" name="Fee" prop="totalFeeTQT" >
+					<ng-template let-value="value" ngx-datatable-cell-template>
+						<div [innerHtml]=" value | amountTqt "></div>
+					</ng-template>
+				</ngx-datatable-column>
+				<ngx-datatable-column headerClass="width-25-per" cellClass="width-25-per" name="Generator" prop="generatorRS" >
+					<ng-template let-value="value" ngx-datatable-cell-template>
+						<a class="hyperlink" (click)="searchValue(value)">{{value}}</a>
+					</ng-template>
+				</ngx-datatable-column>
+				<ngx-datatable-column headerClass="width-25-per" cellClass="width-25-per" name="Date" prop="timestamp" >
+					<ng-template let-value="value" ngx-datatable-cell-template>
+						<div [innerHtml]=" value | timestamp "></div>
+					</ng-template>
+				</ngx-datatable-column>
+			</ngx-datatable>
+		</div>
+	</div>
+</div>

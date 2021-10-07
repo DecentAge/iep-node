@@ -193,7 +193,7 @@ public final class API {
                 defaultServletHolder.setInitParameter("dirAllowed", "false");
                 defaultServletHolder.setInitParameter("resourceBase", apiResourceBase);
                 defaultServletHolder.setInitParameter("welcomeServlets", "true");
-                defaultServletHolder.setInitParameter("redirectWelcome", "true");
+                defaultServletHolder.setInitParameter("redirectWelcome", "false");
                 defaultServletHolder.setInitParameter("gzip", "true");
                 defaultServletHolder.setInitParameter("etags", "true");
                 apiHandler.addServlet(defaultServletHolder, "/wallet/*");

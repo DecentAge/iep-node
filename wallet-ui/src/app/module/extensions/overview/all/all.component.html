@@ -1,0 +1,108 @@
+<div class="row">
+    <div class="col-12 mb-1">
+        <div class="content-header">
+            <h3>{{'tools.tools-online-tab'| translate}}</h3>
+        </div>
+    </div>
+</div>
+<div class="row tool-boxes mt-4" matchHeight="card">
+    <div class="col-xl-3 col-lg-6 col-12 mb-3" *ngFor="let extension of extensionsOnline">
+        <div class="card">
+            <div class="card-header">
+                <h4><i [class]="extension.icon"></i>
+                    {{'tools.extensions-online.'+ extension.title + '.' + 'title' | translate}}</h4>
+            </div>
+            <div class="card-body">
+                <div class="card-block">
+                    <p>{{'tools.extensions-online.'+ extension.title + '.' + 'description'| translate}}</p>
+                </div>
+                <div class="text-center mt-4"><a href="{{ extension?.link }}" target="{{ extension?.target }}"><span
+                            class="btn btn-gradient btn-create white">{{'common.show-btn'| translate}}</span></a></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<div class="row">
+    <div class="col-12 mb-1">
+        <div class="content-header">
+            <h3>{{'tools.tools-in-development-title'| translate}}</h3>
+        </div>
+    </div>
+</div>
+<div class="row tool-boxes orange-boxes" matchHeight="card">
+    <div class="col-xl-3 col-lg-6 col-12 mb-3" *ngFor="let extension of extensionsInDevelopment">
+        <div class="card">
+            <div class="card-header">
+                <h4><i [class]="extension.icon"></i> {{'tools.extensions-in-development.'+ extension.title + '.'+
+                    'title'| translate}}</h4>
+            </div>
+            <div class="card-body">
+                <div class="card-block">
+                    <p>{{'tools.extensions-in-development.'+ extension.title + '.'+ 'description'| translate}}</p>
+                </div>
+            </div>
+            <!-- <div class="card-footer">
+				<span class="badge bg-warning white">In Development</span>
+			</div> -->
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<div class="row">
+    <div class="col-12 mb-1">
+        <div class="content-header">
+            <h3>{{'tools.tools-in-concept-stage-title'| translate}}</h3>
+        </div>
+    </div>
+</div>
+<div class="row tool-boxes blue-boxes" matchHeight="card">
+    <div class="col-xl-3 col-lg-6 col-12 mb-3" *ngFor="let extension of extensionsInConcept">
+        <div class="card">
+            <div class="card-header">
+                <h4><i [class]="extension.icon"></i> {{'tools.extensions-in-concept.' + extension.title + '.'+ 'title'|
+                    translate}}</h4>
+            </div>
+            <div class="card-body">
+                <div class="card-block">
+                    <p>{{'tools.extensions-in-concept.' + extension.title + '.'+ 'description'| translate}}</p>
+                </div>
+            </div>
+            <!-- <div class="card-footer">
+				<span [class]="extension.type">{{ extension.status }}</span>
+			</div> -->
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<div class="row">
+    <div class="col-12 mb-1">
+        <div class="content-header">
+            <h3>{{'tools.tools-in-proof-of-concept-title'| translate}}</h3>
+        </div>
+    </div>
+</div>
+<div class="row tool-boxes blue-boxes" matchHeight="card">
+    <div class="col-xl-3 col-lg-6 col-12 mb-3" *ngFor="let extension of extentionsInProofOfConcept">
+        <div class="card">
+            <div class="card-header">
+                <h4><i [class]="extension.icon"></i> {{'tools.extensions-in-proof-of-concept.'+ extension.title + '.'+
+                    'title'| translate}}</h4>
+            </div>
+            <div class="card-body">
+                <div class="card-block">
+                    <p>{{'tools.extensions-in-proof-of-concept.'+ extension.title + '.' + 'description'| translate}}</p>
+                </div>
+            </div>
+            <!-- <div class="card-footer">
+				<span [class]="extension.type">{{ extension.status }}</span>
+			</div> -->
+        </div>
+    </div>
+</div>

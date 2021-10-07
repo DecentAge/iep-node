@@ -1,0 +1,23 @@
+@media (min-width: 320px) {
+  .navbar-header{
+    float: left;
+  }
+  .navbar-right{
+    float: right !important;
+  }
+  .navbar-nav>li{
+    float: left;
+  }
+}
+
+@media (max-width: 320px) {
+  .navbar-right{
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .navbar-form{
+    display: none;
+  }
+}

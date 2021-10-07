@@ -1,0 +1,25 @@
+<div class="row">
+    <div class="col-12 mb-1">
+        <div class="content-header">
+            <h3>{{'tools.tools-in-concept-stage-title'| translate}}</h3>
+        </div>
+    </div>
+</div>
+<div class="row tool-boxes blue-boxes" matchHeight="card">
+    <div class="col-xl-3 col-lg-6 col-12 mb-3" *ngFor="let extension of extensionsInConcept">
+        <div class="card">
+            <div class="card-header">
+                <h4><i [class]="extension.icon"></i> {{'tools.extensions-in-concept.' + extension.title + '.'+ 'title'|
+                    translate}}</h4>
+            </div>
+            <div class="card-body">
+                <div class="card-block">
+                    <p>{{'tools.extensions-in-concept.' + extension.title + '.'+ 'description'| translate}}</p>
+                </div>
+            </div>
+            <!-- <div class="card-footer">
+				<span [class]="extension.type">{{ extension.status }}</span>
+			</div> -->
+        </div>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+// Theme Colors
+$theme-colors: (
+  //primary: #ec5c30,
+  primary: #e72d45,
+  success: #0CC27E,
+  info: #1CBCD8,
+  warning: #FF8D60,
+  danger: #FF586B,
+  secondary: #868e96,
+  light: #f8f9fa,
+  dark: #343a40,
+  infinity-primary: #e72d45
+);
+
+// Spacing
+
+$spacer: 1.5rem;
+
+$spacers: (
+  0: 0,
+  1: ($spacer * .25),
+  2: ($spacer * .50),
+  3: $spacer,
+  4: ($spacer * 1.5),
+  5: ($spacer * 3)
+) !default;
+
+// Body
+$body-bg:       #f5f7fa;
+
+// Fonts
+$font-family-sans-serif: "Montserrat", sans-serif;
+$font-family-content: "Montserrat", sans-serif;
+
+$font-size-root: 16px;

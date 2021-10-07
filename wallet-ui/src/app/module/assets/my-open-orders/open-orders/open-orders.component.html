@@ -1,0 +1,49 @@
+<div class="card-header">
+  <h3 class="card-title" *ngIf="offerType === 'Buy'">{{'assets.my-open-orders.buy-title' | translate}}</h3>
+  <h3 class="card-title" *ngIf="offerType === 'Sell'">{{'assets.my-open-orders.sell-title' | translate}}</h3>
+  <div class="pull-right filter-group">
+    <div class="btn-group btn-group-justified btn-group-raised">
+      <a href="javascript:void(0)" class="btn btn-sm btn-grey btn-icon" (click)="reload()" triggers="mouseenter:mouseleave" container="body"
+         placement="top" ngbPopover="{{'common.reload-filter-popover'| translate}}">
+        <i class="fa fa-refresh"></i>
+      </a>
+    </div>
+  </div>
+</div>
+<div class="card-body">
+  <div class="card-block">
+    <ngx-datatable class="material" [rows]="orders" [columnMode]="'force'" [rowHeight]="'auto'" [footerHeight]="50" [externalPaging]="true"
+                   [count]="page.totalElements" [offset]="page.pageNumber" [limit]="page.size" (page)='setPage($event)'>
+      <ngx-datatable-column prop="name" [name]="'table-header.asset' | translate">
+        <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+          <a class="hyperlink" (click)="goToAssetDetails(row.asset)">{{value}}</a>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column prop="priceTQT" [name]="'table-header.price' | translate">
+        <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+          {{value | priceTqt:row.decimals}}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column prop="quantityQNT" [name]="'table-header.quantity' | translate">
+        <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+          {{value | quantityQnt:row.decimals}}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column prop="order" [name]="'table-header.actions' | translate">
+        <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+         <div class="btn-group-raised">
+          <a class="btn btn-sm btn-grey btn-icon" (click)="goToTransactionDetails(value)" triggers="mouseenter:mouseleave" container="body" placement="top" [ngbPopover]="'common.details-table-action' | translate">
+            <i class="fa fa-list-ul"></i>
+          </a>
+          <a class="btn btn-sm btn-grey btn-icon" (click)="goToTradeDesk(row.asset)" triggers="mouseenter:mouseleave" container="body" placement="top" [ngbPopover]="'common.tradeDesk-table-action' | translate">
+            <i class="fa fa-bar-chart"></i>
+          </a>
+          <a class="btn btn-sm btn-grey btn-icon" (click)="goToCancelOrder(row)" triggers="mouseenter:mouseleave" container="body" placement="top" [ngbPopover]="'assets.my-open-orders.cancel-table-action' | translate">
+            <i class="fa fa-times"></i>
+          </a>
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+  </div>
+</div>

@@ -1,0 +1,81 @@
+<section id="signup" class="main-bg">
+  <div class="container-fluid">
+    <div class="row full-height-vh">
+      <div class="col-12 d-flex align-items-center justify-content-center">
+        <div>
+          <div class="welcome-logo text-center">
+            <img src="assets/images/iep-logo.png" alt="" />
+          </div>
+          <div class="card text-center">
+            <div class="card-header text-center">
+              <ul class="pagination justify-content-center">
+                <li
+                  [ngClass]="{ active: router.url === '/sign-up/step-1' }"
+                ></li>
+                <li
+                  [ngClass]="{ active: router.url === '/sign-up/step-2' }"
+                ></li>
+                <li
+                  [ngClass]="{ active: router.url === '/sign-up/step-3' }"
+                ></li>
+              </ul>
+            </div>
+            <div class="card-body">
+              <div class="container-fluid">
+                <div class="row-fluid">
+                  <h5 *ngIf="router.url === '/sign-up/step-1'">
+                    {{ steps[0].title | translate | uppercase }}
+                  </h5>
+                  <h5 *ngIf="router.url === '/sign-up/step-2'">
+                    {{ steps[1].title | translate | uppercase }}
+                  </h5>
+                  <h5 *ngIf="router.url === '/sign-up/step-3'">
+                    {{ steps[2].title | translate | uppercase }}
+                  </h5>
+                  <app-signup-disclaimer
+                    *ngIf="router.url === '/sign-up/step-1'"
+                  ></app-signup-disclaimer>
+                  <app-signup-passphrase
+                    *ngIf="router.url === '/sign-up/step-2'"
+                  ></app-signup-passphrase>
+                  <app-signup-confirm
+                    *ngIf="router.url === '/sign-up/step-3'"
+                  ></app-signup-confirm>
+                </div>
+              </div>
+              <div class="container-fluid">
+                <div class="row-fluid">
+                  <div class="centering text-center mt-1">
+                    <button
+                      class="btn btn-border mt-4 mr-2"
+                      *ngIf="router.url === '/sign-up/step-2'"
+                      (click)="generatePassPhrase()"
+                    >
+                      {{
+                        "signup.passphrase.generate_new_btn"
+                          | translate
+                          | uppercase
+                      }}
+                    </button>
+                    <button
+                      class="btn btn-primary btn-gradient mt-4 ml-2"
+                      *ngIf="router.url !== '/sign-up/step-3'"
+                      (click)="next()"
+                    >
+                      {{ "signup.disclaimer.next-step-btn" | translate }}
+                      <img
+                        src="assets/images/right-arrow.png"
+                        alt=""
+                        class="right-arrow"
+                      />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

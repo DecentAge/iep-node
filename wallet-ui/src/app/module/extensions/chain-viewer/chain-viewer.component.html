@@ -1,0 +1,27 @@
+<section>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card">
+				<ul class="nav nav-tabs nav-fill">
+					<li class="nav-item">
+						<a class="nav-link" routerLinkActive="active" [routerLink]="['blocks']"><i class="fa fa-chain"></i> Recent Blocks</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" routerLinkActive="active" [routerLink]="['transactions']"><i class="fa fa-cogs"></i> Recent Transactions</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" routerLinkActive="active" [routerLink]="['unconfirmed']"><i class="fa fa-wrench"></i> Unconfirmed Transactions</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" routerLinkActive="active" [routerLink]="['peers']"><i class="fa fa-compass"></i> Active Nodes</a>
+					</li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active">
+						<router-outlet></router-outlet>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

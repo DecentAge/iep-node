@@ -1,0 +1,200 @@
+<div class="row">
+	<div class="col-sm-12">
+		<div class="content-header">Service Monitors</div>
+	</div>
+</div>
+<section id="service-monitor">
+	<div class="row mt-2">
+		<div class="col-lg-12 col-md-12 col-sm-12">
+			<ngb-accordion [activeIds]="activeIds">
+				<ngb-panel id="peerServiceStatus">
+					<ng-template ngbPanelTitle>
+						<h5>
+							Peer Service Status
+							<span class="pull-right">
+								<i class="fa accordion"></i>
+							</span>
+						</h5>
+					</ng-template>
+					<ng-template ngbPanelContent>
+						<ngx-datatable
+								[rows]="peerEndpoints"
+								[columnMode]="'standard'"
+								[scrollbarH]="true"
+								[rowHeight]="'auto'"
+								[externalPaging]="false">
+							<ngx-datatable-column headerClass="width-15-per" cellClass="width-15-per" name="Name" prop="label" >
+								<ng-template let-value="value" ngx-datatable-cell-template>
+									<strong>{{ value }}</strong>
+								</ng-template>
+							</ngx-datatable-column>
+							<ngx-datatable-column headerClass="width-15-per" cellClass="width-15-per" name="IP" prop="ip" >
+								<ng-template let-value="value" ngx-datatable-cell-template>
+									{{ value }}
+								</ng-template>
+							</ngx-datatable-column>
+							<ngx-datatable-column headerClass="width-40-per" cellClass="width-40-per" name="Last Check" prop="url" >
+								<ng-template let-value="value" ngx-datatable-cell-template>
+									{{ IP_STATUS[value]['timestamp'] }}
+								</ng-template>
+							</ngx-datatable-column>
+							<ngx-datatable-column headerClass="width-15-per" cellClass="width-15-per" name="Status" prop="url" >
+								<ng-template let-value="value" ngx-datatable-cell-template>
+									<div [innerHtml]=" IP_STATUS[value]['status'] "></div>
+								</ng-template>
+							</ngx-datatable-column>
+							<ngx-datatable-column headerClass="width-15-per" cellClass="width-15-per" name="Check" prop="url" >
+								<ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+									<a class="btn btn-outline-dark" (click)="getStatus(row, false)">
+										Check
+									</a>
+								</ng-template>
+							</ngx-datatable-column>
+						</ngx-datatable>
+					</ng-template>
+				</ngb-panel>
+
+				<ngb-panel id="websitesServiceStatus">
+					<ng-template ngbPanelTitle>
+						<h5>
+							Websites Service Status
+							<span class="pull-right">
+								<i class="fa accordion"></i>
+							</span>
+						</h5>
+					</ng-template>
+					<ng-template ngbPanelContent>
+						<ngx-datatable
+								[rows]="websiteEndpoints"
+								[columnMode]="'standard'"
+								[scrollbarH]="true"
+								[rowHeight]="'auto'"
+								[externalPaging]="false">
+							<ngx-datatable-column headerClass="width-15-per" cellClass="width-15-per" name="Name" prop="label" >
+								<ng-template let-value="value" ngx-datatable-cell-template>
+									<strong>{{ value }}</strong>
+								</ng-template>
+							</ngx-datatable-column>
+							<ngx-datatable-column headerClass="width-15-per" cellClass="width-15-per" name="IP" prop="ip" >
+								<ng-template let-value="value" ngx-datatable-cell-template>
+									{{ value }}
+								</ng-template>
+							</ngx-datatable-column>
+							<ngx-datatable-column headerClass="width-40-per" cellClass="width-40-per" name="Last Check" prop="url" >
+								<ng-template let-value="value" ngx-datatable-cell-template>
+									{{ IP_STATUS[value]['timestamp'] }}
+								</ng-template>
+							</ngx-datatable-column>
+							<ngx-datatable-column headerClass="width-15-per" cellClass="width-15-per" name="Status" prop="url" >
+								<ng-template let-value="value" ngx-datatable-cell-template>
+									<div [innerHtml]=" IP_STATUS[value]['status'] "></div>
+								</ng-template>
+							</ngx-datatable-column>
+							<ngx-datatable-column headerClass="width-15-per" cellClass="width-15-per" name="Check" prop="url" >
+								<ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+									<a class="btn btn-outline-dark" (click)="getStatus(row, true)">
+										Check
+									</a>
+								</ng-template>
+							</ngx-datatable-column>
+						</ngx-datatable>
+					</ng-template>
+				</ngb-panel>
+
+				<ngb-panel id="testnetStatus">
+					<ng-template ngbPanelTitle>
+						<h5>
+							Testnet Status
+							<span class="pull-right">
+								<i class="fa accordion"></i>
+							</span>
+						</h5>
+					</ng-template>
+					<ng-template ngbPanelContent>
+						<ngx-datatable
+								[rows]="testnetEndpoints"
+								[columnMode]="'standard'"
+								[scrollbarH]="true"
+								[rowHeight]="'auto'"
+								[externalPaging]="false">
+							<ngx-datatable-column headerClass="width-15-per" cellClass="width-15-per" name="Name" prop="label" >
+								<ng-template let-value="value" ngx-datatable-cell-template>
+									<strong>{{ value }}</strong>
+								</ng-template>
+							</ngx-datatable-column>
+							<ngx-datatable-column headerClass="width-15-per" cellClass="width-15-per" name="IP" prop="ip" >
+								<ng-template let-value="value" ngx-datatable-cell-template>
+									{{ value }}
+								</ng-template>
+							</ngx-datatable-column>
+							<ngx-datatable-column headerClass="width-40-per" cellClass="width-40-per" name="Last Check" prop="url" >
+								<ng-template let-value="value" ngx-datatable-cell-template>
+									{{ IP_STATUS[value]['timestamp'] }}
+								</ng-template>
+							</ngx-datatable-column>
+							<ngx-datatable-column headerClass="width-15-per" cellClass="width-15-per" name="Status" prop="url" >
+								<ng-template let-value="value" ngx-datatable-cell-template>
+									<div [innerHtml]=" IP_STATUS[value]['status'] "></div>
+								</ng-template>
+							</ngx-datatable-column>
+							<ngx-datatable-column headerClass="width-15-per" cellClass="width-15-per" name="Check" prop="url" >
+								<ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+									<a class="btn btn-outline-dark" (click)="getStatus(row, true)">
+										Check
+									</a>
+								</ng-template>
+							</ngx-datatable-column>
+						</ngx-datatable>
+					</ng-template>
+				</ngb-panel>
+
+				<ngb-panel id="apiStatus">
+					<ng-template ngbPanelTitle>
+						<h5>
+							API Status
+							<span class="pull-right">
+								<i class="fa accordion"></i>
+							</span>
+						</h5>
+					</ng-template>
+					<ng-template ngbPanelContent>
+						<ngx-datatable
+								[rows]="apiEndpoints"
+								[columnMode]="'standard'"
+								[scrollbarH]="true"
+								[rowHeight]="'auto'"
+								[externalPaging]="false">
+							<ngx-datatable-column headerClass="width-15-per" cellClass="width-15-per" name="Name" prop="label" >
+								<ng-template let-value="value" ngx-datatable-cell-template>
+									<strong>{{ value }}</strong>
+								</ng-template>
+							</ngx-datatable-column>
+							<ngx-datatable-column headerClass="width-15-per" cellClass="width-15-per" name="IP" prop="ip" >
+								<ng-template let-value="value" ngx-datatable-cell-template>
+									{{ value }}
+								</ng-template>
+							</ngx-datatable-column>
+							<ngx-datatable-column headerClass="width-40-per" cellClass="width-40-per" name="Last Check" prop="url" >
+								<ng-template let-value="value" ngx-datatable-cell-template>
+									{{ IP_STATUS[value]['timestamp'] }}
+								</ng-template>
+							</ngx-datatable-column>
+							<ngx-datatable-column headerClass="width-15-per" cellClass="width-15-per" name="Status" prop="url" >
+								<ng-template let-value="value" ngx-datatable-cell-template>
+									<div [innerHtml]=" IP_STATUS[value]['status'] "></div>
+								</ng-template>
+							</ngx-datatable-column>
+							<ngx-datatable-column headerClass="width-15-per" cellClass="width-15-per" name="Check" prop="url" >
+								<ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+									<a class="btn btn-outline-dark" (click)="getStatus(row, true)">
+										Check
+									</a>
+								</ng-template>
+							</ngx-datatable-column>
+						</ngx-datatable>
+					</ng-template>
+				</ngb-panel>
+			</ngb-accordion>
+		</div>
+	</div>
+</section>

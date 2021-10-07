@@ -1,0 +1,43 @@
+<section>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-block main-card-block">
+                    <div class="border-bt">
+                        <h2 class="main-title">{{ 'voting.voting-list.title' | translate}}</h2>
+                        <app-breadcrumb></app-breadcrumb>
+                        <h3 class="back-button" (click)="goBack()">
+                            <i class="fa fa-chevron-left"></i> {{ 'common.back-btn' | translate}}
+                        </h3>
+                    </div>
+
+                    <div class="card-body mt-4">
+                        <div class="card-block mr-3 ml-3">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <ngx-datatable class="material" [rows]="voters" [columnMode]="'force'" [rowHeight]="'auto'"
+                                        [footerHeight]="50" [externalPaging]="true" [count]="page.totalElements"
+                                        [offset]="page.pageNumber" [limit]="page.size">
+                                        <ngx-datatable-column prop="voterRS" [name]="'table-header.voter' | translate">
+                                            <ng-template let-value="value" ngx-datatable-cell-template>
+                                                {{ value }}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column prop="transaction" [name]="'table-header.details' | translate">
+                                            <ng-template let-value="value" ngx-datatable-cell-template>
+                                                <button class="btn btn-outline-danger actionBtn" (click)="goToDetails(value)"
+                                                    ngbPopover="{{'common.details-table-action'| translate}}" triggers="mouseenter:mouseleave">
+                                                    <i class="fa fa-list-ul font-medium-1"></i>
+                                                </button>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                    </ngx-datatable>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
