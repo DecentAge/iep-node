@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM gradle:6.8.3-jdk8 AS build
+FROM gradle:6.8.3-jdk11 AS build
 WORKDIR /build
 
 COPY --chown=gradle:gradle . .
@@ -17,7 +17,7 @@ RUN npm run-script update-version --release_version=$(cat release-version.txt)
 RUN ls -lat /wallet-ui
 RUN npm run build-prod
 
-FROM openjdk:8-jre-slim
+FROM openjdk:11-jre-slim
 
 RUN apt-get update \
     && apt-get install --yes --no-install-recommends unzip \
