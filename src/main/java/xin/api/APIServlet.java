@@ -16,23 +16,38 @@
 
 package xin.api;
 
-import org.json.simple.JSONObject;
-import org.json.simple.JSONStreamAware;
-import xin.Db;
-import xin.Xin;
-import xin.XinException;
-import xin.util.JSON;
-import xin.util.Logger;
+import static xin.api.JSONResponses.ERROR_DISABLED;
+import static xin.api.JSONResponses.ERROR_INCORRECT_REQUEST;
+import static xin.api.JSONResponses.ERROR_NOT_ALLOWED;
+import static xin.api.JSONResponses.POST_REQUIRED;
+import static xin.api.JSONResponses.REQUIRED_BLOCK_NOT_FOUND;
+import static xin.api.JSONResponses.REQUIRED_LAST_BLOCK_NOT_FOUND;
+
+import java.io.IOException;
+import java.io.Writer;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.Writer;
-import java.util.*;
 
-import static xin.api.JSONResponses.*;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONStreamAware;
+
+import xin.Db;
+import xin.Xin;
+import xin.XinException;
+import xin.util.JSON;
+import xin.util.Logger;
 
 public final class APIServlet extends HttpServlet {
 
@@ -441,10 +456,10 @@ public final class APIServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         process(req, resp);
     }
-
+    
     private void process(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         // Set response values now in case we create an asynchronous context
         resp.setHeader("Cache-Control", "no-cache, no-store, must-revalidate, private");
