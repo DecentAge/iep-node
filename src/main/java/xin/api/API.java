@@ -202,8 +202,8 @@ public final class API {
 
             String localhost = "0.0.0.0".equals(host) || "127.0.0.1".equals(host) ? "localhost" : host;
             try {
-                welcomePageUri = new URI(enableSSL ? "https" : "http", null, localhost, enableSSL ? sslPort : port, "/index.html", null, null);
-                serverRootUri = new URI(enableSSL ? "https" : "http", null, localhost, enableSSL ? sslPort : port, "", null, null);
+                welcomePageUri = new URI(enableSSL ? "https" : "http", null, localhost, enableSSL ? sslPort : port, "/wallet/index.html", null, null);
+                serverRootUri = new URI(enableSSL ? "https" : "http", null, localhost, enableSSL ? sslPort : port, "/wallet", null, null);
             } catch (URISyntaxException e) {
                 Logger.logInfoMessage("Cannot resolve browser URI", e);
             }
@@ -213,16 +213,16 @@ public final class API {
             HandlerList apiHandlers = new HandlerList();
 
             ServletContextHandler apiHandler = new ServletContextHandler();
-            String apiResourceBase = Xin.getStringProperty("nxt.apiResourceBase");
+            String apiResourceBase = Xin.getStringProperty("xin.apiResourceBase");
             if (apiResourceBase != null) {
                 ServletHolder defaultServletHolder = new ServletHolder(new DefaultServlet());
                 defaultServletHolder.setInitParameter("dirAllowed", "false");
                 defaultServletHolder.setInitParameter("resourceBase", apiResourceBase);
                 defaultServletHolder.setInitParameter("welcomeServlets", "true");
-                defaultServletHolder.setInitParameter("redirectWelcome", "false");
+                defaultServletHolder.setInitParameter("redirectWelcome", "true");
                 defaultServletHolder.setInitParameter("gzip", "true");
                 defaultServletHolder.setInitParameter("etags", "true");
-                apiHandler.addServlet(defaultServletHolder, "/*");
+                apiHandler.addServlet(defaultServletHolder, "/wallet/*");
                 apiHandler.setWelcomeFiles(new String[]{Xin.getStringProperty("xin.apiWelcomeFile")});
             }
 
