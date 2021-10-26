@@ -140,6 +140,8 @@ public final class Constants {
     public static final long FEE_FIVE_LETTER_CURRENCY_ISSUANCE = 500 * UNIT_FEE;
     public static final long FEE_FOUR_LETTER_CURRENCY_ISSUANCE = 1000 * UNIT_FEE;
     public static final long FEE_THREE_LETTER_CURRENCY_ISSUANCE = 25000 * UNIT_FEE;
+    
+    public static final int TRANSPARENT_FORGING_BLOCK_5 = 67000;
 
     public static final long FEE_ALIAS_INITIAL_CONSTANT = 2 * UNIT_FEE;
     public static final long ALIAS_FEE_PER_UNIT = 2 * UNIT_FEE;

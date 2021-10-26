@@ -388,30 +388,11 @@ final class BlockImpl implements Block {
 
             BigInteger hit = new BigInteger(1, new byte[]{generationSignatureHash[7], generationSignatureHash[6], generationSignatureHash[5], generationSignatureHash[4], generationSignatureHash[3], generationSignatureHash[2], generationSignatureHash[1], generationSignatureHash[0]});
 
-            if (Generator.verifyHit(hit, BigInteger.valueOf(effectiveBalance), previousBlock, timestamp)) {
-                 return true;
-            }
-
-            if (this.height < Constants.BAD_BLOCK_MAX_HEIGHT) {
-
-              for (BadBlock badBlock : badBlocks) {
-                  if (badBlock.height == (previousBlock.height+1) &&
-                          badBlock.generatorId == getGeneratorId() &&
-                              Arrays.equals(generationSignature, badBlock.generationSignature)) {
-                      Logger.logInfoMessage("Block " + previousBlock.height+1 + " generation signature checkpoint passed");
-                      return true;
-                  }
-              }
-
-            }
-
-            return false;
-
+            return (Generator.verifyHit(hit, BigInteger.valueOf(effectiveBalance), previousBlock, timestamp) 
+            		|| this.height < Constants.TRANSPARENT_FORGING_BLOCK_5);
         } catch (RuntimeException e) {
-
             Logger.logMessage("Error verifying block generation signature", e);
             return false;
-
         }
 
     }
@@ -428,9 +409,12 @@ final class BlockImpl implements Block {
         }
     }
 
-    static final BadBlock[] badBlocks = new BadBlock[] {
-        // new BadBlock(height, "sig", "id"),
-    };
+    private static final long[] badBlocks = new long[] {
+            5113090348579089956L, 8032405266942971936L, 7702042872885598917L, -407022268390237559L, -3320029330888410250L,
+            -6568770202903512165L, 4288642518741472722L, 5315076199486616536L, -6175599071600228543L};
+    static {
+        Arrays.sort(badBlocks);
+    }
 
     void apply() {
         Account generatorAccount = Account.addOrGetAccount(getGeneratorId());

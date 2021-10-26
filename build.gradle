@@ -150,3 +150,9 @@ distZip {
 //    }
 //
 //}
+
+test {
+    useJUnit()
+
+    maxHeapSize = '1G'
+}
