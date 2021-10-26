@@ -66,7 +66,7 @@ public final class Xin {
     public static final String XIN_SYSTEM_PROPERTIES = "system.properties";
 
     public static final String XIN_CUSTOM_PROPERTIES = "custom.properties";
-
+    public static final String XIN_INSTALLER_PROPERTIES = "installer.properties";
     public static final String CONFIG_DIR = "conf";
 
     private static final RuntimeMode runtimeMode;
@@ -81,7 +81,7 @@ public final class Xin {
         runtimeMode = RuntimeEnvironment.getRuntimeMode();
         System.out.printf("Runtime mode %s\n", runtimeMode.getClass().getName());
         dirProvider = RuntimeEnvironment.getDirProvider();
-        System.out.println("User home folder " + dirProvider.getUserHomeDir());
+        System.out.println("User home folder" + dirProvider.getUserHomeDir() + dirProvider.getClass().getName());
 
         loadProperties(defaultProperties, XIN_STORAGE_PROPERTIES, true);
         loadProperties(defaultProperties, XIN_PROXIES_PROPERTIES, true);
@@ -139,6 +139,8 @@ public final class Xin {
 
     static {
         loadProperties(properties, XIN_CUSTOM_PROPERTIES, false);
+        loadProperties(properties, XIN_INSTALLER_PROPERTIES, false);
+
 
         //Add property validations here
         if (StringUtils.equalsIgnoreCase(getStringProperty("xin.enableAPIServer"), "true")) {
@@ -156,6 +158,7 @@ public final class Xin {
         try {
             // Load properties from location specified as command line parameter
             String configFile = System.getProperty(propertiesFile);
+            
             if (configFile != null) {
                 System.out.printf("Loading %s from %s\n", propertiesFile, configFile);
                 try (InputStream fis = new FileInputStream(configFile)) {
@@ -200,7 +203,7 @@ public final class Xin {
                     }
                     Path propPath = Paths.get(confDir.toString()).resolve(Paths.get(propertiesFile));
                     if (Files.isReadable(propPath)) {
-                        System.out.printf("Loading %s from dir %s\n", propertiesFile, confDir);
+                        System.out.printf("Loading %s from dir %s\n" + propPath, propertiesFile, confDir);
                         properties.load(Files.newInputStream(propPath));
                     } else {
                         System.out.printf("Creating property file %s\n", propPath);
@@ -448,9 +451,18 @@ public final class Xin {
                 Logger.logMessage("Copyright © 2013-2016 The Nxt Core Developers.");
                 Logger.logMessage("Copyright © 2016-2018 The XIN Community.");
                 Logger.logMessage("Distributed under GPLv2, with ABSOLUTELY NO WARRANTY.");
-
+                setServerStatus(ServerStatus.STARTED, API.getWelcomePageUri());
+                if (isDesktopApplicationEnabled()) {
+                    launchDesktopApplication();
+                }
+                /*if (Constants.isTestnet) {
+                    Logger.logMessage("RUNNING ON TESTNET - DO NOT USE REAL ACCOUNTS!");
+                }*/
             } catch (Exception e) {
                 Logger.logErrorMessage(e.getMessage(), e);
+                runtimeMode.alert(e.getMessage() + "\n" +
+                        "See additional information in " + dirProvider.getLogFileDir() + System.getProperty("file.separator") + "xin.log");
+
                 System.exit(1);
             }
         }
@@ -559,6 +571,15 @@ public final class Xin {
 
     private static void setServerStatus(ServerStatus status, URI wallet) {
         runtimeMode.setServerStatus(status, wallet, dirProvider.getLogFileDir());
+    }
+    
+    public static boolean isDesktopApplicationEnabled() {
+        boolean isDesktopApplicationEnabled=RuntimeEnvironment.isDesktopApplicationEnabled() && Xin.getBooleanProperty("xin.launchDesktopApplication");    
+        return isDesktopApplicationEnabled;
+    }
+
+    private static void launchDesktopApplication() {
+        runtimeMode.launchDesktopApplication();
     }
 
     private Xin() {

@@ -16,11 +16,40 @@
 
 package xin.api;
 
-import xin.Xin;
-import xin.util.Logger;
-import xin.util.ThreadPool;
-import xin.util.UPnP;
-import org.eclipse.jetty.server.*;
+import static xin.api.JSONResponses.INCORRECT_ADMIN_PASSWORD;
+import static xin.api.JSONResponses.NO_PASSWORD_IN_CONFIG;
+
+import java.io.IOException;
+import java.math.BigInteger;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.UnknownHostException;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.eclipse.jetty.server.Connector;
+import org.eclipse.jetty.server.HttpConfiguration;
+import org.eclipse.jetty.server.HttpConnectionFactory;
+import org.eclipse.jetty.server.SecureRequestCustomizer;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.ServerConnector;
+import org.eclipse.jetty.server.SslConnectionFactory;
 import org.eclipse.jetty.server.handler.DefaultHandler;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.gzip.GzipHandler;
@@ -31,20 +60,10 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 
-import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.math.BigInteger;
-import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.nio.file.Paths;
-import java.util.*;
-
-import static xin.api.JSONResponses.INCORRECT_ADMIN_PASSWORD;
-import static xin.api.JSONResponses.NO_PASSWORD_IN_CONFIG;
-import static xin.api.JSONResponses.INCORRECT_ACCOUNT;
+import xin.Xin;
+import xin.util.Logger;
+import xin.util.ThreadPool;
+import xin.util.UPnP;
 
 public final class API {
 
@@ -64,6 +83,8 @@ public final class API {
     static final boolean enableAPIUPnP = Xin.getBooleanProperty("xin.enableAPIUPnP");
 
     private static final Server apiServer;
+    private static URI welcomePageUri;
+    private static URI serverRootUri;
 
     static {
         List<String> disabled = Xin.getStringListProperty("xin.disabledAPIs");
@@ -180,7 +201,12 @@ public final class API {
             }
 
             String localhost = "0.0.0.0".equals(host) || "127.0.0.1".equals(host) ? "localhost" : host;
-
+            try {
+                welcomePageUri = new URI(enableSSL ? "https" : "http", null, localhost, enableSSL ? sslPort : port, "/index.html", null, null);
+                serverRootUri = new URI(enableSSL ? "https" : "http", null, localhost, enableSSL ? sslPort : port, "", null, null);
+            } catch (URISyntaxException e) {
+                Logger.logInfoMessage("Cannot resolve browser URI", e);
+            }
             openAPIPort = "0.0.0.0".equals(host) && allowedBotHosts == null && (!enableSSL || port != sslPort) ? port : 0;
             openAPISSLPort = "0.0.0.0".equals(host) && allowedBotHosts == null && enableSSL ? sslPort : 0;
 
@@ -196,8 +222,8 @@ public final class API {
                 defaultServletHolder.setInitParameter("redirectWelcome", "false");
                 defaultServletHolder.setInitParameter("gzip", "true");
                 defaultServletHolder.setInitParameter("etags", "true");
-                apiHandler.addServlet(defaultServletHolder, "/wallet/*");
-                apiHandler.setWelcomeFiles(new String[]{Xin.getStringProperty("nxt.apiWelcomeFile")});
+                apiHandler.addServlet(defaultServletHolder, "/*");
+                apiHandler.setWelcomeFiles(new String[]{Xin.getStringProperty("xin.apiWelcomeFile")});
             }
 
             ServletHolder servletHolder = apiHandler.addServlet(APIServlet.class, "/api");
@@ -386,6 +412,14 @@ public final class API {
 
     }
 
+    public static URI getWelcomePageUri() {
+        return welcomePageUri;
+    }
+
+    public static URI getServerRootUri() {
+        return serverRootUri;
+    }
+    
     private API() {
     } // never
 
