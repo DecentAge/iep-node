@@ -82,7 +82,7 @@ task devStartScripts(type: CreateStartScripts) {
 jar {
   manifest {
     attributes(
-      'Main-Class': '$mainClassName',
+      'Main-Class': 'xin.Xin',
       'Class-Path': configurations.runtime.files.collect { "lib/$it.name" }.join(' ')
     )
   }
