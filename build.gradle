@@ -33,7 +33,6 @@ repositories {
 
 // In this section you declare the dependencies for your production and test code
 dependencies {
-
     compile group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.65'
     compile group: 'com.google.zxing', name: 'core', version: '3.2.1'
     compile group: 'com.google.zxing', name: 'javase', version: '3.2.1'
@@ -80,7 +79,14 @@ task devStartScripts(type: CreateStartScripts) {
     outputDir = startScripts.outputDir    
 }
 
-
+jar {
+  manifest {
+    attributes(
+      'Main-Class': '$mainClassName',
+      'Class-Path': configurations.runtime.files.collect { "lib/$it.name" }.join(' ')
+    )
+  }
+}
 
 distributions {
     main {

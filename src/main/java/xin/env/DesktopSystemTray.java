@@ -80,7 +80,7 @@ public class DesktopSystemTray {
         }
         System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
         final PopupMenu popup = new PopupMenu();
-        imageIcon = new ImageIcon("html/www/assets/images/favicon.png", "tray icon");
+        imageIcon = new ImageIcon("html/www/wallet/assets/images/favicon.png", "tray icon");
         trayIcon = new TrayIcon(imageIcon.getImage());
         trayIcon.setImageAutoSize(true);
         tray = SystemTray.getSystemTray();

@@ -25,7 +25,7 @@ import java.util.Properties;
 
 abstract class DesktopUserDirProvider implements DirProvider {
 
-    public static final String LOG_FILE_PATTERN = "java.util.logging.FileHandler.pattern";
+    public static final String LOG_FILE_PATTERN = "log4j.appender.file.File";
 
     private File logFileDir;
 
@@ -38,11 +38,16 @@ abstract class DesktopUserDirProvider implements DirProvider {
     public void updateLogFileHandler(Properties loggingProperties) {
         if (loggingProperties.getProperty(LOG_FILE_PATTERN) == null) {
             logFileDir = new File(getUserHomeDir(), "logs");
+            System.out.println("logFileDir="+logFileDir);
             return;
         }
+        
+        System.out.println("------ 222");
         Path logFilePattern = Paths.get(getUserHomeDir()).resolve(Paths.get(loggingProperties.getProperty(LOG_FILE_PATTERN)));
         loggingProperties.setProperty(LOG_FILE_PATTERN, logFilePattern.toString());
 
+        System.out.println("------ 333 " + logFilePattern.toString());
+        
         Path logDirPath = logFilePattern.getParent();
         System.out.printf("Logs dir %s\n", logDirPath.toString());
         this.logFileDir = new File(logDirPath.toString());
@@ -50,6 +55,7 @@ abstract class DesktopUserDirProvider implements DirProvider {
             System.out.printf("Creating dir %s\n", logDirPath);
             try {
                 Files.createDirectory(logDirPath);
+                System.out.println("------ 444");
             } catch (IOException e) {
                 throw new IllegalArgumentException("Cannot create " + logDirPath, e);
             }

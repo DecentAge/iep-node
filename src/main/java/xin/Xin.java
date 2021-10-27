@@ -81,7 +81,9 @@ public final class Xin {
         runtimeMode = RuntimeEnvironment.getRuntimeMode();
         System.out.printf("Runtime mode %s\n", runtimeMode.getClass().getName());
         dirProvider = RuntimeEnvironment.getDirProvider();
-        System.out.println("User home folder" + dirProvider.getUserHomeDir() + dirProvider.getClass().getName());
+        System.out.println("User home folder " + dirProvider.getUserHomeDir());
+        System.out.println("Using dirProvider " + dirProvider.getClass().getName());
+        
 
         loadProperties(defaultProperties, XIN_STORAGE_PROPERTIES, true);
         loadProperties(defaultProperties, XIN_PROXIES_PROPERTIES, true);
@@ -203,7 +205,7 @@ public final class Xin {
                     }
                     Path propPath = Paths.get(confDir.toString()).resolve(Paths.get(propertiesFile));
                     if (Files.isReadable(propPath)) {
-                        System.out.printf("Loading %s from dir %s\n" + propPath, propertiesFile, confDir);
+                        System.out.printf("Loading %s from dir %s\n", propPath, confDir);
                         properties.load(Files.newInputStream(propPath));
                     } else {
                         System.out.printf("Creating property file %s\n", propPath);
@@ -366,7 +368,6 @@ public final class Xin {
         static {
             try {
                 long startTime = System.currentTimeMillis();
-
 
                 Logger.init();
 

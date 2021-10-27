@@ -5,3 +5,7 @@
 .classpath
 .gitignore
 .gitlab-ci.yml
+wallet-ui/node_modules
+wallet-ui/build
+wallet-ui/dist
+wallet-ui/package-lock.json

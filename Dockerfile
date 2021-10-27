@@ -11,7 +11,7 @@ RUN npm run build-prod
 FROM gradle:6.8.3-jdk11 AS gradle-builder
 WORKDIR /build
 COPY --chown=gradle:gradle . .
-COPY --from=node-builder /wallet-ui/dist html/www
+COPY --from=node-builder /wallet-ui/dist html/www/wallet
 RUN gradle DistZip --no-daemon
 
 
@@ -28,6 +28,6 @@ COPY --from=gradle-builder /build/docker-entrypoint.sh /iep-node/docker-entrypoi
 COPY --from=gradle-builder /build/scripts /iep-node/scripts
 COPY --from=gradle-builder /build/wait-for-it.sh /iep-node/wait-for-it.sh
 #COPY --from=node-builder /wallet-ui/dist /iep-node/html/www/wallet
-RUN set -o errexit -o nounset && unzip -q /iep-node.zip
+RUN set -o errexit -o nounset && unzip -q /iep-node.zip -d /
 
 ENTRYPOINT ["/iep-node/docker-entrypoint.sh"]

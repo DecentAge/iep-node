@@ -16,11 +16,13 @@
 
 package xin.util;
 
-import org.apache.log4j.Level;
+import java.util.Properties;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.PropertyConfigurator;
+
 import xin.Xin;
 import xin.env.RuntimeEnvironment;
-
-import java.util.Properties;
 
 /**
  * Handle logging for the xin node server
@@ -83,8 +85,11 @@ public final class Logger {
      */
 
     static {
-        Properties logginProperites = Xin.loadProperties(new Properties(), "log4j.properties", true);
+        Properties logginProperites = Xin.loadProperties(new Properties(), "log4j.properties", false);
+        System.out.println("Setting following Log4J properties: "+ logginProperites.toString());
         RuntimeEnvironment.getDirProvider().updateLogFileHandler(logginProperites);
+        LogManager.resetConfiguration(); 
+        PropertyConfigurator.configure(logginProperites); 
         log = org.slf4j.LoggerFactory.getLogger(Xin.class);
         enableStackTraces = Xin.getBooleanProperty("xin.enableStackTraces");
         enableLogTraceback = Xin.getBooleanProperty("xin.enableLogTraceback");
