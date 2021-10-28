@@ -389,7 +389,7 @@ final class BlockImpl implements Block {
             BigInteger hit = new BigInteger(1, new byte[]{generationSignatureHash[7], generationSignatureHash[6], generationSignatureHash[5], generationSignatureHash[4], generationSignatureHash[3], generationSignatureHash[2], generationSignatureHash[1], generationSignatureHash[0]});
 
             return (Generator.verifyHit(hit, BigInteger.valueOf(effectiveBalance), previousBlock, timestamp) 
-            		|| this.height < Constants.TRANSPARENT_FORGING_BLOCK_5);
+            		|| (Xin.getBooleanProperty("xin.isOffline") && Xin.getBooleanProperty("xin.enableFakeForging")));
         } catch (RuntimeException e) {
             Logger.logMessage("Error verifying block generation signature", e);
             return false;
