@@ -12,7 +12,7 @@
  * Removal or modification of this copyright notice is prohibited.
  *
  */
-package xin.http.nxt;
+package xin.http.utils;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.WriteListener;

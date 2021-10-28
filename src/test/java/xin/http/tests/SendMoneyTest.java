@@ -14,7 +14,7 @@
  *
  */
 
-package xin.http;
+package xin.http.tests;
 
 import org.json.simple.JSONObject;
 import org.junit.Assert;
@@ -22,7 +22,7 @@ import org.junit.Test;
 
 import xin.BlockchainTest;
 import xin.Constants;
-import xin.http.nxt.APICall;
+import xin.http.utils.APICall;
 import xin.util.Logger;
 
 public class SendMoneyTest extends BlockchainTest {
@@ -47,11 +47,8 @@ public class SendMoneyTest extends BlockchainTest {
         Assert.assertEquals(0, BOB.getBalanceDiff());
         Assert.assertEquals(0, BOB.getUnconfirmedBalanceDiff());
         
-        
-        	generateBlock();
-        	generateBlock();
-        
-        
+       	generateBlock();
+       	generateBlock();
         
         // Forger
         Assert.assertEquals(Constants.ONE_XIN, FORGY.getBalanceDiff());

@@ -14,7 +14,7 @@
  *
  */
 
-package xin.http.nxt;
+package xin.http.utils;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;

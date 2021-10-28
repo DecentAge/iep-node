@@ -14,14 +14,14 @@
  *
  */
 
-package xin.http;
+package xin.http.tests;
 
 import xin.Account;
 import xin.BlockchainTest;
 import xin.Constants;
 import xin.crypto.Crypto;
 import xin.crypto.EncryptedData;
-import xin.http.nxt.APICall;
+import xin.http.utils.APICall;
 import xin.util.Convert;
 import xin.util.Logger;
 import org.json.simple.JSONObject;
@@ -39,8 +39,6 @@ public class SendMessageTest extends BlockchainTest {
                 param("feeTQT", Constants.ONE_XIN).
                 build().invoke();
         
-        System.out.println("Hello first test *************************** ");
-       
         String transaction = (String) response.get("transaction");
         
         JSONObject attachment = (JSONObject) ((JSONObject)response.get("transactionJSON")).get("attachment");

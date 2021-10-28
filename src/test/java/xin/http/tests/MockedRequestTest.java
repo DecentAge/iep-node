@@ -14,9 +14,11 @@
  *
  */
 
-package xin.http;
+package xin.http.tests;
 
 import org.junit.Test;
+
+import xin.http.MockedRequest;
 
 import java.util.Map;
 

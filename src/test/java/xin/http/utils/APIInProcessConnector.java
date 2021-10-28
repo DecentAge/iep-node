@@ -13,7 +13,7 @@
  *
  */
 
-package xin.http.nxt;
+package xin.http.utils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
