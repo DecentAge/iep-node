@@ -1,45 +1,45 @@
 window.envConfig = {
     RELEASE_VERSION: '',
 
-    NETWORK_ENVIRONMENT: '',
+    NETWORK_ENVIRONMENT: 'testnet',
 
-    APP_BASE_HREF:      '' || '',
+    APP_BASE_HREF:      '' || '/wallet',
 
-    CONNECTION_MODE: 	'',
-    FALLBACK_HOST_URL: 	'',
-    USER_NODE_URL: 		'',
-    LOCALTESTNET_URL: 	'',
-    HTTPS_URL: 			'',
-    FOUNDATION_URL: 	'',
-    TESTNET_URL: 		'',
-    DEVTESTNET_URL: 	'',
+    CONNECTION_MODE: 	'LOCALTESTNET',
+    FALLBACK_HOST_URL: 	'http://localhost:23457',
+    USER_NODE_URL: 		'http://localhost:23457',
+    LOCALTESTNET_URL: 	'http://localhost:23457',
+    HTTPS_URL: 			'http://localhost:23457',
+    FOUNDATION_URL: 	'http://localhost:23457',
+    TESTNET_URL: 		'http://localhost:23457',
+    DEVTESTNET_URL: 	'http://localhost:23457',
 
-    PEER_ENDPOINTS_DEFAULT: 		[],
-    PEER_ENDPOINTS_DEVTESTNET: 		[],
-    PEER_ENDPOINTS_TESTNET: 		[],
-    PEER_ENDPOINTS_LOCALTESTNET:	[],
+    PEER_ENDPOINTS_DEFAULT: 		['https://apps-test.infinity-economics.io/peerexplorer-backend/api/nodes'],
+    PEER_ENDPOINTS_DEVTESTNET: 		['https://apps-test.infinity-economics.io/peerexplorer-backend/api/nodes'],
+    PEER_ENDPOINTS_TESTNET: 		['https://apps-test.infinity-economics.io/peerexplorer-backend/api/nodes'],
+    PEER_ENDPOINTS_LOCALTESTNET:	['https://apps-test.infinity-economics.io/peerexplorer-backend/api/nodes'],
 
-    BTC_ENDPOINT: '',
-    XIN_ENDPOINT: '',
+    BTC_ENDPOINT: 'https://apps-test.infinity-economics.io/iep-static-site/master-config',
+    XIN_ENDPOINT: 'https://apps-test.infinity-economics.io/iep-static-site/master-config',
 
-    MARKET_DATA_BASE_URL: '',
+    MARKET_DATA_BASE_URL: 'https://min-api.cryptocompare.com',
 
-    EXCHANGE_BLOCKR_URL_ENDPOINT: '',
+    EXCHANGE_BLOCKR_URL_ENDPOINT: 'https://blockexplorer.com/api/',
 
-    AT_COMPILER_URL: '',
+    AT_COMPILER_URL: 'http://142.93.63.219:10080',
     
-    SEARCH_PEER_URL: '',
+    SEARCH_PEER_URL: 'http://node-1/peerexplorer-backend/api/nodes',
 
-    MACAP_URL: '',
+    MACAP_URL: 'https://apps-test.infinity-economics.io//mcap-backend',
 
-    NEWS_URL: '',
+    NEWS_URL: 'http://node-1:8889',
 
-    CHAINVIEWER_API_URL: '',
+    CHAINVIEWER_API_URL: 'http://node-1:23457',
     CHAINVIEWER_PEER_URL: 'http://199.127.137.169:8888',
 
     SESSION_STORAGE_EXPIRATION: 60 * 60 * 1000, // 1 hour
 
-    EPOCH:  || 1484046000,
-    TX_HEIGHT:  || 7 * 1440,
-    LEASING_OFFSET_BLOCK:  || 3000,
+    EPOCH: 1484046000 || 1484046000,
+    TX_HEIGHT: 10080 || 7 * 1440,
+    LEASING_OFFSET_BLOCK: 3000 || 3000,
 }
