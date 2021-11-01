@@ -33,21 +33,13 @@ public abstract class AbstractBlockchainTest {
 
     protected static Properties newTestProperties() {
         Properties testProperties = new Properties();
-        testProperties.setProperty("nxt.shareMyAddress", "false");
-        testProperties.setProperty("nxt.savePeers", "false");
-        //testProperties.setProperty("nxt.enableAPIServer", "false");
-        //testProperties.setProperty("nxt.enableUIServer", "false");
-        testProperties.setProperty("nxt.disableGenerateBlocksThread", "true");
-        //testProperties.setProperty("nxt.disableProcessTransactionsThread", "true");
-        //testProperties.setProperty("nxt.disableRemoveUnconfirmedTransactionsThread", "true");
-        //testProperties.setProperty("nxt.disableRebroadcastTransactionsThread", "true");
-        //testProperties.setProperty("nxt.disablePeerUnBlacklistingThread", "true");
-        //testProperties.setProperty("nxt.getMorePeers", "false");
-        testProperties.setProperty("nxt.testUnconfirmedTransactions", "true");
-        testProperties.setProperty("nxt.debugTraceAccounts", "");
-        testProperties.setProperty("nxt.debugLogUnconfirmed", "false");
-        testProperties.setProperty("nxt.debugTraceQuote", "\"");
-        //testProperties.setProperty("nxt.numberOfForkConfirmations", "0");
+        testProperties.setProperty("xin.shareMyAddress", "false");
+        testProperties.setProperty("xin.savePeers", "false");
+        testProperties.setProperty("xin.disableGenerateBlocksThread", "true");
+        testProperties.setProperty("xin.testUnconfirmedTransactions", "true");
+        testProperties.setProperty("xin.debugTraceAccounts", "");
+        testProperties.setProperty("xin.debugLogUnconfirmed", "false");
+        testProperties.setProperty("xin.debugTraceQuote", "\"");
         return testProperties;
     }
 
