@@ -32,6 +32,9 @@ public class SendMessageTest extends BlockchainTest {
 
     @Test
     public void sendMessage() {
+    	generateBlock();
+    	generateBlock();
+    	 
         JSONObject response = new APICall.Builder("sendMessage").
                 param("secretPhrase", ALICE.getSecretPhrase()).
                 param("recipient", BOB.getStrId()).
