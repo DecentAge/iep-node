@@ -16,32 +16,6 @@
 
 package xindesktop;
 
-import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.concurrent.Worker;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
-import javafx.stage.FileChooser;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import netscape.javascript.JSObject;
-import xin.Block;
-import xin.BlockchainProcessor;
-import xin.Xin;
-import xin.PrunableMessage;
-//import xin.TaggedData;
-import xin.Transaction;
-import xin.TransactionProcessor;
-import xin.api.API;
-import xin.util.Convert;
-import xin.util.Logger;
-import xin.util.TrustAllSSLProvider;
-
-import javax.net.ssl.HttpsURLConnection;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
@@ -64,6 +38,35 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.net.ssl.HttpsURLConnection;
+
+import com.sun.javafx.webkit.WebConsoleListener;
+
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.concurrent.Worker;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import javafx.stage.FileChooser;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import netscape.javascript.JSObject;
+import xin.Block;
+import xin.BlockchainProcessor;
+import xin.PrunableMessage;
+//import xin.TaggedData;
+import xin.Transaction;
+import xin.TransactionProcessor;
+import xin.Xin;
+import xin.api.API;
+import xin.util.Convert;
+import xin.util.Logger;
+import xin.util.TrustAllSSLProvider;
+
 public class DesktopApplication extends Application {
 
     private static final Set DOWNLOAD_REQUEST_TYPES = new HashSet<>(Arrays.asList("downloadTaggedData", "downloadPrunableMessage"));
@@ -78,6 +81,9 @@ public class DesktopApplication extends Application {
     public static void launch() {
         if (!isLaunched) {
             isLaunched = true;
+            WebConsoleListener.setDefaultListener((webView, message, lineNumber, sourceId) -> {
+            	Logger.logInfoMessage(message + " [at " + lineNumber + " - "+sourceId+"]");
+            });
             Application.launch(DesktopApplication.class);
             return;
         }
@@ -133,7 +139,6 @@ public class DesktopApplication extends Application {
         browser.setMinWidth(width);
         webEngine = browser.getEngine();
         webEngine.setUserDataDirectory(Xin.getConfDir());
-
         Worker<Void> loadWorker = webEngine.getLoadWorker();
         loadWorker.stateProperty().addListener(
                 (ov, oldState, newState) -> {

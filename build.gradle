@@ -10,7 +10,7 @@ sourceCompatibility = 11
 targetCompatibility = 11
 
 javafx {
-    version = "17"
+    version = "15"
     modules = [ 'javafx.controls' , 'javafx.web', 'javafx.fxml' ]
     // configuration = 'compileOnly'
 }
@@ -78,6 +78,10 @@ task devStartScripts(type: CreateStartScripts) {
 //	defaultJvmOpts = ["-Dmrn.runtime.dirProvider=ENV_DIR_PROVIDER"]
     classpath = startScripts.classpath
     outputDir = startScripts.outputDir    
+}
+
+compileJava {
+  options.compilerArgs.addAll(['--add-exports', 'javafx.web/com.sun.javafx.scene.web=ALL-UNNAMED'])
 }
 
 jar {
