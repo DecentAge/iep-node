@@ -599,7 +599,7 @@ export const ROUTES: RouteInfo[] = [
             },
         ],
         appName: 'Shuffling'
-    },
+    },/*
     {
         path: '/wallet-settings/options',
         title: 'Options',
@@ -609,7 +609,7 @@ export const ROUTES: RouteInfo[] = [
         badgeClass: '',
         isExternalLink: false,
         submenu: []
-    },
+    },*/
     {
         path: '/tools',
         title: 'Tools',

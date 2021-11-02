@@ -33,8 +33,7 @@ export class MessageService {
             'subtype': subtype,
             'withMessage': true
         };
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-            this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.messagesConfig.messagesEndPoint, params);
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.messagesConfig.messagesEndPoint, params);
     };
 
     getAccountDetails(accountRS) {
@@ -42,8 +41,7 @@ export class MessageService {
             'requestType': 'getAccount',
             'account': accountRS
         };
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-            this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.messagesConfig.messagesEndPoint, params);
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.messagesConfig.messagesEndPoint, params);
     };
 
     sendMessage(senderPublicKey, recipientRS, fee, data, nonce, recipientPublicKey, prunable) {
@@ -73,8 +71,7 @@ export class MessageService {
         if(prunableAttachmentJSON){
             params['prunableAttachmentJSON'] = JSON.stringify(prunableAttachmentJSON);
         }
-        return this.http.post(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-            this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.messagesConfig.messagesEndPoint, params);
+        return this.http.post(this.nodeService.getNodeUrl(), AppConstants.messagesConfig.messagesEndPoint, params);
 
     };
 }

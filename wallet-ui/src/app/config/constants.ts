@@ -23,7 +23,6 @@ export class AppConstants {
     public static baseConfig = {
         'SESSION_STORAGE_NAMESPACE': 'com.client',
         // This url to access the node API is used when defined connection mode no URL is specified
-        'FALLBACK_HOST_URL': getEnvConfig('FALLBACK_HOST_URL') || 'http://208.95.1.177:23457',
         'AUTO_PAGE_REFRESH_INTERVAL': 60000,
         'TOKEN_QUANTS': 100000000,
         'TX_DEADLINE': 60,
@@ -44,24 +43,9 @@ export class AppConstants {
         'REFRESH_INTERVAL_MILLI_SECONDS': '60000',
         'TX_HEIGHT': getEnvConfig('TX_HEIGHT'),
         'AUTO_UPDATE': 1,
-        // Following values are supported:
-         //   - AUTO            Retrieves the node to be used from /api/nodes and take one randomly from the result list or the first if RANDOMIZE_NODES=true
-         //   - FOUNDATION      The API endpoint to access the mainnet. Will use the URL defined by FOUNDATION_URL.
-         //   - MANUAL          Let the user manually set override API endpoint in die wallet settings (value will be stored in Session store)
-         //   - LOCAL_HOST      ?
-         //   - TESTNET         The API endpoint to access the testnet. Will use the URL defined by TESTNET_URL.
-         //   - LOCALTESTNET    The API endpoint to access the testnet locally. Will use the URL defined by LOCALTESTNET_URL.
-         //   - DEVTESTNET      The API endpoint to access the devnet. Will use the URL defined by DEVTESTNET_URL.
-         //   - HTTPS           The API endpoint to securly access the mainnet with SSL.
-        'CONNECTION_MODE': getEnvConfig('CONNECTION_MODE') || 'LOCALTESTNET',
         'RANDOMIZE_NODES': 1,
         'EXTENSIONS': 1,
-        'USER_NODE_URL': getEnvConfig('USER_NODE_URL') || 'http://localhost:23457',
-        'LOCALTESTNET_URL': getEnvConfig('LOCALTESTNET_URL') || 'http://node-1',
-        'HTTPS_URL': getEnvConfig('HTTPS_URL') || 'https://ssl.infinity-economics.org',
-        'FOUNDATION_URL': getEnvConfig('FOUNDATION_URL') || 'http://159.89.117.247:23457',
-        'TESTNET_URL': getEnvConfig('TESTNET_URL') || 'http://168.119.228.238:9876',
-        'DEVTESTNET_URL': getEnvConfig('DEVTESTNET_URL') || 'http://142.93.129.78:9876',
+        'NODE_API_URL': getEnvConfig('NODE_API_URL') || 'http://node-1',
     };
     public static addressBookConfig = {
         'tableAddressBook': 'addressBook'
@@ -87,22 +71,11 @@ export class AppConstants {
         'TX_HEIGHT': getEnvConfig('TX_HEIGHT'),
     };
 
-    public static peerEndpointsMap =  {
-        DEFAULT: getEnvConfig('PEER_ENDPOINTS_DEFAULT') || [
+    public static peerEndpoints = getEnvConfig('PEER_ENDPOINTS') || [
             'http://208.95.1.177:8888/api/nodes',
             'http://199.127.137.169:8888/api/nodes',
             'http://35.204.224.241:8888/api/nodes'
-        ],
-        DEVTESTNET: getEnvConfig('PEER_ENDPOINTS_DEVTESTNET') || [
-            'http://185.35.138.132:9999/api/nodes',
-        ],
-        TESTNET: getEnvConfig('PEER_ENDPOINTS_TESTNET') || [
-            'http://168.119.228.238/api/nodes'
-        ],
-        LOCALTESTNET: getEnvConfig('PEER_ENDPOINTS_LOCALTESTNET') || [
-            'http://localhost/peerexplorer-backend/api/nodes'
-        ]
-    };
+        ];
 
     public static loginConfig = {
         SESSION_ACCOUNT_DETAILS_KEY: 'account_details',

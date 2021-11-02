@@ -140,7 +140,7 @@ export class ResponseInterceptor implements HttpInterceptor {
             _this.peerService.getPeers().subscribe(
               function(success) {
                 _this.optionsConfigurationService.loadOptions();
-                let url = this.nodeService.getNodeUrl("AUTO", false) + "/api";
+                let url = this.nodeService.getNodeUrl() + "/api";
 
                 let newReq = req.clone({ url });
                 return _this.http.request(newReq);

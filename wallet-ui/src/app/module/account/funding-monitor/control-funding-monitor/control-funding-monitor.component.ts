@@ -8,6 +8,7 @@ import * as alertFunctions from '../../../../shared/data/sweet-alerts';
 import { AmountToQuantPipe } from '../../../../pipes/amount-to-quant.pipe';
 import { ShareToQuantityPipe } from '../../../../pipes/share-to-quantity.pipe';
 import { CommonService } from '../../../../services/common.service';
+import {AppConstants} from '../../../../config/constants';
 
 @Component({
     selector: 'app-control-funding-monitor',
@@ -45,13 +46,12 @@ export class ControlFundingMonitorComponent implements OnInit {
         };
     }
     ngOnInit() {
-        this.connectionMode = this.optionService.getOption('CONNECTION_MODE', '');
         this.hasLocal = this.connectionMode === 'LOCAL_HOST';
         this.displayNotificationAlert();
     }
 
     displayNotificationAlert() {
-        if (this.connectionMode !== 'LOCAL_HOST' && this.connectionMode !== 'TESTNET' && this.connectionMode !== 'DEVTESTNET') {
+        if (AppConstants.DEFAULT_OPTIONS.NETWORK_ENVIRONMENT !== 'testnet') {
             let title: string = this.commonService.translateAlertTitle('Error');
             let errMsg: string = this.commonService.translateInfoMessage('block-generation-localhost-error-msg');
             alertFunctions.InfoAlertBox(title,

@@ -28,10 +28,7 @@ export class AccountService {
       subtype: subtype
     };
     return this.http.get(
-      this.nodeService.getNodeUrl(
-        this.optionsService.getOption("CONNECTION_MODE", ""),
-        this.optionsService.getOption("RANDOMIZE_NODES", "")
-      ),
+      this.nodeService.getNodeUrl(),
       AppConstants.accountConfig.accountEndPoint,
       params
     );
@@ -44,10 +41,7 @@ export class AccountService {
     };
 
     return this.http.get(
-      this.nodeService.getNodeUrl(
-        this.optionsService.getOption("CONNECTION_MODE", ""),
-        this.optionsService.getOption("RANDOMIZE_NODES", "")
-      ),
+      this.nodeService.getNodeUrl(),
       AppConstants.accountConfig.accountEndPoint,
       params
     );
@@ -64,10 +58,7 @@ export class AccountService {
     };
 
     return this.http.get(
-      this.nodeService.getNodeUrl(
-        this.optionsService.getOption("CONNECTION_MODE", ""),
-        this.optionsService.getOption("RANDOMIZE_NODES", "")
-      ),
+      this.nodeService.getNodeUrl(),
       AppConstants.accountConfig.accountEndPoint,
       params
     );
@@ -82,10 +73,7 @@ export class AccountService {
       account: accountRS
     };
     return this.http.get(
-      this.nodeService.getNodeUrl(
-        this.optionsService.getOption("CONNECTION_MODE", ""),
-        this.optionsService.getOption("RANDOMIZE_NODES", "")
-      ),
+      this.nodeService.getNodeUrl(),
       AppConstants.accountConfig.accountEndPoint,
       params
     );
@@ -143,10 +131,7 @@ export class AccountService {
     };
 
     return this.http.post(
-      this.nodeService.getNodeUrl(
-        this.optionsService.getOption("CONNECTION_MODE", ""),
-        this.optionsService.getOption("RANDOMIZE_NODES", "")
-      ),
+      this.nodeService.getNodeUrl(),
       AppConstants.accountConfig.accountEndPoint,
       params
     );
@@ -175,10 +160,7 @@ export class AccountService {
     };
 
     return this.http.get(
-      this.nodeService.getNodeUrl(
-        this.optionsService.getOption("CONNECTION_MODE", ""),
-        this.optionsService.getOption("RANDOMIZE_NODES", "")
-      ),
+      this.nodeService.getNodeUrl(),
       AppConstants.accountConfig.accountEndPoint,
       params
     );
@@ -218,10 +200,7 @@ export class AccountService {
   blockGeneration(mode, secret, node) {
     let baseUrl = "";
     if (node !== "LOCAL_HOST") {
-      baseUrl = this.nodeService.getNodeUrl(
-        this.optionsService.getOption("CONNECTION_MODE", ""),
-        this.optionsService.getOption("RANDOMIZE_NODES", "")
-      );
+      baseUrl = this.nodeService.getNodeUrl();
     } else {
       baseUrl = this.nodeService.getLocalNodeUrl();
     }
@@ -256,10 +235,7 @@ export class AccountService {
       aliasPrefix: query
     };
     return this.http.get(
-      this.nodeService.getNodeUrl(
-        this.optionsService.getOption("CONNECTION_MODE", ""),
-        this.optionsService.getOption("RANDOMIZE_NODES", "")
-      ),
+      this.nodeService.getNodeUrl(),
       AppConstants.accountConfig.accountEndPoint,
       params
     );
@@ -274,10 +250,7 @@ export class AccountService {
     };
 
     return this.http.get(
-      this.nodeService.getNodeUrl(
-        this.optionsService.getOption("CONNECTION_MODE", ""),
-        this.optionsService.getOption("RANDOMIZE_NODES", "")
-      ),
+      this.nodeService.getNodeUrl(),
       AppConstants.accountConfig.accountEndPoint,
       params
     );
@@ -304,10 +277,7 @@ export class AccountService {
     };
 
     return this.http.post(
-      this.nodeService.getNodeUrl(
-        this.optionsService.getOption("CONNECTION_MODE", ""),
-        this.optionsService.getOption("RANDOMIZE_NODES", "")
-      ),
+      this.nodeService.getNodeUrl(),
       AppConstants.accountConfig.accountEndPoint,
       params
     );
@@ -320,10 +290,7 @@ export class AccountService {
     };
 
     return this.http.get(
-      this.nodeService.getNodeUrl(
-        this.optionsService.getOption("CONNECTION_MODE", ""),
-        this.optionsService.getOption("RANDOMIZE_NODES", "")
-      ),
+      this.nodeService.getNodeUrl(),
       AppConstants.accountConfig.accountEndPoint,
       params
     );
@@ -345,10 +312,7 @@ export class AccountService {
     };
 
     return this.http.post(
-      this.nodeService.getNodeUrl(
-        this.optionsService.getOption("CONNECTION_MODE", ""),
-        this.optionsService.getOption("RANDOMIZE_NODES", "")
-      ),
+      this.nodeService.getNodeUrl(),
       AppConstants.accountConfig.accountEndPoint,
       params
     );
@@ -390,10 +354,7 @@ export class AccountService {
     };
 
     return this.http.post(
-      this.nodeService.getNodeUrl(
-        this.optionsService.getOption("CONNECTION_MODE", ""),
-        this.optionsService.getOption("RANDOMIZE_NODES", "")
-      ),
+      this.nodeService.getNodeUrl(),
       AppConstants.accountConfig.accountEndPoint,
       params
     );
@@ -409,10 +370,7 @@ export class AccountService {
       lastIndex: lastIndex
     };
     return this.http.get(
-      this.nodeService.getNodeUrl(
-        this.optionsService.getOption("CONNECTION_MODE", ""),
-        this.optionsService.getOption("RANDOMIZE_NODES", "")
-      ),
+      this.nodeService.getNodeUrl(),
       AppConstants.accountConfig.accountEndPoint,
       params
     );
@@ -434,10 +392,7 @@ export class AccountService {
     };
 
     return this.http.post(
-      this.nodeService.getNodeUrl(
-        this.optionsService.getOption("CONNECTION_MODE", ""),
-        this.optionsService.getOption("RANDOMIZE_NODES", "")
-      ),
+      this.nodeService.getNodeUrl(),
       AppConstants.accountConfig.accountEndPoint,
       params
     );
@@ -459,10 +414,7 @@ export class AccountService {
     };
 
     return this.http.post(
-      this.nodeService.getNodeUrl(
-        this.optionsService.getOption("CONNECTION_MODE", ""),
-        this.optionsService.getOption("RANDOMIZE_NODES", "")
-      ),
+      this.nodeService.getNodeUrl(),
       AppConstants.accountConfig.accountEndPoint,
       params
     );
@@ -477,10 +429,7 @@ export class AccountService {
     };
 
     return this.http.get(
-      this.nodeService.getNodeUrl(
-        this.optionsService.getOption("CONNECTION_MODE", ""),
-        this.optionsService.getOption("RANDOMIZE_NODES", "")
-      ),
+      this.nodeService.getNodeUrl(),
       AppConstants.accountConfig.accountEndPoint,
       params
     );
@@ -509,10 +458,7 @@ export class AccountService {
     };
 
     return this.http.post(
-      this.nodeService.getNodeUrl(
-        this.optionsService.getOption("CONNECTION_MODE", ""),
-        this.optionsService.getOption("RANDOMIZE_NODES", "")
-      ),
+      this.nodeService.getNodeUrl(),
       AppConstants.accountConfig.accountEndPoint,
       params
     );
@@ -537,10 +483,7 @@ export class AccountService {
     };
 
     return this.http.post(
-      this.nodeService.getNodeUrl(
-        this.optionsService.getOption("CONNECTION_MODE", ""),
-        this.optionsService.getOption("RANDOMIZE_NODES", "")
-      ),
+      this.nodeService.getNodeUrl(),
       AppConstants.accountConfig.accountEndPoint,
       params
     );
@@ -553,10 +496,7 @@ export class AccountService {
     };
 
     return this.http.get(
-      this.nodeService.getNodeUrl(
-        this.optionsService.getOption("CONNECTION_MODE", ""),
-        this.optionsService.getOption("RANDOMIZE_NODES", "")
-      ),
+      this.nodeService.getNodeUrl(),
       AppConstants.accountConfig.accountEndPoint,
       params
     );
@@ -581,10 +521,7 @@ export class AccountService {
     };
 
     return this.http.get(
-      this.nodeService.getNodeUrl(
-        this.optionsService.getOption("CONNECTION_MODE", ""),
-        this.optionsService.getOption("RANDOMIZE_NODES", "")
-      ),
+      this.nodeService.getNodeUrl(),
       AppConstants.accountConfig.accountEndPoint,
       params
     );
@@ -595,10 +532,7 @@ export class AccountService {
       transaction: transactionID
     };
     return this.http.get(
-      this.nodeService.getNodeUrl(
-        this.optionsService.getOption("CONNECTION_MODE", ""),
-        this.optionsService.getOption("RANDOMIZE_NODES", "")
-      ),
+      this.nodeService.getNodeUrl(),
       AppConstants.accountConfig.accountEndPoint,
       params
     );

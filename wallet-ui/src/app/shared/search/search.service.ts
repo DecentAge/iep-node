@@ -18,8 +18,7 @@ export class SearchService {
             'height': searchTerm,
             'includeTransactions': true
         };
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-            this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.searchConfig.searchEndPoint, params);
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.searchConfig.searchEndPoint, params);
     };
 
     searchIp = function (ip) {
@@ -31,8 +30,7 @@ export class SearchService {
             'requestType': 'getTransaction',
             'transaction': searchTerm
         };
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-            this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.searchConfig.searchEndPoint, params);
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.searchConfig.searchEndPoint, params);
 
     };
 
@@ -41,8 +39,7 @@ export class SearchService {
             'requestType': 'getBlock',
             'block': searchTerm
         };
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-            this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.searchConfig.searchEndPoint, params);
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.searchConfig.searchEndPoint, params);
 
     };
 
@@ -55,8 +52,7 @@ export class SearchService {
             'includeEffectiveBalance': true,
             'includeLessors': true
         };
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-            this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.searchConfig.searchEndPoint, params);
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.searchConfig.searchEndPoint, params);
     };
 
     searchTransactions = function (searchTerm) {
@@ -65,8 +61,7 @@ export class SearchService {
             'fullHash': searchTerm,
             'includePhasingResult': true,
         };
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-            this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.searchConfig.searchEndPoint, params);
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.searchConfig.searchEndPoint, params);
     };
 
     validateIPaddress(ipAddress) {

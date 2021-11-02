@@ -23,8 +23,7 @@ export class AliasesService {
             'lastIndex': lastIndex
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-            this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.aliasesConfig.aliasesEndPoint, params);
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.aliasesConfig.aliasesEndPoint, params);
 
     };
 
@@ -63,8 +62,7 @@ export class AliasesService {
             'firstIndex': firstIndex,
             'lastIndex': lastIndex
         };
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-            this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.aliasesConfig.aliasesEndPoint, params);
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.aliasesConfig.aliasesEndPoint, params);
     };
 
     sellAlias(publicKey, aliasName, recipientRS, price, fee) {
@@ -118,8 +116,7 @@ export class AliasesService {
             'firstIndex': firstIndex,
             'lastIndex': lastIndex
         };
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-            this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.aliasesConfig.aliasesEndPoint, params);
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.aliasesConfig.aliasesEndPoint, params);
     };
 
     getAliasesPrivateOffers(account, firstIndex, lastIndex) {
@@ -130,8 +127,7 @@ export class AliasesService {
             'firstIndex': firstIndex,
             'lastIndex': lastIndex
         };
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-            this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.aliasesConfig.aliasesEndPoint, params);
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.aliasesConfig.aliasesEndPoint, params);
     };
 
     getAliasesPublicOffers(account, firstIndex, lastIndex, order, orderColumn) {
@@ -142,7 +138,6 @@ export class AliasesService {
             'order': order,
             'orderColumn': orderColumn
         };
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-            this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.aliasesConfig.aliasesEndPoint, params);
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.aliasesConfig.aliasesEndPoint, params);
     };
 }

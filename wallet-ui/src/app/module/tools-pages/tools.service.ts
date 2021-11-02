@@ -18,8 +18,7 @@ export class ToolsService {
       'token': token
     };
     
-    return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-            this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.messagesConfig.messagesEndPoint, params);
+    return this.http.get(this.nodeService.getNodeUrl(), AppConstants.messagesConfig.messagesEndPoint, params);
   };
 
   parseTransaction(transactionBytes) {
@@ -28,8 +27,7 @@ export class ToolsService {
       'transactionBytes': transactionBytes
 
     };
-    return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-            this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.messagesConfig.messagesEndPoint, params);
+    return this.http.get(this.nodeService.getNodeUrl(), AppConstants.messagesConfig.messagesEndPoint, params);
   };
 
   broadcastTransaction(transactionBytes) {
@@ -38,8 +36,7 @@ export class ToolsService {
       'transactionBytes': transactionBytes
     };
     
-    return this.http.post(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-            this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.messagesConfig.messagesEndPoint, params);
+    return this.http.post(this.nodeService.getNodeUrl(), AppConstants.messagesConfig.messagesEndPoint, params);
   };
 
   calculateHash(hashAlgorithm, secret): any {
@@ -49,16 +46,14 @@ export class ToolsService {
       'secret': secret,
       'secretIsText': true
     };
-    return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-            this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.messagesConfig.messagesEndPoint, params);
+    return this.http.get(this.nodeService.getNodeUrl(), AppConstants.messagesConfig.messagesEndPoint, params);
   };
 
   getChainStats(): any {
     var params = {
       'requestType': 'getStatistics',
     };
-    return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-            this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.messagesConfig.messagesEndPoint, params);
+    return this.http.get(this.nodeService.getNodeUrl(), AppConstants.messagesConfig.messagesEndPoint, params);
   };
 
 }
