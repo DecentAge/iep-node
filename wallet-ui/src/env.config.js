@@ -33,3 +33,8 @@ window.envConfig = {
     TX_HEIGHT: 10080 || 7 * 1440,
     LEASING_OFFSET_BLOCK: 3000 || 3000,
 }
+
+window.XRS = {
+    growl: console.info,
+    getState: () => "TEST"
+}

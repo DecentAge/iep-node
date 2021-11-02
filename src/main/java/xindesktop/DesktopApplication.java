@@ -40,6 +40,8 @@ import java.util.stream.Collectors;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import com.mohamnag.fxwebview_debugger.DevToolsDebuggerServer;
+import com.sun.javafx.scene.web.Debugger;
 import com.sun.javafx.webkit.WebConsoleListener;
 
 import javafx.application.Application;
@@ -70,11 +72,11 @@ import xin.util.TrustAllSSLProvider;
 public class DesktopApplication extends Application {
 
     private static final Set DOWNLOAD_REQUEST_TYPES = new HashSet<>(Arrays.asList("downloadTaggedData", "downloadPrunableMessage"));
-    private static final boolean ENABLE_JAVASCRIPT_DEBUGGER = false;
+    private static final boolean ENABLE_JAVASCRIPT_DEBUGGER = true;
     private static volatile boolean isLaunched;
     private static volatile Stage stage;
     private static volatile WebEngine webEngine;
-    private JSObject nrs;
+    private JSObject xrs;
     private volatile long updateTime;
     private JavaScriptBridge javaScriptBridge;
 
@@ -154,8 +156,9 @@ public class DesktopApplication extends Application {
                     String language = locale.getLanguage().toLowerCase() + "-" + locale.getCountry().toUpperCase();
                     window.setMember("javaFxLanguage", language);
                     webEngine.executeScript("console.log = function(msg) { java.log(msg); };");
+                    webEngine.executeScript("console.error = function(msg) { java.log(msg); };");
                     stage.setTitle("XIN Desktop - " + webEngine.getLocation());
-                    nrs = (JSObject) webEngine.executeScript("NRS");
+                    xrs = (JSObject) webEngine.executeScript("XRS");
                     updateClientState("Desktop Wallet started");
                     BlockchainProcessor blockchainProcessor = Xin.getBlockchainProcessor();
                     blockchainProcessor.addListener(this::updateClientState, BlockchainProcessor.Event.BLOCK_PUSHED);
@@ -172,11 +175,9 @@ public class DesktopApplication extends Application {
                             Class webEngineClazz = WebEngine.class;
                             Field debuggerField = webEngineClazz.getDeclaredField("debugger");
                             debuggerField.setAccessible(true);
-                            Object debugger = debuggerField.get(webEngine);
-                            //noinspection JavaReflectionMemberAccess
-                            Method startDebugServer = aClass.getMethod("startDebugServer", debugger.getClass(), int.class);
-                            startDebugServer.invoke(null, debugger, 51742);
-                        } catch (NoSuchFieldException | ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                            Debugger debugger = (Debugger) debuggerField.get(webEngine);
+                            DevToolsDebuggerServer.startDebugServer(debugger, 51742);
+                        } catch (Exception e) {
                             Logger.logInfoMessage("Cannot start JavaFx debugger", e);
                         }
                     }
@@ -227,7 +228,7 @@ public class DesktopApplication extends Application {
 
     private void updateClientState(String msg) {
         updateTime = System.currentTimeMillis();
-        Platform.runLater(() -> webEngine.executeScript("NRS.getState(null, '" + msg + "')"));
+        Platform.runLater(() -> webEngine.executeScript("XRS.getState(null, '" + msg + "')"));
     }
 
     private static String getUrl() {
@@ -393,7 +394,7 @@ public class DesktopApplication extends Application {
         } else {
             Logger.logInfoMessage(msg, e);
         }
-        nrs.call("growl", msg);
+        xrs.call("growl", msg);
     }
 
     private void logJavaFxProperties() {
