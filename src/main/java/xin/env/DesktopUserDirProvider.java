@@ -42,11 +42,8 @@ abstract class DesktopUserDirProvider implements DirProvider {
             return;
         }
         
-        System.out.println("------ 222");
         Path logFilePattern = Paths.get(getUserHomeDir()).resolve(Paths.get(loggingProperties.getProperty(LOG_FILE_PATTERN)));
         loggingProperties.setProperty(LOG_FILE_PATTERN, logFilePattern.toString());
-
-        System.out.println("------ 333 " + logFilePattern.toString());
         
         Path logDirPath = logFilePattern.getParent();
         System.out.printf("Logs dir %s\n", logDirPath.toString());
@@ -55,7 +52,6 @@ abstract class DesktopUserDirProvider implements DirProvider {
             System.out.printf("Creating dir %s\n", logDirPath);
             try {
                 Files.createDirectory(logDirPath);
-                System.out.println("------ 444");
             } catch (IOException e) {
                 throw new IllegalArgumentException("Cannot create " + logDirPath, e);
             }

@@ -174,7 +174,7 @@ public class DesktopSystemTray {
         new Timer(DELAY, statusUpdater).start();
     }
 
-    private void displayStatus() {
+    private void displayStatus() {                System.out.println("------ 444");
         Block lastBlock = Xin.getBlockchain().getLastBlock();
         Collection<Generator> allGenerators = Generator.getAllGenerators();
 

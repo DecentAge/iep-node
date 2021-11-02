@@ -86,7 +86,6 @@ public final class Logger {
 
     static {
         Properties logginProperites = Xin.loadProperties(new Properties(), "log4j.properties", false);
-        System.out.println("Setting following Log4J properties: "+ logginProperites.toString());
         RuntimeEnvironment.getDirProvider().updateLogFileHandler(logginProperites);
         LogManager.resetConfiguration(); 
         PropertyConfigurator.configure(logginProperites); 
