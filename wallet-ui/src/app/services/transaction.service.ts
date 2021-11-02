@@ -27,8 +27,7 @@ export class TransactionService {
                 finalJson = this.copyJson(phasingParameters, finalJson);
                 finalJson = this.copyJson(messageParameters, finalJson);
 
-                subscriber.next(this.http.post(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-                    this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.baseConfig.apiEndPoint, finalJson ));
+                subscriber.next(this.http.post(this.nodeService.getNodeUrl(), AppConstants.baseConfig.apiEndPoint, finalJson ));
                 subscriber.complete();
             });
         });
@@ -40,8 +39,7 @@ export class TransactionService {
             'requestType': 'getBlockchainStatus',
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-        this.optionsService.getOption('RANDOMIZE_NODES', '')),  AppConstants.dashboardConfig.apiEndPoint, params )
+        return this.http.get(this.nodeService.getNodeUrl(),  AppConstants.dashboardConfig.apiEndPoint, params )
 
     };
 

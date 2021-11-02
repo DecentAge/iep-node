@@ -19,8 +19,7 @@ export class DashboardService {
             'account': accountRS
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionService.getOption('CONNECTION_MODE', ''),
-            this.optionService.getOption('RANDOMIZE_NODES', '')), AppConstants.dashboardConfig.apiEndPoint, params)
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.dashboardConfig.apiEndPoint, params)
 
     };
 

@@ -22,8 +22,7 @@ export class CurrenciesService {
             'includeCounts': true
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-        this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.currenciesConfig.currenciesEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.currenciesConfig.currenciesEndPoint, params );
     };
 
     getCurrency(currencyCode) {
@@ -33,8 +32,7 @@ export class CurrenciesService {
             'includeCounts': true
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-        this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.currenciesConfig.currenciesEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.currenciesConfig.currenciesEndPoint, params );
     };
 
     getCurrencyById(currencyId):any {
@@ -45,8 +43,7 @@ export class CurrenciesService {
             'includeCounts': true
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-        this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.currenciesConfig.currenciesEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.currenciesConfig.currenciesEndPoint, params );
     };
 
     getAccountCurrencies(account):any {
@@ -57,8 +54,7 @@ export class CurrenciesService {
             'includeCounts': true,
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-        this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.currenciesConfig.currenciesEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.currenciesConfig.currenciesEndPoint, params );
     };
 
     getSingleAccountCurrency(account, currency):any {
@@ -68,8 +64,7 @@ export class CurrenciesService {
             'currency': currency,
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-        this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.currenciesConfig.currenciesEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.currenciesConfig.currenciesEndPoint, params );
     };
 
     getMultipleCurrenctLastExchanges(currency) {
@@ -78,8 +73,7 @@ export class CurrenciesService {
             'currencies': currency,
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-        this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.currenciesConfig.currenciesEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.currenciesConfig.currenciesEndPoint, params );
     };
 
     issueCurrency =
@@ -113,8 +107,7 @@ export class CurrenciesService {
             'currency': currency,
         };
 
-        return this.http.post(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-        this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.currenciesConfig.currenciesEndPoint, params );
+        return this.http.post(this.nodeService.getNodeUrl(), AppConstants.currenciesConfig.currenciesEndPoint, params );
     };
 
     deleteCurrency(currency, fee, publicKey) {
@@ -137,8 +130,7 @@ export class CurrenciesService {
             'includeCounts': true
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-        this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.currenciesConfig.currenciesEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.currenciesConfig.currenciesEndPoint, params );
     };
 
     transferCurrency(publicKey, recipientRS, currency, units, fee) {
@@ -160,8 +152,7 @@ export class CurrenciesService {
             'requestType': 'getBlockchainStatus',
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-        this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.currenciesConfig.currenciesEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.currenciesConfig.currenciesEndPoint, params );
     };
 
     publishExchangeOffer(publicKey, currency, limits, supply, expirationHeight, fee) {
@@ -191,8 +182,7 @@ export class CurrenciesService {
             'includeCurrencyInfo': true
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-        this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.currenciesConfig.currenciesEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.currenciesConfig.currenciesEndPoint, params );
     };
 
     currencyReserveClaim(publicKey, currency, units, fee) {
@@ -252,7 +242,7 @@ export class CurrenciesService {
 
     // getAvailableToBuy(currency, units  ) {
     //     this.restangular.withConfig( (RestangularConfigurer) => {
-    //         RestangularConfigurer.setBaseUrl(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), '');
+    //         RestangularConfigurer.setBaseUrl(this.nodeService.getNodeUrl();
     //     });
     //     let params = {
     //         'requestType': 'getAvailableToBuy',
@@ -264,7 +254,7 @@ export class CurrenciesService {
     //
     // getAvailableToSell(currency, units  ) {
     //     this.restangular.withConfig( (RestangularConfigurer) => {
-    //         RestangularConfigurer.setBaseUrl(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), '');
+    //         RestangularConfigurer.setBaseUrl(this.nodeService.getNodeUrl();
     //     });
     //     let params = {
     //         'requestType': 'getAvailableToSell',
@@ -285,7 +275,7 @@ export class CurrenciesService {
             'lastIndex': lastIndex
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), ''), AppConstants.currenciesConfig.currenciesEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.currenciesConfig.currenciesEndPoint, params );
     };
 
     getSellOffers(account, currency, firstIndex, lastIndex):any {
@@ -298,7 +288,7 @@ export class CurrenciesService {
             'firstIndex': firstIndex,
             'lastIndex': lastIndex
         };
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), ''), AppConstants.currenciesConfig.currenciesEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.currenciesConfig.currenciesEndPoint, params );
     };
 
     getCurrencyAccounts(currency, firstIndex, lastIndex):any {
@@ -309,7 +299,7 @@ export class CurrenciesService {
             'firstIndex': firstIndex,
             'lastIndex': lastIndex,
         };
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), ''), AppConstants.currenciesConfig.currenciesEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.currenciesConfig.currenciesEndPoint, params );
     };
 
     getCurrencyFounders(currency, firstIndex, lastIndex):any {
@@ -319,7 +309,7 @@ export class CurrenciesService {
             'firstIndex': firstIndex,
             'lastIndex': lastIndex,
         };
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), ''), AppConstants.currenciesConfig.currenciesEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.currenciesConfig.currenciesEndPoint, params );
     };
 
     getCurrencyTransfers(currency, account, firstIndex, lastIndex):any {
@@ -331,7 +321,7 @@ export class CurrenciesService {
             'lastIndex': lastIndex,
             'includeCurrencyInfo': true
         };
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), ''), AppConstants.currenciesConfig.currenciesEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.currenciesConfig.currenciesEndPoint, params );
     };
 
     getExchanges(currency, account, firstIndex, lastIndex) {
@@ -343,7 +333,7 @@ export class CurrenciesService {
             'lastIndex': lastIndex,
             'includeCurrencyInfo': true
         };
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), ''), AppConstants.currenciesConfig.currenciesEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.currenciesConfig.currenciesEndPoint, params );
     };
 
     getDeskExchanges(currency, firstIndex, lastIndex):any {
@@ -354,7 +344,7 @@ export class CurrenciesService {
             'lastIndex': lastIndex,
             'includeCurrencyInfo': true
         };
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), ''), AppConstants.currenciesConfig.currenciesEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.currenciesConfig.currenciesEndPoint, params );
     };
 
     getAccountExchangeRequests(accountRs, currency, firstIndex, lastIndex ) {
@@ -366,7 +356,7 @@ export class CurrenciesService {
             'lastIndex': lastIndex,
             'includeCurrencyInfo': true,
         };
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), ''), AppConstants.currenciesConfig.currenciesEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.currenciesConfig.currenciesEndPoint, params );
     };
 
     getExpectedCurrencyTransfers(currency, account, firstIndex, lastIndex):any {
@@ -378,7 +368,7 @@ export class CurrenciesService {
             'lastIndex': lastIndex,
             'includeCurrencyInfo': true
         };
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), ''), AppConstants.currenciesConfig.currenciesEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.currenciesConfig.currenciesEndPoint, params );
     };
 
     getExpectedExchangeRequests(currency, account, firstIndex, lastIndex):any {
@@ -390,7 +380,7 @@ export class CurrenciesService {
             'lastIndex': lastIndex,
             'includeCurrencyInfo': true
         };
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), ''), AppConstants.currenciesConfig.currenciesEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.currenciesConfig.currenciesEndPoint, params );
     };
 
     getExpectedSellOffers(currency, account, firstIndex, lastIndex):any {
@@ -402,7 +392,7 @@ export class CurrenciesService {
             'lastIndex': lastIndex,
             'sortByRate': true
         };
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), ''), AppConstants.currenciesConfig.currenciesEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.currenciesConfig.currenciesEndPoint, params );
     };
 
     getAvailableToSell(currency, units   ) {
@@ -411,7 +401,7 @@ export class CurrenciesService {
             'currency': currency,
             'units': units
         };
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), ''), AppConstants.currenciesConfig.currenciesEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.currenciesConfig.currenciesEndPoint, params );
     };
 
     getAvailableToBuy(currency, units   ) {
@@ -420,7 +410,7 @@ export class CurrenciesService {
             'currency': currency,
             'units': units
         };
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), ''), AppConstants.currenciesConfig.currenciesEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.currenciesConfig.currenciesEndPoint, params );
     };
 
 

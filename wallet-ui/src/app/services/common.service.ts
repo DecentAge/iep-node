@@ -38,7 +38,7 @@ export class CommonService {
         'transactionBytes': transactionBytes
     };
 
-    return this.http.post(this.nodeService.getNodeUrl(this.optionService.getOption('CONNECTION_MODE', ''), this.optionService.getOption('RANDOMIZE_NODES', '')),  AppConstants.baseConfig.apiEndPoint, params )
+    return this.http.post(this.nodeService.getNodeUrl(),  AppConstants.baseConfig.apiEndPoint, params )
   };
 
   iterateAndExecuteFunctionOnJson = function (object, callback, _this) {

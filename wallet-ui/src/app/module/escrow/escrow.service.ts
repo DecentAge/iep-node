@@ -39,7 +39,7 @@ export class EscrowService {
             'lastIndex': lastIndex
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), ''), AppConstants.escrowConfig.escrowEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.escrowConfig.escrowEndPoint, params );
     };
 
     getEscrowTransaction = function (escrow, firstIndex, lastIndex   ) {
@@ -50,7 +50,7 @@ export class EscrowService {
             'lastIndex': lastIndex
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), ''), AppConstants.escrowConfig.escrowEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.escrowConfig.escrowEndPoint, params );
     };
 
     escrowSign(publicKey, escrow, decision, fee ) {

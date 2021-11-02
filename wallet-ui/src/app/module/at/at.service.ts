@@ -42,7 +42,7 @@ export class AtService {
             'requestType': 'getAT',
             'at': at
         };
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), ''), AppConstants.ATConfig.ATEndPoint, params);
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.ATConfig.ATEndPoint, params);
     };
 
     getATDetails(at) {
@@ -51,7 +51,7 @@ export class AtService {
             'requestType': 'getATDetails',
             'at': at
         };
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), ''), AppConstants.ATConfig.ATEndPoint, params);
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.ATConfig.ATEndPoint, params);
     };
 
     getATIds() {
@@ -59,7 +59,7 @@ export class AtService {
         var params = {
             'requestType': 'getATIds'
         };
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), ''), AppConstants.ATConfig.ATEndPoint, params);
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.ATConfig.ATEndPoint, params);
     };
 
     getAllATs(): any {
@@ -67,7 +67,7 @@ export class AtService {
         var params = {
             'requestType': 'getAllATs'
         };
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), ''), AppConstants.ATConfig.ATEndPoint, params);
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.ATConfig.ATEndPoint, params);
     };
 
     getATLong(hexString) {
@@ -76,7 +76,7 @@ export class AtService {
             'requestType': 'getATLong',
             'hexString': hexString
         };
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), ''), AppConstants.ATConfig.ATEndPoint, params);
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.ATConfig.ATEndPoint, params);
     };
 
     getAccountATs(account): any {
@@ -85,6 +85,6 @@ export class AtService {
             'requestType': 'getAccountATs',
             'account': account
         };
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), ''), AppConstants.ATConfig.ATEndPoint, params);
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.ATConfig.ATEndPoint, params);
     };
 }

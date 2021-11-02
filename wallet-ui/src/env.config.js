@@ -5,19 +5,9 @@ window.envConfig = {
 
     APP_BASE_HREF:      '' || '/wallet',
 
-    CONNECTION_MODE: 	'LOCALTESTNET',
-    FALLBACK_HOST_URL: 	'http://localhost:23457',
-    USER_NODE_URL: 		'http://localhost:23457',
-    LOCALTESTNET_URL: 	'http://localhost:23457',
-    HTTPS_URL: 			'http://localhost:23457',
-    FOUNDATION_URL: 	'http://localhost:23457',
-    TESTNET_URL: 		'http://localhost:23457',
-    DEVTESTNET_URL: 	'http://localhost:23457',
+    NODE_API_URL: 	'http://localhost:23457',
 
-    PEER_ENDPOINTS_DEFAULT: 		['https://apps-test.infinity-economics.io/peerexplorer-backend/api/nodes'],
-    PEER_ENDPOINTS_DEVTESTNET: 		['https://apps-test.infinity-economics.io/peerexplorer-backend/api/nodes'],
-    PEER_ENDPOINTS_TESTNET: 		['https://apps-test.infinity-economics.io/peerexplorer-backend/api/nodes'],
-    PEER_ENDPOINTS_LOCALTESTNET:	['https://apps-test.infinity-economics.io/peerexplorer-backend/api/nodes'],
+    PEER_ENDPOINTS: 		['https://apps-test.infinity-economics.io/peerexplorer-backend/api/nodes'],
 
     BTC_ENDPOINT: 'https://apps-test.infinity-economics.io/iep-static-site/master-config',
     XIN_ENDPOINT: 'https://apps-test.infinity-economics.io/iep-static-site/master-config',

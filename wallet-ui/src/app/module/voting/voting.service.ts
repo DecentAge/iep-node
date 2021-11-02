@@ -21,8 +21,7 @@ export class VotingService {
             'includeFinished': includeFinished
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-            this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.pollConfig.pollEndPoint, params);
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.pollConfig.pollEndPoint, params);
     }
 
     getAccountPolls(account, firstIndex, lastIndex, includeFinished) {
@@ -34,8 +33,7 @@ export class VotingService {
             'includeFinished': includeFinished
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-            this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.pollConfig.pollEndPoint, params);
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.pollConfig.pollEndPoint, params);
     }
 
     getPoll(pollId) {
@@ -44,8 +42,7 @@ export class VotingService {
             'poll': pollId
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-            this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.pollConfig.pollEndPoint, params);
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.pollConfig.pollEndPoint, params);
     }
 
     getPollData(pollId) {
@@ -54,8 +51,7 @@ export class VotingService {
             'poll': pollId
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-            this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.pollConfig.pollEndPoint, params);
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.pollConfig.pollEndPoint, params);
     }
 
     searchPolls(query, firstIndex, lastIndex) {
@@ -144,8 +140,7 @@ export class VotingService {
             'includeFinished': true
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-            this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.pollConfig.pollEndPoint, params);
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.pollConfig.pollEndPoint, params);
     }
 
     fillOptionsToJson(pollJson, pollOptions) {

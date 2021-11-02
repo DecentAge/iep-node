@@ -69,8 +69,7 @@ export class CrowdfundingService {
       params.account = account;
     }
     
-    return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-      this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.crowdfundingConfig.crowdfundingEndPoint, params);
+    return this.http.get(this.nodeService.getNodeUrl(), AppConstants.crowdfundingConfig.crowdfundingEndPoint, params);
 
   };
 
@@ -83,7 +82,7 @@ export class CrowdfundingService {
       'lastIndex': lastIndex,
     };
 
-    return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), ''), AppConstants.crowdfundingConfig.crowdfundingEndPoint, params);
+    return this.http.get(this.nodeService.getNodeUrl(), AppConstants.crowdfundingConfig.crowdfundingEndPoint, params);
   };
 
   setCampaignReserve(currency, amountPerUnitTQT, publicKey): any {
@@ -112,7 +111,7 @@ export class CrowdfundingService {
       'lastIndex': lastIndex,
     };
 
-    return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), ''), AppConstants.crowdfundingConfig.crowdfundingEndPoint, params);
+    return this.http.get(this.nodeService.getNodeUrl(), AppConstants.crowdfundingConfig.crowdfundingEndPoint, params);
   };
 
 }

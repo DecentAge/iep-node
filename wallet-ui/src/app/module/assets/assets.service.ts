@@ -29,8 +29,7 @@ export class AssetsService {
             'orderColumn': orderColumn
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-        this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.assetsConfig.assetsEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.assetsConfig.assetsEndPoint, params );
     };
 
     getAsset(asset, includeCounts?) {
@@ -40,8 +39,7 @@ export class AssetsService {
             'includeCounts': includeCounts
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-        this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.assetsConfig.assetsEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.assetsConfig.assetsEndPoint, params );
     };
 
     getAccountAssets(account) {
@@ -52,8 +50,7 @@ export class AssetsService {
             'includeCounts': true,
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-        this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.assetsConfig.assetsEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.assetsConfig.assetsEndPoint, params );
     };
 
     getAccountSingleAsset(account, asset) {
@@ -64,8 +61,7 @@ export class AssetsService {
             'includeAssetInfo': true
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-        this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.assetsConfig.assetsEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.assetsConfig.assetsEndPoint, params );
     };
 
     getMultipleAssetLastTrades(assets) {
@@ -74,8 +70,7 @@ export class AssetsService {
             'assets': assets,
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-        this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.assetsConfig.assetsEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.assetsConfig.assetsEndPoint, params );
     };
 
     getAccountCurrentBidOrders(accountRS, firstIndex, lastIndex) {
@@ -86,8 +81,7 @@ export class AssetsService {
             'lastIndex': lastIndex
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-        this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.assetsConfig.assetsEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.assetsConfig.assetsEndPoint, params );
     };
 
     getAccountCurrentAskOrders(accountRS, firstIndex, lastIndex) {
@@ -98,8 +92,7 @@ export class AssetsService {
             'lastIndex': lastIndex
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-        this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.assetsConfig.assetsEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.assetsConfig.assetsEndPoint, params );
     };
 
     issueAsset(name, description, quantity, decimals, publicKey, fee) {
@@ -149,8 +142,7 @@ export class AssetsService {
             'query': query
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-        this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.assetsConfig.assetsEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.assetsConfig.assetsEndPoint, params );
     };
 
     cancelOrder(order, fee, publicKey, type) {
@@ -233,8 +225,7 @@ export class AssetsService {
             'lastIndex': lastIndex
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-        this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.assetsConfig.assetsEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.assetsConfig.assetsEndPoint, params );
     };
 
     getAssetOrders(asset, orderType, firstIndex, lastIndex) {
@@ -245,8 +236,7 @@ export class AssetsService {
             'lastIndex': lastIndex
         };
         
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-        this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.assetsConfig.assetsEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.assetsConfig.assetsEndPoint, params );
     };
 
     getAllTrades(firstIndex, lastIndex) {
@@ -257,8 +247,7 @@ export class AssetsService {
             'lastIndex': lastIndex
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-        this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.assetsConfig.assetsEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.assetsConfig.assetsEndPoint, params );
     };
 
     getAllOpenAskOrders(firstIndex, lastIndex) {
@@ -268,8 +257,7 @@ export class AssetsService {
             'lastIndex': lastIndex
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-        this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.assetsConfig.assetsEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.assetsConfig.assetsEndPoint, params );
     };
 
     getAllOpenBidOrders(firstIndex, lastIndex) {
@@ -279,8 +267,7 @@ export class AssetsService {
             'lastIndex': lastIndex
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-        this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.assetsConfig.assetsEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.assetsConfig.assetsEndPoint, params );
     };
 
     getAllLastTransfers(accountRs, firstIndex, lastIndex) {
@@ -292,8 +279,7 @@ export class AssetsService {
             'lastIndex': lastIndex
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-        this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.assetsConfig.assetsEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.assetsConfig.assetsEndPoint, params );
     };
 
     getMyTrades(account, firstIndex, lastIndex) {
@@ -305,8 +291,7 @@ export class AssetsService {
             'lastIndex': lastIndex
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-        this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.assetsConfig.assetsEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.assetsConfig.assetsEndPoint, params );
     };
 
     getExpectedAskOrders(asset) {
@@ -316,7 +301,7 @@ export class AssetsService {
             'sortByPrice': true
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), ''), AppConstants.assetsConfig.assetsEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.assetsConfig.assetsEndPoint, params );
     };
 
     getExpectedBidOrders(asset) {
@@ -326,7 +311,7 @@ export class AssetsService {
             'sortByPrice': true
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), ''), AppConstants.assetsConfig.assetsEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.assetsConfig.assetsEndPoint, params );
     };
 
     getExpectedAssetDeletes(asset, account) {
@@ -335,7 +320,7 @@ export class AssetsService {
             'includeAssetInfo': true
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), ''), AppConstants.assetsConfig.assetsEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.assetsConfig.assetsEndPoint, params );
     };
 
     getExpectedAssetTransfers(asset, account) {
@@ -344,7 +329,7 @@ export class AssetsService {
             'includeAssetInfo': true
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), ''), AppConstants.assetsConfig.assetsEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.assetsConfig.assetsEndPoint, params );
     };
 
     getExpectedOrderCancellations() {
@@ -353,7 +338,7 @@ export class AssetsService {
             'requestType': 'getExpectedOrderCancellations'
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), ''), AppConstants.assetsConfig.assetsEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.assetsConfig.assetsEndPoint, params );
     };
 
     getBidOrderTrades(orderid, firstIndex, lastIndex) {
@@ -366,7 +351,7 @@ export class AssetsService {
             'includeAssetInfo': true
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), ''), AppConstants.assetsConfig.assetsEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.assetsConfig.assetsEndPoint, params );
     };
 
     getAskOrderTrades(orderid, firstIndex, lastIndex) {
@@ -378,7 +363,7 @@ export class AssetsService {
             'includeAssetInfo': true
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), ''), AppConstants.assetsConfig.assetsEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.assetsConfig.assetsEndPoint, params );
     };
 
     getDividendsHistory(asset, firstIndex, lastIndex, timestamp) {
@@ -390,7 +375,7 @@ export class AssetsService {
             'timestamp': timestamp
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), ''), AppConstants.assetsConfig.assetsEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.assetsConfig.assetsEndPoint, params );
     };
 
 }

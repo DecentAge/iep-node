@@ -55,8 +55,7 @@ export class ExtensionsService {
             'lastIndex': lastIndex
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-            this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.chainViewerConfig.endPoint, params);
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.chainViewerConfig.endPoint, params);
     }
 
     getTransactions(firstIndex, lastIndex) {
@@ -66,8 +65,7 @@ export class ExtensionsService {
             'lastIndex': lastIndex
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-            this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.chainViewerConfig.endPoint, params);
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.chainViewerConfig.endPoint, params);
     }
 
     getUnconfirmedTransactions() {
@@ -75,8 +73,7 @@ export class ExtensionsService {
             'requestType': 'getUnconfirmedTransactions'
         };
 
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-            this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.chainViewerConfig.endPoint, params);
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.chainViewerConfig.endPoint, params);
     }
 
     getPeers(page, results) {

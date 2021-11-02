@@ -46,7 +46,7 @@ export class SubscriptionService {
             'firstIndex': firstIndex,
             'lastIndex': lastIndex,
         };
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), ''), AppConstants.subscriptionConfig.subscriptionEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.subscriptionConfig.subscriptionEndPoint, params );
     };
 
     getAccountSubscriptions (account, firstIndex, lastIndex   ) {
@@ -56,7 +56,7 @@ export class SubscriptionService {
             'firstIndex': firstIndex,
             'lastIndex': lastIndex,
         };
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), ''), AppConstants.subscriptionConfig.subscriptionEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.subscriptionConfig.subscriptionEndPoint, params );
     };
 
     getSubscriptionsToAccount (account, firstIndex, lastIndex   ) {
@@ -66,6 +66,6 @@ export class SubscriptionService {
             'firstIndex': firstIndex,
             'lastIndex': lastIndex,
         };
-        return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''), ''), AppConstants.subscriptionConfig.subscriptionEndPoint, params );
+        return this.http.get(this.nodeService.getNodeUrl(), AppConstants.subscriptionConfig.subscriptionEndPoint, params );
     };
 }

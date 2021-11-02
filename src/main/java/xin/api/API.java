@@ -226,7 +226,10 @@ public final class API {
                 apiHandler.setWelcomeFiles(new String[]{Xin.getStringProperty("xin.apiWelcomeFile")});
             }
 
-            ServletHolder servletHolder = apiHandler.addServlet(APIServlet.class, "/api");
+            apiHandler.addServlet(APIServlet.class, "/api");
+            
+            ServletHolder envConfigServletHolder = new ServletHolder(new EnvConfigServlet());
+            //apiHandler.addServlet(envConfigServletHolder, "/wallet/env.config.js");
 
 
             GzipHandler gzipHandler = new GzipHandler();

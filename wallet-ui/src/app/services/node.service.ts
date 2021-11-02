@@ -61,67 +61,8 @@ export class NodeService {
         return total.length;
     };
 
-    getNode(connectionMode, selectRandom) {
-
-        if (connectionMode === 'AUTO' || connectionMode === 0) {
-            let i = 0;
-
-            if (selectRandom) {
-                i = Math.floor(Math.random() * this.getNodesCount());
-            }
-            return this.getPeerNode(i);
-        } else if (connectionMode === 'HTTPS') {
-
-            return this.optionsService.getOption('HTTPS_URL', '');
-
-        } else if (connectionMode === 'FOUNDATION') {
-
-            return this.optionsService.getOption('FOUNDATION_URL', '');
-
-        } else if (connectionMode === 'MANUAL') {
-
-            return this.optionsService.getOption('USER_NODE_URL', '');
-
-        } else if (connectionMode === 'DEVTESTNET') {
-
-            return this.optionsService.getOption('DEVTESTNET_URL', '');
-
-        } else if (connectionMode === 'TESTNET') {
-
-            return this.optionsService.getOption('TESTNET_URL', '');
-
-        } else if (connectionMode === 'LOCALTESTNET') {
-
-            return this.optionsService.getOption('LOCALTESTNET_URL', '');
-
-        }
-        return this.getLocalNode();
-
-    };
-
-    getNodeUrl(connectionMode, selectRandom) {
-
-        let node = this.getNode(connectionMode, selectRandom);
-
-        if (typeof node === 'string') {
-            return node;
-        }
-
-        if (!node._id) {
-            return AppConstants.baseConfig.FALLBACK_HOST_URL;
-        }
-
-        let url = node._id + ':' + node.apiServerPort;
-
-        if (connectionMode === 'HTTPS') {
-            url = 'https://' + node._id;
-        }
-
-        if (!/^https?:\/\//i.test(url)) {
-            url = 'http://' + url;
-        }
-
-        return url;
+    getNodeUrl() {
+        return this.optionsService.getOption('NODE_API_URL', '');
     };
 
     appendPortIfNotPresent(url, port) {
@@ -140,7 +81,7 @@ export class NodeService {
     // };
 
     getLocalNodeUrl() {
-        let node = this.getNode(true, '');
+        let node = this.optionsService.getOption('NODE_API_URL', '');
 
         if (node) {
             let port = node.apiServerPort;

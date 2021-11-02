@@ -27,8 +27,7 @@ export class ShufflingService {
       'includeHoldingInfo': true
     };
 
-    return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-      this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.shufflingsConfig.shufflingEndPoint, params);
+    return this.http.get(this.nodeService.getNodeUrl(), AppConstants.shufflingsConfig.shufflingEndPoint, params);
   };
 
   getAccountShufflings(account, firstIndex, lastIndex, includeFinished) : any{
@@ -42,8 +41,7 @@ export class ShufflingService {
       'includeHoldingInfo': true
     };
 
-    return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-      this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.shufflingsConfig.shufflingEndPoint, params);
+    return this.http.get(this.nodeService.getNodeUrl(), AppConstants.shufflingsConfig.shufflingEndPoint, params);
   };
 
   createShuffling(publicKey, amount, participantCount, registrationPeriod, holding, holdingType, fee) {
@@ -82,20 +80,10 @@ export class ShufflingService {
   };
 
   isLocalHostOrTestnet() {
-    var connectionMode = this.optionsService.getOption('CONNECTION_MODE', '');
-    if (
-      connectionMode === 'TESTNET' ||
-      connectionMode === 'LOCAL_HOST' ||
-      connectionMode === 'DEVTESTNET') {
-      return true;
-    }
-    if (connectionMode === 'MANUAL') {
-      var connectedUrl = this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-        this.optionsService.getOption('RANDOMIZE_NODES', ''));
-      if (connectedUrl.indexOf('localhost') > -1) {
+      const connectedUrl = this.nodeService.getNodeUrl();
+      if (connectedUrl.indexOf('localhost') > -1 || AppConstants.DEFAULT_OPTIONS.NETWORK_ENVIRONMENT === 'testnet') {
         return true;
       }
-    }
   }
 
   getShufflingParticipants(shufflingId): any {
@@ -105,8 +93,7 @@ export class ShufflingService {
       'shuffling': shufflingId
     };
 
-    return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-      this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.shufflingsConfig.shufflingEndPoint, params);
+    return this.http.get(this.nodeService.getNodeUrl(), AppConstants.shufflingsConfig.shufflingEndPoint, params);
   };
 
   getShuffling(shufflingId): any {
@@ -117,8 +104,7 @@ export class ShufflingService {
       'includeHoldingInfo': true
     };
 
-    return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-      this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.shufflingsConfig.shufflingEndPoint, params);
+    return this.http.get(this.nodeService.getNodeUrl(), AppConstants.shufflingsConfig.shufflingEndPoint, params);
   };
 
   getShufflers(adminPassword, account, shufflingFullHash, secretPhrase):any {
@@ -141,8 +127,7 @@ export class ShufflingService {
       params.shufflingFullHash = shufflingFullHash;
     }
 
-    return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-      this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.shufflingsConfig.shufflingEndPoint, params);
+    return this.http.get(this.nodeService.getNodeUrl(), AppConstants.shufflingsConfig.shufflingEndPoint, params);
   };
 
   getShuffleAndStopIfExpired(shuffleId, adminPassword) {
@@ -182,8 +167,7 @@ export class ShufflingService {
       'adminPassword': adminPassword
     };
 
-    return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-      this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.shufflingsConfig.shufflingEndPoint, params);
+    return this.http.get(this.nodeService.getNodeUrl(), AppConstants.shufflingsConfig.shufflingEndPoint, params);
   };
 
   getAssignedShufflings(account, stage, firstIndex, lastIndex, adminPassword) {
@@ -197,8 +181,7 @@ export class ShufflingService {
       'adminPassword': adminPassword
     };
 
-    return this.http.get(this.nodeService.getNodeUrl(this.optionsService.getOption('CONNECTION_MODE', ''),
-      this.optionsService.getOption('RANDOMIZE_NODES', '')), AppConstants.shufflingsConfig.shufflingEndPoint, params);
+    return this.http.get(this.nodeService.getNodeUrl(), AppConstants.shufflingsConfig.shufflingEndPoint, params);
   };
 
   shufflingVerify(shuffling, shufflingStateHash, recipientSecretPhrase, secretPhrase, fee) {

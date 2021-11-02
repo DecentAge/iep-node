@@ -14,7 +14,6 @@ import { isBoolean } from 'util';
     styleUrls: ['./options.component.scss']
 })
 export class OptionsComponent implements OnInit {
-    CONNECTION_MODES: any[] = [];
     connectedURL = '';
 
     optionsForm: any;
@@ -27,10 +26,8 @@ export class OptionsComponent implements OnInit {
         public localhostService: LocalhostService,
         public nodeService: NodeService
     ) {
-        this.CONNECTION_MODES = ['AUTO', 'FOUNDATION', 'MANUAL', 'LOCAL_HOST', 'TESTNET', 'LOCALTESTNET', 'DEVTESTNET']; // 'HTTPS',
         this.activeIds = ['nodeAndConnections', 'blocksAndConfirmations', 'wallet', 'extensions'];
         this.optionsForm = {
-            CONNECTION_MODE: '',
             USER_NODE_URL: '',
             RANDOMIZE_NODES: 0,
             REFRESH_INTERVAL_MILLI_SECONDS: 60,
@@ -49,10 +46,7 @@ export class OptionsComponent implements OnInit {
             this.sessionStorageService.saveToSession(AppConstants.baseConfig.SESSION_APP_OPTIONS, AppConstants.DEFAULT_OPTIONS);
         });
 
-        this.connectedURL = this.nodeService.getNodeUrl(
-            this.optionService.getOption('CONNECTION_MODE', publicKey),
-            this.optionService.getOption('RANDOMIZE_NODES', publicKey)
-        );
+        this.connectedURL = this.nodeService.getNodeUrl();
     }
 
     copyJson(fromJson, toJson) {
@@ -77,14 +71,6 @@ export class OptionsComponent implements OnInit {
             }
         }
         return finalJson;
-    }
-
-    nodeUrl() {
-        const connectionMode = this.optionsForm.CONNECTION_MODE;
-        if (connectionMode === 'AUTO') {
-            return true;
-        }
-        return this.isValidUrl();
     }
 
     validateAndUpdate() {
@@ -129,48 +115,10 @@ export class OptionsComponent implements OnInit {
     }
 
     updateConnectionMode(form) {
-        const connectionMode = this.optionsForm.CONNECTION_MODE;
-
-        if (connectionMode === 'LOCAL_HOST') {
-            this.optionsForm.USER_NODE_URL = AppConstants.DEFAULT_OPTIONS.USER_NODE_URL;
-            this.optionsForm.RANDOMIZE_NODES = 0;
-            this.optionsForm.TESTNET = false;
-            this.optionsForm.EXTENSIONS = 1;
-        } else if (connectionMode === 'MANUAL') {
-            this.optionsForm.RANDOMIZE_NODES = 0;
-            this.optionsForm.TESTNET = false;
-            this.optionsForm.EXTENSIONS = 1;
-        } else if (connectionMode === 'HTTPS') {
-            this.optionsForm.USER_NODE_URL = AppConstants.DEFAULT_OPTIONS.HTTPS_URL;
-            this.optionsForm.RANDOMIZE_NODES = 0;
-            this.optionsForm.TESTNET = false;
-            this.optionsForm.EXTENSIONS = 1;
-        } else if (connectionMode === 'AUTO') {
-            this.optionsForm.RANDOMIZE_NODES = 1;
-            this.optionsForm.TESTNET = false;
-            this.optionsForm.EXTENSIONS = 1;
-        } else if (connectionMode === 'FOUNDATION') {
-            this.optionsForm.USER_NODE_URL = AppConstants.DEFAULT_OPTIONS.FOUNDATION_URL;
-            this.optionsForm.RANDOMIZE_NODES = 0;
-            this.optionsForm.TESTNET = false;
-            this.optionsForm.EXTENSIONS = 1;
-        } else if (connectionMode === 'TESTNET') {
-            this.optionsForm.USER_NODE_URL = AppConstants.DEFAULT_OPTIONS.TESTNET_URL;
-            this.optionsForm.RANDOMIZE_NODES = 0;
-            this.optionsForm.TESTNET = true;
-            this.optionsForm.EXTENSIONS = 1;
-        } else if (connectionMode === 'LOCALTESTNET') {
-            this.optionsForm.USER_NODE_URL = AppConstants.DEFAULT_OPTIONS.LOCALTESTNET_URL;
-            this.optionsForm.RANDOMIZE_NODES = 0;
-            this.optionsForm.TESTNET = true;
-            this.optionsForm.EXTENSIONS = 1;
-        } else if (connectionMode === 'DEVTESTNET') {
-            this.optionsForm.USER_NODE_URL = AppConstants.DEFAULT_OPTIONS.DEVTESTNET_URL;
-            this.optionsForm.RANDOMIZE_NODES = 0;
-            this.optionsForm.TESTNET = true;
-            this.optionsForm.DEVNET = true;
-            this.optionsForm.EXTENSIONS = 1;
-        }
+        this.optionsForm.USER_NODE_URL = AppConstants.DEFAULT_OPTIONS.NODE_API_URL;
+        this.optionsForm.RANDOMIZE_NODES = 0;
+        this.optionsForm.TESTNET = AppConstants.DEFAULT_OPTIONS.NETWORK_ENVIRONMENT === 'testnet';
+        this.optionsForm.EXTENSIONS = 1;
     }
 
     isValidUrl() {

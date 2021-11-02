@@ -26,7 +26,6 @@ export class BlockGenerationComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.connectionMode = this.optionsService.getOption('CONNECTION_MODE', '');
         this.hasLocal = this.connectionMode === 'LOCAL_HOST';
         this.hasHttps = this.connectionMode === 'HTTPS';
         this.displayNotificationAlert();

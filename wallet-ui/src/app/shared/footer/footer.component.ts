@@ -17,7 +17,6 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class FooterComponent implements OnInit {
 
-    connectionMode: string;
     connectedURL: string;
     totalNodes: string;
     currentHeight: string;
@@ -58,8 +57,7 @@ export class FooterComponent implements OnInit {
     }
 
     init() {
-        this.connectionMode = this.optionService.getOption('CONNECTION_MODE', '');
-        this.connectedURL = this.nodeService.getNodeUrl(this.optionService.getOption('CONNECTION_MODE', ''), '');
+        this.connectedURL = this.nodeService.getNodeUrl();
         this.totalNodes = this.nodeService.getNodesCount();
         this.transactionService.getBlockChainStatus().subscribe((success) => {
             this.currentHeight = success.numberOfBlocks;
@@ -67,19 +65,11 @@ export class FooterComponent implements OnInit {
         });
         this.getState();
 
-        if (String(this.connectionMode) !== 'TESTNET' && String(this.connectionMode) !== 'DEVTESTNET') {
-            this.currentModeText = 'MAINNET';
-        } else if (String(this.connectionMode) === 'DEVTESTNET') {
-            this.currentModeText = 'DEVTESTNET';
-        } else if (String(this.connectionMode) === 'HTTPS') {
-            this.currentModeText = 'SSL';
-        } else if (String(this.connectionMode) === 'TESTNET') {
-            this.currentModeText = 'TESTNET';
-        }
+        this.currentModeText = AppConstants.DEFAULT_OPTIONS.NETWORK_ENVIRONMENT;
     };
 
     getState() {
-        this.localhostService.getPeerState(this.nodeService.getNodeUrl(this.optionService.getOption('CONNECTION_MODE', ''), ''))
+        this.localhostService.getPeerState(this.nodeService.getNodeUrl())
             .subscribe((success) => {
                 this.peerState = success;
             });
