@@ -40,8 +40,7 @@ import java.util.stream.Collectors;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import com.mohamnag.fxwebview_debugger.DevToolsDebuggerServer;
-import com.sun.javafx.scene.web.Debugger;
+
 import com.sun.javafx.webkit.WebConsoleListener;
 
 import javafx.application.Application;
@@ -72,7 +71,7 @@ import xin.util.TrustAllSSLProvider;
 public class DesktopApplication extends Application {
 
     private static final Set DOWNLOAD_REQUEST_TYPES = new HashSet<>(Arrays.asList("downloadTaggedData", "downloadPrunableMessage"));
-    private static final boolean ENABLE_JAVASCRIPT_DEBUGGER = true;
+    private static final boolean ENABLE_JAVASCRIPT_DEBUGGER = false;
     private static volatile boolean isLaunched;
     private static volatile Stage stage;
     private static volatile WebEngine webEngine;
@@ -141,10 +140,19 @@ public class DesktopApplication extends Application {
         browser.setMinWidth(width);
         webEngine = browser.getEngine();
         webEngine.setUserDataDirectory(Xin.getConfDir());
+        webEngine.setOnAlert(webEvent -> {
+        	Logger.logInfoMessage("webEngine.setOnAlert: " + webEvent.toString());
+        });
+
+        webEngine.setOnError(webEvent -> {
+        	Logger.logInfoMessage("webEngine.setOnError: " + webEvent.toString());
+        });
+        
         Worker<Void> loadWorker = webEngine.getLoadWorker();
         loadWorker.stateProperty().addListener(
                 (ov, oldState, newState) -> {
                     Logger.logDebugMessage("loadWorker old state " + oldState + " new state " + newState);
+
                     if (newState != Worker.State.SUCCEEDED) {
                         Logger.logDebugMessage("loadWorker state change ignored");
                         return;
@@ -155,8 +163,8 @@ public class DesktopApplication extends Application {
                     Locale locale = Locale.getDefault();
                     String language = locale.getLanguage().toLowerCase() + "-" + locale.getCountry().toUpperCase();
                     window.setMember("javaFxLanguage", language);
-                    webEngine.executeScript("console.log = function(msg) { java.log(msg); };");
-                    webEngine.executeScript("console.error = function(msg) { java.log(msg); };");
+                    //webEngine.executeScript("console.log = function(msg) { java.log(msg); };");
+                    //webEngine.executeScript("console.error = function(msg) { java.log(msg); };");
                     stage.setTitle("XIN Desktop - " + webEngine.getLocation());
                     xrs = (JSObject) webEngine.executeScript("XRS");
                     updateClientState("Desktop Wallet started");
@@ -175,9 +183,10 @@ public class DesktopApplication extends Application {
                             Class webEngineClazz = WebEngine.class;
                             Field debuggerField = webEngineClazz.getDeclaredField("debugger");
                             debuggerField.setAccessible(true);
-                            Debugger debugger = (Debugger) debuggerField.get(webEngine);
-                            DevToolsDebuggerServer.startDebugServer(debugger, 51742);
-                        } catch (Exception e) {
+                            Object debugger = debuggerField.get(webEngine);
+                            Method startDebugServer = aClass.getMethod("startDebugServer", debugger.getClass(), int.class);
+                            startDebugServer.invoke(null, debugger, 51742);
+                        } catch (NoSuchFieldException | ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
                             Logger.logInfoMessage("Cannot start JavaFx debugger", e);
                         }
                     }
@@ -197,6 +206,7 @@ public class DesktopApplication extends Application {
                 return invisible.getEngine();
             });
 
+        Logger.logInfoMessage("webEngine.load aaa: " + getUrl());
         webEngine.load(getUrl());
 
         Scene scene = new Scene(browser);
