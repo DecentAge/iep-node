@@ -51,11 +51,11 @@ const routes: Routes = [
                 component: PocComponent
             }
         ]
-    },
+    },/*
     {
         path:'macap',
         component: MacapComponent,
-    },
+    },*/
     {
         path:'newsviewer',
         component: NewsCenterComponent

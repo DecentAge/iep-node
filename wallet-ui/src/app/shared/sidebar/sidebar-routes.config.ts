@@ -640,16 +640,16 @@ export const ROUTES: RouteInfo[] = [
             //     isExternalLink: false,
             //     submenu: []
             // },
-            {
-                path: '/tools/macap',
-                title: 'MaCap Viewer',
-                icon: '',
-                class: '',
-                badge: '',
-                badgeClass: '',
-                isExternalLink: false,
-                submenu: []
-            },
+            // {
+            //     path: '/tools/macap',
+            //     title: 'MaCap Viewer',
+            //     icon: '',
+            //     class: '',
+            //     badge: '',
+            //     badgeClass: '',
+            //     isExternalLink: false,
+            //     submenu: []
+            // },
             // {
             //     path: '/tools/newsviewer',
             //     title: 'News Center',
