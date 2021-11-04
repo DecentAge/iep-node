@@ -9,7 +9,6 @@ window.envConfig = {
 
     PEER_ENDPOINTS: 		['https://apps-test.infinity-economics.io/peerexplorer-backend/api/nodes'],
 
-    BTC_ENDPOINT: 'https://apps-test.infinity-economics.io/iep-static-site/master-config',
     XIN_ENDPOINT: 'https://apps-test.infinity-economics.io/iep-static-site/master-config',
 
     MARKET_DATA_BASE_URL: 'https://min-api.cryptocompare.com',
@@ -19,13 +18,6 @@ window.envConfig = {
     AT_COMPILER_URL: 'http://142.93.63.219:10080',
     
     SEARCH_PEER_URL: 'http://node-1/peerexplorer-backend/api/nodes',
-
-    MACAP_URL: 'https://apps-test.infinity-economics.io//mcap-backend',
-
-    NEWS_URL: 'http://node-1:8889',
-
-    CHAINVIEWER_API_URL: 'http://node-1:23457',
-    CHAINVIEWER_PEER_URL: 'http://199.127.137.169:8888',
 
     SESSION_STORAGE_EXPIRATION: 60 * 60 * 1000, // 1 hour
 

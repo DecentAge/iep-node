@@ -38,13 +38,13 @@ export class FiatComponent implements OnChanges {
     }
 
     getXinPrice(finalAmount_) {
-        const btcPricePromise = this.fiatService.getBtcPrice();
+        // const btcPricePromise = this.fiatService.getBtcPrice();
         const xinPricePromise = this.fiatService.getXinPrice();
 
-        observableForkJoin([btcPricePromise, xinPricePromise])
+        observableForkJoin([xinPricePromise])
             .subscribe((success) => {
-                const btcPriceJson: any = success[0];
-                const xinPriceJson: any = success[1];
+                // const btcPriceJson: any = success[0];
+                const xinPriceJson: any = success[0];
 
                 // this.xinUSDBTC = btcPriceJson.averages.day || 0;
                 this.xinPriceUSD = xinPriceJson[0].price_usd || 0;
