@@ -9,10 +9,14 @@ apply plugin: 'application'
 sourceCompatibility = 11
 targetCompatibility = 11
 
+ext {
+	javaFxVersion="17.0.1"
+}
+
 javafx {
-    version = "15"
+    version = "$javaFxVersion"
     modules = [ 'javafx.controls' , 'javafx.web', 'javafx.fxml' ]
-    // configuration = 'compileOnly'
+    configuration = "compileOnly"
 }
 
 
@@ -63,25 +67,20 @@ dependencies {
     compile name: 'jTMSP-0.0.1'
     compile group: 'mysql', name: 'mysql-connector-java', version: '6.0.4'
     compile group: 'org.postgresql', name: 'postgresql', version: '9.4.1211'
-
     //Dev tools
     compile group: 'org.springframework.shell', name: 'spring-shell', version: '1.2.0.RELEASE'
 }
 
 mainClassName = "xin.Xin"
 applicationName = 'iep-node'
-//applicationDefaultJvmArgs = ["-Dmrn.runtime.dirProvider=ENV_DIR_PROVIDER"]
+// applicationDefaultJvmArgs = ["-Dmrn.runtime.dirProvider=ENV_DIR_PROVIDER"]
 
 task devStartScripts(type: CreateStartScripts) {
     mainClassName = 'xin.dev.XinDevTools'
     applicationName = 'dev'
 //	defaultJvmOpts = ["-Dmrn.runtime.dirProvider=ENV_DIR_PROVIDER"]
     classpath = startScripts.classpath
-    outputDir = startScripts.outputDir    
-}
-
-compileJava {
-  options.compilerArgs.addAll(['--add-exports', 'javafx.web/com.sun.javafx.scene.web=ALL-UNNAMED'])
+    outputDir = startScripts.outputDir
 }
 
 jar {
