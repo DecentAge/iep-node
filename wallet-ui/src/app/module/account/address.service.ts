@@ -4,12 +4,15 @@ import {SessionStorageService} from '../../services/session-storage.service';
 
 @Injectable()
 export class AddressService {
-    indexedDB = window.indexedDB;
-    open: any;
+    // indexedDB = window.indexedDB;
+    // open: any;
+
+    addressBookLocalStorageKey: string;
 
     constructor(public sessionStorageService: SessionStorageService) {
+        this.addressBookLocalStorageKey = 'addressBook';
     }
-
+/*
     createTransaction(tableOptions, callback) {
         var tx;
         var db;
@@ -114,6 +117,47 @@ export class AddressService {
             }
         })
     }
+*/
+
+    add = function(tableOptions, data, successCallBack, errorCallBack) {
+        const addressBookStr = localStorage.getItem(this.addressBookLocalStorageKey) || '[]';
+        const addressBook = JSON.parse(addressBookStr);
+
+        data.forEach(element => {
+            addressBook.push(element);
+        });
+
+        localStorage.setItem(this.addressBookLocalStorageKey, JSON.stringify(addressBook));
+        successCallBack();
+    };
+
+    get(tableOptions, index, publicKey, successCallBack, errorCallBack) {
+        const addressBookStr = localStorage.getItem(this.addressBookLocalStorageKey) || '[]';
+        const addressBook = JSON.parse(addressBookStr);
+        const res = addressBook.filter((el) => el.publicKey === publicKey);
+
+        if (res) {
+            successCallBack(res);
+        } else {
+            errorCallBack([])
+        }
+    };
+
+    clear(tableOptions, index, publicKey, successCallBack, errorCallBack) {
+        const addressBookStr = localStorage.getItem(this.addressBookLocalStorageKey) || '[]';
+        const addressBook = JSON.parse(addressBookStr);
+        const res = addressBook.filter((el) => el.publicKey !== publicKey);
+        localStorage.setItem(this.addressBookLocalStorageKey, JSON.stringify(res));
+        successCallBack('success');
+    };
+
+    delete(tableOptions, [publicKey, accountRS], successCallBack, errorCallBack) {
+        const addressBookStr = localStorage.getItem(this.addressBookLocalStorageKey) || '[]';
+        const addressBook = JSON.parse(addressBookStr);
+        const res = addressBook.filter((el) => (el.publicKey === publicKey && el.accountRS !== accountRS) || el.publicKey !== publicKey);
+        localStorage.setItem(this.addressBookLocalStorageKey, JSON.stringify(res));
+        successCallBack('success');
+    };
 
     createAddress = function (publicKey, accountRS, tag, successCallBack, errorCallBack) {
       this.add(AppConstants.addressBookConfig.tableAddressBook, [{'publicKey': publicKey, 'accountRS': accountRS, 'tags': tag}], successCallBack, errorCallBack);
