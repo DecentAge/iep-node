@@ -221,3 +221,4 @@ gradle-app.setting
 # wallet
 /html/www/wallet
 /wallet-ui/node_modules
+/.idea/
