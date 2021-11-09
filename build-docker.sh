@@ -5,7 +5,9 @@ set -o nounset
 
 RELEASE_VERSION=$(cat release-version.txt)
 
-mkdir -p build/iep-wallet-ui
+mkdir -pv build/iep-wallet-ui
+echo $PWD
+ls -alt
 cp -rf ../iep-wallet-ui/build/iep-wallet-ui.zip build/iep-wallet-ui
 
 docker build -t decentage/iep-node:${RELEASE_VERSION} .
