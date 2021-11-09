@@ -17,5 +17,8 @@ include:
 
 docker-build:
   before_script:
+      - apk add --update --no-cache git curl bash
+      - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+      - docker info
       - echo "------> before_script"
       - export WALLET_UI_BUILD_FILE=./build/iep-wallet-ui.zip

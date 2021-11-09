@@ -4,10 +4,11 @@ set -o pipefail
 set -o nounset
 
 RELEASE_VERSION=$(cat release-version.txt)
-#WALLET_UI_BUILD_FILE_LOCATION=${WALLET_UI_BUILD_FILE:-../iep-wallet-ui/build/iep-wallet-ui.zip}
+WALLET_UI_BUILD_FILE_LOCATION=${WALLET_UI_BUILD_FILE:-../iep-wallet-ui/build/iep-wallet-ui.zip}
+echo $WALLET_UI_BUILD_FILE_LOCATION
 
 mkdir -pv build/iep-wallet-ui
-cp -rf ../iep-wallet-ui/build/iep-wallet-ui.zip build/iep-wallet-ui
+cp -rf $WALLET_UI_BUILD_FILE_LOCATION build/iep-wallet-ui
 
 docker build -t decentage/iep-node:${RELEASE_VERSION} .
 
