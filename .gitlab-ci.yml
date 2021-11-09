@@ -23,3 +23,7 @@ docker-build:
       - docker info
       - echo "------> before_script"
       - export WALLET_UI_BUILD_FILE=/builds/infinity-economics/iep-node/build/iep-wallet-ui.zip
+      - pwd
+      - ls -lat /builds/infinity-economics
+      - ls -lat /builds/infinity-economics/iep-node
+      - ls -lat /builds/infinity-economics/iep-node/build
