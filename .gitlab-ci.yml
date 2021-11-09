@@ -4,11 +4,7 @@ variables:
 download-artifacts:
   stage: prepare
   script:
-    - pwd
     - ls -alt build
-    - mkdir iep-wallet-ui
-    - cp ./build/iep-wallet-ui.zip ./
-    - ls -lta
   needs:
     - project: infinity-economics/iep-wallet-ui
       job: docker-build
@@ -24,7 +20,6 @@ docker-build:
       - apk add --update --no-cache git curl bash
       - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
       - docker info
-      - echo "------> before_script"
-      - export WALLET_UI_BUILD_FILE=/builds/infinity-economics/iep-wallet-ui.zip
+      - export WALLET_UI_BUILD_FILE=/builds/infinity-economics/iep-node/build/iep-wallet-ui.zip
       - pwd
-      - ls -lat /builds/infinity-economics
+      - ls -lat /builds/infinity-economics/iep-node/build/
