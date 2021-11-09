@@ -5,10 +5,10 @@ download-artifacts:
   stage: prepare
   script:
     - ls -alt build
-    - mkdir -p ../iep-wallet-ui/build
-    - cp ./build/iep-wallet-ui.zip ../iep-wallet-ui/build
+    - mkdir -p ../../iep-wallet-ui/build
+    - cp ./build/iep-wallet-ui.zip ../../iep-wallet-ui/build
     - pwd
-    - ls -alt ../iep-wallet-ui/build
+    - ls -alt ../../iep-wallet-ui/build
   needs:
     - project: infinity-economics/iep-wallet-ui
       job: docker-build
