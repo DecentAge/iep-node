@@ -4,6 +4,7 @@ variables:
 download-artifacts:
   stage: prepare
   script:
+    - pwd
     - ls -alt build
   needs:
     - project: infinity-economics/iep-wallet-ui
