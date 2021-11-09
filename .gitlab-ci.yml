@@ -1,6 +1,17 @@
 variables:
   DOCKER_SERVICE_NAME: "node-1"
 
+download-artifacts:
+  stage: prepare
+  script:
+    - ls -alt build
+  needs:
+    - project: infinity-economics/iep-wallet-ui
+      job: docker-build
+      ref: develop
+      artifacts: true
+
 include:
   - project: 'infinity-economics/iep-docker'
     file: '/gitlab/ci/docker-ci-cd.yml'
+
