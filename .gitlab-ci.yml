@@ -8,8 +8,10 @@ download-artifacts:
   needs:
     - project: infinity-economics/iep-wallet-ui
       job: docker-build
-      ref: develop
       artifacts: true
+  artifacts:
+    paths:
+      - build/
 
 include:
   - project: 'infinity-economics/iep-docker'
