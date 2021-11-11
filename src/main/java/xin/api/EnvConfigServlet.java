@@ -21,10 +21,6 @@ public class EnvConfigServlet extends HttpServlet {
 		String protocol= null;
 		Integer port = null;
 		
-		String address = Xin.getStringProperty("xin.myAddress");
-		
-		if (address == null || "".equals(address))
-		
 		if (Xin.getBooleanProperty("xin.apiSSL")) {
 			protocol = "https";
 			port = Xin.getIntProperty("xin.apiServerSSLPort");
@@ -35,6 +31,12 @@ public class EnvConfigServlet extends HttpServlet {
 		
 		if (!"".equals(urlFromProperties) && urlFromProperties != null) {
 			return protocol + "://" + urlFromProperties;
+		}
+		
+		String address = Xin.getStringProperty("xin.myAddress");
+		
+		if (address == null || "".equals(address)) {
+			address = "localhost";
 		}
 		
 		return protocol + "://" + address + ":" + port;
