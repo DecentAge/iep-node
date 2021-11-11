@@ -2,6 +2,9 @@ package xin.api;
 
 import java.io.IOException;
 
+import xin.Constants;
+import xin.Xin;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,15 +13,41 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 
 public class EnvConfigServlet extends HttpServlet {
+	
+	private String createApiServerURL() {
+		String urlFromProperties = Xin.getStringProperty("xin.apiServerReverseProxyURL");
+		
+		
+		String protocol= null;
+		Integer port = null;
+		
+		if (Xin.getBooleanProperty("xin.apiSSL")) {
+			protocol = "https";
+			port = Xin.getIntProperty("xin.apiServerSSLPort");
+		} else {
+			protocol = "http";
+			port = Xin.getIntProperty("xin.apiServerPort");
+		}
+		
+		if (!"".equals(urlFromProperties) && urlFromProperties != null) {
+			return protocol + "://" + urlFromProperties;
+		}
+		
+		return protocol + "://" + Xin.getIntProperty("xin.myAddress") + ":" + port;
+	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("RELEASE_VERSION", 123);
-		jsonObject.put("APP_BASE_HREF", "/wallet");
-		jsonObject.put("CONNECTION_MODE", "LOCALTESTNET");
-		jsonObject.put("FALLBACK_HOST_URL", "http://node-1");
-		jsonObject.put("LOCALTESTNET_URL", "http://node-1");
+		jsonObject.put("version", Xin.VERSION);
+		jsonObject.put("env", Xin.getStringProperty("xin.env"));
+		jsonObject.put("walletContextPath", Xin.getStringProperty("xin.walletContextPath"));
+		jsonObject.put("apiServerURL", createApiServerURL());
+		jsonObject.put("proxyMarketURL", Xin.getStringProperty("xin.proxy.market.url"));
+		jsonObject.put("walletBrowserStorageExp", Xin.getIntProperty("xin.walletBrowserStorageExp"));
+		jsonObject.put("genesisBlockEpoch", Constants.EPOCH_BEGINNING);
+		jsonObject.put("phasingDuration", Constants.MAX_PHASING_DURATION/2);
+		jsonObject.put("effectiveLeasingOffsetBlock", Constants.EFFECTIVE_LEASING_OFFSET_BLOCK);
 		
 		
 		String jsResponse = "window.envConfig = " + jsonObject.toString(4);

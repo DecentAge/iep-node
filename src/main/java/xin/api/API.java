@@ -229,7 +229,7 @@ public final class API {
             apiHandler.addServlet(APIServlet.class, "/api");
             
             ServletHolder envConfigServletHolder = new ServletHolder(new EnvConfigServlet());
-            //apiHandler.addServlet(envConfigServletHolder, "/wallet/env.config.js");
+            apiHandler.addServlet(envConfigServletHolder, "/wallet/env.config.js");
 
 
             GzipHandler gzipHandler = new GzipHandler();

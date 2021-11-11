@@ -64,6 +64,7 @@ public final class Xin {
     public static final String XIN_MISC_PROPERTIES = "misc.properties";
     public static final String XIN_PEER_PROPERTIES = "peer.properties";
     public static final String XIN_SYSTEM_PROPERTIES = "system.properties";
+    public static final String XIN_WALLET_PROPERTIES = "wallet.properties";
 
     public static final String XIN_CUSTOM_PROPERTIES = "custom.properties";
     public static final String XIN_INSTALLER_PROPERTIES = "installer.properties";
@@ -97,6 +98,7 @@ public final class Xin {
         loadProperties(defaultProperties, XIN_MISC_PROPERTIES, true);
         loadProperties(defaultProperties, XIN_PEER_PROPERTIES, true);
         loadProperties(defaultProperties, XIN_SYSTEM_PROPERTIES, true);
+        loadProperties(defaultProperties, XIN_WALLET_PROPERTIES, true);
 
         if (!VERSION.equals(Xin.defaultProperties.getProperty("xin.version"))) {
             throw new RuntimeException("Using a property file from a version other than " + VERSION + " is not supported!!!");
