@@ -39,7 +39,7 @@ envsubst >- '${NETWORK_ENVIRONMENT}
 	${PEER_SERVER_PORT}
 	${DEFAULT_PEER_PORT}
 	${NUMBER_OF_FORK_CONFIRMATIONS}
-	${DEBUG}' </templates/docker_template.properties> /iep-node/conf/custom.properties
+	${DEBUG}' </templates/docker.properties> /iep-node/conf/custom.properties
 
 cat /iep-node/conf/custom.properties
 
