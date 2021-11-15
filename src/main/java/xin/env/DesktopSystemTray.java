@@ -148,7 +148,7 @@ public class DesktopSystemTray {
         viewLog.addActionListener(e -> {
             try {
                 Desktop.getDesktop().open(dataProvider.getLogFile());
-            } catch (IOException ex) {
+            } catch (Exception ex) {
                 Logger.logInfoMessage("Cannot view log", ex);
             }
         });
