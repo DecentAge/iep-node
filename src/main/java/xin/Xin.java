@@ -142,6 +142,7 @@ public final class Xin {
     private static final Properties properties = new Properties(defaultProperties);
 
     static {
+        Logger.init(getUserHomeDir());
         loadProperties(properties, XIN_CUSTOM_PROPERTIES, false);
         loadProperties(properties, XIN_INSTALLER_PROPERTIES, false);
 
@@ -371,7 +372,7 @@ public final class Xin {
             try {
                 long startTime = System.currentTimeMillis();
 
-                Logger.init();
+                //Logger.init();
 
                 setSystemProperties();
                 logSystemProperties();
@@ -558,10 +559,6 @@ public final class Xin {
 
     public static String getDbDir(String dbDir) {
         return dirProvider.getDbDir(dbDir);
-    }
-
-    public static void updateLogFileHandler(Properties loggingProperties) {
-        dirProvider.updateLogFileHandler(loggingProperties);
     }
 
     public static String getUserHomeDir() {

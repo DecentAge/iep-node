@@ -205,8 +205,6 @@ public class DesktopApplication extends Application {
                 Logger.logInfoMessage("popup request from webEngine");
                 return invisible.getEngine();
             });
-
-        Logger.logInfoMessage("webEngine.load aaa: " + getUrl());
         webEngine.load(getUrl());
 
         Scene scene = new Scene(browser);

@@ -38,7 +38,6 @@ public class RuntimeEnvironment {
             Method isHeadlessMethod = graphicsEnvironmentClass.getMethod("isHeadless");
             isHeadless_ = (Boolean) isHeadlessMethod.invoke(null);
         } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
-        	System.out.println("isHeadless_=true --> "+ e);
         	isHeadless_ = true;
         }
         isHeadless = isHeadless_;

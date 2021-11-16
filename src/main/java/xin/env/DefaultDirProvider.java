@@ -27,8 +27,6 @@ public class DefaultDirProvider implements DirProvider {
         return true;
     }
 
-    @Override
-    public void updateLogFileHandler(Properties loggingProperties) {}
 
     @Override
     public String getDbDir(String dbDir) {

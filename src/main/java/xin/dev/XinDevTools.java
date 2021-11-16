@@ -16,10 +16,8 @@
 
 package xin.dev;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.shell.Bootstrap;
 import xin.Xin;
-import xin.util.Logger;
 
 import java.io.IOException;
 
@@ -27,7 +25,7 @@ import java.io.IOException;
 public class XinDevTools {
 
     public static void main(String[] args) throws IOException {
-        Logger.init();
+        //Logger.init();
         Xin.init();
         Bootstrap.main(args);
     }

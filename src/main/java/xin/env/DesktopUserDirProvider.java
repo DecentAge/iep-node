@@ -17,17 +17,13 @@
 package xin.env;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Properties;
+
+import xin.util.Logger;
+
+
 
 abstract class DesktopUserDirProvider implements DirProvider {
-
-    public static final String LOG_FILE_PATTERN = "log4j.appender.file.File";
-
-    private File logFileDir;
 
     @Override
     public boolean isLoadPropertyFileFromUserDir() {
@@ -35,32 +31,8 @@ abstract class DesktopUserDirProvider implements DirProvider {
     }
 
     @Override
-    public void updateLogFileHandler(Properties loggingProperties) {
-        if (loggingProperties.getProperty(LOG_FILE_PATTERN) == null) {
-            logFileDir = new File(getUserHomeDir(), "logs");
-            System.out.println("logFileDir="+logFileDir);
-            return;
-        }
-        
-        Path logFilePattern = Paths.get(getUserHomeDir()).resolve(Paths.get(loggingProperties.getProperty(LOG_FILE_PATTERN)));
-        loggingProperties.setProperty(LOG_FILE_PATTERN, logFilePattern.toString());
-        
-        Path logDirPath = logFilePattern.getParent();
-        System.out.printf("Logs dir %s\n", logDirPath.toString());
-        this.logFileDir = new File(logDirPath.toString());
-        if (!Files.isReadable(logDirPath)) {
-            System.out.printf("Creating dir %s\n", logDirPath);
-            try {
-                Files.createDirectory(logDirPath);
-            } catch (IOException e) {
-                throw new IllegalArgumentException("Cannot create " + logDirPath, e);
-            }
-        }
-    }
-
-    @Override
     public File getLogFileDir() {
-        return logFileDir;
+        return Logger.getLogFileDir();
     }
 
     @Override

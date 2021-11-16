@@ -16,19 +16,24 @@
 
 package xin.util;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Properties;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.PropertyConfigurator;
+import org.slf4j.LoggerFactory;
 
 import xin.Xin;
-import xin.env.RuntimeEnvironment;
 
 /**
  * Handle logging for the xin node server
  */
 public final class Logger {
 
+    public static final String LOG_FILE_PATTERN = "log4j.appender.file.File";
+	
     /**
      * Log event types
      */
@@ -56,17 +61,22 @@ public final class Logger {
     /**
      * Our logger instance
      */
-    private static final org.slf4j.Logger log;
+    private static org.slf4j.Logger log;
 
     /**
      * Enable stack traces
      */
-    private static final boolean enableStackTraces;
+    private static boolean enableStackTraces;
 
     /**
      * Enable log traceback
      */
-    private static final boolean enableLogTraceback;
+    private static boolean enableLogTraceback;
+    
+    /**
+     * The directory where the default appender logs to
+     */
+    private static File logFileDir;
 
     /**
      * No constructor
@@ -82,24 +92,62 @@ public final class Logger {
      * The xin/conf/log4j.properties and xin/conf/log4j.properties configuration
      * files will be used.  Entries in logging.properties will override entries in
      * logging.properties.
-     */
+     */    
+    public static void init(String userHomeDir) {
 
-    static {
         Properties logginProperites = Xin.loadProperties(new Properties(), "log4j.properties", false);
-        RuntimeEnvironment.getDirProvider().updateLogFileHandler(logginProperites);
+        updateLogFileHandler(logginProperites, userHomeDir);
         LogManager.resetConfiguration(); 
         PropertyConfigurator.configure(logginProperites); 
-        log = org.slf4j.LoggerFactory.getLogger(Xin.class);
+        log = LoggerFactory.getLogger(Xin.class);
         enableStackTraces = Xin.getBooleanProperty("xin.enableStackTraces");
         enableLogTraceback = Xin.getBooleanProperty("xin.enableLogTraceback");
         logInfoMessage("logging enabled");
+        deleteDuplicateLogDir();
+
     }
 
+    
+    private static void updateLogFileHandler(Properties loggingProperties, String userHomeDir) {      
+        File logFile = new File(userHomeDir, loggingProperties.getProperty(LOG_FILE_PATTERN));
+        loggingProperties.setProperty(LOG_FILE_PATTERN, logFile.toString());
+        
+        logFileDir = logFile.getParentFile();
+        System.out.printf("Logs dir %s\n", logFileDir.toString());
+
+        if (!logFileDir.exists()) {
+            try {
+                Files.createDirectory(logFileDir.toPath());
+            } catch (IOException e) {
+                throw new IllegalArgumentException("Cannot create " + logFileDir, e);
+            }
+        }   
+    }
+
+    private static void deleteDuplicateLogDir() {
+	    File duplicateLogsDir = new File(System.getProperty("user.dir"), "logs");
+	    System.out.printf("duplicateLogsDir= %s\n", duplicateLogsDir);
+		if(duplicateLogsDir.exists()) {
+			System.out.printf("Deleting existing log dir %s\n", duplicateLogsDir);
+			deleteDirectory(duplicateLogsDir);
+		}     
+    }
+    
+    private static boolean deleteDirectory(File directoryToBeDeleted) {
+        File[] allContents = directoryToBeDeleted.listFiles();
+        if (allContents != null) {
+            for (File file : allContents) {
+                deleteDirectory(file);
+            }
+        }
+        return directoryToBeDeleted.delete();
+    }
+    
     /**
      * Logger initialization
      */
-    public static void init() {
-    }
+    /*public static void init() {
+    }*/
 
     /**
      * Logger shutdown
@@ -108,6 +156,10 @@ public final class Logger {
 
     }
 
+    public static File getLogFileDir() {
+    	return logFileDir;
+    }
+    
     /**
      * Set the log level
      *
