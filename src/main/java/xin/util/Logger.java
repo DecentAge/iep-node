@@ -19,11 +19,11 @@ package xin.util;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.Properties;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.PropertyConfigurator;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.logging.log4j.core.appender.RollingFileAppender;
+import org.apache.logging.log4j.core.config.Configurator;
 
 import xin.Xin;
 
@@ -61,7 +61,7 @@ public final class Logger {
     /**
      * Our logger instance
      */
-    private static org.slf4j.Logger log;
+    private static org.apache.logging.log4j.Logger log;
 
     /**
      * Enable stack traces
@@ -95,52 +95,37 @@ public final class Logger {
      */    
     public static void init(String userHomeDir) {
 
-        Properties logginProperites = Xin.loadProperties(new Properties(), "log4j.properties", false);
-        updateLogFileHandler(logginProperites, userHomeDir);
-        LogManager.resetConfiguration(); 
-        PropertyConfigurator.configure(logginProperites); 
-        log = LoggerFactory.getLogger(Xin.class);
+        //Properties logginProperites = Xin.loadProperties(new Properties(), "log4j.properties", false);
+    	updateLogFileDir();
+        //LogManager.resetConfiguration(); 
+        //PropertyConfigurator.configure(logginProperites);
+        log = LogManager.getLogger(Xin.class);
         enableStackTraces = Xin.getBooleanProperty("xin.enableStackTraces");
         enableLogTraceback = Xin.getBooleanProperty("xin.enableLogTraceback");
         logInfoMessage("logging enabled");
-        deleteDuplicateLogDir();
+        //deleteDuplicateLogDir();
 
     }
 
     
-    private static void updateLogFileHandler(Properties loggingProperties, String userHomeDir) {      
-        File logFile = new File(userHomeDir, loggingProperties.getProperty(LOG_FILE_PATTERN));
-        loggingProperties.setProperty(LOG_FILE_PATTERN, logFile.toString());
-        
+    private static void updateLogFileDir() {      
+    	RollingFileAppender appender = (RollingFileAppender) LoggerContext.getContext().getConfiguration().getAppenders().get("LogToRollingFile");
+    	if(appender == null) {
+    		 System.err.printf("Can not set log directory since appender 'LogToRollingFile' is not defined\n");
+    		 return;
+    	}
+    	
+    	String logFilePathStr = appender.getFileName();
+    	File logFile = new File(logFilePathStr);
+    	
+    	if(!logFile.exists()) {
+   		 System.err.printf("Can not set log directory for appender 'LogToRollingFile' since path '%s' defined value by the log4j configuration is invalid\n", logFilePathStr);
+   		 return;
+    	}
+    	
         logFileDir = logFile.getParentFile();
-        System.out.printf("Logs dir %s\n", logFileDir.toString());
-
-        if (!logFileDir.exists()) {
-            try {
-                Files.createDirectory(logFileDir.toPath());
-            } catch (IOException e) {
-                throw new IllegalArgumentException("Cannot create " + logFileDir, e);
-            }
-        }   
-    }
-
-    private static void deleteDuplicateLogDir() {
-	    File duplicateLogsDir = new File(System.getProperty("user.dir"), "logs");
-	    System.out.printf("duplicateLogsDir= %s\n", duplicateLogsDir);
-		if(duplicateLogsDir.exists()) {
-			System.out.printf("Deleting existing log dir %s\n", duplicateLogsDir);
-			deleteDirectory(duplicateLogsDir);
-		}     
-    }
-    
-    private static boolean deleteDirectory(File directoryToBeDeleted) {
-        File[] allContents = directoryToBeDeleted.listFiles();
-        if (allContents != null) {
-            for (File file : allContents) {
-                deleteDirectory(file);
-            }
-        }
-        return directoryToBeDeleted.delete();
+        
+        System.out.printf("Logs dir %s\n", logFileDir.getAbsoluteFile());
     }
     
     /**
@@ -166,19 +151,18 @@ public final class Logger {
      * @param level Desired log level
      */
     public static void setLevel(Level level) {
-        org.apache.log4j.Logger log4jLogger = org.apache.log4j.Logger.getLogger(log.getName());
         switch (level) {
             case DEBUG:
-                log4jLogger.setLevel(org.apache.log4j.Level.DEBUG);
+                Configurator.setLevel("xin", org.apache.logging.log4j.Level.DEBUG);
                 break;
             case INFO:
-                log4jLogger.setLevel(org.apache.log4j.Level.INFO);
+                Configurator.setLevel("xin",org.apache.logging.log4j.Level.INFO);
                 break;
             case WARN:
-                log4jLogger.setLevel(org.apache.log4j.Level.WARN);
+                Configurator.setLevel("xin",org.apache.logging.log4j.Level.WARN);
                 break;
             case ERROR:
-                log4jLogger.setLevel(org.apache.log4j.Level.ERROR);
+                Configurator.setLevel("xin",org.apache.logging.log4j.Level.ERROR);
                 break;
         }
     }
@@ -231,12 +215,12 @@ public final class Logger {
      * Log a message (map to INFO)
      *
      * @param message Message
-     */
+     */				
     public static void logMessage(String message) {
         doLog(Level.INFO, message, null);
     }
 
-    /**
+    /**				
      * Log an exception (map to ERROR)
      *
      * @param message Message
@@ -272,12 +256,12 @@ public final class Logger {
     /**
      * Log an ERROR exception
      *
-     * @param message Message
+     * @param message Message				
      * @param exc     Exception
      */
     public static void logErrorMessage(String message, Throwable exc) {
         doLog(Level.ERROR, message, exc);
-    }
+    }				
 
     public static boolean isWarningEnabled() {
         return log.isWarnEnabled();
