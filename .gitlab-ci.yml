@@ -7,7 +7,7 @@ download-artifacts:
     - ls -alt build
   needs:
     - project: infinity-economics/iep-wallet-ui
-      ref: ${CI_COMMIT_BRANCH}
+      ref: ${CI_COMMIT_REF_NAME}
       job: docker-build
       artifacts: true
   artifacts:
@@ -26,3 +26,9 @@ docker-build:
       - export WALLET_UI_BUILD_FILE=/builds/infinity-economics/iep-node/build/iep-wallet-ui.zip
       - pwd
       - ls -lat /builds/infinity-economics/iep-node/build/
+
+
+trigger-iep-node-installer:
+  stage: publish
+  needs: ["docker-build"]
+  trigger: infinity-economics/iep-node-installer
