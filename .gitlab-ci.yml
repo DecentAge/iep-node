@@ -5,7 +5,7 @@ include:
 download-artifacts:
   stage: prepare
   script:
-    - ls -alt
+    - ls -alt build
   needs:
     - project: infinity-economics/iep-wallet-ui
       ref: ${CI_COMMIT_REF_NAME}
@@ -25,16 +25,29 @@ docker-build:
   artifacts:
     paths:
       - build/iep-node.zip
-      - src/main/resources/system.properties
-      - conf/mainnet.properties
-      - conf/testnet.properties
-      - conf/custom.properties
-      - conf/templates/installer.properties
-      - src/main/resources/log4j2.xml
-      - CHANGELOG-@{iep.xin.version}.md
-      - LICENSE.txt
+
+prepare-iep-node-artifacts:
+  stage: publish
+  needs: ["docker-build"]
+  script:
+      - ls -alt
+      - ls -alt build
+      - mkdir iep-node-artifacts
+      - cp build/iep-node.zip iep-node-artifacts
+      - cp src/main/resources/system.properties iep-node-artifacts
+      - cp conf/mainnet.properties iep-node-artifacts
+      - cp conf/testnet.properties iep-node-artifacts
+      - cp conf/custom.properties iep-node-artifacts
+      - cp conf/templates/installer.properties iep-node-artifacts
+      - cp src/main/resources/log4j2.xml iep-node-artifacts
+      - cp CHANGELOG-@{iep.xin.version}.md iep-node-artifacts
+      - cp LICENSE.txt iep-node-artifacts
+
+  artifacts:
+    paths:
+      - iep-node-artifacts
 
 trigger-iep-node-installer:
   stage: publish
-  needs: ["docker-build"]
+  needs: ["prepare-iep-node-artifacts"]
   trigger: infinity-economics/iep-node-installer
