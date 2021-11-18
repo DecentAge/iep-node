@@ -32,7 +32,7 @@ prepare-iep-node-artifacts:
       - ls -alt
       - ls -alt build
       - mkdir iep-node-artifacts
-      - cp ./* iep-node-artifacts
+      - cp -rf ./* iep-node-artifacts
   artifacts:
     paths:
       - iep-node-artifacts/build/iep-node.zip
