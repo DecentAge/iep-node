@@ -5,7 +5,7 @@ include:
 download-artifacts:
   stage: prepare
   script:
-    - ls -alt build
+    - ls -alt
   needs:
     - project: infinity-economics/iep-wallet-ui
       ref: ${CI_COMMIT_REF_NAME}
