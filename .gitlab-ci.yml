@@ -11,9 +11,6 @@ download-artifacts:
       ref: ${CI_COMMIT_REF_NAME}
       job: docker-build
       artifacts: true
-  artifacts:
-    paths:
-      - build/
 
 docker-build:
   stage: build
