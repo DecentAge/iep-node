@@ -41,7 +41,7 @@ prepare-iep-node-artifacts:
       - cp conf/templates/installer.properties iep-node-artifacts
       - cp src/main/resources/log4j2.xml iep-node-artifacts
       - cp CHANGELOG-@{iep.xin.version}.md iep-node-artifacts
-      - cp LICENSE.txt iep-node-artifacts
+#      - cp LICENSE.txt iep-node-artifacts
 
   artifacts:
     paths:
