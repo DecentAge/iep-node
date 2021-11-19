@@ -25,25 +25,27 @@ docker-build:
   artifacts:
     paths:
       - build/iep-node.zip
+
 prepare-iep-node-artifacts:
   stage: publish
   needs: ["docker-build"]
   script:
-      - ls -alt
-      - ls -alt build
-      - mkdir iep-node-artifacts
-      - cp -rf ./* iep-node-artifacts
+      - mkdir iep-node-artifacts/build
+      - cp build/iep-node.zip iep-node-artifacts/build
+      - mkdir -p src/main/resources
+      - cp src/main/resources/system.properties iep-node-artifacts/src/main/resources
+      - cp src/main/resources/log4j2.xml iep-node-artifacts/src/main/resources
+      - mkdir -p iep-node-artifacts/conf
+      - cp conf/mainnet.properties iep-node-artifacts/conf
+      - cp conf/testnet.properties iep-node-artifacts/conf
+      - cp conf/custom.properties iep-node-artifacts/conf
+      - mkdir -p iep-node-artifacts/conf/templates
+      - cp conf/templates/installer.properties iep-node-artifacts/conf/templates
+#     - iep-node-artifacts/CHANGELOG-@{iep.xin.version}.md
+      - cp LICENSE.txt iep-node-artifacts
   artifacts:
     paths:
-      - iep-node-artifacts/build/iep-node.zip
-      - iep-node-artifacts/src/main/resources/system.properties
-      - iep-node-artifacts/conf/mainnet.properties
-      - iep-node-artifacts/conf/testnet.properties
-      - iep-node-artifacts/conf/custom.properties
-      - iep-node-artifacts/conf/templates/installer.properties
-      - iep-node-artifacts/src/main/resources/log4j2.xml
-#     - iep-node-artifacts/CHANGELOG-@{iep.xin.version}.md
-      - iep-node-artifacts/LICENSE.txt
+      - iep-node-artifacts
 
 trigger-iep-node-installer:
   stage: publish
