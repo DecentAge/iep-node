@@ -30,7 +30,7 @@ prepare-iep-node-artifacts:
   stage: publish
   needs: ["docker-build"]
   script:
-      - mkdir iep-node-artifacts/build
+      - mkdir -p iep-node-artifacts/build
       - cp build/iep-node.zip iep-node-artifacts/build
       - mkdir -p src/main/resources
       - cp src/main/resources/system.properties iep-node-artifacts/src/main/resources
@@ -41,7 +41,7 @@ prepare-iep-node-artifacts:
       - cp conf/custom.properties iep-node-artifacts/conf
       - mkdir -p iep-node-artifacts/conf/templates
       - cp conf/templates/installer.properties iep-node-artifacts/conf/templates
-#     - iep-node-artifacts/CHANGELOG-@{iep.xin.version}.md
+#     - cp CHANGELOG-@{iep.xin.version}.md iep-node-artifacts
       - cp LICENSE.txt iep-node-artifacts
   artifacts:
     paths:
