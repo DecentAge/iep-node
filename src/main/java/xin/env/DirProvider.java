@@ -23,8 +23,6 @@ public interface DirProvider {
 
     boolean isLoadPropertyFileFromUserDir();
 
-    void updateLogFileHandler(Properties loggingProperties);
-
     String getDbDir(String dbDir);
 
     File getLogFileDir();

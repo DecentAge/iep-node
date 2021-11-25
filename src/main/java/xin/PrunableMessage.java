@@ -16,16 +16,18 @@
 
 package xin;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import xin.crypto.Crypto;
 import xin.crypto.EncryptedData;
 import xin.db.DbIterator;
 import xin.db.DbKey;
 import xin.db.DbUtils;
 import xin.db.PrunableDbTable;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import xin.util.Convert;
 
 public final class PrunableMessage {
 
@@ -234,6 +236,26 @@ public final class PrunableMessage {
         return height;
     }
 
+    public byte[] decrypt(String secretPhrase) {
+        if (encryptedData == null) {
+            return null;
+        }
+        byte[] publicKey = senderId == Account.getId(Crypto.getPublicKey(secretPhrase))
+                ? Account.getPublicKey(recipientId) : Account.getPublicKey(senderId);
+        return Account.decryptFrom(publicKey, encryptedData, secretPhrase, isCompressed);
+    }
+
+    public byte[] decrypt(byte[] sharedKey) {
+        if (encryptedData == null) {
+            return null;
+        }
+        byte[] data = Crypto.aesDecrypt(encryptedData.getData(), sharedKey);
+        if (isCompressed) {
+            data = Convert.uncompress(data);
+        }
+        return data;
+    }
+    
     static void add(TransactionImpl transaction, Appendix.PrunablePlainMessage appendix) {
         add(transaction, appendix, Xin.getBlockchain().getLastBlockTimestamp(), Xin.getBlockchain().getHeight());
     }

@@ -24,13 +24,9 @@ public class DefaultDirProvider implements DirProvider {
 
     @Override
     public boolean isLoadPropertyFileFromUserDir() {
-        return false;
+        return true;
     }
 
-    @Override
-    public void updateLogFileHandler(Properties loggingProperties) {
-
-    }
 
     @Override
     public String getDbDir(String dbDir) {

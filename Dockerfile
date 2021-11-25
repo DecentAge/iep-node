@@ -1,24 +1,34 @@
-# syntax=docker/dockerfile:1
-FROM gradle:6.8.3-jdk8 AS build
-WORKDIR /build
+FROM gradle:6.8.3-jdk11 AS gradle-builder
+WORKDIR /iep-node
+RUN apt-get update \
+    && apt-get install --yes --no-install-recommends unzip
+
+
+RUN mkdir -p /iep-node/html/www/wallet
+COPY build/iep-wallet-ui/iep-wallet-ui.zip /iep-node/html/www/wallet
+RUN unzip -q  /iep-node/html/www/wallet/iep-wallet-ui.zip -d /iep-node/html/www/wallet
+RUN rm -rf /iep-node/html/www/wallet/iep-wallet-ui.zip
 
 COPY --chown=gradle:gradle . .
-
 RUN gradle DistZip --no-daemon
 
-FROM openjdk:8-jre-slim
 
+FROM openjdk:11-jre-slim
+WORKDIR /iep-node
 RUN apt-get update \
     && apt-get install --yes --no-install-recommends unzip \
     && apt-get install --yes --no-install-recommends gettext-base \
     && apt-get install --yes --no-install-recommends curl
 
-COPY --from=build /build/build/distributions/iep-node.zip /iep-node.zip
-COPY --from=build /build/conf/docker_template.properties /templates/docker_template.properties
-COPY --from=build /build/docker-entrypoint.sh /iep-node/docker-entrypoint.sh
-COPY --from=build /build/scripts /iep-node/scripts
-COPY --from=build /build/wait-for-it.sh /iep-node/wait-for-it.sh
 
-RUN set -o errexit -o nounset && unzip -q /iep-node.zip
-WORKDIR /iep-node/bin
+COPY --from=gradle-builder /iep-node/build/distributions/iep-node.zip /iep-node.zip
+COPY --from=gradle-builder /iep-node/conf/templates/docker.properties /templates/docker.properties
+RUN set -o errexit -o nounset && unzip -q /iep-node.zip -d /
+
+COPY --from=gradle-builder /iep-node/docker-entrypoint.sh /iep-node/docker-entrypoint.sh
+COPY --from=gradle-builder /iep-node/scripts /iep-node/scripts
+COPY --from=gradle-builder /iep-node/wait-for-it.sh /iep-node/wait-for-it.sh
+#COPY --from=node-builder /wallet-ui/dist /iep-node/html/www/wallet
+
+
 ENTRYPOINT ["/iep-node/docker-entrypoint.sh"]

@@ -25,32 +25,32 @@ public class RuntimeEnvironment {
     public static final String DIRPROVIDER_ARG = "xin.runtime.dirProvider";
 
     private static final String osname = System.getProperty("os.name").toLowerCase();
+    private static final String javaSpecVendor = System.getProperty("java.specification.vendor");
     private static final boolean isHeadless;
     private static final boolean hasJavaFX;
 
     static {
-        boolean b;
+    	boolean isHeadless_;
 
         try {
             // Load by reflection to prevent exception in case java.awt does not exist
             Class graphicsEnvironmentClass = Class.forName("java.awt.GraphicsEnvironment");
             Method isHeadlessMethod = graphicsEnvironmentClass.getMethod("isHeadless");
-            b = (Boolean) isHeadlessMethod.invoke(null);
+            isHeadless_ = (Boolean) isHeadlessMethod.invoke(null);
         } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
-            b = true;
+        	isHeadless_ = true;
         }
-
-        isHeadless = b;
-
+        isHeadless = isHeadless_;
+        
+        boolean hasJavaFX_;
         try {
             Class.forName("javafx.application.Application");
-            b = true;
+            hasJavaFX_ = true;
         } catch (ClassNotFoundException e) {
-            System.out.println("javafx not supported");
-            b = false;
+            System.out.println("javafx not supported: "+e.getMessage());
+            hasJavaFX_ = false;
         }
-
-        hasJavaFX = b;
+        hasJavaFX = hasJavaFX_;
     }
 
     private static boolean isWindowsRuntime() {
@@ -65,63 +65,56 @@ public class RuntimeEnvironment {
         return osname.contains("mac");
     }
 
-    // private static boolean isWindowsService() {
-    //     return "service".equalsIgnoreCase(System.getProperty(RUNTIME_MODE_ARG)) && isWindowsRuntime();
-    // }
+    private static boolean isWindowsService() {
+        return "service".equalsIgnoreCase(System.getProperty(RUNTIME_MODE_ARG)) && isWindowsRuntime();
+    }
 
     private static boolean isHeadless() {
         return isHeadless;
     }
 
-    // private static boolean isDesktopEnabled() {
-    //     return "desktop".equalsIgnoreCase(System.getProperty(RUNTIME_MODE_ARG)) && !isHeadless();
-    // }
-    //
-    // public static boolean isDesktopApplicationEnabled() {
-    //     return isDesktopEnabled() && hasJavaFX;
-    // }
+    private static boolean isDesktopEnabled() {
+        return "desktop".equalsIgnoreCase(System.getProperty(RUNTIME_MODE_ARG)) && !isHeadless(); 
+    }
+
+    public static boolean isDesktopApplicationEnabled() {
+        boolean isDesktopApplicationEnabled = isDesktopEnabled() && hasJavaFX;
+    	System.out.println("isDesktopApplicationEnabled=" + isDesktopApplicationEnabled);
+        return isDesktopApplicationEnabled;
+    }
 
     public static RuntimeMode getRuntimeMode() {
-
         System.out.println("isHeadless=" + isHeadless());
-        // if (isDesktopEnabled()) {
-        //     return new DesktopMode();
-        // } else if (isWindowsService()) {
-        //     return new WindowsServiceMode();
-        // } else {
-        //     return new CommandLineMode();
-        // }
-
-        return new CommandLineMode();
-
-
+        if (isDesktopEnabled()) {
+            return new DesktopMode();
+        } else if (isWindowsService()) {
+            return new WindowsServiceMode();
+        } else {
+            return new CommandLineMode();
+        }
     }
 
     public static DirProvider getDirProvider() {
         String dirProvider = System.getProperty(DIRPROVIDER_ARG);
-
         if (dirProvider != null) {
             try {
-                return (DirProvider) Class.forName(dirProvider).newInstance();
+                return (DirProvider)Class.forName(dirProvider).newInstance();
             } catch (ReflectiveOperationException e) {
                 System.out.println("Failed to instantiate dirProvider " + dirProvider);
                 throw new RuntimeException(e.getMessage(), e);
             }
         }
-
-        // if (isDesktopEnabled()) {
-        //     if (isWindowsRuntime()) {
-        //         return new WindowsUserDirProvider();
-        //     }
-        //     if (isUnixRuntime()) {
-        //         return new UnixUserDirProvider();
-        //     }
-        //     if (isMacRuntime()) {
-        //         return new MacUserDirProvider();
-        //     }
-        // }
-
-        return new DeveloperUserDirProvider();
-
+        if (isDesktopEnabled()) {
+            if (isWindowsRuntime()) {
+                return new WindowsUserDirProvider();
+            }
+            if (isUnixRuntime()) {
+                return new UnixUserDirProvider();
+            }
+            if (isMacRuntime()) {
+                return new MacUserDirProvider();
+            }
+        }
+        return new DefaultDirProvider();
     }
 }

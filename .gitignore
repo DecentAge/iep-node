@@ -217,3 +217,8 @@ gradle-app.setting
 
 # End of https://www.toptal.com/developers/gitignore/api/java,gradle,eclipse,intellij
 /.classpath
+
+# wallet
+/html/www/wallet
+/wallet-ui/node_modules
+/.idea/

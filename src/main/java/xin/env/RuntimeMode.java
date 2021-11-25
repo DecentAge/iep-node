@@ -25,7 +25,9 @@ public interface RuntimeMode {
 
     void setServerStatus(ServerStatus status, URI wallet, File logFileDir);
 
-    // void launchDesktopApplication();
+    void launchDesktopApplication();
 
     void shutdown();
+
+    void alert(String message);
 }

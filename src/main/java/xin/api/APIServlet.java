@@ -374,8 +374,6 @@ public final class APIServlet extends HttpServlet {
         map.put("proxyRipple", ProxyRipple.instance);
         map.put("proxyPoloniex", ProxyPoloniex.instance);
 
-        map.put("getServices", GetNodeServices.instance);
-
         map.put("unsignedJSONtoBytes", unsignedJSONtoBytes.instance);
 
         map.put("sendMoneyEscrow", SendMoneyEscrow.instance);
