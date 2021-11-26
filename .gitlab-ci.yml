@@ -22,9 +22,9 @@ docker-build:
       - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
       - export WALLET_UI_BUILD_FILE=/builds/infinity-economics/iep-node/build/iep-wallet-ui.zip
       - ls -alt
-#  artifacts:
-#    paths:
-#      - build/iep-node.zip
+  artifacts:
+    paths:
+      - build/iep-node.tar
 
 prepare-iep-node-artifacts:
   stage: publish
