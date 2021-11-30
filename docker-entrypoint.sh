@@ -10,7 +10,7 @@ if [ -z "${MY_HALLMARK}" ]; then
 else
 	export ENABLE_HALLMARK_PROTECTION=true
 fi
-cat /iep-node/conf/custom.properties
+
 
 export NETWORK_ENVIRONMENT=${NETWORK_ENVIRONMENT:-mainnet}
 export NUMBER_OF_FORK_CONFIRMATIONS=${NUMBER_OF_FORK_CONFIRMATIONS:-2}
