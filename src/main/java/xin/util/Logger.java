@@ -94,17 +94,16 @@ public final class Logger {
      * logging.properties.
      */    
     public static void init(String userHomeDir) {
-
-        //Properties logginProperites = Xin.loadProperties(new Properties(), "log4j.properties", false);
-    	updateLogFileDir();
-        //LogManager.resetConfiguration(); 
-        //PropertyConfigurator.configure(logginProperites);
+    	updateLogFileDir();;
         log = LogManager.getLogger(Xin.class);
         enableStackTraces = Xin.getBooleanProperty("xin.enableStackTraces");
         enableLogTraceback = Xin.getBooleanProperty("xin.enableLogTraceback");
+        boolean debugEnabled = Xin.getBooleanProperty("xin.debugEnabled");
+        if(debugEnabled) {
+        	Logger.setLevel(Logger.Level.DEBUG);
+        }
         logInfoMessage("logging enabled");
         //deleteDuplicateLogDir();
-
     }
 
     
