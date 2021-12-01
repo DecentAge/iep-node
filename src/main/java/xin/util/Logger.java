@@ -98,7 +98,7 @@ public final class Logger {
         log = LogManager.getLogger(Xin.class);
         enableStackTraces = Xin.getBooleanProperty("xin.enableStackTraces");
         enableLogTraceback = Xin.getBooleanProperty("xin.enableLogTraceback");
-        boolean debugEnabled = Xin.getBooleanProperty("xin.debugEnabled");
+        boolean debugEnabled = Xin.getBooleanProperty("xin.debug");
         if(debugEnabled) {
         	Logger.setLevel(Logger.Level.DEBUG);
         }
