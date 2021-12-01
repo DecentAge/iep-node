@@ -16,7 +16,6 @@
 
 package xin.db;
 
-import org.apache.lucene.search.Sort;
 import xin.Constants;
 import xin.Xin;
 import xin.util.Logger;
@@ -80,7 +79,8 @@ public abstract class EntityDbTable<T> extends DerivedDbTable {
     public final T newEntity(DbKey dbKey) {
         boolean cache = db.isInTransaction();
         if (cache) {
-            T t = (T) db.getCache(table).get(dbKey);
+            @SuppressWarnings("unchecked")
+			T t = (T) db.getCache(table).get(dbKey);
             if (t != null) {
                 return t;
             }
@@ -98,7 +98,8 @@ public abstract class EntityDbTable<T> extends DerivedDbTable {
 
     public final T get(DbKey dbKey, boolean cache) {
         if (cache && db.isInTransaction()) {
-            T t = (T) db.getCache(table).get(dbKey);
+            @SuppressWarnings("unchecked")
+			T t = (T) db.getCache(table).get(dbKey);
             if (t != null) {
                 return t;
             }
@@ -167,7 +168,8 @@ public abstract class EntityDbTable<T> extends DerivedDbTable {
         }
     }
 
-    private T get(Connection con, PreparedStatement pstmt, boolean cache) throws SQLException {
+    @SuppressWarnings("unchecked")
+	private T get(Connection con, PreparedStatement pstmt, boolean cache) throws SQLException {
         final boolean doCache = cache && db.isInTransaction();
         try (ResultSet rs = pstmt.executeQuery()) {
             if (!rs.next()) {
@@ -247,7 +249,8 @@ public abstract class EntityDbTable<T> extends DerivedDbTable {
         }
     }
 
-    public final DbIterator<T> getManyBy(Connection con, PreparedStatement pstmt, boolean cache) {
+    @SuppressWarnings("unchecked")
+	public final DbIterator<T> getManyBy(Connection con, PreparedStatement pstmt, boolean cache) {
         final boolean doCache = cache && db.isInTransaction();
         return new DbIterator<>(con, pstmt, (connection, rs) -> {
             T t = null;
@@ -415,7 +418,8 @@ public abstract class EntityDbTable<T> extends DerivedDbTable {
         if (dbKey == null) {
             throw new RuntimeException("DbKey not set");
         }
-        T cachedT = (T) db.getCache(table).get(dbKey);
+        @SuppressWarnings("unchecked")
+		T cachedT = (T) db.getCache(table).get(dbKey);
         if (cachedT == null) {
             db.getCache(table).put(dbKey, t);
         } else if (t != cachedT) { // not a bug

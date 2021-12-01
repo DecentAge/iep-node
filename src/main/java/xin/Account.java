@@ -35,7 +35,6 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-@SuppressWarnings({"UnusedDeclaration", "SuspiciousNameCombination"})
 public final class Account {
 
     public enum Event {
@@ -124,7 +123,6 @@ public final class Account {
 
     }
 
-    @SuppressWarnings("UnusedDeclaration")
     public static final class AccountCurrency {
 
         private final long accountId;
@@ -447,7 +445,9 @@ public final class Account {
 
     static class DoubleSpendingException extends RuntimeException {
 
-        DoubleSpendingException(String message, long accountId, long confirmed, long unconfirmed) {
+		private static final long serialVersionUID = -6828926691832837352L;
+
+		DoubleSpendingException(String message, long accountId, long confirmed, long unconfirmed) {
             super(message + " account: " + Long.toUnsignedString(accountId) + " confirmed: " + confirmed +
                     " unconfirmed: " + unconfirmed);
         }
@@ -643,7 +643,8 @@ public final class Account {
 
             };
 
-    private static final DerivedDbTable accountGuaranteedBalanceTable =
+    @SuppressWarnings("unused")
+	private static final DerivedDbTable accountGuaranteedBalanceTable =
             new DerivedDbTable("account_guaranteed_balance") {
 
                 @Override
