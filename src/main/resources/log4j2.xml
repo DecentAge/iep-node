@@ -18,7 +18,7 @@
 		</RollingFile>
 	</Appenders>
 	<Loggers>
-		<Logger name="xin" level="info" additivity="false">
+		<Logger name="xin" level="debug" additivity="false">
 			<AppenderRef ref="LogToRollingFile" />
 			<AppenderRef ref="LogToConsole" />
 		</Logger>
