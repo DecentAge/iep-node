@@ -36,7 +36,8 @@ public final class GetBlockchainTransactions extends APIServlet.APIRequestHandle
                 "includeExpiredPrunable", "includePhasingResult", "executedOnly");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
 
         long accountId = ParameterParser.getAccountId(req, true);

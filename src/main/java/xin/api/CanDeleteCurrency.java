@@ -31,7 +31,8 @@ public final class CanDeleteCurrency extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.MS}, "account", "currency");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
         Currency currency = ParameterParser.getCurrency(req);
         long accountId = ParameterParser.getAccountId(req, true);

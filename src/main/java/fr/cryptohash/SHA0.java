@@ -74,11 +74,11 @@ public class SHA0 extends MDHelper {
 	/** @see DigestEngine */
 	protected void engineReset()
 	{
-		currentVal[0] = (int)0x67452301;
-		currentVal[1] = (int)0xEFCDAB89;
-		currentVal[2] = (int)0x98BADCFE;
-		currentVal[3] = (int)0x10325476;
-		currentVal[4] = (int)0xC3D2E1F0;
+		currentVal[0] = 0x67452301;
+		currentVal[1] = 0xEFCDAB89;
+		currentVal[2] = 0x98BADCFE;
+		currentVal[3] = 0x10325476;
+		currentVal[4] = 0xC3D2E1F0;
 	}
 
 	/** @see DigestEngine */

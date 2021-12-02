@@ -31,7 +31,8 @@ public final class GetOffer extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.MS}, "offer");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
         JSONObject response = new JSONObject();
         CurrencyBuyOffer buyOffer = ParameterParser.getBuyOffer(req);

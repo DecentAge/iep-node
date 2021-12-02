@@ -34,7 +34,8 @@ public final class SetAlias extends CreateTransaction {
         super(new APITag[]{APITag.ALIASES, APITag.CREATE_TRANSACTION}, "aliasName", "aliasURI");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
         String aliasName = Convert.emptyToNull(req.getParameter("aliasName"));
         String aliasURI = Convert.nullToEmpty(req.getParameter("aliasURI"));

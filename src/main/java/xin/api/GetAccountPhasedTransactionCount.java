@@ -30,7 +30,8 @@ public class GetAccountPhasedTransactionCount extends APIServlet.APIRequestHandl
         super(new APITag[]{APITag.ACCOUNTS, APITag.PHASING}, "account");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
         long accountId = ParameterParser.getAccountId(req, true);
         JSONObject response = new JSONObject();

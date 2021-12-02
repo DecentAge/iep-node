@@ -36,7 +36,8 @@ public final class GenerateToken extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.TOKENS}, "website", "secretPhrase");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
     	if (!API.isAllowedLocalhost(req.getRemoteHost())) {
     		return INCORRECT_HOST;

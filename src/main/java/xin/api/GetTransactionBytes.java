@@ -34,7 +34,8 @@ public final class GetTransactionBytes extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.TRANSACTIONS}, "transaction");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) {
 
         String transactionValue = req.getParameter("transaction");

@@ -36,7 +36,6 @@ import xin.util.Logger;
 /**
  * The class itself and methods in this class are invoked from JavaScript therefore has to be public
  */
-@SuppressWarnings("WeakerAccess")
 public class JavaScriptBridge {
 
     DesktopApplication application;
@@ -62,7 +61,7 @@ public class JavaScriptBridge {
         });
     }
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings({ "unused", "unchecked" })
     public String readContactsFile() {
         String fileName = "contacts.json";
         byte[] bytes;

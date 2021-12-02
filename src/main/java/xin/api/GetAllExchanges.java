@@ -33,7 +33,8 @@ public final class GetAllExchanges extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.MS}, "timestamp", "firstIndex", "lastIndex", "includeCurrencyInfo");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
         final int timestamp = ParameterParser.getTimestamp(req);
         int firstIndex = ParameterParser.getFirstIndex(req);

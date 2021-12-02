@@ -70,7 +70,7 @@ import xin.util.TrustAllSSLProvider;
 
 public class DesktopApplication extends Application {
 
-    private static final Set DOWNLOAD_REQUEST_TYPES = new HashSet<>(Arrays.asList("downloadTaggedData", "downloadPrunableMessage"));
+    private static final Set<String> DOWNLOAD_REQUEST_TYPES = new HashSet<>(Arrays.asList("downloadTaggedData", "downloadPrunableMessage"));
     private static final boolean ENABLE_JAVASCRIPT_DEBUGGER = false;
     private static volatile boolean isLaunched;
     private static volatile Stage stage;
@@ -180,7 +180,7 @@ public class DesktopApplication extends Application {
                             // Add the javafx_webview_debugger and websocket-* test libs to the classpath
                             // For more details, check https://github.com/mohamnag/javafx_webview_debugger
                             Class<?> aClass = Class.forName("com.mohamnag.fxwebview_debugger.DevToolsDebuggerServer");
-                            Class webEngineClazz = WebEngine.class;
+                            Class<WebEngine> webEngineClazz = WebEngine.class;
                             Field debuggerField = webEngineClazz.getDeclaredField("debugger");
                             debuggerField.setAccessible(true);
                             Object debugger = debuggerField.get(webEngine);
@@ -252,7 +252,6 @@ public class DesktopApplication extends Application {
         return url;
     }
 
-    @SuppressWarnings("WeakerAccess")
     public void popupHandlerURLChange(String newValue) {
         Logger.logInfoMessage("popup request for " + newValue);
         Platform.runLater(() -> {

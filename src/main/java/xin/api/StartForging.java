@@ -34,7 +34,8 @@ public final class StartForging extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.FORGING}, "secretPhrase");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
     	if (!API.isAllowedLocalhost(req.getRemoteHost())) {
     		return INCORRECT_ACCOUNT;

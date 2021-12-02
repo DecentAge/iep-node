@@ -36,7 +36,9 @@ import static xin.api.JSONResponses.*;
 
 public final class APIServlet extends HttpServlet {
 
-    public abstract static class APIRequestHandler {
+	private static final long serialVersionUID = 7367823110060147432L;
+
+	public abstract static class APIRequestHandler {
 
         private final List<String> parameters;
         private final String fileParameter;
@@ -443,7 +445,8 @@ public final class APIServlet extends HttpServlet {
         process(req, resp);
     }
 
-    private void process(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    @SuppressWarnings("unchecked")
+	private void process(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         // Set response values now in case we create an asynchronous context
         resp.setHeader("Cache-Control", "no-cache, no-store, must-revalidate, private");
         resp.setHeader("Pragma", "no-cache");

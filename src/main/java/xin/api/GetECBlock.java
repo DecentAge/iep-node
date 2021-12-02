@@ -30,7 +30,8 @@ public final class GetECBlock extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.BLOCKS}, "timestamp");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
         int timestamp = ParameterParser.getTimestamp(req);
         if (timestamp == 0) {

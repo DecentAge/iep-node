@@ -42,7 +42,8 @@ public class ProxyEthereum extends APIServlet.APIRequestHandler {
 
     private ProxyEthereumClient btcEthereumClient;
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest request) throws XinException {
         if (!isProxyAvailable()) {
             throw new XinException.XinProxyServiceException("Btc proxy not available");

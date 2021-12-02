@@ -18,7 +18,7 @@ package xin.api;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.math.NumberUtils;
-import org.json.JSONArray;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONStreamAware;
 import xin.*;
@@ -57,7 +57,8 @@ public class GetActivationHeights extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.UTILS}, "name");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
 
         JSONObject response = new JSONObject();

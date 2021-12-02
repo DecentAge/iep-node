@@ -29,7 +29,8 @@ public final class GetLightClientPing extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.INFO});
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) {
 
         JSONObject response = new JSONObject();

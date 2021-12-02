@@ -393,7 +393,8 @@ class EventListener implements Runnable, AsyncListener, TransactionalDb.Transact
     /**
      * Complete the current event wait (Runnable interface)
      */
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public void run() {
         lock.lock();
         try {
@@ -474,7 +475,8 @@ class EventListener implements Runnable, AsyncListener, TransactionalDb.Transact
      *
      * @param event Async event
      */
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public void onTimeout(AsyncEvent event) {
         AsyncContext context = event.getAsyncContext();
         lock.lock();
@@ -1077,7 +1079,9 @@ class EventListener implements Runnable, AsyncListener, TransactionalDb.Transact
      */
     static class EventListenerException extends Exception {
 
-        /**
+		private static final long serialVersionUID = 480015281569194352L;
+
+		/**
          * Create an event exception with a message
          *
          * @param message Exception message

@@ -34,7 +34,8 @@ public final class GetAccountProperties extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.ACCOUNTS}, "recipient", "property", "setter", "firstIndex", "lastIndex");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
 
         long recipientId = ParameterParser.getAccountId(req, "recipient", false);

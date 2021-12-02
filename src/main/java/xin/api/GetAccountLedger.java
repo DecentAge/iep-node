@@ -51,7 +51,8 @@ public class GetAccountLedger extends APIServlet.APIRequestHandler {
      * @return API response
      * @throws XinException Invalid request
      */
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
         //
         // Process the request parameters

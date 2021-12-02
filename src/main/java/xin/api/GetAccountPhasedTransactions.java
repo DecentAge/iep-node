@@ -34,7 +34,8 @@ public class GetAccountPhasedTransactions extends APIServlet.APIRequestHandler {
                 "account", "firstIndex", "lastIndex");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
         long accountId = ParameterParser.getAccountId(req, true);
 

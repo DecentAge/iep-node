@@ -35,7 +35,8 @@ public final class GetHoldingShufflings extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.SHUFFLING}, "holding", "stage", "includeFinished", "firstIndex", "lastIndex");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
 
         long holdingId = 0;

@@ -26,7 +26,8 @@ import java.sql.Statement;
 public class MySqlUtil {
 
 
-    public static JSONObject pingMySqlDb(MySqlDb db) {
+    @SuppressWarnings("unchecked")
+	public static JSONObject pingMySqlDb(MySqlDb db) {
         Connection con = db.getMysqlConnection();
         Statement statement = null;
         ResultSet rs = null;

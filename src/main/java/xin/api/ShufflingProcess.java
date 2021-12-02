@@ -36,7 +36,8 @@ public final class ShufflingProcess extends CreateTransaction {
                 "shuffling", "recipientSecretPhrase", "recipientPublicKey");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
     	if (!API.isAllowedLocalhost(req.getRemoteHost())) {
     		return INCORRECT_HOST;

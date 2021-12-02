@@ -40,7 +40,8 @@ public class GetDistributions extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.ACCOUNTS}, "minAccountBalance", "maxAccountBalance", "slices");
     }
     
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
     	JSONObject response = new JSONObject();
     	Long startAmountTQT = ParameterParser.getLong(req, "minAccountBalance",0L, Constants.MAX_BALANCE_TQT, true);
@@ -56,6 +57,7 @@ public class GetDistributions extends APIServlet.APIRequestHandler {
         return response;
     }
 
+	@SuppressWarnings("unchecked")
 	private JSONArray retrieveFromDB(Long startAmountTQT, Long endAmountTQT, long distributionInterval) {
 		String sql = "select count(id) as results from account where latest = true and balance between ? and ?";
     	JSONArray distributionArray=new JSONArray();

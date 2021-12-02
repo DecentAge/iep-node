@@ -499,12 +499,12 @@ abstract class ECHOSmallCore extends DigestEngine {
 			int ab = a ^ b;
 			int bc = b ^ c;
 			int cd = c ^ d;
-			int abx = ((ab & (int)0x80808080) >>> 7) * 27
-				^ ((ab & (int)0x7F7F7F7F) << 1);
-			int bcx = ((bc & (int)0x80808080) >>> 7) * 27
-				^ ((bc & (int)0x7F7F7F7F) << 1);
-			int cdx = ((cd & (int)0x80808080) >>> 7) * 27
-				^ ((cd & (int)0x7F7F7F7F) << 1);
+			int abx = ((ab & 0x80808080) >>> 7) * 27
+				^ ((ab & 0x7F7F7F7F) << 1);
+			int bcx = ((bc & 0x80808080) >>> 7) * 27
+				^ ((bc & 0x7F7F7F7F) << 1);
+			int cdx = ((cd & 0x80808080) >>> 7) * 27
+				^ ((cd & 0x7F7F7F7F) << 1);
 			W[(ia << 2) + n] = abx ^ bc ^ d;
 			W[(ib << 2) + n] = bcx ^ a ^ cd;
 			W[(ic << 2) + n] = cdx ^ ab ^ d;

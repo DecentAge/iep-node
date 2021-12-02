@@ -21,7 +21,8 @@ import org.json.simple.JSONStreamAware;
 
 public final class ParameterException extends XinException {
 
-    private final JSONStreamAware errorResponse;
+	private static final long serialVersionUID = 8369535035940718694L;
+	private final JSONStreamAware errorResponse;
 
     ParameterException(JSONStreamAware errorResponse) {
         this.errorResponse = errorResponse;

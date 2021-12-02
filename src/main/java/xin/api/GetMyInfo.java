@@ -29,7 +29,8 @@ public final class GetMyInfo extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.NETWORK});
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) {
 
         JSONObject response = new JSONObject();

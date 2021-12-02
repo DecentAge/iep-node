@@ -38,7 +38,8 @@ import java.util.List;
 import java.util.Map;
 
 public final class JSONData {
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject alias(Alias alias) {
         JSONObject json = new JSONObject();
         putAccount(json, "account", alias.getAccountId());
@@ -59,7 +60,8 @@ public final class JSONData {
     static JSONObject accountBalance(Account account, boolean includeEffectiveBalance) {
         return accountBalance(account, includeEffectiveBalance, Xin.getBlockchain().getHeight());
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject accountBalance(Account account, boolean includeEffectiveBalance, int height) {
         JSONObject json = new JSONObject();
         if (account == null) {
@@ -87,7 +89,8 @@ public final class JSONData {
         }
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject lessor(Account account, boolean includeEffectiveBalance) {
         JSONObject json = new JSONObject();
         Account.AccountLease accountLease = account.getAccountLease();
@@ -111,7 +114,8 @@ public final class JSONData {
         }
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject asset(Asset asset, boolean includeCounts) {
         JSONObject json = new JSONObject();
         putAccount(json, "account", asset.getAccountId());
@@ -133,7 +137,8 @@ public final class JSONData {
         return currency(currency,includeCounts,false);
     }
 
-    static JSONObject currency(Currency currency, boolean includeCounts,boolean includeAmounts) {
+    @SuppressWarnings("unchecked")
+	static JSONObject currency(Currency currency, boolean includeCounts,boolean includeAmounts) {
         JSONObject json = new JSONObject();
         json.put("currency", Long.toUnsignedString(currency.getId()));
         putAccount(json, "account", currency.getAccountId());
@@ -173,7 +178,8 @@ public final class JSONData {
 
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject currencyFounder(CurrencyFounder founder) {
         JSONObject json = new JSONObject();
         json.put("currency", Long.toUnsignedString(founder.getCurrencyId()));
@@ -181,7 +187,8 @@ public final class JSONData {
         json.put("amountPerUnitTQT", String.valueOf(founder.getAmountPerUnitTQT()));
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject accountAsset(Account.AccountAsset accountAsset, boolean includeAccount, boolean includeAssetInfo ) {
 
 
@@ -211,7 +218,8 @@ public final class JSONData {
 
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject accountCurrency(Account.AccountCurrency accountCurrency, boolean includeAccount, boolean includeCurrencyInfo) {
         JSONObject json = new JSONObject();
 
@@ -231,7 +239,8 @@ public final class JSONData {
 
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject accountProperty(Account.AccountProperty accountProperty, boolean includeAccount, boolean includeSetter) {
         JSONObject json = new JSONObject();
         if (includeAccount) {
@@ -244,19 +253,22 @@ public final class JSONData {
         json.put("value", accountProperty.getValue());
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject askOrder(Order.Ask order) {
         JSONObject json = order(order);
         json.put("type", "ask");
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject bidOrder(Order.Bid order) {
         JSONObject json = order(order);
         json.put("type", "bid");
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     private static JSONObject order(Order order) {
         JSONObject json = new JSONObject();
         json.put("order", Long.toUnsignedString(order.getId()));
@@ -272,19 +284,22 @@ public final class JSONData {
 
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject expectedAskOrder(Transaction transaction) {
         JSONObject json = expectedOrder(transaction);
         json.put("type", "ask");
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject expectedBidOrder(Transaction transaction) {
         JSONObject json = expectedOrder(transaction);
         json.put("type", "bid");
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     private static JSONObject expectedOrder(Transaction transaction) {
         JSONObject json = new JSONObject();
         Attachment.ColoredCoinsOrderPlacement attachment = (Attachment.ColoredCoinsOrderPlacement) transaction.getAttachment();
@@ -296,7 +311,8 @@ public final class JSONData {
         putExpectedTransaction(json, transaction);
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject expectedOrderCancellation(Transaction transaction) {
         JSONObject json = new JSONObject();
         Attachment.ColoredCoinsOrderCancellation attachment = (Attachment.ColoredCoinsOrderCancellation) transaction.getAttachment();
@@ -306,7 +322,8 @@ public final class JSONData {
         return json;
     }
 
-    static JSONObject offer(CurrencyExchangeOffer offer) {
+    @SuppressWarnings("unchecked")
+	static JSONObject offer(CurrencyExchangeOffer offer) {
         JSONObject json = new JSONObject();
         json.put("offer", Long.toUnsignedString(offer.getId()));
         putAccount(json, "account", offer.getAccountId());
@@ -321,7 +338,8 @@ public final class JSONData {
 
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject expectedBuyOffer(Transaction transaction) {
         JSONObject json = expectedOffer(transaction);
         Attachment.MonetarySystemPublishExchangeOffer attachment = (Attachment.MonetarySystemPublishExchangeOffer) transaction.getAttachment();
@@ -331,7 +349,8 @@ public final class JSONData {
         return json;
     }
 
-    static JSONObject expectedSellOffer(Transaction transaction) {
+    @SuppressWarnings("unchecked")
+	static JSONObject expectedSellOffer(Transaction transaction) {
         JSONObject json = expectedOffer(transaction);
         Attachment.MonetarySystemPublishExchangeOffer attachment = (Attachment.MonetarySystemPublishExchangeOffer) transaction.getAttachment();
         json.put("rateTQT", String.valueOf(attachment.getSellRateTQT()));
@@ -340,7 +359,8 @@ public final class JSONData {
         return json;
     }
 
-    private static JSONObject expectedOffer(Transaction transaction) {
+    @SuppressWarnings("unchecked")
+	private static JSONObject expectedOffer(Transaction transaction) {
         Attachment.MonetarySystemPublishExchangeOffer attachment = (Attachment.MonetarySystemPublishExchangeOffer) transaction.getAttachment();
         JSONObject json = new JSONObject();
         json.put("offer", transaction.getStringId());
@@ -351,14 +371,16 @@ public final class JSONData {
         return json;
     }
 
-    static JSONObject availableOffers(CurrencyExchangeOffer.AvailableOffers availableOffers) {
+    @SuppressWarnings("unchecked")
+	static JSONObject availableOffers(CurrencyExchangeOffer.AvailableOffers availableOffers) {
         JSONObject json = new JSONObject();
         json.put("rateTQT", String.valueOf(availableOffers.getRateTQT()));
         json.put("units", String.valueOf(availableOffers.getUnits()));
         json.put("amountTQT", String.valueOf(availableOffers.getAmountTQT()));
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject shuffling(Shuffling shuffling, boolean includeHoldingInfo) {
         JSONObject json = new JSONObject();
         json.put("shuffling", Long.toUnsignedString(shuffling.getId()));
@@ -393,7 +415,8 @@ public final class JSONData {
         }
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject participant(ShufflingParticipant participant) {
         JSONObject json = new JSONObject();
         json.put("shuffling", Long.toUnsignedString(participant.getShufflingId()));
@@ -402,7 +425,8 @@ public final class JSONData {
         json.put("state", participant.getState().getCode());
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject shuffler(Shuffler shuffler, boolean includeParticipantState) {
         JSONObject json = new JSONObject();
         putAccount(json, "account", shuffler.getAccountId());
@@ -421,7 +445,8 @@ public final class JSONData {
         }
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject block(Block block, boolean includeTransactions, boolean includeExecutedPhased) {
         JSONObject json = new JSONObject();
         json.put("block", block.getStringId());
@@ -471,14 +496,16 @@ public final class JSONData {
         }
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject encryptedData(EncryptedData encryptedData) {
         JSONObject json = new JSONObject();
         json.put("data", Convert.toHexString(encryptedData.getData()));
         json.put("nonce", Convert.toHexString(encryptedData.getNonce()));
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject hallmark(Hallmark hallmark) {
         JSONObject json = new JSONObject();
         putAccount(json, "account", Account.getId(hallmark.getPublicKey()));
@@ -490,7 +517,8 @@ public final class JSONData {
         json.put("valid", hallmark.isValid());
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject token(Token token) {
         JSONObject json = new JSONObject();
         putAccount(json, "account", Account.getId(token.getPublicKey()));
@@ -498,7 +526,8 @@ public final class JSONData {
         json.put("valid", token.isValid());
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject peer(Peer peer) {
         JSONObject json = new JSONObject();
         json.put("address", peer.getHost());
@@ -539,7 +568,8 @@ public final class JSONData {
         json.put("services", servicesArray);
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject poll(Poll poll) {
         JSONObject json = new JSONObject();
         putAccount(json, "account", poll.getAccountId());
@@ -559,7 +589,8 @@ public final class JSONData {
         json.put("timestamp", poll.getTimestamp());
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject pollResults(Poll poll, List<Poll.OptionResult> results, VoteWeighting voteWeighting) {
         JSONObject json = new JSONObject();
         json.put("poll", Long.toUnsignedString(poll.getId()));
@@ -600,7 +631,8 @@ public final class JSONData {
     interface VoteWeighter {
         long calcWeight(long voterId);
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject vote(Vote vote, VoteWeighter weighter) {
         JSONObject json = new JSONObject();
         putAccount(json, "voter", vote.getVoterId());
@@ -619,7 +651,8 @@ public final class JSONData {
         }
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject phasingPoll(PhasingPoll poll, boolean countVotes) {
         JSONObject json = new JSONObject();
         json.put("transaction", Long.toUnsignedString(poll.getId()));
@@ -657,7 +690,8 @@ public final class JSONData {
         }
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject phasingPollResult(PhasingPoll.PhasingPollResult phasingPollResult) {
         JSONObject json = new JSONObject();
         json.put("transaction", Long.toUnsignedString(phasingPollResult.getId()));
@@ -666,14 +700,16 @@ public final class JSONData {
         json.put("executionHeight", phasingPollResult.getHeight());
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject phasingPollVote(PhasingVote vote) {
         JSONObject json = new JSONObject();
         JSONData.putAccount(json, "voter", vote.getVoterId());
         json.put("transaction", Long.toUnsignedString(vote.getVoteId()));
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     private static void putVoteWeighting(JSONObject json, VoteWeighting voteWeighting) {
         json.put("votingModel", voteWeighting.getVotingModel().getCode());
         json.put("minBalance", String.valueOf(voteWeighting.getMinBalance()));
@@ -682,7 +718,8 @@ public final class JSONData {
             json.put("holding", Long.toUnsignedString(voteWeighting.getHoldingId()));
         }
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject phasingOnly(AccountRestrictions.PhasingOnly phasingOnly) {
         JSONObject json = new JSONObject();
         putAccount(json, "account", phasingOnly.getAccountId());
@@ -700,7 +737,8 @@ public final class JSONData {
         putVoteWeighting(json, phasingOnly.getPhasingParams().getVoteWeighting());
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject trade(Trade trade, boolean includeAssetInfo) {
         JSONObject json = new JSONObject();
         json.put("timestamp", trade.getTimestamp());
@@ -721,7 +759,8 @@ public final class JSONData {
         }
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject assetTransfer(AssetTransfer assetTransfer, boolean includeAssetInfo) {
         JSONObject json = new JSONObject();
         json.put("assetTransfer", Long.toUnsignedString(assetTransfer.getId()));
@@ -736,7 +775,8 @@ public final class JSONData {
         }
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject expectedAssetTransfer(Transaction transaction, boolean includeAssetInfo) {
         JSONObject json = new JSONObject();
         Attachment.ColoredCoinsAssetTransfer attachment = (Attachment.ColoredCoinsAssetTransfer) transaction.getAttachment();
@@ -751,7 +791,8 @@ public final class JSONData {
         putExpectedTransaction(json, transaction);
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject assetDelete(AssetDelete assetDelete, boolean includeAssetInfo) {
         JSONObject json = new JSONObject();
         json.put("assetDelete", Long.toUnsignedString(assetDelete.getId()));
@@ -765,7 +806,8 @@ public final class JSONData {
         }
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject expectedAssetDelete(Transaction transaction, boolean includeAssetInfo) {
         JSONObject json = new JSONObject();
         Attachment.ColoredCoinsAssetDelete attachment = (Attachment.ColoredCoinsAssetDelete) transaction.getAttachment();
@@ -779,7 +821,8 @@ public final class JSONData {
         putExpectedTransaction(json, transaction);
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject assetDividend(AssetDividend assetDividend) {
         JSONObject json = new JSONObject();
         json.put("assetDividend", Long.toUnsignedString(assetDividend.getId()));
@@ -792,7 +835,8 @@ public final class JSONData {
         json.put("timestamp", assetDividend.getTimestamp());
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject currencyTransfer(CurrencyTransfer transfer, boolean includeCurrencyInfo) {
         JSONObject json = new JSONObject();
         json.put("transfer", Long.toUnsignedString(transfer.getId()));
@@ -807,7 +851,8 @@ public final class JSONData {
         }
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject expectedCurrencyTransfer(Transaction transaction, boolean includeCurrencyInfo) {
         JSONObject json = new JSONObject();
         Attachment.MonetarySystemCurrencyTransfer attachment = (Attachment.MonetarySystemCurrencyTransfer) transaction.getAttachment();
@@ -822,7 +867,8 @@ public final class JSONData {
         putExpectedTransaction(json, transaction);
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject exchange(Exchange exchange, boolean includeCurrencyInfo) {
         JSONObject json = new JSONObject();
         json.put("transaction", Long.toUnsignedString(exchange.getTransactionId()));
@@ -840,7 +886,8 @@ public final class JSONData {
         }
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject exchangeRequest(ExchangeRequest exchangeRequest, boolean includeCurrencyInfo) {
         JSONObject json = new JSONObject();
         json.put("transaction", Long.toUnsignedString(exchangeRequest.getId()));
@@ -854,7 +901,8 @@ public final class JSONData {
         }
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject expectedExchangeRequest(Transaction transaction, boolean includeCurrencyInfo) {
         JSONObject json = new JSONObject();
         json.put("transaction", transaction.getStringId());
@@ -872,7 +920,8 @@ public final class JSONData {
     static JSONObject unconfirmedTransaction(Transaction transaction) {
         return unconfirmedTransaction(transaction, null);
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject escrowTransaction(Escrow escrow) {
         JSONObject json = new JSONObject();
         json.put("id", Convert.toUnsignedLong(escrow.getId()));
@@ -900,7 +949,8 @@ public final class JSONData {
         json.put("signers", signers);
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject subscription(Subscription subscription) {
         JSONObject json = new JSONObject();
         json.put("id", Convert.toUnsignedLong(subscription.getId()));
@@ -911,7 +961,8 @@ public final class JSONData {
         json.put("timeNext", subscription.getTimeNext());
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject unconfirmedTransaction(Transaction transaction, Filter<Appendix> filter) {
         JSONObject json = new JSONObject();
         json.put("type", transaction.getType().getType());
@@ -975,7 +1026,8 @@ public final class JSONData {
     static JSONObject transaction(Transaction transaction) {
         return transaction(transaction, false);
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject transaction(Transaction transaction, boolean includePhasingResult) {
         JSONObject json = transaction(transaction, null);
         if (includePhasingResult && transaction.getPhasing() != null) {
@@ -988,7 +1040,8 @@ public final class JSONData {
         }
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject transaction(Transaction transaction, Filter<Appendix> filter) {
         JSONObject json = unconfirmedTransaction(transaction, filter);
         json.put("block", Long.toUnsignedString(transaction.getBlockId()));
@@ -997,7 +1050,8 @@ public final class JSONData {
         json.put("transactionIndex", transaction.getIndex());
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject generator(Generator generator, int elapsedTime) {
         JSONObject response = new JSONObject();
         long deadline = generator.getDeadline();
@@ -1007,7 +1061,8 @@ public final class JSONData {
         response.put("remaining", Math.max(deadline - elapsedTime, 0));
         return response;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject accountMonitor(FundingMonitor monitor, boolean includeMonitoredAccounts) {
         JSONObject json = new JSONObject();
         json.put("holdingType", monitor.getHoldingType().getCode());
@@ -1026,7 +1081,8 @@ public final class JSONData {
         }
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject monitoredAccount(FundingMonitor.MonitoredAccount account) {
         JSONObject json = new JSONObject();
         json.put("account", Long.toUnsignedString(account.getAccountId()));
@@ -1036,7 +1092,8 @@ public final class JSONData {
         json.put("interval", account.getInterval());
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject prunableMessage(PrunableMessage prunableMessage, long readerAccountId, String secretPhrase) {
         JSONObject json = new JSONObject();
         json.put("transaction", Long.toUnsignedString(prunableMessage.getId()));
@@ -1073,7 +1130,8 @@ public final class JSONData {
         }
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject apiRequestHandler(APIServlet.APIRequestHandler handler) {
         JSONObject json = new JSONObject();
         json.put("allowRequiredBlockParameters", handler.allowRequiredBlockParameters());
@@ -1085,7 +1143,8 @@ public final class JSONData {
         json.put("requirePassword", handler.requirePassword());
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static void putPrunableAttachment(JSONObject json, Transaction transaction) {
         JSONObject prunableAttachment = transaction.getPrunableAttachmentJSON();
         if (prunableAttachment != null) {
@@ -1096,7 +1155,8 @@ public final class JSONData {
     static void putException(JSONObject json, Exception e) {
         putException(json, e, "");
     }
-
+    
+    @SuppressWarnings("unchecked")
     static void putException(JSONObject json, Exception e, String error) {
         json.put("errorCode", 4);
         if (error.length() > 0) {
@@ -1105,12 +1165,14 @@ public final class JSONData {
         json.put("error", e.toString());
         json.put("errorDescription", error + e.getMessage());
     }
-
+    
+    @SuppressWarnings("unchecked")
     static void putAccount(JSONObject json, String name, long accountId) {
         json.put(name, Long.toUnsignedString(accountId));
         json.put(name + "RS", Convert.rsAccount(accountId));
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject at(AT at) {
         JSONObject json = new JSONObject();
         ByteBuffer bf = ByteBuffer.allocate( 8 );
@@ -1143,13 +1205,15 @@ public final class JSONData {
         json.put("creationBlock", at.getCreationBlockHeight());
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     static JSONObject hex2long(String longString){
         JSONObject json = new JSONObject();
         json.put("hex2long", longString);
         return json;
     }
-
+    
+    @SuppressWarnings("unchecked")
     private static void putCurrencyInfo(JSONObject json, long currencyId) {
         Currency currency = Currency.getCurrency(currencyId);
         if (currency == null) {
@@ -1179,7 +1243,8 @@ public final class JSONData {
         json.put("types", types);
 
     }
-
+    
+    @SuppressWarnings("unchecked")
     private static void putAssetInfo(JSONObject json, long assetId) {
         Asset asset = Asset.getAsset(assetId);
         json.put("name", asset.getName());
@@ -1189,7 +1254,8 @@ public final class JSONData {
         json.put("currentQuantityQNT", String.valueOf(asset.getQuantityQNT()));
 
     }
-
+    
+    @SuppressWarnings("unchecked")
     private static void putExpectedTransaction(JSONObject json, Transaction transaction) {
         json.put("height", Xin.getBlockchain().getHeight() + 1);
         json.put("phased", transaction.getPhasing() != null);
@@ -1198,7 +1264,8 @@ public final class JSONData {
             json.put("confirmations", Xin.getBlockchain().getHeight() - transaction.getHeight());
         }
     }
-
+    
+    @SuppressWarnings("unchecked")
     static void ledgerEntry(JSONObject json, LedgerEntry entry, boolean includeTransactions, boolean includeHoldingInfo) {
         putAccount(json, "account", entry.getAccountId());
         json.put("ledgerId", Long.toUnsignedString(entry.getLedgerId()));

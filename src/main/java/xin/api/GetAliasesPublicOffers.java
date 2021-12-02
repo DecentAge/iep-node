@@ -38,7 +38,8 @@ public final class GetAliasesPublicOffers extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.ALIASES}, "firstIndex", "lastIndex");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) {
 
         int firstIndex = 0;

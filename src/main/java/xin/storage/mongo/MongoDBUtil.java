@@ -25,7 +25,8 @@ import java.util.Map;
 
 public class MongoDBUtil {
 
-    public static JSONObject pingMongoDb() {
+    @SuppressWarnings("unchecked")
+	public static JSONObject pingMongoDb() {
         MongoDatabase database = MongoDB.getMongoDb();
         Document stats = database.runCommand(new Document("dbstats", 1));
         JSONObject response = new JSONObject();

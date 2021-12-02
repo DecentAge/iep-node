@@ -33,7 +33,8 @@ public class GetCurrencyPhasedTransactions extends APIServlet.APIRequestHandler 
         super(new APITag[]{APITag.MS, APITag.PHASING}, "currency", "account", "withoutWhitelist", "firstIndex", "lastIndex");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
         long currencyId = ParameterParser.getUnsignedLong(req, "currency", true);
         long accountId = ParameterParser.getAccountId(req, false);

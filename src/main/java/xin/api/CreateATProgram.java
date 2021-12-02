@@ -21,6 +21,7 @@ public final class CreateATProgram extends CreateTransaction {
 		super (new APITag[] {APITag.AT, APITag.CREATE_TRANSACTION}, "name", "description", "creationBytes", "code", "data", "dpages", "cspages", "uspages", "minActivationAmountTQT");
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
 		//String atVersion = req.getParameter("atVersion");

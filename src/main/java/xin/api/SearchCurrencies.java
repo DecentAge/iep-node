@@ -33,7 +33,8 @@ public final class SearchCurrencies extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.MS, APITag.SEARCH}, "query", "firstIndex", "lastIndex", "includeCounts");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
         String query = Convert.nullToEmpty(req.getParameter("query"));
         if (query.isEmpty()) {

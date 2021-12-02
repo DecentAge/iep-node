@@ -770,7 +770,8 @@ public final class TransactionImpl implements Transaction {
         return zeroSignature(getBytes());
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public JSONObject getJSONObject() {
         JSONObject json = new JSONObject();
         json.put("type", type.getType());
@@ -801,7 +802,8 @@ public final class TransactionImpl implements Transaction {
         return json;
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public JSONObject getPrunableAttachmentJSON() {
         JSONObject prunableJSON = null;
         for (Appendix.AbstractAppendix appendage : appendages) {

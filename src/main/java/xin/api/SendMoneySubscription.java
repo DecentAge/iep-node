@@ -20,6 +20,7 @@ public final class SendMoneySubscription extends CreateTransaction {
 			  "frequency");
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
 

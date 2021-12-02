@@ -34,6 +34,7 @@ public final class GetAccountEscrowTransactions extends APIServlet.APIRequestHan
 		super(new APITag[] {APITag.ACCOUNTS}, "account");
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
 

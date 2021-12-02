@@ -37,7 +37,8 @@ public final class GetExpectedTransactions extends APIServlet.APIRequestHandler 
         super(new APITag[]{APITag.TRANSACTIONS}, "account", "account", "account");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
 
         Set<Long> accountIds = Convert.toSet(ParameterParser.getAccountIds(req, false));

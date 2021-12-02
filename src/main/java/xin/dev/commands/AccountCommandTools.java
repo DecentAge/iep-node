@@ -46,7 +46,8 @@ public class AccountCommandTools implements CommandMarker {
 
     // Long.toUnsignedString(longId));
 
-    @CliCommand(value = ACCOUNT_DETAILS_FROM_SECRET, help = "Will print account details from secret")
+    @SuppressWarnings("unchecked")
+	@CliCommand(value = ACCOUNT_DETAILS_FROM_SECRET, help = "Will print account details from secret")
     public String accountDetails(
             @CliOption(key = {"secret"}, mandatory = true, help = "The secret from which account to be calculated") final String secret) {
         JSONObject jsonObject = new JSONObject();

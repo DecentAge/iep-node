@@ -38,7 +38,8 @@ public final class GetTransactions extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.TRANSACTIONS}, "firstIndex", "lastIndex");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) {
 
         int firstIndex = 0;

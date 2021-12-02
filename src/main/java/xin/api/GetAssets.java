@@ -33,7 +33,8 @@ public final class GetAssets extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.AE}, "assets", "assets", "assets", "includeCounts"); // limit to 3 for testing
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
         long[] assetIds = ParameterParser.getUnsignedLongs(req, "assets");
         boolean includeCounts = "true".equalsIgnoreCase(req.getParameter("includeCounts"));

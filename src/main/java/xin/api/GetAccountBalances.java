@@ -34,7 +34,8 @@ public class GetAccountBalances extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.ACCOUNTS}, "index", "size");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
         int index = ParameterParser.getInt(req, "index", 0, 100, true);
         int size = ParameterParser.getInt(req, "size", 0, 50, true);

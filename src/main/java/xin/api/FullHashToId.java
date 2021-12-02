@@ -30,7 +30,8 @@ public final class FullHashToId extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.UTILS}, "fullHash");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) {
         JSONObject response = new JSONObject();
         long longId = Convert.fullHashToId(Convert.parseHexString(req.getParameter("fullHash")));

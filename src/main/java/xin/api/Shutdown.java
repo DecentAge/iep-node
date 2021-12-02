@@ -30,7 +30,8 @@ public final class Shutdown extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.DEBUG}, "scan");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) {
         JSONObject response = new JSONObject();
         boolean scan = "true".equalsIgnoreCase(req.getParameter("scan"));

@@ -41,7 +41,8 @@ public class StorageMySqlDBPing extends APIServlet.APIRequestHandler {
     private static final Boolean STORAGE_SUPPORTED = Xin.getBooleanProperty("xin.storage.mysql.enable");
     private static final String COMMAND_DB_PING = "dbPing";
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest request) throws XinException {
 
         if (!isStorageAvailable()) {

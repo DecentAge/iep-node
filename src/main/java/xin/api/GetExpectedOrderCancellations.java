@@ -36,7 +36,8 @@ public final class GetExpectedOrderCancellations extends APIServlet.APIRequestHa
         super(new APITag[]{APITag.AE});
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
         Filter<Transaction> filter = transaction -> transaction.getType() == TransactionType.ColoredCoins.ASK_ORDER_CANCELLATION
                 || transaction.getType() == TransactionType.ColoredCoins.BID_ORDER_CANCELLATION;

@@ -34,7 +34,8 @@ public final class GetBlocks extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.BLOCKS}, "firstIndex", "lastIndex", "timestamp", "includeTransactions", "includeExecutedPhased");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
 
         int firstIndex = ParameterParser.getFirstIndex(req);

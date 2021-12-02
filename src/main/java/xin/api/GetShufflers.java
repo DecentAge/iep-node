@@ -36,7 +36,8 @@ public final class GetShufflers extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.SHUFFLING}, "account", "shufflingFullHash", "secretPhrase", "adminPassword", "includeParticipantState");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
 
         String secretPhrase = ParameterParser.getSecretPhrase(req, false);

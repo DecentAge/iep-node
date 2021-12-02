@@ -35,7 +35,8 @@ public class RuntimeEnvironment {
         try {
             // Load by reflection to prevent exception in case java.awt does not exist
             Class graphicsEnvironmentClass = Class.forName("java.awt.GraphicsEnvironment");
-            Method isHeadlessMethod = graphicsEnvironmentClass.getMethod("isHeadless");
+            @SuppressWarnings("unchecked")
+			Method isHeadlessMethod = graphicsEnvironmentClass.getMethod("isHeadless");
             isHeadless_ = (Boolean) isHeadlessMethod.invoke(null);
         } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
         	isHeadless_ = true;
@@ -94,7 +95,8 @@ public class RuntimeEnvironment {
         }
     }
 
-    public static DirProvider getDirProvider() {
+    @SuppressWarnings("deprecation")
+	public static DirProvider getDirProvider() {
         String dirProvider = System.getProperty(DIRPROVIDER_ARG);
         if (dirProvider != null) {
             try {

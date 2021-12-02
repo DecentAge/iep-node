@@ -33,7 +33,8 @@ public class GetPhasingPollVotes extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.PHASING}, "transaction", "firstIndex", "lastIndex");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
         long transactionId = ParameterParser.getUnsignedLong(req, "transaction", true);
         int firstIndex = ParameterParser.getFirstIndex(req);

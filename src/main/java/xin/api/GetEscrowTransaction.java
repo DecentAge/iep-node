@@ -32,6 +32,7 @@ public final class GetEscrowTransaction extends APIServlet.APIRequestHandler {
 		super(new APITag[] {APITag.ACCOUNTS}, "escrow");
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
 		Long escrowId;

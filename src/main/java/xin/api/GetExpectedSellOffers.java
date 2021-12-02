@@ -44,7 +44,8 @@ public final class GetExpectedSellOffers extends APIServlet.APIRequestHandler {
         return Long.compare(a1.getSellRateTQT(), a2.getSellRateTQT());
     };
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
 
         long currencyId = ParameterParser.getUnsignedLong(req, "currency", false);

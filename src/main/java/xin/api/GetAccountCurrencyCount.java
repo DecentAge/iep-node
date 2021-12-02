@@ -31,7 +31,8 @@ public final class GetAccountCurrencyCount extends APIServlet.APIRequestHandler 
         super(new APITag[]{APITag.ACCOUNTS, APITag.MS}, "account", "height");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
 
         long accountId = ParameterParser.getAccountId(req, true);

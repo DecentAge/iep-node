@@ -31,7 +31,8 @@ public final class GetAccountId extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.ACCOUNTS}, "secretPhrase", "publicKey");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
 
         byte[] publicKey = ParameterParser.getPublicKey(req);

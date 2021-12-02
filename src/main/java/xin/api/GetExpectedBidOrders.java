@@ -41,7 +41,8 @@ public final class GetExpectedBidOrders extends APIServlet.APIRequestHandler {
         return Long.compare(a2.getPriceTQT(), a1.getPriceTQT());
     };
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
 
         long assetId = ParameterParser.getUnsignedLong(req, "asset", false);

@@ -27,7 +27,8 @@ public class RethinkDbUtil {
 
     private static final Gson gson = new Gson();
 
-    public static JSONObject pingDb() {
+    @SuppressWarnings("unchecked")
+	public static JSONObject pingDb() {
         JSONObject jsonObject = new JSONObject();
         RethinkDatabase database = new RethinkDatabase();
         Connection connection = database.getDBConnection();

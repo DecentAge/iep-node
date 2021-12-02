@@ -30,7 +30,8 @@ public final class Scan extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.DEBUG}, "numBlocks", "height", "validate");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) {
         JSONObject response = new JSONObject();
         try {

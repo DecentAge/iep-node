@@ -73,10 +73,10 @@ public class RIPEMD128 extends MDHelper {
 	/** @see DigestEngine */
 	protected void engineReset()
 	{
-		currentVal[0] = (int)0x67452301;
-		currentVal[1] = (int)0xEFCDAB89;
-		currentVal[2] = (int)0x98BADCFE;
-		currentVal[3] = (int)0x10325476;
+		currentVal[0] = 0x67452301;
+		currentVal[1] = 0xEFCDAB89;
+		currentVal[2] = 0x98BADCFE;
+		currentVal[3] = 0x10325476;
 	}
 
 	/** @see DigestEngine */
@@ -205,105 +205,105 @@ public class RIPEMD128 extends MDHelper {
 		}
 		for (int i = 16; i < 32; i += 4) {
 			int T1 = A1 + (((C1 ^ D1) & B1) ^ D1)
-				+ X[r1[i + 0]] + (int)0x5A827999;
+				+ X[r1[i + 0]] + 0x5A827999;
 			A1 = ((T1 << s1[i + 0]) | (T1 >>> (32 - s1[i + 0])));
 
 			T1 = D1 + (((B1 ^ C1) & A1) ^ C1)
-				+ X[r1[i + 1]] + (int)0x5A827999;
+				+ X[r1[i + 1]] + 0x5A827999;
 			D1 = ((T1 << s1[i + 1]) | (T1 >>> (32 - s1[i + 1])));
 
 			T1 = C1 + (((A1 ^ B1) & D1) ^ B1)
-				+ X[r1[i + 2]] + (int)0x5A827999;
+				+ X[r1[i + 2]] + 0x5A827999;
 			C1 = ((T1 << s1[i + 2]) | (T1 >>> (32 - s1[i + 2])));
 
 			T1 = B1 + (((D1 ^ A1) & C1) ^ A1)
-				+ X[r1[i + 3]] + (int)0x5A827999;
+				+ X[r1[i + 3]] + 0x5A827999;
 			B1 = ((T1 << s1[i + 3]) | (T1 >>> (32 - s1[i + 3])));
 		}
 		for (int i = 32; i < 48; i += 4) {
 			int T1 = A1 + ((B1 | ~C1) ^ D1)
-				+ X[r1[i + 0]] + (int)0x6ED9EBA1;
+				+ X[r1[i + 0]] + 0x6ED9EBA1;
 			A1 = ((T1 << s1[i + 0]) | (T1 >>> (32 - s1[i + 0])));
 
 			T1 = D1 + ((A1 | ~B1) ^ C1)
-				+ X[r1[i + 1]] + (int)0x6ED9EBA1;
+				+ X[r1[i + 1]] + 0x6ED9EBA1;
 			D1 = ((T1 << s1[i + 1]) | (T1 >>> (32 - s1[i + 1])));
 
 			T1 = C1 + ((D1 | ~A1) ^ B1)
-				+ X[r1[i + 2]] + (int)0x6ED9EBA1;
+				+ X[r1[i + 2]] + 0x6ED9EBA1;
 			C1 = ((T1 << s1[i + 2]) | (T1 >>> (32 - s1[i + 2])));
 
 			T1 = B1 + ((C1 | ~D1) ^ A1)
-				+ X[r1[i + 3]] + (int)0x6ED9EBA1;
+				+ X[r1[i + 3]] + 0x6ED9EBA1;
 			B1 = ((T1 << s1[i + 3]) | (T1 >>> (32 - s1[i + 3])));
 		}
 		for (int i = 48; i < 64; i += 4) {
 			int T1 = A1 + (((B1 ^ C1) & D1) ^ C1)
-				+ X[r1[i + 0]] + (int)0x8F1BBCDC;
+				+ X[r1[i + 0]] + 0x8F1BBCDC;
 			A1 = ((T1 << s1[i + 0]) | (T1 >>> (32 - s1[i + 0])));
 
 			T1 = D1 + (((A1 ^ B1) & C1) ^ B1)
-				+ X[r1[i + 1]] + (int)0x8F1BBCDC;
+				+ X[r1[i + 1]] + 0x8F1BBCDC;
 			D1 = ((T1 << s1[i + 1]) | (T1 >>> (32 - s1[i + 1])));
 
 			T1 = C1 + (((D1 ^ A1) & B1) ^ A1)
-				+ X[r1[i + 2]] + (int)0x8F1BBCDC;
+				+ X[r1[i + 2]] + 0x8F1BBCDC;
 			C1 = ((T1 << s1[i + 2]) | (T1 >>> (32 - s1[i + 2])));
 
 			T1 = B1 + (((C1 ^ D1) & A1) ^ D1)
-				+ X[r1[i + 3]] + (int)0x8F1BBCDC;
+				+ X[r1[i + 3]] + 0x8F1BBCDC;
 			B1 = ((T1 << s1[i + 3]) | (T1 >>> (32 - s1[i + 3])));
 		}
 
 		for (int i = 0; i < 16; i += 4) {
 			int T2 = A2 + (((B2 ^ C2) & D2) ^ C2)
-				+ X[r2[i + 0]] + (int)0x50A28BE6;
+				+ X[r2[i + 0]] + 0x50A28BE6;
 			A2 = ((T2 << s2[i + 0]) | (T2 >>> (32 - s2[i + 0])));
 
 			T2 = D2 + (((A2 ^ B2) & C2) ^ B2)
-				+ X[r2[i + 1]] + (int)0x50A28BE6;
+				+ X[r2[i + 1]] + 0x50A28BE6;
 			D2 = ((T2 << s2[i + 1]) | (T2 >>> (32 - s2[i + 1])));
 
 			T2 = C2 + (((D2 ^ A2) & B2) ^ A2)
-				+ X[r2[i + 2]] + (int)0x50A28BE6;
+				+ X[r2[i + 2]] + 0x50A28BE6;
 			C2 = ((T2 << s2[i + 2]) | (T2 >>> (32 - s2[i + 2])));
 
 			T2 = B2 + (((C2 ^ D2) & A2) ^ D2)
-				+ X[r2[i + 3]] + (int)0x50A28BE6;
+				+ X[r2[i + 3]] + 0x50A28BE6;
 			B2 = ((T2 << s2[i + 3]) | (T2 >>> (32 - s2[i + 3])));
 		}
 		for (int i = 16; i < 32; i += 4) {
 			int T2 = A2 + ((B2 | ~C2) ^ D2)
-				+ X[r2[i + 0]] + (int)0x5C4DD124;
+				+ X[r2[i + 0]] + 0x5C4DD124;
 			A2 = ((T2 << s2[i + 0]) | (T2 >>> (32 - s2[i + 0])));
 
 			T2 = D2 + ((A2 | ~B2) ^ C2)
-				+ X[r2[i + 1]] + (int)0x5C4DD124;
+				+ X[r2[i + 1]] + 0x5C4DD124;
 			D2 = ((T2 << s2[i + 1]) | (T2 >>> (32 - s2[i + 1])));
 
 			T2 = C2 + ((D2 | ~A2) ^ B2)
-				+ X[r2[i + 2]] + (int)0x5C4DD124;
+				+ X[r2[i + 2]] + 0x5C4DD124;
 			C2 = ((T2 << s2[i + 2]) | (T2 >>> (32 - s2[i + 2])));
 
 			T2 = B2 + ((C2 | ~D2) ^ A2)
-				+ X[r2[i + 3]] + (int)0x5C4DD124;
+				+ X[r2[i + 3]] + 0x5C4DD124;
 			B2 = ((T2 << s2[i + 3]) | (T2 >>> (32 - s2[i + 3])));
 		}
 		for (int i = 32; i < 48; i += 4) {
 			int T2 = A2 + (((C2 ^ D2) & B2) ^ D2)
-				+ X[r2[i + 0]] + (int)0x6D703EF3;
+				+ X[r2[i + 0]] + 0x6D703EF3;
 			A2 = ((T2 << s2[i + 0]) | (T2 >>> (32 - s2[i + 0])));
 
 			T2 = D2 + (((B2 ^ C2) & A2) ^ C2)
-				+ X[r2[i + 1]] + (int)0x6D703EF3;
+				+ X[r2[i + 1]] + 0x6D703EF3;
 			D2 = ((T2 << s2[i + 1]) | (T2 >>> (32 - s2[i + 1])));
 
 			T2 = C2 + (((A2 ^ B2) & D2) ^ B2)
-				+ X[r2[i + 2]] + (int)0x6D703EF3;
+				+ X[r2[i + 2]] + 0x6D703EF3;
 			C2 = ((T2 << s2[i + 2]) | (T2 >>> (32 - s2[i + 2])));
 
 			T2 = B2 + (((D2 ^ A2) & C2) ^ A2)
-				+ X[r2[i + 3]] + (int)0x6D703EF3;
+				+ X[r2[i + 3]] + 0x6D703EF3;
 			B2 = ((T2 << s2[i + 3]) | (T2 >>> (32 - s2[i + 3])));
 		}
 		for (int i = 48; i < 64; i += 4) {

@@ -33,7 +33,8 @@ public class GetAssetPhasedTransactions extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.AE, APITag.PHASING}, "asset", "account", "withoutWhitelist", "firstIndex", "lastIndex");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
         long assetId = ParameterParser.getUnsignedLong(req, "asset", true);
         long accountId = ParameterParser.getAccountId(req, false);

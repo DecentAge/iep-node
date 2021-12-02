@@ -31,7 +31,8 @@ public class GetPollVotes extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.VS}, "poll", "firstIndex", "lastIndex", "includeWeights");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
 
         int firstIndex = ParameterParser.getFirstIndex(req);

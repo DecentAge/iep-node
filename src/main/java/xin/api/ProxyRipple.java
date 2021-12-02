@@ -41,7 +41,8 @@ public class ProxyRipple extends APIServlet.APIRequestHandler {
 
     private ProxyRippleClient btcRippleClient;
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest request) throws XinException {
         if (!isProxyAvailable()) {
             throw new XinException.XinProxyServiceException("Ripple proxy not available");

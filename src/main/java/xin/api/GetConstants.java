@@ -33,7 +33,8 @@ public final class GetConstants extends APIServlet.APIRequestHandler {
 
     static final GetConstants instance = new GetConstants();
 
-    private static final class Holder {
+    @SuppressWarnings("unchecked")
+	private static final class Holder {
 
         private static final JSONStreamAware CONSTANTS;
 

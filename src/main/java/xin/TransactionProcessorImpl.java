@@ -228,7 +228,8 @@ final class TransactionProcessorImpl implements TransactionProcessor {
 
     };
 
-    private final Runnable processTransactionsThread = () -> {
+    @SuppressWarnings("unchecked")
+	private final Runnable processTransactionsThread = () -> {
 
         try {
             try {

@@ -32,6 +32,7 @@ public final class GetSubscription extends APIServlet.APIRequestHandler {
 		super(new APITag[] {APITag.ACCOUNTS}, "subscription");
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
 		Long subscriptionId;

@@ -32,7 +32,8 @@ public final class GetCurrencyIds extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.MS}, "firstIndex", "lastIndex");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) {
 
         int firstIndex = ParameterParser.getFirstIndex(req);

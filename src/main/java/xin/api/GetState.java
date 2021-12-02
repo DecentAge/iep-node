@@ -33,7 +33,8 @@ public final class GetState extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.INFO}, "includeCounts", "adminPassword");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) {
 
         JSONObject response = GetBlockchainStatus.instance.processRequest(req);

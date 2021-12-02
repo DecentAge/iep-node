@@ -31,7 +31,8 @@ public class RetrievePrunedData extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.DEBUG});
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) {
         JSONObject response = new JSONObject();
         try {

@@ -33,7 +33,8 @@ public final class GetAssetAccounts extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.AE}, "asset", "height", "firstIndex", "lastIndex");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
 
         long assetId = ParameterParser.getUnsignedLong(req, "asset", true);

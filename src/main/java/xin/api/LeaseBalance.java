@@ -33,7 +33,8 @@ public final class LeaseBalance extends CreateTransaction {
         super(new APITag[]{APITag.FORGING, APITag.ACCOUNT_CONTROL, APITag.CREATE_TRANSACTION}, "period", "recipient");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
 
         int period = ParameterParser.getInt(req, "period", Constants.LEASING_DELAY, 65535, true);

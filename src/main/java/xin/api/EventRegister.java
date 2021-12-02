@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("unchecked")
 public class EventRegister extends APIServlet.APIRequestHandler {
 
     /**

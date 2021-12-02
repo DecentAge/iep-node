@@ -36,7 +36,8 @@ public final class GetAliasesPrivateOffers extends APIServlet.APIRequestHandler 
         super(new APITag[]{APITag.ALIASES}, "account", "firstIndex", "lastIndex");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
 
         int firstIndex = 0;

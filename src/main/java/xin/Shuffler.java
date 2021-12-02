@@ -481,7 +481,9 @@ public final class Shuffler {
 
     public static class ShufflerException extends XinException {
 
-        private ShufflerException(String message) {
+		private static final long serialVersionUID = 1946832942351728271L;
+
+		private ShufflerException(String message) {
             super(message);
         }
 
@@ -493,7 +495,9 @@ public final class Shuffler {
 
     public static final class ShufflerLimitException extends ShufflerException {
 
-        private ShufflerLimitException(String message) {
+		private static final long serialVersionUID = 8815105889149394915L;
+
+		private ShufflerLimitException(String message) {
             super(message);
         }
 
@@ -501,7 +505,9 @@ public final class Shuffler {
 
     public static final class DuplicateShufflerException extends ShufflerException {
 
-        private DuplicateShufflerException(String message) {
+		private static final long serialVersionUID = 8599254431226241031L;
+
+		private DuplicateShufflerException(String message) {
             super(message);
         }
 
@@ -509,7 +515,9 @@ public final class Shuffler {
 
     public static final class InvalidRecipientException extends ShufflerException {
 
-        private InvalidRecipientException(String message) {
+		private static final long serialVersionUID = -2898386006363187921L;
+
+		private InvalidRecipientException(String message) {
             super(message);
         }
 
@@ -517,7 +525,9 @@ public final class Shuffler {
 
     public static final class ControlledAccountException extends ShufflerException {
 
-        private ControlledAccountException(String message) {
+		private static final long serialVersionUID = 6514678349419339113L;
+
+		private ControlledAccountException(String message) {
             super(message);
         }
 
@@ -525,7 +535,9 @@ public final class Shuffler {
 
     public static final class InvalidStageException extends ShufflerException {
 
-        private InvalidStageException(String message) {
+		private static final long serialVersionUID = -202367565863998251L;
+
+		private InvalidStageException(String message) {
             super(message);
         }
 

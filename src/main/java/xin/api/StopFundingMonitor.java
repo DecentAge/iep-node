@@ -56,7 +56,8 @@ public class StopFundingMonitor extends APIServlet.APIRequestHandler {
      * @return Client response
      * @throws ParameterException Unable to process request
      */
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
         String secretPhrase = ParameterParser.getSecretPhrase(req, false);
         long accountId = ParameterParser.getAccountId(req, false);

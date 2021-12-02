@@ -67,7 +67,8 @@ public final class GetInboundPeers extends APIServlet.APIRequestHandler {
      * @param req API request
      * @return API response or null
      */
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) {
         boolean includePeerInfo = "true".equalsIgnoreCase(req.getParameter("includePeerInfo"));
         List<Peer> peers = Peers.getInboundPeers();

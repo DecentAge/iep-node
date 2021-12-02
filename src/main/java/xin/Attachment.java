@@ -183,7 +183,8 @@ public interface Attachment extends Appendix {
             buffer.put(uri);
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             attachment.put("alias", aliasName);
             attachment.put("uri", aliasURI);
@@ -243,7 +244,8 @@ public interface Attachment extends Appendix {
             buffer.putLong(priceTQT);
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             attachment.put("alias", aliasName);
             attachment.put("priceTQT", priceTQT);
@@ -293,7 +295,8 @@ public interface Attachment extends Appendix {
             buffer.put(aliasBytes);
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             attachment.put("alias", aliasName);
         }
@@ -338,7 +341,8 @@ public interface Attachment extends Appendix {
             buffer.put(aliasBytes);
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(final JSONObject attachment) {
             attachment.put("alias", aliasName);
         }
@@ -526,7 +530,8 @@ public interface Attachment extends Appendix {
             buffer.putLong(this.voteWeighting.getHoldingId());
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             attachment.put("name", this.pollName);
             attachment.put("description", this.pollDescription);
@@ -637,7 +642,8 @@ public interface Attachment extends Appendix {
             buffer.put(this.pollVote);
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             attachment.put("poll", Long.toUnsignedString(this.pollId));
             JSONArray vote = new JSONArray();
@@ -689,7 +695,8 @@ public interface Attachment extends Appendix {
             }
         }
 
-        MessagingPhasingVoteCasting(JSONObject attachmentData) {
+        @SuppressWarnings("unchecked")
+		MessagingPhasingVoteCasting(JSONObject attachmentData) {
             super(attachmentData);
             JSONArray hashes = (JSONArray) attachmentData.get("transactionFullHashes");
             transactionFullHashes = new ArrayList<>(hashes.size());
@@ -716,7 +723,8 @@ public interface Attachment extends Appendix {
             buffer.put(revealedSecret);
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             JSONArray jsonArray = new JSONArray();
             transactionFullHashes.forEach(hash -> jsonArray.add(Convert.toHexString(hash)));
@@ -797,7 +805,8 @@ public interface Attachment extends Appendix {
             }
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             attachment.put("minFeePerByteTQT", minFeePerByteTQT);
             JSONArray uris = new JSONArray();
@@ -857,7 +866,8 @@ public interface Attachment extends Appendix {
             buffer.put(description);
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             attachment.put("name", name);
             attachment.put("description", description);
@@ -915,7 +925,8 @@ public interface Attachment extends Appendix {
             buffer.put(value);
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             attachment.put("property", property);
             attachment.put("value", value);
@@ -964,7 +975,8 @@ public interface Attachment extends Appendix {
             buffer.putLong(propertyId);
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             attachment.put("property", Long.toUnsignedString(propertyId));
         }
@@ -1027,7 +1039,8 @@ public interface Attachment extends Appendix {
             buffer.put(decimals);
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             attachment.put("name", name);
             attachment.put("description", description);
@@ -1099,7 +1112,8 @@ public interface Attachment extends Appendix {
             }
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             attachment.put("asset", Long.toUnsignedString(assetId));
             attachment.put("quantityQNT", quantityQNT);
@@ -1160,7 +1174,8 @@ public interface Attachment extends Appendix {
             buffer.putLong(quantityQNT);
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             attachment.put("asset", Long.toUnsignedString(assetId));
             attachment.put("quantityQNT", quantityQNT);
@@ -1209,7 +1224,8 @@ public interface Attachment extends Appendix {
             buffer.putLong(assetId);
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             attachment.put("asset", Long.toUnsignedString(assetId));
         }
@@ -1263,7 +1279,8 @@ public interface Attachment extends Appendix {
             buffer.putLong(priceTQT);
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             attachment.put("asset", Long.toUnsignedString(assetId));
             attachment.put("quantityQNT", quantityQNT);
@@ -1353,7 +1370,8 @@ public interface Attachment extends Appendix {
             buffer.putLong(orderId);
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             attachment.put("order", Long.toUnsignedString(orderId));
         }
@@ -1443,7 +1461,8 @@ public interface Attachment extends Appendix {
             buffer.putLong(amountTQTPerQNT);
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             attachment.put("asset", Long.toUnsignedString(assetId));
             attachment.put("height", height);
@@ -1549,7 +1568,8 @@ public interface Attachment extends Appendix {
             }
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             attachment.put("amountTQT", Convert.toUnsignedLong(this.amountTQT));
             attachment.put("deadline", this.deadline);
@@ -1614,7 +1634,8 @@ public interface Attachment extends Appendix {
             buffer.put(Escrow.decisionToByte(this.decision));
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             attachment.put("escrowId", Convert.toUnsignedLong(this.escrowId));
             attachment.put("decision", Escrow.decisionToString(this.decision));
@@ -1663,7 +1684,8 @@ public interface Attachment extends Appendix {
             buffer.put(Escrow.decisionToByte(this.decision));
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             attachment.put("escrowId", Convert.toUnsignedLong(this.escrowId));
             attachment.put("decision", Escrow.decisionToString(this.decision));
@@ -1703,7 +1725,8 @@ public interface Attachment extends Appendix {
             buffer.putInt(this.frequency);
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             attachment.put("frequency", this.frequency);
         }
@@ -1744,7 +1767,8 @@ public interface Attachment extends Appendix {
             buffer.putLong(subscriptionId);
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             attachment.put("subscriptionId", Convert.toUnsignedLong(this.subscriptionId));
         }
@@ -1786,7 +1810,8 @@ public interface Attachment extends Appendix {
             buffer.putLong(this.subscriptionId);
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             attachment.put("subscriptionId", Convert.toUnsignedLong(this.subscriptionId));
         }
@@ -1857,7 +1882,8 @@ public interface Attachment extends Appendix {
             buffer.put( creationBytes );
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             attachment.put("name", name);
             attachment.put("description", description);
@@ -1903,7 +1929,8 @@ public interface Attachment extends Appendix {
             buffer.putShort((short) period);
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             attachment.put("period", period);
         }
@@ -2026,7 +2053,8 @@ public interface Attachment extends Appendix {
             buffer.put(decimals);
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             attachment.put("name", name);
             attachment.put("code", code);
@@ -2139,7 +2167,8 @@ public interface Attachment extends Appendix {
             buffer.putLong(amountPerUnitTQT);
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             attachment.put("currency", Long.toUnsignedString(currencyId));
             attachment.put("amountPerUnitTQT", amountPerUnitTQT);
@@ -2194,7 +2223,8 @@ public interface Attachment extends Appendix {
             buffer.putLong(units);
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             attachment.put("currency", Long.toUnsignedString(currencyId));
             attachment.put("units", units);
@@ -2249,7 +2279,8 @@ public interface Attachment extends Appendix {
             buffer.putLong(units);
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             attachment.put("currency", Long.toUnsignedString(currencyId));
             attachment.put("units", units);
@@ -2334,7 +2365,8 @@ public interface Attachment extends Appendix {
             buffer.putInt(expirationHeight);
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             attachment.put("currency", Long.toUnsignedString(currencyId));
             attachment.put("buyRateTQT", buyRateTQT);
@@ -2424,7 +2456,8 @@ public interface Attachment extends Appendix {
             buffer.putLong(units);
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             attachment.put("currency", Long.toUnsignedString(currencyId));
             attachment.put("rateTQT", rateTQT);
@@ -2531,7 +2564,8 @@ public interface Attachment extends Appendix {
             buffer.putLong(counter);
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             attachment.put("nonce", nonce);
             attachment.put("currency", Long.toUnsignedString(currencyId));
@@ -2591,7 +2625,8 @@ public interface Attachment extends Appendix {
             buffer.putLong(currencyId);
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             attachment.put("currency", Long.toUnsignedString(currencyId));
         }
@@ -2655,7 +2690,8 @@ public interface Attachment extends Appendix {
             buffer.putShort(registrationPeriod);
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             attachment.put("holding", Long.toUnsignedString(holdingId));
             attachment.put("holdingType", holdingType.getCode());
@@ -2732,7 +2768,8 @@ public interface Attachment extends Appendix {
             buffer.put(shufflingStateHash);
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             attachment.put("shuffling", Long.toUnsignedString(shufflingId));
             attachment.put("shufflingStateHash", Convert.toHexString(shufflingStateHash));
@@ -2784,7 +2821,8 @@ public interface Attachment extends Appendix {
             buffer.put(shufflingFullHash);
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             attachment.put("shufflingFullHash", Convert.toHexString(shufflingFullHash));
         }
@@ -2867,7 +2905,8 @@ public interface Attachment extends Appendix {
             buffer.put(getHash());
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             super.putMyJSON(attachment);
             if (data != null) {
@@ -2971,7 +3010,8 @@ public interface Attachment extends Appendix {
             }
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             super.putMyJSON(attachment);
             JSONArray jsonArray = new JSONArray();
@@ -3102,7 +3142,8 @@ public interface Attachment extends Appendix {
             buffer.putLong(cancellingAccountId);
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject attachment) {
             super.putMyJSON(attachment);
             JSONArray jsonArray = new JSONArray();
@@ -3191,7 +3232,8 @@ public interface Attachment extends Appendix {
             buffer.putShort(maxDuration);
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         void putMyJSON(JSONObject json) {
             JSONObject phasingControlParams = new JSONObject();
             phasingParams.putMyJSON(phasingControlParams);

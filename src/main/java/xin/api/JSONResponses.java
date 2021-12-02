@@ -25,6 +25,7 @@ import org.json.simple.JSONStreamAware;
 
 import java.util.Arrays;
 
+@SuppressWarnings("unchecked")
 public final class JSONResponses {
 
     public static final JSONStreamAware INCORRECT_ALIAS = incorrect("alias");

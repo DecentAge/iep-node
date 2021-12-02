@@ -38,7 +38,8 @@ public final class GetForging extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.FORGING}, "secretPhrase", "adminPassword");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
 
         String secretPhrase = ParameterParser.getSecretPhrase(req, false);

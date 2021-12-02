@@ -41,7 +41,8 @@ public final class StartFundingMonitor extends APIServlet.APIRequestHandler {
      * @return Client response
      * @throws XinException Unable to process request
      */
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
     	if (!API.isAllowedLocalhost(req.getRemoteHost())) {
     		return INCORRECT_HOST;

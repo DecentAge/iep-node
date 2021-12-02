@@ -33,7 +33,8 @@ public final class PopOff extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.DEBUG}, "numBlocks", "height", "keepTransactions");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) {
 
         int numBlocks = 0;

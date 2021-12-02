@@ -35,7 +35,8 @@ public final class GetAccount extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.ACCOUNTS}, "account", "includeLessors", "includeAssets", "includeCurrencies", "includeEffectiveBalance", "includeCurrentHeight");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
 
         Account account = ParameterParser.getAccount(req);

@@ -41,7 +41,8 @@ public final class DumpPeers extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.DEBUG}, "version", "weight", "connect", "adminPassword");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
 
         String version = Convert.nullToEmpty(req.getParameter("version"));

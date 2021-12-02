@@ -35,7 +35,8 @@ public class GetVoterPhasedTransactions extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.ACCOUNTS, APITag.PHASING}, "account", "firstIndex", "lastIndex");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
         long accountId = ParameterParser.getAccountId(req, true);
         int firstIndex = ParameterParser.getFirstIndex(req);

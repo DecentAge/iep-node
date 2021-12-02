@@ -33,7 +33,8 @@ public final class GetExpectedCurrencyTransfers extends APIServlet.APIRequestHan
         super(new APITag[]{APITag.MS}, "currency", "account", "includeCurrencyInfo");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
 
         long currencyId = ParameterParser.getUnsignedLong(req, "currency", false);

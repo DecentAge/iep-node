@@ -68,7 +68,8 @@ public interface BlockchainProcessor extends Observable<Block, BlockchainProcess
 
     class BlockNotAcceptedException extends XinException {
 
-        private final BlockImpl block;
+		private static final long serialVersionUID = -8136615506584327880L;
+		private final BlockImpl block;
 
         BlockNotAcceptedException(String message, BlockImpl block) {
             super(message);
@@ -89,7 +90,9 @@ public interface BlockchainProcessor extends Observable<Block, BlockchainProcess
 
     class TransactionNotAcceptedException extends BlockNotAcceptedException {
 
-        private final TransactionImpl transaction;
+		private static final long serialVersionUID = -6748634604168055333L;
+
+		private final TransactionImpl transaction;
 
         TransactionNotAcceptedException(String message, TransactionImpl transaction) {
             super(message, transaction.getBlock());
@@ -113,7 +116,9 @@ public interface BlockchainProcessor extends Observable<Block, BlockchainProcess
 
     class BlockOutOfOrderException extends BlockNotAcceptedException {
 
-        BlockOutOfOrderException(String message, BlockImpl block) {
+		private static final long serialVersionUID = 2622947995773879015L;
+
+		BlockOutOfOrderException(String message, BlockImpl block) {
             super(message, block);
         }
 

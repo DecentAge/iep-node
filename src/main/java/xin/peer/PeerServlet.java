@@ -40,9 +40,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+@SuppressWarnings("unchecked")
 public final class PeerServlet extends WebSocketServlet {
 
-    abstract static class PeerRequestHandler {
+	private static final long serialVersionUID = -8976230967235657891L;
+
+	abstract static class PeerRequestHandler {
         abstract JSONStreamAware processRequest(JSONObject request, Peer peer);
 
         abstract boolean rejectWhileDownloading();

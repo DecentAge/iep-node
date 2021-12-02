@@ -36,7 +36,8 @@ public class GetPolls extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.ACCOUNTS, APITag.VS}, "account", "firstIndex", "lastIndex", "timestamp", "includeFinished", "finishedOnly");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
         long accountId = ParameterParser.getAccountId(req, "account", false);
         boolean includeFinished = "true".equalsIgnoreCase(req.getParameter("includeFinished"));

@@ -42,7 +42,8 @@ public class GatewayIpfs extends APIServlet.APIRequestHandler {
 
     private GatewayIpfsClient gatewayIpfsClient;
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest request) throws XinException {
         if (!isGatewayAvailable()) {
             throw new XinException.XinProxyServiceException("IPFS gateway not available");

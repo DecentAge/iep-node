@@ -36,6 +36,7 @@ public final class EscrowSign extends CreateTransaction {
 			  "decision");
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
 		Long escrowId;

@@ -35,7 +35,8 @@ public final class GetPrunableMessages extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.MESSAGES}, "account", "otherAccount", "secretPhrase", "firstIndex", "lastIndex", "timestamp");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
         long accountId = ParameterParser.getAccountId(req, true);
         String secretPhrase = ParameterParser.getSecretPhrase(req, false);

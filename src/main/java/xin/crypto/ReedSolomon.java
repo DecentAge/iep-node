@@ -164,12 +164,18 @@ final class ReedSolomon {
     }
 
     abstract static class DecodeException extends Exception {
+
+		private static final long serialVersionUID = 5693091333383105764L;
     }
 
     static final class CodewordTooLongException extends DecodeException {
+
+		private static final long serialVersionUID = -2779453420718617041L;
     }
 
     static final class CodewordInvalidException extends DecodeException {
+
+		private static final long serialVersionUID = 5277513400895272668L;
     }
 
     private ReedSolomon() {

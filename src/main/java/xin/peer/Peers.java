@@ -36,6 +36,7 @@ import java.net.*;
 import java.util.*;
 import java.util.concurrent.*;
 
+@SuppressWarnings("unchecked")
 public final class Peers {
 
     public enum Event {

@@ -46,7 +46,8 @@ public class GatewayIpfsClient {
         }
     }
 
-    public JSONObject getFileContent(Map<String, String[]> requestParams) throws XinException.NotValidException {
+    @SuppressWarnings("unchecked")
+	public JSONObject getFileContent(Map<String, String[]> requestParams) throws XinException.NotValidException {
         setIpfs();
         String[] fileHash = requestParams.get("fileHash");
         if (CollectionUtils.sizeIsEmpty(fileHash) || StringUtils.isEmpty(fileHash[0])) {

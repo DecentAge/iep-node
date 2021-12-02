@@ -242,7 +242,8 @@ final class BlockImpl implements Block {
         return (int) (getId() ^ (getId() >>> 32));
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public JSONObject getJSONObject() {
         JSONObject json = new JSONObject();
         json.put("version", version);

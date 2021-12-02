@@ -33,7 +33,8 @@ public final class GetShufflingParticipants extends APIServlet.APIRequestHandler
         super(new APITag[]{APITag.SHUFFLING}, "shuffling");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
         long shufflingId = ParameterParser.getUnsignedLong(req, "shuffling", true);
         JSONObject response = new JSONObject();

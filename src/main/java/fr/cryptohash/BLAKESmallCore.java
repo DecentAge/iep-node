@@ -134,10 +134,10 @@ abstract class BLAKESmallCore extends DigestEngine {
 		int tl = t0 + bitLen;
 		tmpBuf[ptr] = (byte)0x80;
 		if (ptr == 0) {
-			t0 = (int)0xFFFFFE00;
-			t1 = (int)0xFFFFFFFF;
+			t0 = 0xFFFFFE00;
+			t1 = 0xFFFFFFFF;
 		} else if (t0 == 0) {
-			t0 = (int)0xFFFFFE00 + bitLen;
+			t0 = 0xFFFFFE00 + bitLen;
 			t1 --;
 		} else {
 			t0 -= 512 - bitLen;
@@ -154,8 +154,8 @@ abstract class BLAKESmallCore extends DigestEngine {
 			for (int i = ptr + 1; i < 64; i ++)
 				tmpBuf[i] = 0;
 			update(tmpBuf, ptr, 64 - ptr);
-			t0 = (int)0xFFFFFE00;
-			t1 = (int)0xFFFFFFFF;
+			t0 = 0xFFFFFE00;
+			t1 = 0xFFFFFFFF;
 			for (int i = 0; i < 56; i ++)
 				tmpBuf[i] = 0x00;
 			if (getDigestLength() == 32)
@@ -244,14 +244,14 @@ abstract class BLAKESmallCore extends DigestEngine {
 		int v5 = h5;
 		int v6 = h6;
 		int v7 = h7;
-		int v8 = s0 ^ (int)0x243F6A88;
-		int v9 = s1 ^ (int)0x85A308D3;
-		int vA = s2 ^ (int)0x13198A2E;
-		int vB = s3 ^ (int)0x03707344;
-		int vC = t0 ^ (int)0xA4093822;
-		int vD = t0 ^ (int)0x299F31D0;
-		int vE = t1 ^ (int)0x082EFA98;
-		int vF = t1 ^ (int)0xEC4E6C89;
+		int v8 = s0 ^ 0x243F6A88;
+		int v9 = s1 ^ 0x85A308D3;
+		int vA = s2 ^ 0x13198A2E;
+		int vB = s3 ^ 0x03707344;
+		int vC = t0 ^ 0xA4093822;
+		int vD = t0 ^ 0x299F31D0;
+		int vE = t1 ^ 0x082EFA98;
+		int vF = t1 ^ 0xEC4E6C89;
 		int[] m = tmpM;
 		for (int i = 0; i < 16; i ++)
 			m[i] = decodeBEInt(data, 4 * i);

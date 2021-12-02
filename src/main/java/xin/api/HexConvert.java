@@ -31,7 +31,8 @@ public final class HexConvert extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.UTILS}, "string");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) {
         String string = Convert.emptyToNull(req.getParameter("string"));
         if (string == null) {

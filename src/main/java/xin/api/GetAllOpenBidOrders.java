@@ -32,7 +32,8 @@ public final class GetAllOpenBidOrders extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.AE}, "firstIndex", "lastIndex");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) {
 
         JSONObject response = new JSONObject();

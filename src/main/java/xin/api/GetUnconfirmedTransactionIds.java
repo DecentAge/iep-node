@@ -36,7 +36,8 @@ public final class GetUnconfirmedTransactionIds extends APIServlet.APIRequestHan
         super(new APITag[]{APITag.TRANSACTIONS, APITag.ACCOUNTS}, "account", "account", "account");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
 
         Set<Long> accountIds = Convert.toSet(ParameterParser.getAccountIds(req, false));

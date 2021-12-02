@@ -58,6 +58,7 @@ import javax.servlet.http.HttpServletRequest;
  * <li>HTTP-OK    - Log HTTP 200 responses.</li>
  * </ul>
  */
+@SuppressWarnings("unchecked")
 public class SetLogging extends APIServlet.APIRequestHandler {
 
     /**

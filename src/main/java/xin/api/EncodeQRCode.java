@@ -85,7 +85,8 @@ public final class EncodeQRCode extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.UTILS}, "qrCodeData", "width", "height");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest request)
             throws XinException {
 

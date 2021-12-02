@@ -33,7 +33,8 @@ public final class ParseTransaction extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.TRANSACTIONS}, "transactionJSON", "transactionBytes", "prunableAttachmentJSON");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
 
         String transactionBytes = Convert.emptyToNull(req.getParameter("transactionBytes"));

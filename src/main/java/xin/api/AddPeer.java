@@ -36,7 +36,8 @@ public class AddPeer extends APIRequestHandler {
         super(new APITag[]{APITag.NETWORK}, "peer");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest request)
             throws XinException {
         String peerAddress = Convert.emptyToNull(request.getParameter("peer"));

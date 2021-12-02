@@ -38,7 +38,8 @@ public final class SendMoneyEscrow extends CreateTransaction {
                 "signers");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
         Account sender = ParameterParser.getSenderAccount(req);
         Long recipient = ParameterParser.getAccountId(req, "recipient", true);

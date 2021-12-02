@@ -33,7 +33,8 @@ public final class GetCurrencies extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.MS}, "currencies", "currencies", "currencies", "includeCounts"); // limit to 3 for testing
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
         long[] currencyIds = ParameterParser.getUnsignedLongs(req, "currencies");
         boolean includeCounts = "true".equalsIgnoreCase(req.getParameter("includeCounts"));

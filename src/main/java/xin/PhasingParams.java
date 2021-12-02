@@ -18,11 +18,12 @@ package xin;
 
 import xin.XinException.ValidationException;
 import xin.util.Convert;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import java.nio.ByteBuffer;
 import java.util.Arrays;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 /**
  * Class for handling phasing parameters shared between {@link Appendix.Phasing} and {@link AccountRestrictions.PhasingOnly}
@@ -94,7 +95,8 @@ public final class PhasingParams {
         buffer.put(voteWeighting.getMinBalanceModel().getCode());
     }
 
-    void putMyJSON(JSONObject json) {
+    @SuppressWarnings("unchecked")
+	void putMyJSON(JSONObject json) {
         json.put("phasingQuorum", quorum);
         json.put("phasingMinBalance", voteWeighting.getMinBalance());
         json.put("phasingVotingModel", voteWeighting.getVotingModel().getCode());

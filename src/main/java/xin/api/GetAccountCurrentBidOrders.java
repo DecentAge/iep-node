@@ -32,7 +32,8 @@ public final class GetAccountCurrentBidOrders extends APIServlet.APIRequestHandl
         super(new APITag[]{APITag.ACCOUNTS, APITag.AE}, "account", "asset", "firstIndex", "lastIndex");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
 
         long accountId = ParameterParser.getAccountId(req, true);

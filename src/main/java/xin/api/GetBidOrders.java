@@ -35,7 +35,8 @@ public final class GetBidOrders extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.AE}, "asset", "firstIndex", "lastIndex", "showExpectedCancellations");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
 
         long assetId = ParameterParser.getUnsignedLong(req, "asset", true);

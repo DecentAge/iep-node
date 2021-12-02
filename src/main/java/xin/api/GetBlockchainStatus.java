@@ -32,7 +32,8 @@ public final class GetBlockchainStatus extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.BLOCKS, APITag.INFO});
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONObject processRequest(HttpServletRequest req) {
         JSONObject response = new JSONObject();
         response.put("application", Xin.APPLICATION);
