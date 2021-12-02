@@ -1005,7 +1005,7 @@ public final class JSONData {
             }
         }
         if (!attachmentJSON.isEmpty()) {
-            for (Map.Entry entry : (Iterable<Map.Entry>) attachmentJSON.entrySet()) {
+            for (@SuppressWarnings("rawtypes") Map.Entry entry : (Iterable<Map.Entry>) attachmentJSON.entrySet()) {
                 if (entry.getValue() instanceof Long) {
                     entry.setValue(String.valueOf(entry.getValue()));
                 }

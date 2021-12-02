@@ -38,7 +38,8 @@ public final class DecryptFrom extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.MESSAGES}, "account", "data", "nonce", "decryptedMessageIsText", "uncompressDecryptedMessage", "secretPhrase");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
 
         byte[] publicKey = Account.getPublicKey(ParameterParser.getAccountId(req, true));

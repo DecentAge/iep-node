@@ -32,7 +32,8 @@ public final class GetAssignedShufflings extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.SHUFFLING}, "account", "includeHoldingInfo", "firstIndex", "lastIndex");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
 
         long accountId = ParameterParser.getAccountId(req, "account", true);

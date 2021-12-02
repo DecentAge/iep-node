@@ -32,7 +32,8 @@ public final class GetGuaranteedBalance extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.ACCOUNTS, APITag.FORGING}, "account", "numberOfConfirmations");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
 
         Account account = ParameterParser.getAccount(req);

@@ -112,7 +112,7 @@ public class Fugue384 extends FugueCore {
 				| ((buf[off + 2] & 0xFF) << 8)
 				| (buf[off + 3] & 0xFF);
 			off += 4;
-			/* fall through */
+			//$FALL-THROUGH$
 		case 2:
 			S[34] ^= S[18];
 			S[18] = w;
@@ -149,7 +149,7 @@ public class Fugue384 extends FugueCore {
 				| ((buf[off + 2] & 0xFF) << 8)
 				| (buf[off + 3] & 0xFF);
 			off += 4;
-			/* fall through */
+			//$FALL-THROUGH$ 
 		case 3:
 			S[25] ^= S[ 9];
 			S[ 9] = w;
@@ -186,6 +186,7 @@ public class Fugue384 extends FugueCore {
 				| ((buf[off + 2] & 0xFF) << 8)
 				| (buf[off + 3] & 0xFF);
 			off += 4;
+			//$FALL-THROUGH$ 
 		}
 		for (;;) {
 			/* ================ */

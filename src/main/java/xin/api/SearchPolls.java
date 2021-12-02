@@ -33,7 +33,8 @@ public final class SearchPolls extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.VS, APITag.SEARCH}, "query", "firstIndex", "lastIndex", "includeFinished");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
         String query = Convert.nullToEmpty(req.getParameter("query"));
         if (query.isEmpty()) {

@@ -34,7 +34,8 @@ public final class GetReferencingTransactions extends APIServlet.APIRequestHandl
         super(new APITag[]{APITag.TRANSACTIONS}, "transaction", "firstIndex", "lastIndex");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
 
         long transactionId = ParameterParser.getUnsignedLong(req, "transaction", true);

@@ -61,7 +61,8 @@ public final class GetLog extends APIServlet.APIRequestHandler {
      * @param req API request
      * @return API response
      */
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) {
         //
         // Get the number of log messages to return

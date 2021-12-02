@@ -33,7 +33,8 @@ public class GetLinkedPhasedTransactions extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.PHASING}, "linkedFullHash");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
         byte[] linkedFullHash = ParameterParser.getBytes(req, "linkedFullHash", true);
 

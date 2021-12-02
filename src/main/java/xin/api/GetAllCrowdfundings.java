@@ -35,7 +35,8 @@ public final class GetAllCrowdfundings extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.CF}, "firstIndex", "lastIndex", "includeCounts", "account", "includeAmounts");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
 
         int firstIndex = ParameterParser.getFirstIndex(req);

@@ -33,7 +33,8 @@ public final class GetAliases extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.ALIASES}, "timestamp", "account", "firstIndex", "lastIndex");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
         final int timestamp = ParameterParser.getTimestamp(req);
         final long accountId = ParameterParser.getAccountId(req, true);

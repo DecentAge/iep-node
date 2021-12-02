@@ -34,7 +34,8 @@ public final class GetAllAssets extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.AE}, "firstIndex", "lastIndex", "includeCounts");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) {
 
         int firstIndex = ParameterParser.getFirstIndex(req);

@@ -41,7 +41,8 @@ public class ProxyPoloniex extends APIServlet.APIRequestHandler {
 
     private ProxyPoloniexClient btcPoloniexClient;
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest request) throws XinException {
         if (!isProxyAvailable()) {
             throw new XinException.XinProxyServiceException("Poloniex proxy not available");
@@ -50,7 +51,6 @@ public class ProxyPoloniex extends APIServlet.APIRequestHandler {
         if (StringUtils.isEmpty(command)) {
             throw new XinException.NotValidException("command parameter cannot be empty for accessing proxy");
         }
-        Map<String, String[]> requestParams = request.getParameterMap();
         JSONObject jsonObject;
         switch (command) {
             case COMMAND_POLONIEX_TICKER:

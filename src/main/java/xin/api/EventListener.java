@@ -666,7 +666,8 @@ class EventListener implements Runnable, AsyncListener, TransactionalDb.Transact
          * @throws EventListenerException Invalid event
          */
         public XinEventListener(EventRegistration eventRegistration) throws EventListenerException {
-            Enum<? extends Enum> event = eventRegistration.getEvent();
+            @SuppressWarnings("rawtypes")
+			Enum<? extends Enum> event = eventRegistration.getEvent();
             if (event instanceof Peers.Event) {
                 eventHandler = new PeerEventHandler(eventRegistration);
             } else if (event instanceof BlockchainProcessor.Event) {
@@ -685,7 +686,8 @@ class EventListener implements Runnable, AsyncListener, TransactionalDb.Transact
          *
          * @return Xin event
          */
-        public Enum<? extends Enum> getEvent() {
+        @SuppressWarnings("rawtypes")
+		public Enum<? extends Enum> getEvent() {
             return eventHandler.getEvent();
         }
 
@@ -752,7 +754,8 @@ class EventListener implements Runnable, AsyncListener, TransactionalDb.Transact
             /**
              * Xin listener event
              */
-            protected final Enum<? extends Enum> event;
+            @SuppressWarnings("rawtypes")
+			protected final Enum<? extends Enum> event;
 
             /**
              * Create the Xin event handler
@@ -770,7 +773,8 @@ class EventListener implements Runnable, AsyncListener, TransactionalDb.Transact
              *
              * @return Xin event
              */
-            public Enum<? extends Enum> getEvent() {
+            @SuppressWarnings("rawtypes")
+			public Enum<? extends Enum> getEvent() {
                 return event;
             }
 
@@ -1037,7 +1041,8 @@ class EventListener implements Runnable, AsyncListener, TransactionalDb.Transact
         /**
          * Xin listener event
          */
-        private final Enum<? extends Enum> event;
+        @SuppressWarnings("rawtypes")
+		private final Enum<? extends Enum> event;
 
         /**
          * Account identifier
@@ -1050,7 +1055,7 @@ class EventListener implements Runnable, AsyncListener, TransactionalDb.Transact
          * @param event     Xin listener event
          * @param accountId Account identifier
          */
-        EventRegistration(Enum<? extends Enum> event, long accountId) {
+        EventRegistration(@SuppressWarnings("rawtypes") Enum<? extends Enum> event, long accountId) {
             this.event = event;
             this.accountId = accountId;
         }
@@ -1060,7 +1065,8 @@ class EventListener implements Runnable, AsyncListener, TransactionalDb.Transact
          *
          * @return Xin listener event
          */
-        public Enum<? extends Enum> getEvent() {
+        @SuppressWarnings("rawtypes")
+		public Enum<? extends Enum> getEvent() {
             return event;
         }
 

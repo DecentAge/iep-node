@@ -65,7 +65,8 @@ public final class DecodeQRCode extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.UTILS}, "qrCodeBase64");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest request)
             throws XinException {
 
@@ -81,7 +82,8 @@ public final class DecodeQRCode extends APIServlet.APIRequestHandler {
                     ))
             );
 
-            Map hints = new HashMap();
+            @SuppressWarnings("rawtypes")
+			Map hints = new HashMap();
             hints.put(DecodeHintType.POSSIBLE_FORMATS, EnumSet.of(BarcodeFormat.QR_CODE));
             hints.put(DecodeHintType.CHARACTER_SET, "UTF-8");
 

@@ -31,7 +31,8 @@ public final class GetPhasingPolls extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.PHASING}, "transaction", "transaction", "transaction", "countVotes"); // limit to 3 for testing
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
         long[] transactionIds = ParameterParser.getUnsignedLongs(req, "transaction");
         boolean countVotes = "true".equalsIgnoreCase(req.getParameter("countVotes"));

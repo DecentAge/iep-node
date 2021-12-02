@@ -34,7 +34,8 @@ public final class GetCurrencyFounders extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.MS}, "currency", "account", "firstIndex", "lastIndex");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
         long currencyId = ParameterParser.getUnsignedLong(req, "currency", false);
         long accountId = ParameterParser.getAccountId(req, false);

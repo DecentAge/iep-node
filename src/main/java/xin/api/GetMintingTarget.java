@@ -44,7 +44,8 @@ public final class GetMintingTarget extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.MS}, "currency", "account", "units");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
         Currency currency = ParameterParser.getCurrency(req);
         JSONObject json = new JSONObject();

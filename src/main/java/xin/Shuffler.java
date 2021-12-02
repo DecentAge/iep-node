@@ -277,7 +277,7 @@ public final class Shuffler {
     }
 
     private static void clearExpiration(Shuffling shuffling) {
-        for (Set shufflingIds : expirations.values()) {
+        for (Set<String> shufflingIds : expirations.values()) {
             if (shufflingIds.remove(shuffling.getId())) {
                 return;
             }

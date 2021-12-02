@@ -35,7 +35,8 @@ public class GetAssetDividends extends APIServlet.APIRequestHandler {
         super(new APITag[] {APITag.AE}, "asset", "firstIndex", "lastIndex", "timestamp");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException{
 
         long assetId = ParameterParser.getUnsignedLong(req, "asset", false);

@@ -121,7 +121,7 @@ public class Fugue512 extends FugueCore {
 				| ((buf[off + 2] & 0xFF) << 8)
 				| (buf[off + 3] & 0xFF);
 			off += 4;
-			/* fall through */
+			//$FALL-THROUGH$
 		case 2:
 			S[34] ^= S[12];
 			S[12] = w;

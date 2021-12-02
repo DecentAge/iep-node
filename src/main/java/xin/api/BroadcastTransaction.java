@@ -53,7 +53,8 @@ public final class BroadcastTransaction extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.TRANSACTIONS}, "transactionJSON", "transactionBytes", "prunableAttachmentJSON");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
 
         String transactionJSON = Convert.emptyToNull(req.getParameter("transactionJSON"));

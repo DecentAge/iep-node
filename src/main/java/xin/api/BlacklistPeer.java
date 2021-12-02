@@ -36,7 +36,8 @@ public class BlacklistPeer extends APIRequestHandler {
         super(new APITag[]{APITag.NETWORK}, "peer");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest request)
             throws XinException {
         JSONObject response = new JSONObject();

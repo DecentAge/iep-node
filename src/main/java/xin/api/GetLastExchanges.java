@@ -32,7 +32,8 @@ public final class GetLastExchanges extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.MS}, "currencies", "currencies", "currencies"); // limit to 3 for testing
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
         long[] currencyIds = ParameterParser.getUnsignedLongs(req, "currencies");
         JSONArray exchangesJSON = new JSONArray();

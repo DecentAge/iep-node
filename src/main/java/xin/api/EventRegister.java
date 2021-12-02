@@ -142,7 +142,8 @@ public class EventRegister extends APIServlet.APIRequestHandler {
                 //
                 // Add the event
                 //
-                List<? extends Enum> eventList;
+                @SuppressWarnings("rawtypes")
+				List<? extends Enum> eventList;
                 switch (parts[0]) {
                     case "Block":
                         eventList = EventListener.blockEvents;
@@ -160,7 +161,7 @@ public class EventRegister extends APIServlet.APIRequestHandler {
                         return unknownEvent;
                 }
                 boolean eventAdded = false;
-                for (Enum<? extends Enum> event : eventList) {
+                for (@SuppressWarnings("rawtypes") Enum<? extends Enum> event : eventList) {
                     if (event.name().equals(parts[1])) {
                         events.add(new EventRegistration(event, accountId));
                         eventAdded = true;

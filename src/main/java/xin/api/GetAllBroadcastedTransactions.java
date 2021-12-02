@@ -32,7 +32,8 @@ public final class GetAllBroadcastedTransactions extends APIServlet.APIRequestHa
         super(new APITag[]{APITag.DEBUG});
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) {
         JSONObject response = new JSONObject();
         JSONArray jsonArray = new JSONArray();

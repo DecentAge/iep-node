@@ -33,7 +33,8 @@ public final class GetSellOffers extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.MS}, "currency", "account", "availableOnly", "firstIndex", "lastIndex");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
 
         long currencyId = ParameterParser.getUnsignedLong(req, "currency", false);

@@ -35,7 +35,8 @@ public final class GetExchangesByExchangeRequest extends APIServlet.APIRequestHa
         super(new APITag[]{APITag.MS}, "transaction", "includeCurrencyInfo");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) {
         String transactionIdString = Convert.emptyToNull(req.getParameter("transaction"));
         if (transactionIdString == null) {

@@ -33,7 +33,8 @@ public final class GetExpectedAssetTransfers extends APIServlet.APIRequestHandle
         super(new APITag[]{APITag.AE}, "asset", "account", "includeAssetInfo");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
 
         long assetId = ParameterParser.getUnsignedLong(req, "asset", false);

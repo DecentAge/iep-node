@@ -38,7 +38,8 @@ public class StorageRethinkDBPing extends APIServlet.APIRequestHandler {
     private static final Boolean STORAGE_SUPPORTED = Xin.getBooleanProperty("xin.storage.rethinkdb.enable");
     private static final String COMMAND_PING = "dbPing";
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest request) throws XinException {
 
         if (!isStorageAvailable()) {
@@ -48,7 +49,6 @@ public class StorageRethinkDBPing extends APIServlet.APIRequestHandler {
         if (StringUtils.isEmpty(command)) {
             throw new XinException.NotValidException("command parameter cannot be empty for accessing proxy");
         }
-        Map<String, String[]> requestParams = request.getParameterMap();
         JSONObject jsonObject;
         switch (command) {
             case COMMAND_PING:

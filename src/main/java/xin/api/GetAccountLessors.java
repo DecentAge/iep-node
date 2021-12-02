@@ -35,7 +35,8 @@ public final class GetAccountLessors extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.ACCOUNTS}, "account", "height");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
 
         Account account = ParameterParser.getAccount(req);

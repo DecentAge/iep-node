@@ -34,7 +34,8 @@ public final class GetAssetDeletes extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.AE}, "asset", "account", "firstIndex", "lastIndex", "timestamp", "includeAssetInfo");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
 
         long assetId = ParameterParser.getUnsignedLong(req, "asset", false);

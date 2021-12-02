@@ -31,7 +31,8 @@ public final class GetAliasCount extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.ALIASES}, "account");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
         final long accountId = ParameterParser.getAccountId(req, true);
         JSONObject response = new JSONObject();

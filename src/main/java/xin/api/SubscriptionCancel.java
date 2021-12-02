@@ -35,6 +35,7 @@ public final class SubscriptionCancel extends CreateTransaction {
 			  "subscription");
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
 		Account sender = ParameterParser.getSenderAccount(req);

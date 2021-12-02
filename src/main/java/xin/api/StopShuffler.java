@@ -33,7 +33,8 @@ public final class StopShuffler extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.SHUFFLING}, "account", "shufflingFullHash", "secretPhrase", "adminPassword");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
         String secretPhrase = ParameterParser.getSecretPhrase(req, false);
         byte[] shufflingFullHash = ParameterParser.getBytes(req, "shufflingFullHash", false);

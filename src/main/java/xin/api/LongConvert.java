@@ -32,7 +32,8 @@ public final class LongConvert extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.UTILS}, "id");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) {
         String id = Convert.emptyToNull(req.getParameter("id"));
         if (id == null) {

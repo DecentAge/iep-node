@@ -41,7 +41,8 @@ public final class GetPeerState extends APIServlet.APIRequestHandler {
     ThreadMXBean threadMXBean = java.lang.management.ManagementFactory.getThreadMXBean();
     RuntimeMXBean runtimeMXBean = java.lang.management.ManagementFactory.getRuntimeMXBean();
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) {
 
         JSONObject response = GetBlockchainStatus.instance.processRequest(req);

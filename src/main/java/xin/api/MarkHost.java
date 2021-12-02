@@ -35,7 +35,8 @@ public final class MarkHost extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.TOKENS}, "secretPhrase", "host", "weight", "date");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
     	if (!API.isAllowedLocalhost(req.getRemoteHost())) {
     		return INCORRECT_HOST;

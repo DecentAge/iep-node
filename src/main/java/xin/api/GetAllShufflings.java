@@ -33,7 +33,8 @@ public final class GetAllShufflings extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.SHUFFLING}, "includeFinished", "includeHoldingInfo", "finishedOnly", "firstIndex", "lastIndex");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) {
 
         boolean includeFinished = "true".equalsIgnoreCase(req.getParameter("includeFinished"));

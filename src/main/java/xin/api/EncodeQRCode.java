@@ -98,7 +98,7 @@ public final class EncodeQRCode extends APIServlet.APIRequestHandler {
         int height = ParameterParser.getInt(request, "height", 0, 5000, false);
 
         try {
-            Map hints = new HashMap();
+            Map<EncodeHintType, Object> hints = new HashMap<>();
             // Error correction level: L (7%), M (15%), Q (25%), H (30%) -- Default L.
             hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.M);
             hints.put(EncodeHintType.MARGIN, 0); // Default 4

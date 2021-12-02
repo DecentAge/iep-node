@@ -33,7 +33,7 @@ public class RethinkDbUtil {
         RethinkDatabase database = new RethinkDatabase();
         Connection connection = database.getDBConnection();
         Table table = database.getTable("rethinkdb", "stats");
-        Cursor cursor = table.run(connection);
+        Cursor<?> cursor = table.run(connection);
         String json = gson.toJson(cursor.next());
         jsonObject.put("stats", gson.fromJson(json, JSONObject.class));
         return jsonObject;

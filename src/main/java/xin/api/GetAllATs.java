@@ -36,7 +36,8 @@ public final class GetAllATs extends APIServlet.APIRequestHandler {
         super(new APITag[] {APITag.AT});
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) {
 
         JSONArray ats = new JSONArray();

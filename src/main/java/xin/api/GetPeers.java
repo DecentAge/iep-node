@@ -34,7 +34,8 @@ public final class GetPeers extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.NETWORK}, "active", "state", "service", "service", "service", "includePeerInfo");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) {
 
         boolean active = "true".equalsIgnoreCase(req.getParameter("active"));

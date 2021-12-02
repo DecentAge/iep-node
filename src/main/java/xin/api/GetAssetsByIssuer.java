@@ -32,7 +32,8 @@ public final class GetAssetsByIssuer extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.AE, APITag.ACCOUNTS}, "account", "account", "account", "firstIndex", "lastIndex", "includeCounts");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
         long[] accountIds = ParameterParser.getAccountIds(req, true);
         int firstIndex = ParameterParser.getFirstIndex(req);

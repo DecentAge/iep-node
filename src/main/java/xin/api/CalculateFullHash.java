@@ -36,7 +36,8 @@ public final class CalculateFullHash extends APIServlet.APIRequestHandler {
         super(new APITag[]{APITag.TRANSACTIONS}, "unsignedTransactionBytes", "unsignedTransactionJSON", "signatureHash");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
 
         String unsignedBytesString = Convert.emptyToNull(req.getParameter("unsignedTransactionBytes"));
