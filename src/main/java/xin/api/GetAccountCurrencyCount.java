@@ -33,7 +33,7 @@ public final class GetAccountCurrencyCount extends APIServlet.APIRequestHandler 
 
     @Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
-
+    	//Comment
         long accountId = ParameterParser.getAccountId(req, true);
         int height = ParameterParser.getHeight(req);
 
