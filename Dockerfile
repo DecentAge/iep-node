@@ -24,7 +24,7 @@ RUN apt-get update \
 COPY --from=gradle-builder /iep-node/build/distributions/iep-node.zip /iep-node.zip
 COPY --from=gradle-builder /iep-node/conf/templates/docker.properties /templates/docker.properties
 RUN set -o errexit -o nounset && unzip -q /iep-node.zip -d /
-RUN rm -rf /iep-node.zip
+#RUN rm -rf /iep-node.zip
 COPY --from=gradle-builder /iep-node/docker-entrypoint.sh /iep-node/docker-entrypoint.sh
 COPY --from=gradle-builder /iep-node/scripts /iep-node/scripts
 COPY --from=gradle-builder /iep-node/wait-for-it.sh /iep-node/wait-for-it.sh
