@@ -31,7 +31,7 @@ prepare-iep-node-artifacts:
   needs: ["docker-build"]
   script:
       - mkdir -p iep-node-artifacts/build
-#      - cp build/iep-node.zip iep-node-artifacts/build
+      - cp build/iep-node.zip iep-node-artifacts/build
       - mkdir -p iep-node-artifacts/src/main/resources
       - cp src/main/resources/system.properties iep-node-artifacts/src/main/resources
       - cp src/main/resources/log4j2.xml iep-node-artifacts/src/main/resources
