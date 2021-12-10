@@ -10,14 +10,11 @@ if [ -z "${MY_HALLMARK}" ]; then
 else
 	export ENABLE_HALLMARK_PROTECTION=true
 fi
-cat /iep-node/conf/custom.properties
+
 
 export NETWORK_ENVIRONMENT=${NETWORK_ENVIRONMENT:-mainnet}
 export NUMBER_OF_FORK_CONFIRMATIONS=${NUMBER_OF_FORK_CONFIRMATIONS:-2}
 export INIT_TESTNET=${INIT_TESTNET:-false}
-
-echo "NETWORK_ENVIRONMENT=${NETWORK_ENVIRONMENT}"
-echo "NUMBER_OF_FORK_CONFIRMATIONS=${NUMBER_OF_FORK_CONFIRMATIONS}"
 
 echo "Removing existing node config /iep-node/conf/custom.properties"
 rm -f /iep-node/conf/custom.properties

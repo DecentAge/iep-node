@@ -20,7 +20,7 @@ import java.nio.file.Paths;
 
 public class UnixUserDirProvider extends DesktopUserDirProvider {
 
-    private static final String XIN_USER_HOME = Paths.get(System.getProperty("user.home"), ".xin").toString();
+    private static final String XIN_USER_HOME = Paths.get(System.getProperty("user.home"), ".iep").toString();
 
     @Override
     public String getUserHomeDir() {

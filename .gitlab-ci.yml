@@ -24,8 +24,8 @@ docker-build:
       - ls -alt
   artifacts:
     paths:
+      - build/iep-node.tar
       - build/iep-node.zip
-
 prepare-iep-node-artifacts:
   stage: publish
   needs: ["docker-build"]

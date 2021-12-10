@@ -21,7 +21,7 @@ import java.nio.file.Paths;
 public class WindowsUserDirProvider extends DesktopUserDirProvider {
 
     //private static final String XIN_USER_HOME = Paths.get(System.getProperty("user.home"), "AppData", "Roaming", "XIN").toString();
-	private static final String XIN_USER_HOME = Paths.get(System.getProperty("user.home"), ".xin").toString();
+	private static final String XIN_USER_HOME = Paths.get(System.getProperty("user.home"), ".iep").toString();
 	
     @Override
     public String getUserHomeDir() {
