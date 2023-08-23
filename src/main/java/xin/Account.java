@@ -1258,8 +1258,7 @@ public final class Account {
 
             if (this.publicKey == null || this.publicKey.publicKey == null || this.publicKey.height == 0 ||
                     height - this.publicKey.height <= 1440) {
-                // Logger.logMessage(  "Accounts with the public key revealed less than 1440 blocks ago are not
-                // allowed to generate blocks" );
+                Logger.logMessage("Accounts with the public key revealed less than 1440 blocks ago are not allowed to generate blocks");
                 return 0;
             }
         }
