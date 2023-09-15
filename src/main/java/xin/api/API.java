@@ -351,7 +351,7 @@ public final class API {
     
     static boolean isAllowedLocalhost(String remoteHost) {
     	
-        if (API.allowedBotLocalhosts == null || API.allowedBotLocalhosts.contains("*") || API.allowedBotLocalhosts.contains(remoteHost)) {
+        if (API.allowedBotLocalhosts == null || API.allowedBotLocalhosts.contains(remoteHost)) {
             return true;
         }
         try {
