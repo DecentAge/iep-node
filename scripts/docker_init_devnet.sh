@@ -3,7 +3,7 @@ set -eou pipefail
 source /iep-node/scripts/docker_utils.sh
 init_base64_secret "FORGING_ACCOUNT_PASSPHRASE"
 
-if [ "${INIT_TESTNET}" == "true" ]; then
+if [ "${INIT_DEVNET}" == "true" ]; then
 
 	init_base64_secret "GENESIS_FUNDS_ACCOUNT_PASSPHRASE"
 	init_base64_secret "CASH_ACCOUNT_PASSPHRASE"
@@ -50,7 +50,7 @@ if [ "${INIT_TESTNET}" == "true" ]; then
 		-H "Accept: application/json" \
 		--data "requestType=sendMoney" \
 		--data "amountTQT=100000000000000000" \
-		--data "recipient=XIN-WDYP-H647-KPNR-BWWRK" \
+		--data "recipient=XIN-96NR-MYTX-7PGD-3D8SE" \
 		--data-urlencode "secretPhrase=${GENESIS_FUNDS_ACCOUNT_PASSPHRASE}" \
 		--data "feeTQT=100000000" \
 		--data "deadline=80")
@@ -64,12 +64,12 @@ if [ "${INIT_TESTNET}" == "true" ]; then
 	if [ ! -z "${GENESIS_FUNDS_ACCOUNT_PASSPHRASE-}" ] && [ ! -z "${CASH_ACCOUNT_PASSPHRASE-}" ]; then
 
 		echo "Sending money from Genesis Funds Recipient Account to Cash Account"
-
+    echo ${GENESIS_FUNDS_ACCOUNT_PASSPHRASE}
 		sendMoneyResponse=$(curl --fail "http://localhost:${API_SERVER_PORT}/api" \
 		-H "Accept: application/json" \
 		--data "requestType=sendMoney" \
 		--data "amountTQT=200000000000000000" \
-		--data "recipient=XIN-5XVT-HNMR-NTFM-7MTFQ" \
+		--data "recipient=XIN-C28M-7S2E-E9X8-A9ZHF" \
 		--data-urlencode "secretPhrase=${GENESIS_FUNDS_ACCOUNT_PASSPHRASE}" \
 		--data "feeTQT=100000000" \
 		--data "deadline=80")

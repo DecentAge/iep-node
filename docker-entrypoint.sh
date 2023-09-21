@@ -14,7 +14,7 @@ fi
 
 export NETWORK_ENVIRONMENT=${NETWORK_ENVIRONMENT:-mainnet}
 export NUMBER_OF_FORK_CONFIRMATIONS=${NUMBER_OF_FORK_CONFIRMATIONS:-2}
-export INIT_TESTNET=${INIT_TESTNET:-false}
+export INIT_DEVNET=${INIT_DEVNET:-false}
 
 echo "Removing existing node config /iep-node/conf/custom.properties"
 rm -f /iep-node/conf/custom.properties
@@ -51,9 +51,11 @@ remove_secret "ADMIN_PASSWORD"
 init_when_ready() {
 	echo "Initializing network ${NETWORK_ENVIRONMENT}..."
 	if [ "${NETWORK_ENVIRONMENT}" == "testnet" ]; then
-		/iep-node/scripts/docker_init_testnet.sh
+		/iep-node/scripts/docker_init.sh
 	elif [ "${NETWORK_ENVIRONMENT}" == "mainnet" ]; then
-		/iep-node/scripts/docker_init_mainnet.sh
+		/iep-node/scripts/docker_init.sh
+	elif [ "${NETWORK_ENVIRONMENT}" == "devnet" ]; then
+    		/iep-node/scripts/docker_init_devnet.sh
 	fi
 	echo "Network ${NETWORK_ENVIRONMENT} has been initialized..."
 }
@@ -61,6 +63,6 @@ init_when_ready() {
 export -f init_when_ready
 
 # waits until the IEP iep-node API endpoint is ready to receive requests before calling initTestEnvironment
-(./wait-for-it.sh localhost:${API_SERVER_PORT} --timeout=60 -- bash -c "sleep 30; init_when_ready") &
+(./wait-for-it.sh localhost:${API_SERVER_PORT} --timeout=60 -- bash -c "sleep 30; init_when_ready") &> /iep-node/init_devnet.log &
 
 /iep-node/bin/iep-node
