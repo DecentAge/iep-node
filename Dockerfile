@@ -4,10 +4,10 @@ RUN apt-get update \
     && apt-get install --yes --no-install-recommends unzip
 
 
-RUN mkdir -p /iep-node/html/www/wallet
-COPY build/iep-wallet-ui/iep-wallet-ui.zip /iep-node/html/www/wallet
-RUN unzip -q  /iep-node/html/www/wallet/iep-wallet-ui.zip -d /iep-node/html/www/wallet
-RUN rm -rf /iep-node/html/www/wallet/iep-wallet-ui.zip
+#RUN mkdir -p /iep-node/html/www/wallet
+#COPY build/iep-wallet-ui/iep-wallet-ui.zip /iep-node/html/www/wallet
+#RUN unzip -q  /iep-node/html/www/wallet/iep-wallet-ui.zip -d /iep-node/html/www/wallet
+#RUN rm -rf /iep-node/html/www/wallet/iep-wallet-ui.zip
 
 COPY --chown=gradle:gradle . .
 RUN gradle DistZip --no-daemon
