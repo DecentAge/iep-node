@@ -29,7 +29,7 @@ COPY --from=gradle-builder /iep-node/docker-entrypoint.sh /iep-node/docker-entry
 COPY --from=gradle-builder /iep-node/scripts /iep-node/scripts
 COPY --from=gradle-builder /iep-node/wait-for-it.sh /iep-node/wait-for-it.sh
 RUN rm -rf conf/custom.properties conf/open_custom.properties conf/services
-COPY --from=node-builder /wallet-ui/dist /iep-node/html/www/wallet
+#COPY --from=node-builder /wallet-ui/dist /iep-node/html/www/wallet
 
 
 ENTRYPOINT ["/iep-node/docker-entrypoint.sh"]
