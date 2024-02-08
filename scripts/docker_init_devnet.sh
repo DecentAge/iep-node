@@ -23,9 +23,9 @@ if [ "${INIT_DEVNET}" == "true" ]; then
 	fi
 
 	if [ ! -z "${FORGING_ACCOUNT_PASSPHRASE-}" ] && [ ! -z "${MY_ADDRESS-}" ]; then
-	
+
 		echo "Mark node as hallmark using using the Forger Account: host=$MY_ADDRESS, weight=1.."
-	
+
 		markHostResponse=$(curl --fail "http://localhost:${API_SERVER_PORT}/api" \
 		-H "Accept: application/json" \
 		--data "requestType=markHost" \
@@ -38,7 +38,7 @@ if [ "${INIT_DEVNET}" == "true" ]; then
 		echo ""
 		echo "============================================================================================================================================="
 		echo markHostResponse=${markHostResponse}
-		echo "============================================================================================================================================="	
+		echo "============================================================================================================================================="
 		sleep 30;
 	fi
 	
@@ -109,7 +109,28 @@ if [ ! -z "${FORGING_ACCOUNT_PASSPHRASE-}" ] && [ "${START_FORGER}" == "true" ];
 	echo ""
 	echo "============================================================================================================================================="
 	echo startForgingResponse=${startForgingResponse}
-	echo "============================================================================================================================================="	
+	echo "============================================================================================================================================="
+
+	if [ ! -z "${MY_ADDRESS-}" ]; then
+
+  		echo "Mark node as hallmark using using the Forger Account: host=$MY_ADDRESS, weight=1.."
+
+  		markHostResponse=$(curl --fail "http://localhost:${API_SERVER_PORT}/api" \
+  		-H "Accept: application/json" \
+  		--data "requestType=markHost" \
+  		--data "host=${MY_ADDRESS}" \
+  		--data "weight=1" \
+  		--data "date=$(date +'%Y-%m-%d')" \
+  		--data-urlencode "secretPhrase=${FORGING_ACCOUNT_PASSPHRASE}" \
+  		--data "feeTQT=200000000" \
+  		--data "deadline=80")
+  		echo ""
+  		echo "============================================================================================================================================="
+  		echo markHostResponse=${markHostResponse}
+  		echo "============================================================================================================================================="
+  		sleep 30;
+  fi
+
 fi
 
 remove_secret "FORGING_ACCOUNT_PASSPHRASE"
