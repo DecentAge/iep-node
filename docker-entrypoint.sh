@@ -55,7 +55,7 @@ init_when_ready() {
 	elif [ "${NETWORK_ENVIRONMENT}" == "mainnet" ]; then
 		/iep-node/scripts/docker_init.sh
 	elif [ "${NETWORK_ENVIRONMENT}" == "devnet" ]; then
-    		/iep-node/scripts/docker_init_devnet.sh
+    /iep-node/scripts/docker_init_devnet.sh
 	fi
 	echo "Network ${NETWORK_ENVIRONMENT} has been initialized..."
 }
