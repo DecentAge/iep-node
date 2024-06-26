@@ -1,5 +1,6 @@
 include:
   - project: 'infinity-economics/iep-docker'
+    ref: ${CI_COMMIT_REF_NAME}
     file: '/gitlab/ci/docker-ci-cd.yml'
 
 download-artifacts:
