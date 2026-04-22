@@ -23,10 +23,10 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONStreamAware;
 import xin.XinException;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 public final class GetAllATs extends APIServlet.APIRequestHandler {
 

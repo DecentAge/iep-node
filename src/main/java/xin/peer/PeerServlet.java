@@ -22,15 +22,19 @@ import xin.util.CountingInputReader;
 import xin.util.CountingOutputWriter;
 import xin.util.JSON;
 import xin.util.Logger;
-import org.eclipse.jetty.websocket.servlet.*;
+import org.eclipse.jetty.websocket.server.JettyWebSocketServlet;
+import org.eclipse.jetty.websocket.server.JettyWebSocketServletFactory;
+import org.eclipse.jetty.websocket.server.JettyWebSocketCreator;
+import org.eclipse.jetty.websocket.server.JettyServerUpgradeRequest;
+import org.eclipse.jetty.websocket.server.JettyServerUpgradeResponse;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONStreamAware;
 import org.json.simple.JSONValue;
 import org.json.simple.parser.ParseException;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
@@ -40,7 +44,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class PeerServlet extends WebSocketServlet {
+public final class PeerServlet extends JettyWebSocketServlet {
 
     abstract static class PeerRequestHandler {
         abstract JSONStreamAware processRequest(JSONObject request, Peer peer);
@@ -128,9 +132,9 @@ public final class PeerServlet extends WebSocketServlet {
      * @param factory WebSocket factory
      */
     @Override
-    public void configure(WebSocketServletFactory factory) {
-        factory.getPolicy().setIdleTimeout(Peers.webSocketIdleTimeout);
-        factory.getPolicy().setMaxBinaryMessageSize(Peers.MAX_MESSAGE_SIZE);
+    public void configure(JettyWebSocketServletFactory factory) {
+        factory.setIdleTimeout(java.time.Duration.ofMillis(Peers.webSocketIdleTimeout));
+        factory.setMaxBinaryMessageSize(Peers.MAX_MESSAGE_SIZE);
         factory.setCreator(new PeerSocketCreator());
     }
 
@@ -288,7 +292,7 @@ public final class PeerServlet extends WebSocketServlet {
     /**
      * WebSocket creator for peer connections
      */
-    private class PeerSocketCreator implements WebSocketCreator {
+    private class PeerSocketCreator implements JettyWebSocketCreator {
         /**
          * Create a peer WebSocket
          *
@@ -297,7 +301,7 @@ public final class PeerServlet extends WebSocketServlet {
          * @return WebSocket
          */
         @Override
-        public Object createWebSocket(ServletUpgradeRequest req, ServletUpgradeResponse resp) {
+        public Object createWebSocket(JettyServerUpgradeRequest req, JettyServerUpgradeResponse resp) {
             return Peers.useWebSockets ? new PeerWebSocket(PeerServlet.this) : null;
         }
     }

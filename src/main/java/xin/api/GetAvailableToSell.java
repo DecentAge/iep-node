@@ -19,7 +19,7 @@ package xin.api;
 import xin.CurrencyExchangeOffer;
 import org.json.simple.JSONStreamAware;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 public final class GetAvailableToSell extends APIServlet.APIRequestHandler {
 

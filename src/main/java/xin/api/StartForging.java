@@ -20,7 +20,7 @@ import xin.Generator;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONStreamAware;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import static xin.api.JSONResponses.UNKNOWN_ACCOUNT;
 import static xin.api.JSONResponses.INCORRECT_HOST;

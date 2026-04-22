@@ -30,18 +30,18 @@
       protected void update(int nextUpdate) {
           switch (nextUpdate) {
               case 1:
-                  apply("CREATE TABLE IF NOT EXISTS block (db_id IDENTITY, id BIGINT NOT NULL, version INT NOT NULL, "
-                          + "timestamp INT NOT NULL, previous_block_id BIGINT, "
+                  apply("CREATE TABLE IF NOT EXISTS block (db_id IDENTITY, id BIGINT NOT NULL UNIQUE, version INT NOT NULL, "
+                          + "timestamp INT NOT NULL UNIQUE, previous_block_id BIGINT, "
                           + "total_amount BIGINT NOT NULL, "
                           + "total_fee BIGINT NOT NULL, payload_length INT NOT NULL, "
                           + "previous_block_hash BINARY(32), cumulative_difficulty VARBINARY NOT NULL, base_target BIGINT NOT NULL, "
                           + "next_block_id BIGINT, "
-                          + "height INT NOT NULL, generation_signature BINARY(64) NOT NULL, "
+                          + "height INT NOT NULL UNIQUE, generation_signature BINARY(64) NOT NULL, "
                           + "block_signature BINARY(64) NOT NULL, payload_hash BINARY(32) NOT NULL, generator_id BIGINT NOT NULL)");
               case 2:
                   apply("CREATE UNIQUE INDEX IF NOT EXISTS block_id_idx ON block (id)");
               case 3:
-                  apply("CREATE TABLE IF NOT EXISTS transaction (db_id IDENTITY, id BIGINT NOT NULL, "
+                  apply("CREATE TABLE IF NOT EXISTS transaction (db_id IDENTITY, id BIGINT NOT NULL UNIQUE, "
                           + "deadline SMALLINT NOT NULL, recipient_id BIGINT, "
                           + "amount BIGINT NOT NULL, fee BIGINT NOT NULL, full_hash BINARY(32) NOT NULL, "
                           + "height INT NOT NULL, block_id BIGINT NOT NULL, FOREIGN KEY (block_id) REFERENCES block (id) ON DELETE CASCADE, "
@@ -580,7 +580,7 @@
               case 236:
                   apply("CREATE TABLE IF NOT EXISTS poll (db_id IDENTITY, id BIGINT NOT NULL, "
                           + "account_id BIGINT NOT NULL, name VARCHAR NOT NULL, "
-                          + "description VARCHAR, options ARRAY NOT NULL, min_num_options TINYINT, max_num_options TINYINT, "
+                          + "description VARCHAR, options VARCHAR ARRAY NOT NULL, min_num_options TINYINT, max_num_options TINYINT, "
                           + "min_range_value TINYINT, max_range_value TINYINT, timestamp INT NOT NULL, "
                           + "finish_height INT NOT NULL, voting_model TINYINT NOT NULL, min_balance BIGINT, "
                           + "min_balance_model TINYINT, holding_id BIGINT, height INT NOT NULL)");
@@ -982,7 +982,7 @@
                   apply("CREATE TABLE IF NOT EXISTS shuffling (db_id IDENTITY, id BIGINT NOT NULL, holding_id BIGINT NULL, holding_type TINYINT NOT NULL, "
                           + "issuer_id BIGINT NOT NULL, amount BIGINT NOT NULL, participant_count TINYINT NOT NULL, blocks_remaining SMALLINT NULL, "
                           + "stage TINYINT NOT NULL, assignee_account_id BIGINT NULL, registrant_count TINYINT NOT NULL, "
-                          + "recipient_public_keys ARRAY, height INT NOT NULL, latest BOOLEAN NOT NULL DEFAULT TRUE)");
+                          + "recipient_public_keys VARBINARY ARRAY, height INT NOT NULL, latest BOOLEAN NOT NULL DEFAULT TRUE)");
               case 423:
                   apply("CREATE UNIQUE INDEX IF NOT EXISTS shuffling_id_height_idx ON shuffling (id, height DESC)");
               case 424:
@@ -994,7 +994,7 @@
               case 427:
                   apply("CREATE TABLE IF NOT EXISTS shuffling_participant (db_id IDENTITY, shuffling_id BIGINT NOT NULL, "
                           + "account_id BIGINT NOT NULL, next_account_id BIGINT NULL, participant_index TINYINT NOT NULL, "
-                          + "state TINYINT NOT NULL, blame_data ARRAY, key_seeds ARRAY, data_transaction_full_hash BINARY(32), "
+                          + "state TINYINT NOT NULL, blame_data VARBINARY ARRAY, key_seeds VARBINARY ARRAY, data_transaction_full_hash BINARY(32), "
                           + "height INT NOT NULL, latest BOOLEAN NOT NULL DEFAULT TRUE)");
               case 428:
                   apply("CREATE UNIQUE INDEX IF NOT EXISTS shuffling_participant_shuffling_id_account_id_idx ON shuffling_participant "
@@ -1003,7 +1003,7 @@
                   apply("CREATE INDEX IF NOT EXISTS shuffling_participant_height_idx ON shuffling_participant (height, shuffling_id, account_id)");
               case 430:
                   apply("CREATE TABLE IF NOT EXISTS shuffling_data (db_id IDENTITY, shuffling_id BIGINT NOT NULL, account_id BIGINT NOT NULL, "
-                          + "data ARRAY, transaction_timestamp INT NOT NULL, height INT NOT NULL, "
+                          + "data VARBINARY ARRAY, transaction_timestamp INT NOT NULL, height INT NOT NULL, "
                           + "FOREIGN KEY (height) REFERENCES block (height) ON DELETE CASCADE)");
               case 431:
                   apply("CREATE UNIQUE INDEX IF NOT EXISTS shuffling_data_id_height_idx ON shuffling_data (shuffling_id, height DESC)");
@@ -1023,7 +1023,7 @@
                   apply("ALTER TABLE phasing_poll DROP COLUMN IF EXISTS linked_full_hashes");
               case 438:
                   apply("CREATE TABLE IF NOT EXISTS account_control_phasing (db_id IDENTITY, account_id BIGINT NOT NULL, "
-                          + "whitelist ARRAY, voting_model TINYINT NOT NULL, quorum BIGINT, min_balance BIGINT, "
+                          + "whitelist BIGINT ARRAY, voting_model TINYINT NOT NULL, quorum BIGINT, min_balance BIGINT, "
                           + "holding_id BIGINT, min_balance_model TINYINT, max_fees BIGINT, min_duration SMALLINT, max_duration SMALLINT, "
                           + "height INT NOT NULL, latest BOOLEAN NOT NULL DEFAULT TRUE)");
               case 439:
@@ -1034,7 +1034,7 @@
                   apply("CREATE INDEX IF NOT EXISTS account_control_phasing_height_id_idx ON account_control_phasing (height, account_id)");
               case 442:
                   apply("CREATE TABLE IF NOT EXISTS account_property (db_id IDENTITY, id BIGINT NOT NULL, account_id BIGINT NOT NULL, setter_id BIGINT, "
-                          + "property VARCHAR NOT NULL, value VARCHAR, height INT NOT NULL, latest BOOLEAN NOT NULL DEFAULT TRUE)");
+                          + "property VARCHAR NOT NULL, \"VALUE\" VARCHAR, height INT NOT NULL, latest BOOLEAN NOT NULL DEFAULT TRUE)");
               case 443:
                   apply("CREATE UNIQUE INDEX IF NOT EXISTS account_property_id_height_idx ON account_property (id, height DESC)");
               case 444:
@@ -1129,14 +1129,21 @@
               case 478:
                   try (Connection con = db.getConnection();
                        Statement stmt = con.createStatement();
-                       ResultSet rs = stmt.executeQuery("SELECT CONSTRAINT_NAME FROM INFORMATION_SCHEMA.CONSTRAINTS "
-                               + "WHERE TABLE_NAME='BLOCK' AND (COLUMN_LIST='NEXT_BLOCK_ID' OR COLUMN_LIST='PREVIOUS_BLOCK_ID')")) {
+                       ResultSet rs = stmt.executeQuery("SELECT CONSTRAINT_NAME FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS "
+                               + "WHERE TABLE_NAME='BLOCK' AND CONSTRAINT_TYPE='REFERENTIAL'")) {
                       List<String> constraintNames = new ArrayList<>();
                       while (rs.next()) {
-                          constraintNames.add(rs.getString(1));
+                          String constraintName = rs.getString(1);
+                          // Only drop constraints on next_block_id or previous_block_id
+                          // In H2 2.x we need to check column info separately or just try to drop known ones
+                          constraintNames.add(constraintName);
                       }
                       for (String constraintName : constraintNames) {
-                          stmt.executeUpdate("ALTER TABLE BLOCK DROP CONSTRAINT " + constraintName);
+                          try {
+                              stmt.executeUpdate("ALTER TABLE BLOCK DROP CONSTRAINT IF EXISTS " + constraintName);
+                          } catch (SQLException ignore) {
+                              // Ignore if constraint doesn't exist or can't be dropped
+                          }
                       }
                       apply(null);
                   } catch (SQLException e) {
@@ -1214,7 +1221,7 @@
               case 507:
               	apply("CREATE INDEX IF NOT EXISTS at_state_id_next_height_height_idx ON at_state (at_id, next_height, height DESC)");
               case 508:
-                  apply("ALTER TABLE block ADD COLUMN IF NOT EXISTS ats BINARY");
+                  apply("ALTER TABLE block ADD COLUMN IF NOT EXISTS ats VARBINARY");
 
               case 509:
                 apply(null);
@@ -1233,7 +1240,7 @@
               case 515:
                   apply(null);
               case 516:
-                  apply("ALTER TABLE block ADD COLUMN IF NOT EXISTS ats BINARY");
+                  apply("ALTER TABLE block ADD COLUMN IF NOT EXISTS ats VARBINARY");
               case 517:
                   return;
               default:

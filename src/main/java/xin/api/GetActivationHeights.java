@@ -24,7 +24,7 @@ import org.json.simple.JSONStreamAware;
 import xin.*;
 import xin.db.DbIterator;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

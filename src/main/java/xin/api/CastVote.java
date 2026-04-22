@@ -20,7 +20,7 @@ import xin.*;
 import xin.util.Convert;
 import org.json.simple.JSONStreamAware;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import static xin.api.JSONResponses.INCORRECT_VOTE;
 import static xin.api.JSONResponses.POLL_FINISHED;

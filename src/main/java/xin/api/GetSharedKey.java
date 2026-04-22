@@ -25,7 +25,7 @@ import org.json.simple.JSONStreamAware;
 
 import static xin.api.JSONResponses.INCORRECT_HOST;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 public final class GetSharedKey extends APIServlet.APIRequestHandler {
 

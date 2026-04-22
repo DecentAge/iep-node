@@ -19,7 +19,7 @@ package xin.api;
 import xin.Alias;
 import org.json.simple.JSONStreamAware;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 public final class GetAlias extends APIServlet.APIRequestHandler {
 

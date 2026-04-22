@@ -19,7 +19,7 @@ package xin.api;
 import xin.peer.Hallmark;
 import org.json.simple.JSONStreamAware;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import static xin.api.JSONResponses.INCORRECT_HALLMARK;
 import static xin.api.JSONResponses.MISSING_HALLMARK;

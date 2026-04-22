@@ -23,7 +23,7 @@ import xin.util.Convert;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONStreamAware;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.security.MessageDigest;
 
 import static xin.api.JSONResponses.MISSING_SIGNATURE_HASH;
