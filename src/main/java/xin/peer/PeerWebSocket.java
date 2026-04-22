@@ -19,8 +19,8 @@ package xin.peer;
 import xin.util.Logger;
 import xin.util.QueuedThreadPool;
 import org.eclipse.jetty.websocket.api.Session;
-import org.eclipse.jetty.websocket.api.UpgradeException;
-import org.eclipse.jetty.websocket.api.WebSocketException;
+import org.eclipse.jetty.websocket.api.exceptions.UpgradeException;
+import org.eclipse.jetty.websocket.api.exceptions.WebSocketException;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
@@ -65,8 +65,8 @@ public class PeerWebSocket {
     static {
         try {
             peerClient = new WebSocketClient();
-            peerClient.getPolicy().setIdleTimeout(Peers.webSocketIdleTimeout);
-            peerClient.getPolicy().setMaxBinaryMessageSize(Peers.MAX_MESSAGE_SIZE);
+            peerClient.setIdleTimeout(java.time.Duration.ofMillis(Peers.webSocketIdleTimeout));
+            peerClient.setMaxBinaryMessageSize(Peers.MAX_MESSAGE_SIZE);
             peerClient.setConnectTimeout(Peers.connectTimeout);
             peerClient.start();
         } catch (Exception exc) {
@@ -204,7 +204,7 @@ public class PeerWebSocket {
         if ((Peers.communicationLoggingMask & Peers.LOGGING_MASK_200_RESPONSES) != 0) {
             Logger.logDebugMessage(String.format("%s WebSocket connection with %s completed",
                     peerServlet != null ? "Inbound" : "Outbound",
-                    session.getRemoteAddress().getHostString()));
+                    ((InetSocketAddress)session.getRemoteAddress()).getHostString()));
         }
     }
 
@@ -225,7 +225,7 @@ public class PeerWebSocket {
      */
     public InetSocketAddress getRemoteAddress() {
         Session s;
-        return ((s = session) != null && s.isOpen() ? s.getRemoteAddress() : null);
+        return ((s = session) != null && s.isOpen() ? (InetSocketAddress)s.getRemoteAddress() : null);
     }
 
     /**
@@ -394,7 +394,7 @@ public class PeerWebSocket {
                 if ((Peers.communicationLoggingMask & Peers.LOGGING_MASK_200_RESPONSES) != 0) {
                     Logger.logDebugMessage(String.format("%s WebSocket connection with %s closed",
                             peerServlet != null ? "Inbound" : "Outbound",
-                            session.getRemoteAddress().getHostString()));
+                            ((InetSocketAddress)session.getRemoteAddress()).getHostString()));
                 }
                 session = null;
             }

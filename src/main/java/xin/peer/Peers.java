@@ -31,7 +31,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONStreamAware;
 
-import javax.servlet.DispatcherType;
+import jakarta.servlet.DispatcherType;
 import java.net.*;
 import java.util.*;
 import java.util.concurrent.*;
@@ -363,6 +363,9 @@ public final class Peers {
 
                 ServletContextHandler ctxHandler = new ServletContextHandler();
                 ctxHandler.setContextPath("/");
+
+                // Jetty 11 requires WebSocket components to be explicitly installed
+                org.eclipse.jetty.websocket.server.config.JettyWebSocketServletContainerInitializer.configure(ctxHandler, null);
 
                 ServletHolder peerServletHolder = new ServletHolder(new PeerServlet());
                 ctxHandler.addServlet(peerServletHolder, "/*");

@@ -23,7 +23,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONStreamAware;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import static xin.api.JSONResponses.INCORRECT_OFFER;
 import static xin.api.JSONResponses.MISSING_OFFER;

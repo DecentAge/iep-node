@@ -123,6 +123,7 @@ public interface Appendix {
         abstract void putMyBytes(ByteBuffer buffer);
 
         @Override
+        @SuppressWarnings("unchecked")
         public final JSONObject getJSONObject() {
             JSONObject json = new JSONObject();
             json.put("version." + getAppendixName(), version);
@@ -271,6 +272,7 @@ public interface Appendix {
         }
 
         @Override
+        @SuppressWarnings("unchecked")
         void putMyJSON(JSONObject json) {
             json.put("message", Convert.toString(message, isText));
             json.put("messageIsText", isText);
@@ -402,6 +404,7 @@ public interface Appendix {
         }
 
         @Override
+        @SuppressWarnings("unchecked")
         void putMyJSON(JSONObject json) {
             if (prunableMessage != null) {
                 json.put("message", Convert.toString(prunableMessage.getMessage(), prunableMessage.messageIsText()));
@@ -542,6 +545,7 @@ public interface Appendix {
         }
 
         @Override
+        @SuppressWarnings("unchecked")
         void putMyJSON(JSONObject json) {
             json.put("data", Convert.toHexString(encryptedData.getData()));
             json.put("nonce", Convert.toHexString(encryptedData.getNonce()));
@@ -685,6 +689,7 @@ public interface Appendix {
         }
 
         @Override
+        @SuppressWarnings("unchecked")
         void putMyJSON(JSONObject json) {
             if (prunableMessage != null) {
                 JSONObject encryptedMessageJSON = new JSONObject();
@@ -842,6 +847,7 @@ public interface Appendix {
         }
 
         @Override
+        @SuppressWarnings("unchecked")
         void putMyJSON(JSONObject json) {
             if (getEncryptedData() == null) {
                 JSONObject encryptedMessageJSON = new JSONObject();
@@ -928,6 +934,7 @@ public interface Appendix {
         }
 
         @Override
+        @SuppressWarnings("unchecked")
         void putMyJSON(JSONObject json) {
             JSONObject encryptedMessageJSON = new JSONObject();
             super.putMyJSON(encryptedMessageJSON);
@@ -981,6 +988,7 @@ public interface Appendix {
         }
 
         @Override
+        @SuppressWarnings("unchecked")
         void putMyJSON(JSONObject json) {
             if (getEncryptedData() == null) {
                 JSONObject encryptedMessageJSON = new JSONObject();
@@ -1050,6 +1058,7 @@ public interface Appendix {
         }
 
         @Override
+        @SuppressWarnings("unchecked")
         void putMyJSON(JSONObject json) {
             JSONObject encryptToSelfMessageJSON = new JSONObject();
             super.putMyJSON(encryptToSelfMessageJSON);
@@ -1092,6 +1101,7 @@ public interface Appendix {
         }
 
         @Override
+        @SuppressWarnings("unchecked")
         void putMyJSON(JSONObject json) {
             if (getEncryptedData() == null) {
                 JSONObject encryptedMessageJSON = new JSONObject();
@@ -1172,6 +1182,7 @@ public interface Appendix {
         }
 
         @Override
+        @SuppressWarnings("unchecked")
         void putMyJSON(JSONObject json) {
             json.put("recipientPublicKey", Convert.toHexString(publicKey));
         }
@@ -1326,6 +1337,7 @@ public interface Appendix {
         }
 
         @Override
+        @SuppressWarnings("unchecked")
         void putMyJSON(JSONObject json) {
             json.put("phasingFinishHeight", finishHeight);
             params.putMyJSON(json);

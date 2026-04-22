@@ -9,16 +9,6 @@ COPY build/iep-wallet-ui/iep-wallet-ui.zip /iep-node/html/www/wallet
 RUN unzip -q  /iep-node/html/www/wallet/iep-wallet-ui.zip -d /iep-node/html/www/wallet
 RUN rm -rf /iep-node/html/www/wallet/iep-wallet-ui.zip
 
-RUN mkdir -p /iep-node/html/www/blockexplorer
-COPY build/iep-blockexplorer-ui/iep-blockexplorer.zip /iep-node/html/www/blockexplorer
-RUN unzip -q /iep-node/html/www/blockexplorer/iep-blockexplorer.zip -d /iep-node/html/www/blockexplorer
-RUN rm -rf /iep-node/html/www/blockexplorer/iep-blockexplorer.zip
-
-RUN mkdir -p /iep-node/html/www/peerexplorer
-COPY build/iep-peerexplorer-ui/iep-peerexplorer.zip /iep-node/html/www/peerexplorer
-RUN unzip -q /iep-node/html/www/peerexplorer/iep-peerexplorer.zip -d /iep-node/html/www/peerexplorer
-RUN rm -rf /iep-node/html/www/peerexplorer/iep-peerexplorer.zip
-
 COPY --chown=gradle:gradle . .
 RUN gradle DistZip --no-daemon
 

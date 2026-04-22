@@ -24,7 +24,7 @@ import xin.crypto.Crypto;
 import xin.util.JSON;
 import org.json.simple.JSONStreamAware;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import static xin.api.JSONResponses.PRUNED_TRANSACTION;
 

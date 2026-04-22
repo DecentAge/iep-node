@@ -20,7 +20,7 @@ import xin.XinException;
 import xin.PhasingPoll;
 import org.json.simple.JSONStreamAware;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 public class GetPhasingPoll extends APIServlet.APIRequestHandler {
 

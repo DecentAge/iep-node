@@ -231,26 +231,6 @@ public final class API {
             ServletHolder envConfigServletHolder = new ServletHolder(new EnvConfigServlet());
             apiHandler.addServlet(envConfigServletHolder, "/wallet/env.config.js");
 
-            // Add blockexplorer servlet
-            if (apiResourceBase != null) {
-                ServletHolder blockexplorerServletHolder = apiHandler.addServlet(DefaultServlet.class, "/blockexplorer/*");
-                blockexplorerServletHolder.setInitParameter("resourceBase", apiResourceBase.replace("/wallet", "/blockexplorer"));
-                blockexplorerServletHolder.setInitParameter("welcomeServlets", "true");
-                blockexplorerServletHolder.setInitParameter("redirectWelcome", "true");
-                blockexplorerServletHolder.setInitParameter("gzip", "true");
-                blockexplorerServletHolder.setInitParameter("etags", "true");
-            }
-
-            // Add peerexplorer servlet
-            if (apiResourceBase != null) {
-                ServletHolder peerexplorerServletHolder = apiHandler.addServlet(DefaultServlet.class, "/peerexplorer/*");
-                peerexplorerServletHolder.setInitParameter("resourceBase", apiResourceBase.replace("/wallet", "/peerexplorer"));
-                peerexplorerServletHolder.setInitParameter("welcomeServlets", "true");
-                peerexplorerServletHolder.setInitParameter("redirectWelcome", "true");
-                peerexplorerServletHolder.setInitParameter("gzip", "true");
-                peerexplorerServletHolder.setInitParameter("etags", "true");
-            }
-
 
             GzipHandler gzipHandler = new GzipHandler();
             if (!Xin.getBooleanProperty("xin.enableAPIServerGZIPFilter")) {

@@ -22,7 +22,7 @@ import xin.Attachment;
 import xin.XinException;
 import org.json.simple.JSONStreamAware;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import static xin.api.JSONResponses.NOT_ENOUGH_ASSETS;
 

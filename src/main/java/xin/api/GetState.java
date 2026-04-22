@@ -22,7 +22,7 @@ import xin.util.UPnP;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONStreamAware;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 
 public final class GetState extends APIServlet.APIRequestHandler {

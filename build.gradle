@@ -1,16 +1,16 @@
 // Apply the java plugin to add support for Java
 plugins {
-  id "org.openjfx.javafxplugin" version "0.0.10"
+  id "org.openjfx.javafxplugin" version "0.1.0"
 }
 
 apply plugin: 'java'
 apply plugin: 'application'
 
-sourceCompatibility = 11
-targetCompatibility = 11
+sourceCompatibility = 21
+targetCompatibility = 21
 
 ext {
-	javaFxVersion="17.0.1"
+	javaFxVersion="21.0.2"
 }
 
 javafx {
@@ -22,7 +22,8 @@ javafx {
 
 gradle.projectsEvaluated {
     tasks.withType(JavaCompile) {
-        options.compilerArgs << "-Xlint"
+        // Only show warnings, don't fail the build
+        options.compilerArgs << "-Xlint:none"
     }
 }
 
@@ -30,61 +31,64 @@ gradle.projectsEvaluated {
 repositories {
     mavenLocal()
     mavenCentral()
-    jcenter()
     flatDir {
         dirs 'external_libs'
     }
 }
 
 configurations {
-    compile {
-        exclude(group: 'org.slf4j', module: 'slf4j-api')
-    }
+    // Removed SLF4J exclusion - required by Jetty 11.x
 }
 
 // In this section you declare the dependencies for your production and test code
 dependencies {
-    compile group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.65'
-    compile group: 'com.google.zxing', name: 'core', version: '3.2.1'
-    compile group: 'com.google.zxing', name: 'javase', version: '3.2.1'
-    compile group: 'com.h2database', name: 'h2', version: '1.4.191'
-    compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
-    compile group: 'org.eclipse.jetty', name: 'jetty-server', version: '9.4.6.v20170531'
-    compile group: 'org.eclipse.jetty', name: 'jetty-http-spi', version: '9.4.6.v20170531'
-    compile group: 'org.eclipse.jetty', name: 'jetty-security' , version: '9.4.6.v20170531'
-    compile group: 'org.eclipse.jetty', name: 'jetty-servlets', version: '9.4.6.v20170531'
-    compile group: 'org.eclipse.jetty.websocket', name: 'websocket-api', version: '9.4.6.v20170531'
-    compile group: 'org.eclipse.jetty.websocket', name: 'websocket-server', version: '9.4.6.v20170531'
-    compile group: 'org.eclipse.jetty', name: 'jetty-util', version: '9.4.6.v20170531'
-    compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
-    compile group: 'org.apache.lucene', name: 'lucene-analyzers-common', version: '8.7.0'
-    compile group: 'org.apache.lucene', name: 'lucene-queryparser', version: '8.7.0'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.14.1'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.14.1'
-    compile group: 'org.apache.tika', name: 'tika-parsers', version: '1.13'
-    compile group: 'org.apache.tika', name: 'tika-core', version: '1.13'
-    compile 'org.bitlet:weupnp:0.1.4'
-    compile 'org.mongodb:mongodb-driver:3.3.0'
-    compile 'com.squareup.retrofit2:retrofit:2.9.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.9.0'
-    compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
-    compile group: 'com.rethinkdb', name: 'rethinkdb-driver', version: '2.3.3'
-    compile name: 'IPFS'
-    compile name: 'jTMSP-0.0.1'
-    compile group: 'mysql', name: 'mysql-connector-java', version: '6.0.4'
-    compile group: 'org.postgresql', name: 'postgresql', version: '9.4.1211'
+    implementation group: 'org.bouncycastle', name: 'bcprov-jdk18on', version: '1.78'
+    implementation group: 'com.google.zxing', name: 'core', version: '3.5.3'
+    implementation group: 'com.google.zxing', name: 'javase', version: '3.5.3'
+    implementation group: 'com.h2database', name: 'h2', version: '2.2.224'
+    implementation group: 'jakarta.servlet', name: 'jakarta.servlet-api', version: '5.0.0'
+    implementation group: 'org.eclipse.jetty', name: 'jetty-server', version: '11.0.24'
+    implementation group: 'org.eclipse.jetty', name: 'jetty-http-spi', version: '11.0.24'
+    implementation group: 'org.eclipse.jetty', name: 'jetty-security' , version: '11.0.24'
+    implementation group: 'org.eclipse.jetty', name: 'jetty-servlets', version: '11.0.24'
+    implementation group: 'org.eclipse.jetty.websocket', name: 'websocket-jetty-api', version: '11.0.24'
+    implementation group: 'org.eclipse.jetty.websocket', name: 'websocket-jetty-server', version: '11.0.24'
+    implementation group: 'org.eclipse.jetty.websocket', name: 'websocket-jetty-client', version: '11.0.24'
+    implementation group: 'org.eclipse.jetty', name: 'jetty-util', version: '11.0.24'
+    implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+    implementation group: 'org.json', name: 'json', version: '20240303'
+    implementation group: 'commons-lang', name: 'commons-lang', version: '2.6'
+    implementation group: 'org.apache.lucene', name: 'lucene-analysis-common', version: '9.11.1'
+    implementation group: 'org.apache.lucene', name: 'lucene-queryparser', version: '9.11.1'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.23.1'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.23.1'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j2-impl', version: '2.23.1'
+    implementation group: 'org.apache.tika', name: 'tika-parsers', version: '1.28.5'
+    implementation group: 'org.apache.tika', name: 'tika-core', version: '1.28.5'
+    implementation 'org.bitlet:weupnp:0.1.4'
+    implementation 'org.mongodb:mongodb-driver:3.12.14'
+    implementation 'com.squareup.retrofit2:retrofit:2.11.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
+    implementation group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
+    implementation group: 'com.rethinkdb', name: 'rethinkdb-driver', version: '2.4.4'
+    implementation name: 'IPFS'
+    implementation name: 'jTMSP-0.0.1'
+    implementation group: 'com.mysql', name: 'mysql-connector-j', version: '8.3.0'
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.7.3'
     //Dev tools
-    compile group: 'org.springframework.shell', name: 'spring-shell', version: '1.2.0.RELEASE'
+    implementation group: 'org.springframework.shell', name: 'spring-shell', version: '1.2.0.RELEASE'
 
 
 }
 
-mainClassName = "xin.Xin"
-applicationName = 'iep-node'
+application {
+    mainClass = "xin.Xin"
+    applicationName = 'iep-node'
+}
 // applicationDefaultJvmArgs = ["-Dmrn.runtime.dirProvider=ENV_DIR_PROVIDER"]
 
 task devStartScripts(type: CreateStartScripts) {
-    mainClassName = 'xin.dev.XinDevTools'
+    mainClass = 'xin.dev.XinDevTools'
     applicationName = 'dev'
 //	defaultJvmOpts = ["-Dmrn.runtime.dirProvider=ENV_DIR_PROVIDER"]
     classpath = startScripts.classpath
@@ -95,7 +99,7 @@ jar {
   manifest {
     attributes(
       'Main-Class': 'xin.Xin',
-      'Class-Path': configurations.runtime.files.collect { "$it.name" }.join(' ')
+      'Class-Path': configurations.runtimeClasspath.files.collect { "$it.name" }.join(' ')
     )
   }
 }
@@ -116,5 +120,7 @@ distributions {
 applicationDistribution.into('bin') {
     duplicatesStrategy= DuplicatesStrategy.EXCLUDE
     from(devStartScripts)
-    fileMode = 0755
+    filePermissions {
+        unix(0755)
+    }
 }

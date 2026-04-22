@@ -23,7 +23,7 @@ import xin.XinException;
 import xin.util.Convert;
 import org.json.simple.JSONStreamAware;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import static xin.api.JSONResponses.INCORRECT_ACCOUNT_PROPERTY_NAME_LENGTH;
 import static xin.api.JSONResponses.INCORRECT_ACCOUNT_PROPERTY_VALUE_LENGTH;

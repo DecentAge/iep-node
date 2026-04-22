@@ -24,7 +24,7 @@ import org.json.simple.JSONStreamAware;
 import xin.db.SortClause;
 import xin.db.SortType;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 public final class GetAllCurrencies extends APIServlet.APIRequestHandler {
 

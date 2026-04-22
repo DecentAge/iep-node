@@ -20,7 +20,7 @@ import xin.*;
 import xin.util.JSON;
 import org.json.simple.JSONStreamAware;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 public class GetPollVote extends APIServlet.APIRequestHandler {
     static final GetPollVote instance = new GetPollVote();

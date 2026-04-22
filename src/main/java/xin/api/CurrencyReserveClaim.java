@@ -22,7 +22,7 @@ import xin.Currency;
 import xin.XinException;
 import org.json.simple.JSONStreamAware;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * Claim currency units and receive back token invested into this currency before it became active
