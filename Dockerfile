@@ -1,4 +1,4 @@
-FROM gradle:6.8.3-jdk11 AS gradle-builder
+FROM gradle:8.12-jdk21 AS gradle-builder
 WORKDIR /iep-node
 RUN apt-get update \
     && apt-get install --yes --no-install-recommends unzip
@@ -9,11 +9,21 @@ COPY build/iep-wallet-ui/iep-wallet-ui.zip /iep-node/html/www/wallet
 RUN unzip -q  /iep-node/html/www/wallet/iep-wallet-ui.zip -d /iep-node/html/www/wallet
 RUN rm -rf /iep-node/html/www/wallet/iep-wallet-ui.zip
 
+RUN mkdir -p /iep-node/html/www/blockexplorer
+COPY build/iep-blockexplorer-ui/iep-blockexplorer.zip /iep-node/html/www/blockexplorer
+RUN unzip -q /iep-node/html/www/blockexplorer/iep-blockexplorer.zip -d /iep-node/html/www/blockexplorer
+RUN rm -rf /iep-node/html/www/blockexplorer/iep-blockexplorer.zip
+
+RUN mkdir -p /iep-node/html/www/peerexplorer
+COPY build/iep-peerexplorer-ui/iep-peerexplorer.zip /iep-node/html/www/peerexplorer
+RUN unzip -q /iep-node/html/www/peerexplorer/iep-peerexplorer.zip -d /iep-node/html/www/peerexplorer
+RUN rm -rf /iep-node/html/www/peerexplorer/iep-peerexplorer.zip
+
 COPY --chown=gradle:gradle . .
 RUN gradle DistZip --no-daemon
 
 
-FROM openjdk:11-jre-slim
+FROM eclipse-temurin:21-jre
 WORKDIR /iep-node
 RUN apt-get update \
     && apt-get install --yes --no-install-recommends unzip \
