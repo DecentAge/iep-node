@@ -222,3 +222,4 @@ gradle-app.setting
 /html/www/wallet
 /wallet-ui/node_modules
 /.idea/
+/iep-node.iml
