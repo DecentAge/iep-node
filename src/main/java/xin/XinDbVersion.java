@@ -1129,21 +1129,21 @@
               case 478:
                   try (Connection con = db.getConnection();
                        Statement stmt = con.createStatement();
-                       ResultSet rs = stmt.executeQuery("SELECT CONSTRAINT_NAME FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS "
-                               + "WHERE TABLE_NAME='BLOCK' AND CONSTRAINT_TYPE='REFERENTIAL'")) {
+                       ResultSet rs = stmt.executeQuery(
+                               "SELECT DISTINCT tc.CONSTRAINT_NAME "
+                               + "FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS tc "
+                               + "JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE kcu "
+                               + "  ON tc.CONSTRAINT_NAME = kcu.CONSTRAINT_NAME "
+                               + " AND tc.TABLE_NAME      = kcu.TABLE_NAME "
+                               + "WHERE tc.TABLE_NAME      = 'BLOCK' "
+                               + "  AND tc.CONSTRAINT_TYPE = 'REFERENTIAL' "
+                               + "  AND kcu.COLUMN_NAME IN ('NEXT_BLOCK_ID', 'PREVIOUS_BLOCK_ID')")) {
                       List<String> constraintNames = new ArrayList<>();
                       while (rs.next()) {
-                          String constraintName = rs.getString(1);
-                          // Only drop constraints on next_block_id or previous_block_id
-                          // In H2 2.x we need to check column info separately or just try to drop known ones
-                          constraintNames.add(constraintName);
+                          constraintNames.add(rs.getString(1));
                       }
                       for (String constraintName : constraintNames) {
-                          try {
-                              stmt.executeUpdate("ALTER TABLE BLOCK DROP CONSTRAINT IF EXISTS " + constraintName);
-                          } catch (SQLException ignore) {
-                              // Ignore if constraint doesn't exist or can't be dropped
-                          }
+                          stmt.executeUpdate("ALTER TABLE BLOCK DROP CONSTRAINT IF EXISTS " + constraintName);
                       }
                       apply(null);
                   } catch (SQLException e) {

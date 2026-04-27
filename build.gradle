@@ -113,6 +113,9 @@ distributions {
             from('conf') {
                into('conf')
             }
+            from('legacy_libs') {
+               into('legacy_libs')
+            }
         }
     }
 }
