@@ -47,7 +47,6 @@ public class RuntimeEnvironment {
             Class.forName("javafx.application.Application");
             hasJavaFX_ = true;
         } catch (ClassNotFoundException e) {
-            System.out.println("javafx not supported: "+e.getMessage());
             hasJavaFX_ = false;
         }
         hasJavaFX = hasJavaFX_;
