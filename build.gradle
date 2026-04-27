@@ -116,6 +116,10 @@ distributions {
             from('legacy_libs') {
                into('legacy_libs')
             }
+            from('scripts') {
+               into('scripts')
+               filePermissions { unix(0755) }
+            }
         }
     }
 }
