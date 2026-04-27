@@ -104,11 +104,27 @@ jar {
   }
 }
 
+// iep-wallet-ui ships the desktop wallet UI as a zip (built separately by
+// `iep-wallet-ui`). iep-node's jetty serves /wallet/* from html/www/ (per
+// xin.apiResourceBase), so the wallet zip's contents must end up under
+// html/www/wallet/. The Dockerfile does this at image-build time; we mirror
+// that step here so distZip / the installer build path also bundle the UI.
+def walletZip = file("${projectDir}/../iep-wallet-ui/build/iep-wallet-ui.zip")
+
 distributions {
     main {
         contents {
             from('html') {
                into('html')
+            }
+            // Unpack the wallet UI zip into html/www/wallet/ if available.
+            // The build still succeeds without it (you'll get an empty wallet
+            // dir + 404 at /wallet/index.html), so users who don't want a
+            // bundled UI can build iep-node without iep-wallet-ui.
+            if (walletZip.exists()) {
+                from(zipTree(walletZip)) {
+                    into('html/www/wallet')
+                }
             }
             from('conf') {
                into('conf')
@@ -131,3 +147,22 @@ applicationDistribution.into('bin') {
         unix(0755)
     }
 }
+
+// Mirror the dist zip from gradle's standard build/distributions/iep-node.zip to
+// build/iep-node.zip so iep-node-installer's install.xml (which references
+// `${nodeProjectPath}/build/${xin.app.name}.zip`) finds it. This matches the
+// flat layout that CI's iep-node-artifacts uses.
+//
+// Implementation note: a Copy task here got fooled by stale leftovers from
+// previous runs (a leftover symlink/file at the destination would make gradle's
+// up-to-date check think the copy was already done). A direct `Files.copy` with
+// REPLACE_EXISTING sidesteps that — runs every time, ~0ms, always correct.
+task copyDistZipToBuild(dependsOn: distZip) {
+    description = 'Copy build/distributions/iep-node.zip to build/iep-node.zip for the installer.'
+    doLast {
+        def src = layout.buildDirectory.file('distributions/iep-node.zip').get().asFile.toPath()
+        def dst = layout.buildDirectory.file('iep-node.zip').get().asFile.toPath()
+        java.nio.file.Files.copy(src, dst, java.nio.file.StandardCopyOption.REPLACE_EXISTING)
+    }
+}
+distZip.finalizedBy copyDistZipToBuild
