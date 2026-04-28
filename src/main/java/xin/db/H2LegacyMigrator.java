@@ -11,11 +11,9 @@
 
 package xin.db;
 
-import org.h2.tools.RunScript;
 import xin.util.Logger;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -177,16 +175,18 @@ public final class H2LegacyMigrator {
 
     private static void runImport(String dbDir, String user, String pwd, File scriptFile) {
         String url = "jdbc:h2:" + new File(dbDir).getAbsolutePath()
-                + ";MODE=LEGACY;NON_KEYWORDS=VALUE;DB_CLOSE_ON_EXIT=FALSE";
+                + ";NON_KEYWORDS=VALUE;DB_CLOSE_ON_EXIT=FALSE";
         Logger.logMessage("Importing dump into new H2 2.x database (" + new File(dbDir + ".mv.db").getAbsolutePath() + ")");
+        // FROM_1X tells the H2 2.x parser this dump came from a 1.x database, enabling
+        // compatibility handling for legacy idioms (untyped ARRAY, etc.). This is what
+        // org.h2.tools.Upgrade does internally; RunScript.execute() does not set it.
+        String quotedPath = scriptFile.getAbsolutePath().replace("'", "''");
+        String runscript = "RUNSCRIPT FROM '" + quotedPath + "' FROM_1X";
         try (Connection con = DriverManager.getConnection(url, user, pwd);
-             Reader reader = new FileReader(scriptFile);
-             Statement shutdown = con.createStatement()) {
-            RunScript.execute(con, reader);
-            // Explicit SHUTDOWN flushes the MVStore so BasicDb opens a clean DB. The
-            // outer auto-close on the connection/statement is a no-op afterwards.
-            shutdown.execute("SHUTDOWN");
-        } catch (SQLException | IOException e) {
+             Statement stmt = con.createStatement()) {
+            stmt.execute(runscript);
+            stmt.execute("SHUTDOWN");
+        } catch (SQLException e) {
             throw new RuntimeException("Import of legacy dump into H2 2.x failed: " + e
                     + ". Legacy backup files retained for recovery.", e);
         }
