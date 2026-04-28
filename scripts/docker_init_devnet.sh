@@ -64,7 +64,6 @@ if [ "${INIT_DEVNET}" == "true" ]; then
 	if [ ! -z "${GENESIS_FUNDS_ACCOUNT_PASSPHRASE-}" ] && [ ! -z "${CASH_ACCOUNT_PASSPHRASE-}" ]; then
 
 		echo "Sending money from Genesis Funds Recipient Account to Cash Account"
-    echo ${GENESIS_FUNDS_ACCOUNT_PASSPHRASE}
 		sendMoneyResponse=$(curl --fail "http://localhost:${API_SERVER_PORT}/api" \
 		-H "Accept: application/json" \
 		--data "requestType=sendMoney" \
@@ -73,12 +72,34 @@ if [ "${INIT_DEVNET}" == "true" ]; then
 		--data-urlencode "secretPhrase=${GENESIS_FUNDS_ACCOUNT_PASSPHRASE}" \
 		--data "feeTQT=100000000" \
 		--data "deadline=80")
-	
+
 		echo "============================================================================================================================================="
 		echo sendMoneyResponse=${sendMoneyResponse}
 		echo "============================================================================================================================================="
-		sleep 60			
-	fi	
+		sleep 60
+	fi
+
+	# Fund the publicly-documented "Test Account 1" (XIN-WDYP-H647-KPNR-BWWRK)
+	# from the Cash Account so the e2e test suite has a funded account it can
+	# derive from a public passphrase. Passphrase is in iep-docker/README.md;
+	# safe to reference by accountRS here.
+	if [ ! -z "${CASH_ACCOUNT_PASSPHRASE-}" ]; then
+
+		echo "Sending 1B XIN from Cash Account to e2e Test Account 1 (XIN-WDYP-H647-KPNR-BWWRK)"
+		sendMoneyResponse=$(curl --fail "http://localhost:${API_SERVER_PORT}/api" \
+		-H "Accept: application/json" \
+		--data "requestType=sendMoney" \
+		--data "amountTQT=100000000000000000" \
+		--data "recipient=XIN-WDYP-H647-KPNR-BWWRK" \
+		--data-urlencode "secretPhrase=${CASH_ACCOUNT_PASSPHRASE}" \
+		--data "feeTQT=100000000" \
+		--data "deadline=80")
+
+		echo "============================================================================================================================================="
+		echo sendMoneyResponse=${sendMoneyResponse}
+		echo "============================================================================================================================================="
+		sleep 60
+	fi
 		
 	if [ ! -z "${GENESIS_FUNDS_ACCOUNT_PASSPHRASE-}" ]; then
 
