@@ -13,12 +13,23 @@ package xin.db;
 
 import xin.util.Logger;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -66,6 +77,7 @@ public final class H2LegacyMigrator {
         File scriptFile = new File(dbDir + "-migration.sql");
 
         runLegacyDump(legacyJar, dbDir, username, password, scriptFile);
+        fixGeneratedColumns(scriptFile);
         archiveLegacyFiles(dbDir);
         runImport(dbDir, username, password, scriptFile);
         verifyImport(dbDir, username, password);
@@ -154,6 +166,319 @@ public final class H2LegacyMigrator {
             throw new RuntimeException("Legacy H2 dump produced no output at " + scriptFile.getAbsolutePath());
         }
         if (out.length() > 0) Logger.logDebugMessage("Legacy dump output:\n" + out);
+    }
+
+    /**
+     * Fix generated column issue: H2 2.x does not allow INSERT into generated columns.
+     * This method scans the SQL dump, identifies tables with generated columns (e.g.,
+     * ALIAS_NAME_LOWER AS LOWER(ALIAS_NAME)), and removes those columns from INSERT statements.
+     */
+    private static void fixGeneratedColumns(File scriptFile) {
+        Logger.logMessage("Fixing generated columns in migration script...");
+
+        Map<String, List<String>> generatedColumns = new HashMap<>();
+        Pattern createTablePattern = Pattern.compile("CREATE\\s+(?:CACHED\\s+)?TABLE\\s+(\\S+)\\s*\\(", Pattern.CASE_INSENSITIVE);
+        Pattern generatedColPattern = Pattern.compile("^\\s*(\\w+)\\s+\\w+\\s+AS\\s+", Pattern.CASE_INSENSITIVE);
+        Pattern insertPattern = Pattern.compile("INSERT\\s+INTO\\s+(\\S+)\\s*\\(([^)]+)\\)", Pattern.CASE_INSENSITIVE);
+
+        File tempFile = new File(scriptFile.getAbsolutePath() + ".tmp");
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(scriptFile, StandardCharsets.UTF_8));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile, StandardCharsets.UTF_8))) {
+
+            String line;
+            String currentTable = null;
+            boolean inCreateTable = false;
+
+            // First pass: identify generated columns
+            while ((line = reader.readLine()) != null) {
+                Matcher createMatcher = createTablePattern.matcher(line);
+                if (createMatcher.find()) {
+                    currentTable = createMatcher.group(1);
+                    inCreateTable = true;
+                } else if (inCreateTable) {
+                    Matcher genMatcher = generatedColPattern.matcher(line);
+                    if (genMatcher.find()) {
+                        String colName = genMatcher.group(1).toUpperCase();
+                        generatedColumns.computeIfAbsent(currentTable, k -> new ArrayList<>()).add(colName);
+                        Logger.logDebugMessage("Found generated column: " + currentTable + "." + colName);
+                    }
+                    if (line.trim().endsWith(");")) {
+                        inCreateTable = false;
+                        currentTable = null;
+                    }
+                }
+            }
+
+            if (!generatedColumns.isEmpty()) {
+                Logger.logMessage("Found " + generatedColumns.size() + " table(s) with generated columns");
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to analyze generated columns in " + scriptFile.getAbsolutePath(), e);
+        }
+
+        // Second pass: rewrite INSERT statements
+        try (BufferedReader reader = new BufferedReader(new FileReader(scriptFile, StandardCharsets.UTF_8));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile, StandardCharsets.UTF_8))) {
+
+            String line;
+            int fixedInserts = 0;
+            boolean inInsertValues = false;
+            List<Integer> currentGenColPositions = null;
+            StringBuilder valuesBlock = new StringBuilder();
+
+            while ((line = reader.readLine()) != null) {
+                if (inInsertValues) {
+                    // Collect and fix VALUES lines until we hit a line that doesn't start with '('
+                    if (line.trim().startsWith("(")) {
+                        // Fix this row and write it
+                        String fixedRow = fixValuesRow(line, currentGenColPositions);
+                        writer.write(fixedRow);
+                        writer.newLine();
+                        continue;
+                    } else {
+                        // End of VALUES block
+                        inInsertValues = false;
+                        currentGenColPositions = null;
+                        // Fall through to write the current line
+                    }
+                }
+
+                Matcher insertMatcher = insertPattern.matcher(line);
+                if (insertMatcher.find()) {
+                    String tableName = insertMatcher.group(1);
+                    List<String> genCols = generatedColumns.get(tableName);
+
+                    if (genCols != null && !genCols.isEmpty()) {
+                        String columnList = insertMatcher.group(2);
+                        String[] columns = columnList.split(",");
+
+                        // Find positions of generated columns
+                        List<Integer> genColPositions = new ArrayList<>();
+                        for (int i = 0; i < columns.length; i++) {
+                            String col = columns[i].trim().toUpperCase();
+                            if (genCols.contains(col)) {
+                                genColPositions.add(i);
+                            }
+                        }
+
+                        if (!genColPositions.isEmpty()) {
+                            // Remove generated columns from column list
+                            StringBuilder newColumnList = new StringBuilder();
+                            for (int i = 0; i < columns.length; i++) {
+                                if (!genColPositions.contains(i)) {
+                                    if (newColumnList.length() > 0) newColumnList.append(",");
+                                    newColumnList.append(columns[i].trim());
+                                }
+                            }
+
+                            // Write the INSERT header with fixed column list
+                            writer.write("INSERT INTO " + tableName + "(" + newColumnList.toString() + ") VALUES");
+                            writer.newLine();
+
+                            // Prepare to collect VALUES lines
+                            inInsertValues = true;
+                            currentGenColPositions = genColPositions;
+                            valuesBlock = new StringBuilder();
+                            fixedInserts++;
+                            continue;
+                        }
+                    }
+                }
+
+                writer.write(line);
+                writer.newLine();
+            }
+
+            if (fixedInserts > 0) {
+                Logger.logMessage("Fixed " + fixedInserts + " INSERT statement(s) to exclude generated columns");
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to fix generated columns in " + scriptFile.getAbsolutePath(), e);
+        }
+
+        // Replace original file with fixed version
+        try {
+            Files.move(tempFile.toPath(), scriptFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to replace migration script with fixed version", e);
+        }
+    }
+
+    /**
+     * Fix a single VALUES row by removing values at specified positions.
+     * Example: "(1, 'text', 'remove_me', 'keep', TRUE)," with position [2]
+     * Returns: "(1, 'text', 'keep', TRUE),"
+     */
+    private static String fixValuesRow(String rowLine, List<Integer> positions) {
+        if (positions == null || positions.isEmpty()) return rowLine;
+
+        String trimmed = rowLine.trim();
+        if (!trimmed.startsWith("(")) return rowLine;
+
+        // Extract the row content (between parentheses)
+        int openParen = trimmed.indexOf('(');
+        int closeParen = trimmed.lastIndexOf(')');
+        if (closeParen <= openParen) return rowLine;
+
+        String rowContent = trimmed.substring(openParen + 1, closeParen);
+        String trailing = trimmed.substring(closeParen + 1); // Preserves "," or ");", etc.
+
+        // Parse values, respecting quoted strings
+        List<String> values = new ArrayList<>();
+        StringBuilder currentValue = new StringBuilder();
+        boolean inString = false;
+        char stringDelim = 0;
+        int parenDepth = 0;
+
+        for (int i = 0; i < rowContent.length(); i++) {
+            char c = rowContent.charAt(i);
+
+            if (inString) {
+                currentValue.append(c);
+                if (c == stringDelim) {
+                    // Check if escaped by looking for preceding single quotes (H2 uses '' for escaping)
+                    if (i + 1 < rowContent.length() && rowContent.charAt(i + 1) == stringDelim) {
+                        currentValue.append(rowContent.charAt(i + 1));
+                        i++; // Skip next char
+                    } else {
+                        inString = false;
+                    }
+                }
+            } else {
+                if (c == '\'' || c == '"') {
+                    inString = true;
+                    stringDelim = c;
+                    currentValue.append(c);
+                } else if (c == '(') {
+                    parenDepth++;
+                    currentValue.append(c);
+                } else if (c == ')') {
+                    parenDepth--;
+                    currentValue.append(c);
+                } else if (c == ',' && parenDepth == 0) {
+                    // End of value
+                    values.add(currentValue.toString().trim());
+                    currentValue = new StringBuilder();
+                } else {
+                    currentValue.append(c);
+                }
+            }
+        }
+
+        // Add last value
+        if (currentValue.length() > 0) {
+            values.add(currentValue.toString().trim());
+        }
+
+        // Remove values at specified positions (in descending order to avoid index shift)
+        List<Integer> sortedPositions = new ArrayList<>(positions);
+        sortedPositions.sort((a, b) -> b - a);
+        for (int pos : sortedPositions) {
+            if (pos < values.size()) {
+                values.remove(pos);
+            }
+        }
+
+        // Rebuild the row
+        StringBuilder result = new StringBuilder("(");
+        for (int i = 0; i < values.size(); i++) {
+            if (i > 0) result.append(", ");
+            result.append(values.get(i));
+        }
+        result.append(')').append(trailing);
+
+        return result.toString();
+    }
+
+    /**
+     * Remove values at specified positions from a VALUES clause.
+     * Handles multi-row inserts like: (val1, val2, val3), (val4, val5, val6)
+     */
+    private static String removeValuesAtPositions(String valuesClause, List<Integer> positions) {
+        if (positions.isEmpty()) return valuesClause;
+
+        // Sort positions in descending order for easier removal
+        List<Integer> sortedPositions = new ArrayList<>(positions);
+        sortedPositions.sort((a, b) -> b - a);
+
+        StringBuilder result = new StringBuilder();
+        boolean inRow = false;
+        int depth = 0;
+        List<String> currentRow = new ArrayList<>();
+        StringBuilder currentValue = new StringBuilder();
+        boolean inString = false;
+        char stringDelim = 0;
+
+        for (int i = 0; i < valuesClause.length(); i++) {
+            char c = valuesClause.charAt(i);
+
+            if (inString) {
+                currentValue.append(c);
+                if (c == stringDelim) {
+                    // Check if it's escaped
+                    int backslashCount = 0;
+                    for (int j = i - 1; j >= 0 && valuesClause.charAt(j) == '\\'; j--) {
+                        backslashCount++;
+                    }
+                    if (backslashCount % 2 == 0) {
+                        inString = false;
+                    }
+                }
+            } else {
+                if (c == '\'' || c == '"') {
+                    inString = true;
+                    stringDelim = c;
+                    currentValue.append(c);
+                } else if (c == '(') {
+                    if (depth == 0) {
+                        // Start of a row
+                        inRow = true;
+                        currentRow.clear();
+                        currentValue = new StringBuilder();
+                    } else {
+                        currentValue.append(c);
+                    }
+                    depth++;
+                } else if (c == ')' && depth > 0) {
+                    depth--;
+                    if (depth == 0) {
+                        // End of row - add last value and process the row
+                        currentRow.add(currentValue.toString());
+
+                        // Remove values at specified positions
+                        for (int pos : sortedPositions) {
+                            if (pos < currentRow.size()) {
+                                currentRow.remove(pos);
+                            }
+                        }
+
+                        // Write the row
+                        result.append('(');
+                        for (int j = 0; j < currentRow.size(); j++) {
+                            if (j > 0) result.append(',');
+                            result.append(currentRow.get(j));
+                        }
+                        result.append(')');
+
+                        inRow = false;
+                        currentValue = new StringBuilder();
+                    } else {
+                        currentValue.append(c);
+                    }
+                } else if (c == ',' && depth == 1) {
+                    // End of value within the row
+                    currentRow.add(currentValue.toString());
+                    currentValue = new StringBuilder();
+                } else {
+                    currentValue.append(c);
+                }
+            }
+        }
+
+        return result.toString();
     }
 
     private static void archiveLegacyFiles(String dbDir) {
