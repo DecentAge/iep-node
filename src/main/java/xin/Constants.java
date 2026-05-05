@@ -36,7 +36,7 @@ public final class Constants {
     public static final long ONE_XIN = 100000000L;
     public static final long MAX_BALANCE_TQT = MAX_BALANCE_XIN * ONE_XIN;
 
-    public static final long INITIAL_BASE_TARGET = 17080318;
+    public static final long INITIAL_BASE_TARGET = ConstantsConfigHelper.getLongProperty(ConstantsConfigHelper.PROPERTY_INITIAL_BASE_TARGET);
 
     public static final long MAX_BASE_TARGET = MAX_BALANCE_XIN * INITIAL_BASE_TARGET;
     public static final long MAX_BASE_TARGET_2 = INITIAL_BASE_TARGET * 50;
@@ -47,7 +47,8 @@ public final class Constants {
     public static final int BASE_TARGET_GAMMA = 64;
     public static final int MAX_ROLLBACK = Math.max(Xin.getIntProperty("xin.maxRollback"), 720);
     public static final int GUARANTEED_BALANCE_CONFIRMATIONS = 1440;
-    public static final int LEASING_DELAY = 1440;
+    public static final int LEASING_DELAY = ConstantsConfigHelper.getIntProperty(ConstantsConfigHelper.PROPERTY_LEASING_DELAY);
+    public static final int LEASE_ACTIVATION_OFFSET_BLOCK = ConstantsConfigHelper.getIntProperty(ConstantsConfigHelper.PROPERTY_LEASE_ACTIVATION_OFFSET_BLOCK);
     public static final long MIN_FORGING_BALANCE_TQT = 1000 * ONE_XIN;
 
     public static final int MAX_TIMEDRIFT = 15;

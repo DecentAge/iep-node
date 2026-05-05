@@ -1038,7 +1038,7 @@ public final class Account {
         Xin.getBlockchainProcessor().addListener(block -> {
             int height = block.getHeight();
 
-            if (height < Constants.EFFECTIVE_LEASING_OFFSET_BLOCK) {
+            if (height < Constants.LEASE_ACTIVATION_OFFSET_BLOCK) {
                 return;
             }
 

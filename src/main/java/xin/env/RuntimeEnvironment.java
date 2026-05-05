@@ -77,13 +77,10 @@ public class RuntimeEnvironment {
     }
 
     public static boolean isDesktopApplicationEnabled() {
-        boolean isDesktopApplicationEnabled = isDesktopEnabled() && hasJavaFX;
-    	System.out.println("isDesktopApplicationEnabled=" + isDesktopApplicationEnabled);
-        return isDesktopApplicationEnabled;
+        return isDesktopEnabled() && hasJavaFX;
     }
 
     public static RuntimeMode getRuntimeMode() {
-        System.out.println("isHeadless=" + isHeadless());
         if (isDesktopEnabled()) {
             return new DesktopMode();
         } else if (isWindowsService()) {
