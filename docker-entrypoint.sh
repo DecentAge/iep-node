@@ -2,7 +2,6 @@
 set -eou pipefail
 
 /iep-node/scripts/check-java-version.sh
-
 source /iep-node/scripts/docker_utils.sh
 
 init_secret "ADMIN_PASSWORD"
