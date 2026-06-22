@@ -39,6 +39,7 @@ prepare-iep-node-artifacts:
       - mkdir -p iep-node-artifacts/conf
       - cp conf/mainnet.properties iep-node-artifacts/conf
       - cp conf/testnet.properties iep-node-artifacts/conf
+      - cp conf/devnet.properties iep-node-artifacts/conf
       - cp conf/custom.properties iep-node-artifacts/conf
       - mkdir -p iep-node-artifacts/conf/templates
       - cp conf/templates/installer.properties iep-node-artifacts/conf/templates
