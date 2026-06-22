@@ -10,6 +10,26 @@ if [ -z "${MY_HALLMARK}" ]; then
 	export ENABLE_HALLMARK_PROTECTION=false
 else
 	export ENABLE_HALLMARK_PROTECTION=true
+
+	# Pre-flight: a hallmark hard-codes its host. If it no longer matches this
+	# node's address (e.g. the server IP changed on a delete/create reinstall),
+	# the node would abort at boot with a cryptic "Your hallmark is invalid"
+	# from Peers.java. Fail here with a clear message instead. Mirrors
+	# Peers.java, which only validates the hallmark host when xin.myAddress is
+	# set; only the host is checked because IEP hallmarks encode a bare IP, so
+	# the port always resolves to the default peer port.
+	if [ -n "${MY_ADDRESS:-}" ]; then
+		if ! hallmark_host=$(decode_hallmark_host "${MY_HALLMARK}"); then
+			echo >&2 "ERROR: MY_HALLMARK is malformed and cannot be decoded. Regenerate it via the 'markHost' API (host=${MY_ADDRESS}) and update the node configuration."
+			exit 1
+		fi
+		my_host="${MY_ADDRESS%%:*}"
+		if [ "${hallmark_host}" != "${my_host}" ]; then
+			echo >&2 "ERROR: MY_HALLMARK is bound to host '${hallmark_host}', but this node's MY_ADDRESS is '${my_host}'. The node would refuse to start ('Your hallmark is invalid'). Regenerate the hallmark via 'markHost' (host=${my_host}) and update the configuration."
+			exit 1
+		fi
+		echo "MY_HALLMARK host '${hallmark_host}' matches MY_ADDRESS '${my_host}'"
+	fi
 fi
 
 
@@ -103,8 +123,10 @@ init_when_ready() {
 	# account is a genesis recipient, so it can forge straight from height 1.
 	/iep-node/scripts/docker_init.sh
 	# Devnet: with the chain now advancing, fund the e2e test account from cash
-	# (see scripts/docker_init_devnet.sh).
-	if [ "${NETWORK_ENVIRONMENT}" == "devnet" ]; then
+	# (see scripts/docker_init_devnet.sh). Only runs on the fresh-genesis init
+	# node (INIT_DEVNET=true) — the node that creates the devnet bootstraps the
+	# e2e accounts; non-init nodes join an already-funded chain.
+	if [ "${NETWORK_ENVIRONMENT}" == "devnet" ] && [ "${INIT_DEVNET}" == "true" ]; then
 		/iep-node/scripts/docker_init_devnet.sh
 	fi
 	echo "Network ${NETWORK_ENVIRONMENT} has been initialized in $(( $(date +%s) - init_start_seconds ))s"

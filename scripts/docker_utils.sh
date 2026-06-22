@@ -36,6 +36,23 @@ remove_secret() {
 	unset ${secret_name}
 }
 
+# Decode the host (IP/hostname) embedded in a hex hallmark string, purely in
+# bash — no API/peer needed. Byte layout (see Hallmark.generateHallmark in
+# iep-node): publicKey[32] + hostLen[2, little-endian short] + host[ASCII]
+# + weight[4] + date[4] + 1. Echoes the host; returns non-zero if the string
+# is too short or the encoded host length is implausible (Java caps it 1..100).
+decode_hallmark_host() {
+	local hex="$1"
+	hex="${hex//[[:space:]]/}"
+	[ "${#hex}" -ge 68 ] || return 1
+	local lo="${hex:64:2}" hi="${hex:66:2}"
+	local hostlen=$(( 16#$hi * 256 + 16#$lo ))
+	{ [ "$hostlen" -ge 1 ] && [ "$hostlen" -le 100 ]; } || return 1
+	local host_hex="${hex:68:$((hostlen * 2))}"
+	[ "${#host_hex}" -eq $((hostlen * 2)) ] || return 1
+	printf '%b' "$(printf '%s' "$host_hex" | sed 's/../\\x&/g')"
+}
+
 # Extract the "transaction":"<id>" field from a sendMoney JSON response.
 # Echoes the id, or empty string if the response carried none
 # (e.g. an errorCode response from a failed broadcast).
