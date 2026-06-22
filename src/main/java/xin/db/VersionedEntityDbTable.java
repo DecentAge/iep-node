@@ -135,7 +135,12 @@ public abstract class VersionedEntityDbTable<T> extends EntityDbTable<T> {
              PreparedStatement pstmtDelete = con.prepareStatement("DELETE FROM " + table + dbKeyFactory.getPKClause()
                      + " AND height < ? AND height >= 0 LIMIT " + Constants.BATCH_COMMIT_SIZE);
              PreparedStatement pstmtDeleteDeleted = con.prepareStatement("DELETE FROM " + table + " WHERE height < ? AND height >= 0 AND latest = FALSE "
-                     + " AND (" + dbKeyFactory.getPKColumns() + ") NOT IN (SELECT (" + dbKeyFactory.getPKColumns() + ") FROM "
+                     // H2 2.x: do NOT wrap the sub-select columns in parens — "(a, b)" in a
+                     // SELECT list is a ROW constructor (1 column), which mismatches the
+                     // left-side row "(a, b)" and throws "Column count does not match".
+                     // H2 1.4 tolerated it. Plain "SELECT a, b" works for both 1.4 and 2.x
+                     // and for single- and multi-column primary keys.
+                     + " AND (" + dbKeyFactory.getPKColumns() + ") NOT IN (SELECT " + dbKeyFactory.getPKColumns() + " FROM "
                      + table + " WHERE height >= ?) LIMIT " + Constants.BATCH_COMMIT_SIZE)) {
             pstmtSelect.setInt(1, height);
 
