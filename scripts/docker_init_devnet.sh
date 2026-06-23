@@ -1,7 +1,10 @@
 #!/bin/bash
-# Devnet-only chain bootstrap: fund publicly-documented e2e test accounts
-# from the cash account so the e2e suite has known-funded accounts derived
-# from public passphrases.
+# Devnet-only bootstrap (runs on the INIT_DEVNET=true forger node). Two parts:
+#   1. Generate this node's HALLMARK via markHost and PRINT it, so it can be
+#      copied into IEP_HALLMARK in the server's .properties (markHost only signs
+#      and returns the string — no transaction/fee).
+#   2. Fund the publicly-documented e2e test accounts from the cash account
+#      (skipped if CASH_ACCOUNT_PASSPHRASE is unset).
 #
 # Runs AFTER docker_init.sh (per docker-entrypoint.sh). docker_init.sh has
 # already started the regular forger from FORGING_ACCOUNT_PASSPHRASE — that
@@ -26,6 +29,37 @@
 set -eou pipefail
 source /iep-node/scripts/docker_utils.sh
 
+API_URL="http://localhost:${API_SERVER_PORT}/api"
+
+# --- 1. Hallmark: generate + print -------------------------------------------
+# markHost signs and RETURNS the hallmark for (host, weight, date) — it does NOT
+# broadcast a transaction. The forger account signs it (its balance backs the
+# peer weight). Copy the printed value into IEP_HALLMARK in this server's
+# .properties so future deploys advertise the node as a weighted peer.
+init_base64_secret "FORGING_ACCOUNT_PASSPHRASE"
+if [ -n "${FORGING_ACCOUNT_PASSPHRASE-}" ] && [ -n "${MY_ADDRESS-}" ]; then
+	echo "Generating hallmark for host '${MY_ADDRESS}' (weight=1) via markHost..."
+	markHostResponse=$(curl --silent --show-error --fail "${API_URL}" \
+		-H "Accept: application/json" \
+		--data "requestType=markHost" \
+		--data "host=${MY_ADDRESS}" \
+		--data "weight=1" \
+		--data "date=$(date +'%Y-%m-%d')" \
+		--data-urlencode "secretPhrase=${FORGING_ACCOUNT_PASSPHRASE}")
+	hallmark=$(echo "${markHostResponse}" | grep -oE '"hallmark":"[0-9a-fA-F]+"' | head -1 | sed -E 's/.*:"([0-9a-fA-F]+)".*/\1/')
+	echo "=================== HALLMARK for ${MY_ADDRESS} ==================="
+	if [ -n "${hallmark}" ]; then
+		echo "IEP_HALLMARK=${hallmark}"
+	else
+		echo "markHost returned no hallmark. Raw response: ${markHostResponse}"
+	fi
+	echo "================================================================="
+else
+	echo "Skipping hallmark generation (FORGING_ACCOUNT_PASSPHRASE or MY_ADDRESS unset)"
+fi
+remove_secret "FORGING_ACCOUNT_PASSPHRASE"
+
+# --- 2. e2e test-account funding ---------------------------------------------
 init_base64_secret "CASH_ACCOUNT_PASSPHRASE"
 
 if [ -z "${CASH_ACCOUNT_PASSPHRASE-}" ] || [ "${START_FORGER}" != "true" ]; then
