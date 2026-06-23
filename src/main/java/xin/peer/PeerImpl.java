@@ -303,7 +303,11 @@ final class PeerImpl implements Peer {
             if (cause instanceof IOException || cause instanceof ParseException || cause instanceof IllegalArgumentException) {
                 Logger.logDebugMessage("Blacklisting " + host + " because of: " + cause.toString());
             } else {
-                Logger.logDebugMessage("Blacklisting " + host + " because of: " + cause.toString(), cause);
+                // Unexpected blacklisting cause (e.g. BufferOverflowException): log at
+                // WARN WITH the throwable so the full stack trace reaches the console
+                // log regardless of the DEBUG level (the log4j2 console appender is
+                // pinned at INFO, so logDebugMessage never surfaces in docker logs).
+                Logger.logWarningMessage("Blacklisting " + host + " because of: " + cause.toString(), cause);
             }
         }
         blacklist(cause.toString() == null || Peers.hideErrorDetails ? cause.getClass().getName() : cause.toString());
