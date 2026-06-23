@@ -36,7 +36,7 @@
                           + "total_fee BIGINT NOT NULL, payload_length INT NOT NULL, "
                           + "previous_block_hash BINARY(32), cumulative_difficulty VARBINARY NOT NULL, base_target BIGINT NOT NULL, "
                           + "next_block_id BIGINT, "
-                          + "height INT NOT NULL UNIQUE, generation_signature BINARY(64) NOT NULL, "
+                          + "height INT NOT NULL UNIQUE, generation_signature VARBINARY(64) NOT NULL, "
                           + "block_signature BINARY(64) NOT NULL, payload_hash BINARY(32) NOT NULL, generator_id BIGINT NOT NULL)");
               case 2:
                   apply("CREATE UNIQUE INDEX IF NOT EXISTS block_id_idx ON block (id)");
