@@ -180,15 +180,10 @@ public final class H2LegacyMigrator {
         Pattern createTablePattern = Pattern.compile("CREATE\\s+(?:CACHED\\s+)?TABLE\\s+(\\S+)\\s*\\(", Pattern.CASE_INSENSITIVE);
         Pattern generatedColPattern = Pattern.compile("^\\s*(\\w+)\\s+\\w+\\s+AS\\s+", Pattern.CASE_INSENSITIVE);
         Pattern insertPattern = Pattern.compile("INSERT\\s+INTO\\s+(\\S+)\\s*\\(([^)]+)\\)", Pattern.CASE_INSENSITIVE);
-        // H2 2.x makes BINARY(n) fixed-length and zero-pads short values; H2 1.4 treated
-        // it as variable. The block table's generation_signature is declared BINARY(64)
-        // but holds a 32-byte SHA-256 genSig for forged blocks (64 only for genesis). On
-        // re-import the 1.4 SCRIPT dump re-emits BINARY(64), so H2 2.x would pad it back to
-        // 64 bytes -> BlockImpl.bytes() overflows when a peer parses the served block
-        // (java.nio.BufferOverflowException, followers stuck at height 1). Rewrite the
-        // dumped DDL to VARBINARY(64) — the same fix applied to XinDbVersion case 1 for
-        // fresh installs. Targeted at this one column (group 1 = identifier+space, group 2
-        // = the (64)); every other BINARY(n) column matches its data length and is left as-is.
+        // H2 2.x zero-pads fixed BINARY(n); the 32-byte generation_signature in a
+        // BINARY(64) column would pad to 64 on re-import and overflow BlockImpl.bytes()
+        // when a peer parses the served block. Rewrite the dumped DDL to VARBINARY(64)
+        // (group 1 = identifier+space, group 2 = the (64)). See XinDbVersion case 1.
         Pattern genSigBinaryPattern = Pattern.compile("(?i)(\"?generation_signature\"?\\s+)BINARY(\\s*\\(\\s*64\\s*\\))");
 
         File tempFile = new File(scriptFile.getAbsolutePath() + ".tmp");
