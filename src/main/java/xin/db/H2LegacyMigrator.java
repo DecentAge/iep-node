@@ -180,6 +180,16 @@ public final class H2LegacyMigrator {
         Pattern createTablePattern = Pattern.compile("CREATE\\s+(?:CACHED\\s+)?TABLE\\s+(\\S+)\\s*\\(", Pattern.CASE_INSENSITIVE);
         Pattern generatedColPattern = Pattern.compile("^\\s*(\\w+)\\s+\\w+\\s+AS\\s+", Pattern.CASE_INSENSITIVE);
         Pattern insertPattern = Pattern.compile("INSERT\\s+INTO\\s+(\\S+)\\s*\\(([^)]+)\\)", Pattern.CASE_INSENSITIVE);
+        // H2 2.x makes BINARY(n) fixed-length and zero-pads short values; H2 1.4 treated
+        // it as variable. The block table's generation_signature is declared BINARY(64)
+        // but holds a 32-byte SHA-256 genSig for forged blocks (64 only for genesis). On
+        // re-import the 1.4 SCRIPT dump re-emits BINARY(64), so H2 2.x would pad it back to
+        // 64 bytes -> BlockImpl.bytes() overflows when a peer parses the served block
+        // (java.nio.BufferOverflowException, followers stuck at height 1). Rewrite the
+        // dumped DDL to VARBINARY(64) — the same fix applied to XinDbVersion case 1 for
+        // fresh installs. Targeted at this one column (group 1 = identifier+space, group 2
+        // = the (64)); every other BINARY(n) column matches its data length and is left as-is.
+        Pattern genSigBinaryPattern = Pattern.compile("(?i)(\"?generation_signature\"?\\s+)BINARY(\\s*\\(\\s*64\\s*\\))");
 
         File tempFile = new File(scriptFile.getAbsolutePath() + ".tmp");
 
@@ -224,6 +234,7 @@ public final class H2LegacyMigrator {
 
             String line;
             int fixedInserts = 0;
+            int genSigRewrites = 0;
             boolean inInsertValues = false;
             List<Integer> currentGenColPositions = null;
             StringBuilder valuesBlock = new StringBuilder();
@@ -287,12 +298,26 @@ public final class H2LegacyMigrator {
                     }
                 }
 
+                // Rewrite the generation_signature column type in the dumped DDL
+                // (BINARY(64) -> VARBINARY(64)) so H2 2.x does not zero-pad it on import.
+                Matcher genSigMatcher = genSigBinaryPattern.matcher(line);
+                if (genSigMatcher.find()) {
+                    line = genSigMatcher.replaceAll("$1VARBINARY$2");
+                    genSigRewrites++;
+                }
+
                 writer.write(line);
                 writer.newLine();
             }
 
             if (fixedInserts > 0) {
                 Logger.logMessage("Fixed " + fixedInserts + " INSERT statement(s) to exclude generated columns");
+            }
+            if (genSigRewrites > 0) {
+                Logger.logMessage("Rewrote " + genSigRewrites + " generation_signature column DDL: BINARY(64) -> VARBINARY(64)");
+            } else {
+                Logger.logMessage("WARNING: no generation_signature BINARY(64) DDL found to rewrite — "
+                        + "verify the dump's column type; an un-rewritten BINARY(64) padding will break peer sync");
             }
 
         } catch (IOException e) {
