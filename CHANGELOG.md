@@ -1,3 +1,20 @@
+# Changelog
+
+## [Unreleased]
+
+## [0.4.1] - 2026-06-24
+### Changed
+- Migrated runtime to JDK 21 (Temurin 21.0.5) with Gradle wrapper 8.12; startup enforces Java >= 21.
+- Migrated H2 database 1.4 -> 2.x: dialect porting plus an automatic legacy-DB migrator (H2LegacyMigrator, RUNSCRIPT FROM_1X).
+- Migrated the peer/API web layer from Jetty 9 to Jetty 11.
+- Bundled the wallet UI into the distribution; reworked devnet bootstrap and hallmark handling.
+### Fixed
+- generation_signature column BINARY(64) -> VARBINARY(64) to avoid H2 2.x zero-padding that broke block sync (BufferOverflowException); same rewrite applied during legacy migration.
+- Made the VersionedEntityDbTable trim query H2-2.x compatible (no row-constructor in sub-select).
+- Replaced deprecated Jetty setGzipHandler with insertHandler; log unexpected peer-blacklist causes at WARN with stack trace.
+
+## [0.3.x and earlier]
+
 # Release 0.3.1
 - Added dockerfile to create a docker image used to run the IEP node on
 docker
