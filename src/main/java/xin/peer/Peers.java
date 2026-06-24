@@ -385,7 +385,7 @@ public final class Peers {
                     gzipHandler.setIncludedMethods("GET", "POST");
                     gzipHandler.setIncludedPaths("/*");
                     gzipHandler.setMinGzipSize(MIN_COMPRESS_SIZE);
-                    ctxHandler.setGzipHandler(gzipHandler);
+                    ctxHandler.insertHandler(gzipHandler);
                 }
 
                 peerServer.setHandler(ctxHandler);

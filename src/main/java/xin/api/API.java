@@ -238,7 +238,7 @@ public final class API {
             }
             gzipHandler.setIncludedMethods("GET", "POST");
             gzipHandler.setMinGzipSize(xin.peer.Peers.MIN_COMPRESS_SIZE);
-            apiHandler.setGzipHandler(gzipHandler);
+            apiHandler.insertHandler(gzipHandler);
 
             if (Xin.getBooleanProperty("xin.apiServerCORS")) {
                 FilterHolder filterHolder = apiHandler.addFilter(CrossOriginFilter.class, "/*", null);
