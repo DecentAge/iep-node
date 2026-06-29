@@ -177,8 +177,17 @@ public final class H2LegacyMigrator {
         Logger.logMessage("Fixing generated columns in migration script...");
 
         Map<String, List<String>> generatedColumns = new HashMap<>();
+        // ARRAY columns per table: H2 1.4 SCRIPT serializes array values as (e1, e2, ...)
+        // — with a trailing comma for the single-element case ('x',). H2 2.x rejects the
+        // trailing comma AND silently imports the multi-element (a,b) form as a 1-element
+        // [ROW(a,b)] (cardinality 1, data corrupted) even with FROM_1X. We rewrite each
+        // array value to ARRAY[...] (the only form that round-trips correctly).
+        Map<String, List<String>> arrayColumns = new HashMap<>();
         Pattern createTablePattern = Pattern.compile("CREATE\\s+(?:CACHED\\s+)?TABLE\\s+(\\S+)\\s*\\(", Pattern.CASE_INSENSITIVE);
         Pattern generatedColPattern = Pattern.compile("^\\s*(\\w+)\\s+\\w+\\s+AS\\s+", Pattern.CASE_INSENSITIVE);
+        // Column whose type ends in ARRAY: "<name> [<base type>] ARRAY [NOT NULL]".
+        // .* (not .+) so the untyped legacy form "<name> ARRAY" also matches.
+        Pattern arrayColPattern = Pattern.compile("^\\s*\"?(\\w+)\"?\\s+.*\\bARRAY\\b", Pattern.CASE_INSENSITIVE);
         Pattern insertPattern = Pattern.compile("INSERT\\s+INTO\\s+(\\S+)\\s*\\(([^)]+)\\)", Pattern.CASE_INSENSITIVE);
         // H2 2.x zero-pads fixed BINARY(n); the 32-byte generation_signature in a
         // BINARY(64) column would pad to 64 on re-import and overflow BlockImpl.bytes()
@@ -207,6 +216,13 @@ public final class H2LegacyMigrator {
                         String colName = genMatcher.group(1).toUpperCase();
                         generatedColumns.computeIfAbsent(currentTable, k -> new ArrayList<>()).add(colName);
                         Logger.logDebugMessage("Found generated column: " + currentTable + "." + colName);
+                    } else {
+                        Matcher arrMatcher = arrayColPattern.matcher(line);
+                        if (arrMatcher.find()) {
+                            String colName = arrMatcher.group(1).toUpperCase();
+                            arrayColumns.computeIfAbsent(currentTable, k -> new ArrayList<>()).add(colName);
+                            Logger.logDebugMessage("Found array column: " + currentTable + "." + colName);
+                        }
                     }
                     if (line.trim().endsWith(");")) {
                         inCreateTable = false;
@@ -217,6 +233,9 @@ public final class H2LegacyMigrator {
 
             if (!generatedColumns.isEmpty()) {
                 Logger.logMessage("Found " + generatedColumns.size() + " table(s) with generated columns");
+            }
+            if (!arrayColumns.isEmpty()) {
+                Logger.logMessage("Found " + arrayColumns.size() + " table(s) with ARRAY columns");
             }
 
         } catch (IOException e) {
@@ -232,14 +251,14 @@ public final class H2LegacyMigrator {
             int genSigRewrites = 0;
             boolean inInsertValues = false;
             List<Integer> currentGenColPositions = null;
-            StringBuilder valuesBlock = new StringBuilder();
+            List<Integer> currentArrayPositions = null;
 
             while ((line = reader.readLine()) != null) {
                 if (inInsertValues) {
                     // Collect and fix VALUES lines until we hit a line that doesn't start with '('
                     if (line.trim().startsWith("(")) {
                         // Fix this row and write it
-                        String fixedRow = fixValuesRow(line, currentGenColPositions);
+                        String fixedRow = fixValuesRow(line, currentGenColPositions, currentArrayPositions);
                         writer.write(fixedRow);
                         writer.newLine();
                         continue;
@@ -247,6 +266,7 @@ public final class H2LegacyMigrator {
                         // End of VALUES block
                         inInsertValues = false;
                         currentGenColPositions = null;
+                        currentArrayPositions = null;
                         // Fall through to write the current line
                     }
                 }
@@ -255,22 +275,27 @@ public final class H2LegacyMigrator {
                 if (insertMatcher.find()) {
                     String tableName = insertMatcher.group(1);
                     List<String> genCols = generatedColumns.get(tableName);
+                    List<String> arrCols = arrayColumns.get(tableName);
 
-                    if (genCols != null && !genCols.isEmpty()) {
+                    if ((genCols != null && !genCols.isEmpty()) || (arrCols != null && !arrCols.isEmpty())) {
                         String columnList = insertMatcher.group(2);
                         String[] columns = columnList.split(",");
 
-                        // Find positions of generated columns
+                        // Find positions of generated (to remove) and array (to wrap) columns
                         List<Integer> genColPositions = new ArrayList<>();
+                        List<Integer> arrayPositions = new ArrayList<>();
                         for (int i = 0; i < columns.length; i++) {
-                            String col = columns[i].trim().toUpperCase();
-                            if (genCols.contains(col)) {
+                            String col = columns[i].trim().toUpperCase().replace("\"", "");
+                            if (genCols != null && genCols.contains(col)) {
                                 genColPositions.add(i);
+                            }
+                            if (arrCols != null && arrCols.contains(col)) {
+                                arrayPositions.add(i);
                             }
                         }
 
-                        if (!genColPositions.isEmpty()) {
-                            // Remove generated columns from column list
+                        if (!genColPositions.isEmpty() || !arrayPositions.isEmpty()) {
+                            // Header keeps all columns except generated ones (array columns stay).
                             StringBuilder newColumnList = new StringBuilder();
                             for (int i = 0; i < columns.length; i++) {
                                 if (!genColPositions.contains(i)) {
@@ -286,7 +311,7 @@ public final class H2LegacyMigrator {
                             // Prepare to collect VALUES lines
                             inInsertValues = true;
                             currentGenColPositions = genColPositions;
-                            valuesBlock = new StringBuilder();
+                            currentArrayPositions = arrayPositions;
                             fixedInserts++;
                             continue;
                         }
@@ -332,8 +357,10 @@ public final class H2LegacyMigrator {
      * Example: "(1, 'text', 'remove_me', 'keep', TRUE)," with position [2]
      * Returns: "(1, 'text', 'keep', TRUE),"
      */
-    private static String fixValuesRow(String rowLine, List<Integer> positions) {
-        if (positions == null || positions.isEmpty()) return rowLine;
+    private static String fixValuesRow(String rowLine, List<Integer> positions, List<Integer> arrayPositions) {
+        boolean hasRemove = positions != null && !positions.isEmpty();
+        boolean hasArray = arrayPositions != null && !arrayPositions.isEmpty();
+        if (!hasRemove && !hasArray) return rowLine;
 
         String trimmed = rowLine.trim();
         if (!trimmed.startsWith("(")) return rowLine;
@@ -393,12 +420,24 @@ public final class H2LegacyMigrator {
             values.add(currentValue.toString().trim());
         }
 
+        // Wrap array values (...) -> ARRAY[...] at array column positions. Done BEFORE
+        // removal so positions still refer to the original column order.
+        if (hasArray) {
+            for (int pos : arrayPositions) {
+                if (pos < values.size()) {
+                    values.set(pos, wrapArrayLiteral(values.get(pos)));
+                }
+            }
+        }
+
         // Remove values at specified positions (in descending order to avoid index shift)
-        List<Integer> sortedPositions = new ArrayList<>(positions);
-        sortedPositions.sort((a, b) -> b - a);
-        for (int pos : sortedPositions) {
-            if (pos < values.size()) {
-                values.remove(pos);
+        if (hasRemove) {
+            List<Integer> sortedPositions = new ArrayList<>(positions);
+            sortedPositions.sort((a, b) -> b - a);
+            for (int pos : sortedPositions) {
+                if (pos < values.size()) {
+                    values.remove(pos);
+                }
             }
         }
 
@@ -411,6 +450,27 @@ public final class H2LegacyMigrator {
         result.append(')').append(trailing);
 
         return result.toString();
+    }
+
+    /**
+     * Convert a legacy H2 1.4 array literal value to the H2 2.x ARRAY[...] form.
+     * 1.4 emits {@code (e1, e2, ...)} and, for a single element, {@code ('x',)} with a
+     * trailing comma. H2 2.x rejects the trailing comma and (worse) imports the bare
+     * {@code (a, b)} form as a 1-element {@code [ROW(a,b)]} (silent corruption) — so we
+     * swap the outer delimiters to ARRAY[...] and drop a trailing comma. The element
+     * text is left byte-for-byte unchanged. NULL / non-parenthesized values pass through.
+     */
+    private static String wrapArrayLiteral(String value) {
+        if (value == null) return null;
+        String t = value.trim();
+        if (t.isEmpty() || "NULL".equalsIgnoreCase(t)) return value;
+        if (t.regionMatches(true, 0, "ARRAY[", 0, 6)) return value; // already converted
+        if (t.length() >= 2 && t.charAt(0) == '(' && t.charAt(t.length() - 1) == ')') {
+            String inner = t.substring(1, t.length() - 1).trim();
+            if (inner.endsWith(",")) inner = inner.substring(0, inner.length() - 1).trim();
+            return "ARRAY[" + inner + "]";
+        }
+        return value;
     }
 
     /**
@@ -553,10 +613,56 @@ public final class H2LegacyMigrator {
                 Logger.logMessage("Imported database: block count = " + rs.getLong(1)
                         + ", max height = " + rs.getInt(2));
             }
+            verifyNoArrayRowCorruption(stmt);
             stmt.execute("SHUTDOWN");
         } catch (SQLException e) {
             throw new RuntimeException("Verification of imported database failed: " + e
                     + ". Legacy backup files retained for recovery.", e);
         }
+    }
+
+    /**
+     * Guard against the silent ARRAY corruption: a legacy {@code (a, b)} literal that was
+     * NOT rewritten to {@code ARRAY[...]} imports as a single-element {@code [ROW(a,b)]}
+     * (cardinality 1, a ROW where a scalar belongs). Scan every ARRAY column and abort
+     * loudly if any element is itself a ROW/array/struct — i.e. the rewrite missed a value.
+     * VARBINARY array elements legitimately arrive as {@code byte[]} and are NOT flagged.
+     */
+    private static void verifyNoArrayRowCorruption(Statement stmt) throws SQLException {
+        List<String[]> arrayCols = new ArrayList<>();
+        try (ResultSet rs = stmt.executeQuery(
+                "SELECT TABLE_NAME, COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS "
+                        + "WHERE TABLE_SCHEMA = 'PUBLIC' AND DATA_TYPE LIKE '%ARRAY%'")) {
+            while (rs.next()) {
+                arrayCols.add(new String[]{rs.getString(1), rs.getString(2)});
+            }
+        }
+        long scanned = 0;
+        for (String[] tc : arrayCols) {
+            String table = tc[0], col = tc[1];
+            try (ResultSet rs = stmt.executeQuery(
+                    "SELECT \"" + col + "\" FROM \"" + table + "\" WHERE \"" + col + "\" IS NOT NULL")) {
+                while (rs.next()) {
+                    java.sql.Array arr = rs.getArray(1);
+                    if (arr == null) continue;
+                    Object data = arr.getArray();
+                    if (data == null) continue;
+                    int len = java.lang.reflect.Array.getLength(data);
+                    for (int i = 0; i < len; i++) {
+                        Object el = java.lang.reflect.Array.get(data, i);
+                        boolean nestedArray = el != null && el.getClass().isArray() && !(el instanceof byte[]);
+                        if (el instanceof java.sql.Array || el instanceof java.sql.Struct || nestedArray
+                                || (el != null && el.toString().startsWith("ROW "))) {
+                            throw new RuntimeException("ARRAY corruption detected in " + table + "." + col
+                                    + ": element is a nested ROW/array (" + el + "). A legacy (...) array literal"
+                                    + " was not rewritten to ARRAY[...] — aborting to avoid silent data corruption.");
+                        }
+                    }
+                    scanned++;
+                }
+            }
+        }
+        Logger.logMessage("Verified " + scanned + " array value(s) across " + arrayCols.size()
+                + " ARRAY column(s): no ROW corruption");
     }
 }
