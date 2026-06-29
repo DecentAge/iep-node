@@ -142,9 +142,9 @@ public final class Xin {
     private static final Properties properties = new Properties(defaultProperties);
 
     static {
-        Logger.init(getUserHomeDir());
         loadProperties(properties, XIN_CUSTOM_PROPERTIES, false);
         loadProperties(properties, XIN_INSTALLER_PROPERTIES, false);
+        Logger.init(getUserHomeDir());
 
 
         //Add property validations here
