@@ -97,14 +97,34 @@ public final class DbUtils {
         return getArray(rs, columnName, cls, null);
     }
 
+    @SuppressWarnings("unchecked")
     public static <T> T[] getArray(ResultSet rs, String columnName, Class<? extends T[]> cls, T[] ifNull) throws SQLException {
         Array array = rs.getArray(columnName);
-        if (array != null) {
-            Object[] objects = (Object[]) array.getArray();
-            return Arrays.copyOf(objects, objects.length, cls);
-        } else {
+        if (array == null) {
             return ifNull;
         }
+        Object[] objects = (Object[]) array.getArray();
+        // H2 2.x can return an untyped-ARRAY column as a MIXED Object[] — e.g. the
+        // account_control_phasing.whitelist BIGINT array, when a DB is migrated from H2 1.4
+        // by H2LegacyMigrator, keeps the 1.4 untyped ARRAY type, and H2 2.x then returns
+        // small values as Integer and large ones as Long. Arrays.copyOf(.., Long[].class)
+        // then throws ArrayStoreException. Convert each element to the requested component
+        // type instead of a raw copy, so migrated (mixed) arrays read back correctly.
+        Class<?> componentType = cls.getComponentType();
+        T[] result = (T[]) java.lang.reflect.Array.newInstance(componentType, objects.length);
+        for (int i = 0; i < objects.length; i++) {
+            Object o = objects[i];
+            if (o == null || componentType.isInstance(o)) {
+                result[i] = (T) o;
+            } else if (o instanceof Number && componentType == Long.class) {
+                result[i] = (T) (Long) ((Number) o).longValue();
+            } else if (o instanceof Number && componentType == Integer.class) {
+                result[i] = (T) (Integer) ((Number) o).intValue();
+            } else {
+                result[i] = (T) o; // last resort — fail loudly if genuinely incompatible
+            }
+        }
+        return result;
     }
 
     public static <T> void setArray(PreparedStatement pstmt, int index, T[] array) throws SQLException {
