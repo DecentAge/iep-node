@@ -222,3 +222,8 @@ gradle-app.setting
 /html/www/wallet
 /wallet-ui/node_modules
 /.idea/
+/iep-node.iml
+
+# runtime data (H2 db created when running the node from the repo root)
+/db/
+/logs/

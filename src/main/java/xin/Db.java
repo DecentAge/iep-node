@@ -17,6 +17,7 @@
 package xin;
 
 import xin.db.BasicDb;
+import xin.db.H2LegacyMigrator;
 import xin.db.TransactionalDb;
 
 public final class Db {
@@ -38,6 +39,13 @@ public final class Db {
     );
 
     static void init() {
+        if ("h2".equalsIgnoreCase(Xin.getStringProperty(PREFIX + "Type"))
+                && Xin.getStringProperty(PREFIX + "Url") == null) {
+            H2LegacyMigrator.migrateIfNeeded(
+                    Xin.getDbDir(Xin.getStringProperty(PREFIX + "Dir")),
+                    Xin.getStringProperty(PREFIX + "Username"),
+                    Xin.getStringProperty(PREFIX + "Password", null, true));
+        }
         db.init(new XinDbVersion());
     }
 

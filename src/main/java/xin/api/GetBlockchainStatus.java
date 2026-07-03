@@ -22,7 +22,7 @@ import xin.peer.Peers;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 public final class GetBlockchainStatus extends APIServlet.APIRequestHandler {
 

@@ -23,7 +23,7 @@ import xin.VoteWeighting;
 import xin.util.Convert;
 import org.json.simple.JSONStreamAware;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 
 import static xin.api.JSONResponses.POLL_RESULTS_NOT_AVAILABLE;

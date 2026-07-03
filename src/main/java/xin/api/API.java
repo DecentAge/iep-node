@@ -34,14 +34,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.HttpConfiguration;
@@ -164,7 +164,7 @@ public final class API {
             //
             // Create the HTTPS connector
             //
-            final SslContextFactory sslContextFactory;
+            final SslContextFactory.Server sslContextFactory;
             if (enableSSL) {
                 HttpConfiguration https_config = new HttpConfiguration();
                 https_config.setSendDateHeader(false);
@@ -172,7 +172,7 @@ public final class API {
                 https_config.setSecureScheme("https");
                 https_config.setSecurePort(sslPort);
                 https_config.addCustomizer(new SecureRequestCustomizer());
-                sslContextFactory = new SslContextFactory();
+                sslContextFactory = new SslContextFactory.Server();
                 String keyStorePath = Paths.get(Xin.getUserHomeDir()).resolve(Paths.get(Xin.getStringProperty("xin.keyStorePath"))).toString();
                 Logger.logInfoMessage("Using keystore: " + keyStorePath);
                 sslContextFactory.setKeyStorePath(keyStorePath);
@@ -227,7 +227,7 @@ public final class API {
             }
 
             apiHandler.addServlet(APIServlet.class, "/api");
-            
+
             ServletHolder envConfigServletHolder = new ServletHolder(new EnvConfigServlet());
             apiHandler.addServlet(envConfigServletHolder, "/wallet/env.config.js");
 
@@ -238,7 +238,7 @@ public final class API {
             }
             gzipHandler.setIncludedMethods("GET", "POST");
             gzipHandler.setMinGzipSize(xin.peer.Peers.MIN_COMPRESS_SIZE);
-            apiHandler.setGzipHandler(gzipHandler);
+            apiHandler.insertHandler(gzipHandler);
 
             if (Xin.getBooleanProperty("xin.apiServerCORS")) {
                 FilterHolder filterHolder = apiHandler.addFilter(CrossOriginFilter.class, "/*", null);

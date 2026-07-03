@@ -21,7 +21,7 @@ import xin.Account;
 import xin.XinException;
 import org.json.simple.JSONStreamAware;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 public final class SendToken extends CreateTransaction {
 
