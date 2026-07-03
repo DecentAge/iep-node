@@ -106,25 +106,41 @@ public final class DbUtils {
         Object[] objects = (Object[]) array.getArray();
         // H2 2.x can return an untyped-ARRAY column as a MIXED Object[] — e.g. the
         // account_control_phasing.whitelist BIGINT array, when a DB is migrated from H2 1.4
-        // by H2LegacyMigrator, keeps the 1.4 untyped ARRAY type, and H2 2.x then returns
-        // small values as Integer and large ones as Long. Arrays.copyOf(.., Long[].class)
-        // then throws ArrayStoreException. Convert each element to the requested component
-        // type instead of a raw copy, so migrated (mixed) arrays read back correctly.
+        // by H2LegacyMigrator, keeps the 1.4 untyped ARRAY type. H2 2.x then hands the
+        // elements back inconsistently typed — as Integer, Long, or even String — so a raw
+        // Arrays.copyOf(.., Long[].class) throws ArrayStoreException. Coerce each element to
+        // the requested numeric component type (from a Number or from its text form) so
+        // migrated arrays read back correctly regardless of how H2 typed them.
         Class<?> componentType = cls.getComponentType();
         T[] result = (T[]) java.lang.reflect.Array.newInstance(componentType, objects.length);
         for (int i = 0; i < objects.length; i++) {
             Object o = objects[i];
             if (o == null || componentType.isInstance(o)) {
                 result[i] = (T) o;
-            } else if (o instanceof Number && componentType == Long.class) {
-                result[i] = (T) (Long) ((Number) o).longValue();
-            } else if (o instanceof Number && componentType == Integer.class) {
-                result[i] = (T) (Integer) ((Number) o).intValue();
+            } else if (componentType == Long.class) {
+                result[i] = (T) Long.valueOf(coerceToLong(o));
+            } else if (componentType == Integer.class) {
+                result[i] = (T) Integer.valueOf((int) coerceToLong(o));
             } else {
                 result[i] = (T) o; // last resort — fail loudly if genuinely incompatible
             }
         }
         return result;
+    }
+
+    // Coerce a value H2 may hand back as Number or (for a migrated untyped ARRAY) String
+    // into a long. Account ids are UNSIGNED 64-bit, so a large decimal string can exceed
+    // Long.MAX_VALUE — fall back to unsigned parsing rather than throwing.
+    private static long coerceToLong(Object o) {
+        if (o instanceof Number) {
+            return ((Number) o).longValue();
+        }
+        String s = o.toString().trim();
+        try {
+            return Long.parseLong(s);
+        } catch (NumberFormatException e) {
+            return Long.parseUnsignedLong(s);
+        }
     }
 
     public static <T> void setArray(PreparedStatement pstmt, int index, T[] array) throws SQLException {
