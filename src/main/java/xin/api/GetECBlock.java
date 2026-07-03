@@ -20,7 +20,7 @@ import xin.*;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONStreamAware;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 public final class GetECBlock extends APIServlet.APIRequestHandler {
 

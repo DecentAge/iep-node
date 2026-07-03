@@ -19,7 +19,7 @@ package xin.storage.rethink;
 import com.google.gson.Gson;
 import com.rethinkdb.gen.ast.Table;
 import com.rethinkdb.net.Connection;
-import com.rethinkdb.net.Cursor;
+import com.rethinkdb.net.Result;
 import org.json.simple.JSONObject;
 
 
@@ -32,7 +32,7 @@ public class RethinkDbUtil {
         RethinkDatabase database = new RethinkDatabase();
         Connection connection = database.getDBConnection();
         Table table = database.getTable("rethinkdb", "stats");
-        Cursor cursor = table.run(connection);
+        Result cursor = table.run(connection);
         String json = gson.toJson(cursor.next());
         jsonObject.put("stats", gson.fromJson(json, JSONObject.class));
         return jsonObject;

@@ -3,12 +3,13 @@ package xin.api;
 import java.io.IOException;
 
 import xin.Constants;
+import xin.ConstantsConfigHelper;
 import xin.Xin;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
@@ -53,7 +54,7 @@ public class EnvConfigServlet extends HttpServlet {
 		jsonObject.put("walletBrowserStorageExp", Xin.getIntProperty("xin.walletBrowserStorageExp"));
 		jsonObject.put("genesisBlockEpoch", Constants.EPOCH_BEGINNING);
 		jsonObject.put("phasingDuration", Constants.MAX_PHASING_DURATION/2);
-		jsonObject.put("effectiveLeasingOffsetBlock", Constants.EFFECTIVE_LEASING_OFFSET_BLOCK);
+		jsonObject.put("effectiveLeasingOffsetBlock", ConstantsConfigHelper.getIntProperty(ConstantsConfigHelper.PROPERTY_WALLET_LEASING_OFFSET_BLOCK));
 		
 		
 		String jsResponse = "window.envConfig = " + jsonObject.toString(4);

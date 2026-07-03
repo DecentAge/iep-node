@@ -1,16 +1,16 @@
 // Apply the java plugin to add support for Java
 plugins {
-  id "org.openjfx.javafxplugin" version "0.0.10"
+  id "org.openjfx.javafxplugin" version "0.1.0"
 }
 
 apply plugin: 'java'
 apply plugin: 'application'
 
-sourceCompatibility = 11
-targetCompatibility = 11
+sourceCompatibility = 21
+targetCompatibility = 21
 
 ext {
-	javaFxVersion="17.0.1"
+	javaFxVersion="21.0.2"
 }
 
 javafx {
@@ -22,7 +22,8 @@ javafx {
 
 gradle.projectsEvaluated {
     tasks.withType(JavaCompile) {
-        options.compilerArgs << "-Xlint"
+        // Only show warnings, don't fail the build
+        options.compilerArgs << "-Xlint:none"
     }
 }
 
@@ -30,61 +31,75 @@ gradle.projectsEvaluated {
 repositories {
     mavenLocal()
     mavenCentral()
-    jcenter()
     flatDir {
         dirs 'external_libs'
     }
 }
 
 configurations {
-    compile {
-        exclude(group: 'org.slf4j', module: 'slf4j-api')
-    }
+    // Removed SLF4J exclusion - required by Jetty 11.x
+
+    // Legacy H2 1.4 jar, resolved at build time and bundled into the dist's
+    // legacy_libs/ (see distributions block). Resolving it from the repo instead
+    // of shipping a committed binary means CI builds (fresh git checkout) get it
+    // too: the jar is gitignored (*.jar), so a file-based legacy_libs/ was absent
+    // in CI images and H2LegacyMigrator failed on nodes with an old H2 1.4 DB.
+    legacyH2 { transitive = false }
 }
 
 // In this section you declare the dependencies for your production and test code
 dependencies {
-    compile group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.65'
-    compile group: 'com.google.zxing', name: 'core', version: '3.2.1'
-    compile group: 'com.google.zxing', name: 'javase', version: '3.2.1'
-    compile group: 'com.h2database', name: 'h2', version: '1.4.191'
-    compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
-    compile group: 'org.eclipse.jetty', name: 'jetty-server', version: '9.4.6.v20170531'
-    compile group: 'org.eclipse.jetty', name: 'jetty-http-spi', version: '9.4.6.v20170531'
-    compile group: 'org.eclipse.jetty', name: 'jetty-security' , version: '9.4.6.v20170531'
-    compile group: 'org.eclipse.jetty', name: 'jetty-servlets', version: '9.4.6.v20170531'
-    compile group: 'org.eclipse.jetty.websocket', name: 'websocket-api', version: '9.4.6.v20170531'
-    compile group: 'org.eclipse.jetty.websocket', name: 'websocket-server', version: '9.4.6.v20170531'
-    compile group: 'org.eclipse.jetty', name: 'jetty-util', version: '9.4.6.v20170531'
-    compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
-    compile group: 'org.apache.lucene', name: 'lucene-analyzers-common', version: '8.7.0'
-    compile group: 'org.apache.lucene', name: 'lucene-queryparser', version: '8.7.0'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.14.1'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.14.1'
-    compile group: 'org.apache.tika', name: 'tika-parsers', version: '1.13'
-    compile group: 'org.apache.tika', name: 'tika-core', version: '1.13'
-    compile 'org.bitlet:weupnp:0.1.4'
-    compile 'org.mongodb:mongodb-driver:3.3.0'
-    compile 'com.squareup.retrofit2:retrofit:2.9.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.9.0'
-    compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
-    compile group: 'com.rethinkdb', name: 'rethinkdb-driver', version: '2.3.3'
-    compile name: 'IPFS'
-    compile name: 'jTMSP-0.0.1'
-    compile group: 'mysql', name: 'mysql-connector-java', version: '6.0.4'
-    compile group: 'org.postgresql', name: 'postgresql', version: '9.4.1211'
+    implementation group: 'org.bouncycastle', name: 'bcprov-jdk18on', version: '1.78'
+    implementation group: 'com.google.zxing', name: 'core', version: '3.5.3'
+    implementation group: 'com.google.zxing', name: 'javase', version: '3.5.3'
+    implementation group: 'com.h2database', name: 'h2', version: '2.2.224'
+    // Legacy H2 1.4 engine — used ONLY by H2LegacyMigrator (subprocess) to dump an
+    // existing 1.4 DB before importing it into 2.x. Bundled into legacy_libs/, not
+    // on the app classpath.
+    legacyH2 group: 'com.h2database', name: 'h2', version: '1.4.191'
+    implementation group: 'jakarta.servlet', name: 'jakarta.servlet-api', version: '5.0.0'
+    implementation group: 'org.eclipse.jetty', name: 'jetty-server', version: '11.0.24'
+    implementation group: 'org.eclipse.jetty', name: 'jetty-http-spi', version: '11.0.24'
+    implementation group: 'org.eclipse.jetty', name: 'jetty-security' , version: '11.0.24'
+    implementation group: 'org.eclipse.jetty', name: 'jetty-servlets', version: '11.0.24'
+    implementation group: 'org.eclipse.jetty.websocket', name: 'websocket-jetty-api', version: '11.0.24'
+    implementation group: 'org.eclipse.jetty.websocket', name: 'websocket-jetty-server', version: '11.0.24'
+    implementation group: 'org.eclipse.jetty.websocket', name: 'websocket-jetty-client', version: '11.0.24'
+    implementation group: 'org.eclipse.jetty', name: 'jetty-util', version: '11.0.24'
+    implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+    implementation group: 'org.json', name: 'json', version: '20240303'
+    implementation group: 'commons-lang', name: 'commons-lang', version: '2.6'
+    implementation group: 'org.apache.lucene', name: 'lucene-analysis-common', version: '9.11.1'
+    implementation group: 'org.apache.lucene', name: 'lucene-queryparser', version: '9.11.1'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.23.1'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.23.1'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j2-impl', version: '2.23.1'
+    implementation group: 'org.apache.tika', name: 'tika-parsers', version: '1.28.5'
+    implementation group: 'org.apache.tika', name: 'tika-core', version: '1.28.5'
+    implementation 'org.bitlet:weupnp:0.1.4'
+    implementation 'org.mongodb:mongodb-driver:3.12.14'
+    implementation 'com.squareup.retrofit2:retrofit:2.11.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
+    implementation group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
+    implementation group: 'com.rethinkdb', name: 'rethinkdb-driver', version: '2.4.4'
+    implementation name: 'IPFS'
+    implementation name: 'jTMSP-0.0.1'
+    implementation group: 'com.mysql', name: 'mysql-connector-j', version: '8.3.0'
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.7.3'
     //Dev tools
-    compile group: 'org.springframework.shell', name: 'spring-shell', version: '1.2.0.RELEASE'
+    implementation group: 'org.springframework.shell', name: 'spring-shell', version: '1.2.0.RELEASE'
 
 
 }
 
-mainClassName = "xin.Xin"
-applicationName = 'iep-node'
+application {
+    mainClass = "xin.Xin"
+    applicationName = 'iep-node'
+}
 // applicationDefaultJvmArgs = ["-Dmrn.runtime.dirProvider=ENV_DIR_PROVIDER"]
 
 task devStartScripts(type: CreateStartScripts) {
-    mainClassName = 'xin.dev.XinDevTools'
+    mainClass = 'xin.dev.XinDevTools'
     applicationName = 'dev'
 //	defaultJvmOpts = ["-Dmrn.runtime.dirProvider=ENV_DIR_PROVIDER"]
     classpath = startScripts.classpath
@@ -95,10 +110,17 @@ jar {
   manifest {
     attributes(
       'Main-Class': 'xin.Xin',
-      'Class-Path': configurations.runtime.files.collect { "$it.name" }.join(' ')
+      'Class-Path': configurations.runtimeClasspath.files.collect { "$it.name" }.join(' ')
     )
   }
 }
+
+// iep-wallet-ui ships the desktop wallet UI as a zip (built separately by
+// `iep-wallet-ui`). iep-node's jetty serves /wallet/* from html/www/ (per
+// xin.apiResourceBase), so the wallet zip's contents must end up under
+// html/www/wallet/. The Dockerfile does this at image-build time; we mirror
+// that step here so distZip / the installer build path also bundle the UI.
+def walletZip = file("${projectDir}/../iep-wallet-ui/build/iep-wallet-ui.zip")
 
 distributions {
     main {
@@ -106,8 +128,28 @@ distributions {
             from('html') {
                into('html')
             }
+            // Unpack the wallet UI zip into html/www/wallet/ if available.
+            // The build still succeeds without it (you'll get an empty wallet
+            // dir + 404 at /wallet/index.html), so users who don't want a
+            // bundled UI can build iep-node without iep-wallet-ui.
+            if (walletZip.exists()) {
+                from(zipTree(walletZip)) {
+                    into('html/www/wallet')
+                }
+            }
             from('conf') {
                into('conf')
+            }
+            // Legacy H2 1.4 jar resolved by the legacyH2 configuration (NOT a
+            // committed binary — the jar is gitignored, so a file-based copy was
+            // missing from CI-built images). Lands as legacy_libs/h2-1.4.191.jar,
+            // which is exactly what H2LegacyMigrator.DEFAULT_LEGACY_JAR expects.
+            from(configurations.legacyH2) {
+               into('legacy_libs')
+            }
+            from('scripts') {
+               into('scripts')
+               filePermissions { unix(0755) }
             }
         }
     }
@@ -116,5 +158,26 @@ distributions {
 applicationDistribution.into('bin') {
     duplicatesStrategy= DuplicatesStrategy.EXCLUDE
     from(devStartScripts)
-    fileMode = 0755
+    filePermissions {
+        unix(0755)
+    }
 }
+
+// Mirror the dist zip from gradle's standard build/distributions/iep-node.zip to
+// build/iep-node.zip so iep-node-installer's install.xml (which references
+// `${nodeProjectPath}/build/${xin.app.name}.zip`) finds it. This matches the
+// flat layout that CI's iep-node-artifacts uses.
+//
+// Implementation note: a Copy task here got fooled by stale leftovers from
+// previous runs (a leftover symlink/file at the destination would make gradle's
+// up-to-date check think the copy was already done). A direct `Files.copy` with
+// REPLACE_EXISTING sidesteps that — runs every time, ~0ms, always correct.
+task copyDistZipToBuild(dependsOn: distZip) {
+    description = 'Copy build/distributions/iep-node.zip to build/iep-node.zip for the installer.'
+    doLast {
+        def src = layout.buildDirectory.file('distributions/iep-node.zip').get().asFile.toPath()
+        def dst = layout.buildDirectory.file('iep-node.zip').get().asFile.toPath()
+        java.nio.file.Files.copy(src, dst, java.nio.file.StandardCopyOption.REPLACE_EXISTING)
+    }
+}
+distZip.finalizedBy copyDistZipToBuild

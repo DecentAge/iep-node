@@ -47,7 +47,6 @@ public class RuntimeEnvironment {
             Class.forName("javafx.application.Application");
             hasJavaFX_ = true;
         } catch (ClassNotFoundException e) {
-            System.out.println("javafx not supported: "+e.getMessage());
             hasJavaFX_ = false;
         }
         hasJavaFX = hasJavaFX_;
@@ -78,13 +77,10 @@ public class RuntimeEnvironment {
     }
 
     public static boolean isDesktopApplicationEnabled() {
-        boolean isDesktopApplicationEnabled = isDesktopEnabled() && hasJavaFX;
-    	System.out.println("isDesktopApplicationEnabled=" + isDesktopApplicationEnabled);
-        return isDesktopApplicationEnabled;
+        return isDesktopEnabled() && hasJavaFX;
     }
 
     public static RuntimeMode getRuntimeMode() {
-        System.out.println("isHeadless=" + isHeadless());
         if (isDesktopEnabled()) {
             return new DesktopMode();
         } else if (isWindowsService()) {

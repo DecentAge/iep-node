@@ -56,6 +56,10 @@ public class ConstantsConfigHelper {
     public static final String PROPERTY_PRUNABLE_MESSAGES_BLOCK = "PRUNABLE_MESSAGES_BLOCK";
     public static final String PROPERTY_CROWD_FUNDING_BLOCK = "CROWD_FUNDING_BLOCK";
     public static final String PROPERTY_FUNDING_MONITOR_BLOCK = "FUNDING_MONITOR_BLOCK";
+    public static final String PROPERTY_INITIAL_BASE_TARGET = "INITIAL_BASE_TARGET";
+    public static final String PROPERTY_WALLET_LEASING_OFFSET_BLOCK = "WALLET_LEASING_OFFSET_BLOCK";
+    public static final String PROPERTY_LEASING_DELAY = "LEASING_DELAY";
+    public static final String PROPERTY_LEASE_ACTIVATION_OFFSET_BLOCK = "LEASE_ACTIVATION_OFFSET_BLOCK";
 
     private static final List<String> ENVIRONMENT_DIFFER_PROPERTY_NAMES =
             ImmutableList.of(
@@ -87,7 +91,11 @@ public class ConstantsConfigHelper {
                     PROPERTY_SHUFFLING_ACTIVATION_BLOCK,
                     PROPERTY_PRUNABLE_MESSAGES_BLOCK,
                     PROPERTY_CROWD_FUNDING_BLOCK,
-                    PROPERTY_FUNDING_MONITOR_BLOCK
+                    PROPERTY_FUNDING_MONITOR_BLOCK,
+                    PROPERTY_INITIAL_BASE_TARGET,
+                    PROPERTY_WALLET_LEASING_OFFSET_BLOCK,
+                    PROPERTY_LEASING_DELAY,
+                    PROPERTY_LEASE_ACTIVATION_OFFSET_BLOCK
             );
 
     
@@ -143,10 +151,14 @@ public class ConstantsConfigHelper {
             .put(PROPERTY_PRUNABLE_MESSAGES_BLOCK, 1)
             .put(PROPERTY_CROWD_FUNDING_BLOCK, 1)
             .put(PROPERTY_FUNDING_MONITOR_BLOCK, 1)
+            .put(PROPERTY_INITIAL_BASE_TARGET, 17080318L)
+            .put(PROPERTY_WALLET_LEASING_OFFSET_BLOCK, 3000)
+            .put(PROPERTY_LEASING_DELAY, 1440)
+            .put(PROPERTY_LEASE_ACTIVATION_OFFSET_BLOCK, 3000)
             .put(PROPERTY_BLOCK_CHECKSUMS, ImmutableMap.<Integer, BlockChecksum>builder()
                     .build())
             .build();
-    
+
     private static final Map<String, Object> MAINNET_PROPERTIES = ImmutableMap.<String, Object>builder()
             .put(PROPERTY_CREATOR_ID, "16362770385693468241")
             .put(PROPERTY_GENESIS_BLOCK_ID, "5886376434652814108")
@@ -199,6 +211,10 @@ public class ConstantsConfigHelper {
             .put(PROPERTY_ESCROW_START_BLOCK, 685560)
             .put(PROPERTY_AUTOMATED_TRANSACTION_BLOCK, 695640)
             .put(PROPERTY_ASSET_FULLDELETE_START_BLOCK, Integer.MAX_VALUE)
+            .put(PROPERTY_INITIAL_BASE_TARGET, 17080318L)
+            .put(PROPERTY_WALLET_LEASING_OFFSET_BLOCK, 3000)
+            .put(PROPERTY_LEASING_DELAY, 1440)
+            .put(PROPERTY_LEASE_ACTIVATION_OFFSET_BLOCK, 3000)
             .put(PROPERTY_BLOCK_CHECKSUMS, ImmutableMap.<Integer, BlockChecksum>builder()
                     .put(100000, new BlockChecksum(0, 100000, new byte[]{
                             -77, 8, 37, 48, -73, 103, 71, 25, 97, -117, 116, 85, -110, -1, 87, 22, -104, 43, -128, 77,
@@ -229,42 +245,21 @@ public class ConstantsConfigHelper {
             .build();
 
     private static final Map<String, Object> DEVNET_PROPERTIES = ImmutableMap.<String, Object>builder()
-            .put(PROPERTY_CREATOR_ID, "9816658139650642618")
-            .put(PROPERTY_GENESIS_BLOCK_ID, "2537533802978479559")
-            .put(PROPERTY_CREATOR_PUBLIC_KEY, new byte[]{
-                    -21, -79, -43, -128, 4, 47, -34, 42, -108, 80, -74, 118, -7, -1, -88, 39, -47, 92, -49,
-                    76, -94, 56,
-                    16, -86, -20, -123, -97, -53, 112, 14, -28, 8
+            .put(PROPERTY_CREATOR_ID, "11357980301682877803")
+            .put(PROPERTY_GENESIS_BLOCK_ID, "8131248850773295182")
+            .put(PROPERTY_CREATOR_PUBLIC_KEY, new byte[]{31, -59, 74, -126, 13, -101, -82, 67, -45, 50, -103, 15, -94, -18, -126, 42, 113, -37, 60, -92, -69, -56, 54, 123, 57, -87, 82, 55, -68, 3, -60, 33
             })
             .put(PROPERTY_GENESIS_SIGNATURES,
-                    new byte[][]{{-7, -66, 76, -50, 69, -78, 13, 21, -125, 46, -98, -83, -46, -84, 71, 126, 16, 28, 61,
-                            113, 117,
-                            58, 113, 8, -128, -81, -72, -29, 104, -118, 42, 10, -126, -106, 69, -17, -27, -76, -91, 83,
-                            38, 52,
-                            -103, 108, 92, -97, 66, -39, -25, -11, 107, 61, 123, -80, -11, 127, -78, 31, -67, -69, -11,
-                            -91,
-                            -43, -66
-                    }, {104, -3, 43, -4, -47, 102, 72, -74, -12, -128, 12, 98, 105, 97, -37, -45, -79, 41, 50,
-                            89, 30,
-                            -120, -76, -127, 36, -36, -32, -48, -43, -124, -117, 2, 74, -50, 85, -61, 51, -6, -101, 68,
-                            64, -27,
-                            -7, -55, 13, -85, -17, -80, 32, 97, 5, 57, 54, -76, 55, 31, 123, -80, 109, 59, 119, 28, 56,
-                            -31}})
-            .put(PROPERTY_GENESIS_BLOCK_SIGNATURE, new byte[]{
-                    52, -64, -51, -114, -41, 102, -15, 126, -56, 95, 126, 50, 76, -128, -36, -61, 5, 26, 73, 82,
-                    -7,
-                    101, -64, 65, 17, 58, 60, 56, -90, -93, -109, 4, 35, -42, 104, 76, -34, 41, 67, 109, -54,
-                    -57, -84,
-                    31, -58, -47, -35, -70, -2, 87, 94, 9, -82, -10, 86, -80, -38, 82, -13, -127, -108, 119,
-                    106, 16
-            })
+                    new byte[][] {{-41, 62, 72, 53, -54, 88, 1, -73, -111, 80, 16, 91, 54, -54, -100, -56, 38, 90, 51, 4, 24, 56, 57, -15, 50, 18, -36, -4, 91, -124, 67, 11, 69, -124, -44, -80, -24, -86, -92, -59, -66, 118, 81, -32, 38, 96, 113, 27, -61, -16, 2, 43, 12, 88, -120, 112, -92, -66, -44, -58, -64, -28, -11, 11},
+                            {-61, 95, 88, -10, 32, -87, -2, 74, -40, -84, -17, 22, 45, -5, -96, 76, 64, 66, 33, 75, -42, -95, -53, 60, 76, 119, -60, 71, -115, -107, 24, 12, -84, 54, -46, -73, 68, -58, -81, -42, 1, 108, -53, 101, 59, 106, 60, -128, 6, 86, 81, -110, -81, 117, -80, 57, -88, -54, 62, 99, 78, -63, -65, 67}})
+            .put(PROPERTY_GENESIS_BLOCK_SIGNATURE, new byte[] {123, 24, 122, -38, -93, -123, -103, 24, 109, -24, -71, -79, -117, -1, 117, 98, 58, 120, -19, 107, -95, 73, -27, 41, 109, -116, 53, 51, 116, 23, -24, 1, -56, 12, -78, -103, -23, 38, 109, 94, 40, 2, 118, 122, 20, 59, 75, 100, -23, -33, -33, 71, 10, 28, 84, 88, 15, 78, -116, 125, -42, 118, 58, -26})
             .put(PROPERTY_GENESIS_AMOUNTS, new long[]{
                     4500000000L,
                     4500000000L
             })
             .put(PROPERTY_GENESIS_RECIPIENTS, new long[]{
-                    Long.parseUnsignedLong("16388043638115838282"),
-                    Long.parseUnsignedLong("9166403121853243813")
+                    Long.parseUnsignedLong("9709733506401501395"),
+                    Long.parseUnsignedLong("1612512553375863447")
             })
             .put(PROPERTY_LAST_KNOWN_BLOCK_HEIGHT, 0)
             .put(PROPERTY_LOCKED_BLOCK_MAX_VALUE, 1)
@@ -287,6 +282,27 @@ public class ConstantsConfigHelper {
             .put(PROPERTY_CROWD_FUNDING_BLOCK, 1)
             .put(PROPERTY_FUNDING_MONITOR_BLOCK, 1)
             .put(PROPERTY_PRUNABLE_MESSAGES_BLOCK, 1)
+            // Devnet starts at the protocol's MAX_BASE_TARGET_2 ceiling (50x the
+            // mainnet initial value) for ~2-3s block time from genesis. Higher
+            // values would overflow MAX_BASE_TARGET = MAX_BALANCE_XIN * INITIAL_BASE_TARGET
+            // (long range ~9.2e18; 9e9 * 854_015_900 ≈ 7.7e18 — under the limit).
+            .put(PROPERTY_INITIAL_BASE_TARGET, 854015900L)
+            // Devnet: lease becomes "effective" almost immediately. Mainnet's
+            // 3000-block bootstrap delay is meaningless on a fresh local chain
+            // and blocks the wallet's balance-lease form for ~2.5h at 3s/block.
+            .put(PROPERTY_WALLET_LEASING_OFFSET_BLOCK, 1)
+            // Devnet: 10-block delay (≈30s at 3s/block) lets e2e tests verify
+            // active lessors in the datatable within a single test run.
+            // Mainnet/testnet: 1440 (the NXT protocol default).
+            .put(PROPERTY_LEASING_DELAY, 10)
+            // Devnet: allow leases to activate from block 1 onwards. On mainnet/
+            // testnet this must be 3000 so that the AFTER_BLOCK_APPLY guard aligns
+            // with the key-age forging check in getEffectiveBalanceTKN. On devnet,
+            // setting to 1 lets e2e tests see active lessors without waiting 3000
+            // blocks. Safe because the genesis forger never leases out its balance;
+            // the EFFECTIVE_LEASING_OFFSET_BLOCK=3000 in getEffectiveBalanceTKN is
+            // NOT changed and continues to protect the forger's key-age eligibility.
+            .put(PROPERTY_LEASE_ACTIVATION_OFFSET_BLOCK, 1)
             .put(PROPERTY_BLOCK_CHECKSUMS, ImmutableMap.<Integer, BlockChecksum>builder()
                     .build())
             .build();

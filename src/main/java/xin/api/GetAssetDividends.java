@@ -24,7 +24,7 @@ import xin.XinException;
 import xin.db.DbIterator;
 import xin.util.Logger;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 
 public class GetAssetDividends extends APIServlet.APIRequestHandler {

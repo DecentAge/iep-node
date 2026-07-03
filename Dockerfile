@@ -1,4 +1,4 @@
-FROM gradle:6.8.3-jdk11 AS gradle-builder
+FROM gradle:8.12-jdk21 AS gradle-builder
 WORKDIR /iep-node
 RUN apt-get update \
     && apt-get install --yes --no-install-recommends unzip
@@ -13,7 +13,7 @@ COPY --chown=gradle:gradle . .
 RUN gradle DistZip --no-daemon
 
 
-FROM openjdk:11-jre-slim
+FROM eclipse-temurin:21-jre
 WORKDIR /iep-node
 RUN apt-get update \
     && apt-get install --yes --no-install-recommends unzip \

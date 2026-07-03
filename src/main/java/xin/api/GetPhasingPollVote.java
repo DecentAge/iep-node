@@ -21,7 +21,7 @@ import xin.PhasingVote;
 import xin.util.JSON;
 import org.json.simple.JSONStreamAware;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 public class GetPhasingPollVote extends APIServlet.APIRequestHandler {
     static final GetPhasingPollVote instance = new GetPhasingPollVote();

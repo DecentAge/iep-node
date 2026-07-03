@@ -1,9 +1,12 @@
 include:
   - project: 'infinity-economics/iep-docker'
+    ref: ${CI_COMMIT_REF_NAME}
     file: '/gitlab/ci/docker-ci-cd.yml'
 
 download-artifacts:
   stage: prepare
+  tags:
+    - ci-cd
   script:
     - ls -alt build
   needs:
@@ -17,17 +20,21 @@ download-artifacts:
 
 docker-build:
   stage: build
+  tags:
+    - ci-cd
   before_script:
       - apk add --update --no-cache git curl bash
       - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
       - export WALLET_UI_BUILD_FILE=/builds/infinity-economics/iep-node/build/iep-wallet-ui.zip
-      - ls -alt
+      - ls -alt build/
   artifacts:
     paths:
       - build/iep-node.tar
       - build/iep-node.zip
 prepare-iep-node-artifacts:
   stage: publish
+  tags:
+    - ci-cd
   needs: ["docker-build"]
   script:
       - mkdir -p iep-node-artifacts/build
@@ -38,6 +45,7 @@ prepare-iep-node-artifacts:
       - mkdir -p iep-node-artifacts/conf
       - cp conf/mainnet.properties iep-node-artifacts/conf
       - cp conf/testnet.properties iep-node-artifacts/conf
+      - cp conf/devnet.properties iep-node-artifacts/conf
       - cp conf/custom.properties iep-node-artifacts/conf
       - mkdir -p iep-node-artifacts/conf/templates
       - cp conf/templates/installer.properties iep-node-artifacts/conf/templates
@@ -50,4 +58,19 @@ prepare-iep-node-artifacts:
 trigger-iep-node-installer:
   stage: publish
   needs: ["prepare-iep-node-artifacts"]
+  when: manual
   trigger: infinity-economics/iep-node-installer
+
+# Auto-rebuild the deployment package after a new node image is built: iep-docker's
+# download-docker-images jobs pull this pipeline's docker-build artifact
+# (build/iep-node.tar). Same branch. forward:false so iep-node's variables don't
+# leak into the iep-docker pipeline. iep-docker -> iep-node (build-iep-node) stays
+# manual, so this does not create an auto-trigger loop.
+trigger-iep-docker:
+  stage: publish
+  needs: ["docker-build"]
+  trigger:
+    project: infinity-economics/iep-docker
+    branch: $CI_COMMIT_BRANCH
+    forward:
+      yaml_variables: false

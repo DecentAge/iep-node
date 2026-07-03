@@ -357,12 +357,12 @@ public final class Account {
             long setterId = rs.getLong("setter_id");
             this.setterId = setterId == 0 ? recipientId : setterId;
             this.property = rs.getString("property");
-            this.value = rs.getString("value");
+            this.value = rs.getString("VALUE");
         }
 
         private void save(Connection con) throws SQLException {
             try (PreparedStatement pstmt = con.prepareStatement("MERGE INTO account_property "
-                    + "(id, recipient_id, setter_id, property, value, height, latest) "
+                    + "(id, recipient_id, setter_id, property, \"VALUE\", height, latest) "
                     + "KEY (id, height) VALUES (?, ?, ?, ?, ?, ?, TRUE)")) {
                 int i = 0;
                 pstmt.setLong(++i, this.id);
@@ -1038,7 +1038,7 @@ public final class Account {
         Xin.getBlockchainProcessor().addListener(block -> {
             int height = block.getHeight();
 
-            if (height < Constants.EFFECTIVE_LEASING_OFFSET_BLOCK) {
+            if (height < Constants.LEASE_ACTIVATION_OFFSET_BLOCK) {
                 return;
             }
 
