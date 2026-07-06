@@ -60,6 +60,9 @@ public class EnvConfigServlet extends HttpServlet {
 		String jsResponse = "window.envConfig = " + jsonObject.toString(4);
 		
 		response.setContentType("text/javascript");
+		// Dynamic per-node config (version, env, proxyMarketURL, ...) — never cache it,
+		// or a CDN/browser serves stale version/config for hours after a deploy.
+		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
 		response.setStatus(HttpServletResponse.SC_OK);
 		response.getWriter().write(jsResponse);
 		response.getWriter().flush();
