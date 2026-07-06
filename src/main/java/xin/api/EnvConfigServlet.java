@@ -51,6 +51,7 @@ public class EnvConfigServlet extends HttpServlet {
 		jsonObject.put("walletContextPath", Xin.getStringProperty("xin.walletContextPath"));
 		//jsonObject.put("apiServerURL", createApiServerURL());
 		jsonObject.put("proxyMarketURL", Xin.getStringProperty("xin.proxy.market.url"));
+		jsonObject.put("mcapBackendURL", Xin.getStringProperty("xin.mcapBackendURL"));
 		jsonObject.put("walletBrowserStorageExp", Xin.getIntProperty("xin.walletBrowserStorageExp"));
 		jsonObject.put("genesisBlockEpoch", Constants.EPOCH_BEGINNING);
 		jsonObject.put("phasingDuration", Constants.MAX_PHASING_DURATION/2);
