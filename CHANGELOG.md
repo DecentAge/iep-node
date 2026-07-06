@@ -2,16 +2,22 @@
 
 ## [Unreleased]
 
-## [0.4.1] - 2026-06-24
+## [0.4.1] - 2026-07-06
+### Added
+- Added the mcapBackendURL environment property (EnvConfigServlet, proxies.properties) exposed to clients.
 ### Changed
 - Migrated runtime to JDK 21 (Temurin 21.0.5) with Gradle wrapper 8.12; startup enforces Java >= 21.
 - Migrated H2 database 1.4 -> 2.x: dialect porting plus an automatic legacy-DB migrator (H2LegacyMigrator, RUNSCRIPT FROM_1X).
 - Migrated the peer/API web layer from Jetty 9 to Jetty 11.
 - Bundled the wallet UI into the distribution; reworked devnet bootstrap and hallmark handling.
+- Enabled the API/service servers in the test and dev environments and adjusted the server recreate mode in production.
 ### Fixed
 - generation_signature column BINARY(64) -> VARBINARY(64) to avoid H2 2.x zero-padding that broke block sync (BufferOverflowException); same rewrite applied during legacy migration.
 - Made the VersionedEntityDbTable trim query H2-2.x compatible (no row-constructor in sub-select).
 - Replaced deprecated Jetty setGzipHandler with insertHandler; log unexpected peer-blacklist causes at WARN with stack trace.
+- Extended the H2 legacy migrator to convert 1.4 ARRAY columns and hardened DbUtils array handling (getArray, coerceToLong) for migrated databases.
+- Set Cache-Control headers on EnvConfigServlet responses to prevent stale client configuration.
+- Reordered Logger.init after custom.properties loading so environment-driven DEBUG flags take effect.
 
 ## [0.3.x and earlier]
 
