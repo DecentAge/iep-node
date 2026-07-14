@@ -31,6 +31,9 @@ docker-build:
     paths:
       - build/iep-node.tar
       - build/iep-node.zip
+      # carry the stamped version forward so dockerhub-/gitlab-publish tag the
+      # candidate (X.Y.Z-rc.<iid>) instead of the committed X.Y.Z
+      - release-version.txt
 prepare-iep-node-artifacts:
   stage: publish
   tags:
