@@ -122,12 +122,16 @@ init_when_ready() {
 	# (no-op if the secret is unset or START_FORGER!=true). On devnet the forger
 	# account is a genesis recipient, so it can forge straight from height 1.
 	/iep-node/scripts/docker_init.sh
-	# Devnet: with the chain now advancing, fund the e2e test account from cash
-	# (see scripts/docker_init_devnet.sh). Only runs on the fresh-genesis init
-	# node (INIT_DEVNET=true) — the node that creates the devnet bootstraps the
-	# e2e accounts; non-init nodes join an already-funded chain.
+	# Devnet: generate + print this node's hallmark (see docker_init_devnet.sh).
+	# Only runs on the fresh-genesis init node (INIT_DEVNET=true).
 	if [ "${NETWORK_ENVIRONMENT}" == "devnet" ] && [ "${INIT_DEVNET}" == "true" ]; then
 		/iep-node/scripts/docker_init_devnet.sh
+		# Opt-in: fund the publicly-documented e2e test accounts from cash and
+		# register their public keys, so the wallet e2e suite has a seeded
+		# chain. Off unless the environment explicitly asks for it.
+		if [ "${INIT_DEVNET_E2E_ACCOUNTS:-false}" == "true" ]; then
+			/iep-node/scripts/docker_init_devnet_local.sh
+		fi
 	fi
 	echo "Network ${NETWORK_ENVIRONMENT} has been initialized in $(( $(date +%s) - init_start_seconds ))s"
 }
