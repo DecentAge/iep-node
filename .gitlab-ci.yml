@@ -11,7 +11,10 @@ download-artifacts:
     - ls -alt build
   needs:
     - project: infinity-economics/iep-wallet-ui
-      ref: ${CI_COMMIT_REF_NAME}
+      # UPSTREAM_REF comes from the iep-release template: this branch on
+      # develop/master, the default branch elsewhere. ${CI_COMMIT_REF_NAME}
+      # would point at a branch that usually does not exist in iep-wallet-ui.
+      ref: $UPSTREAM_REF
       job: docker-build
       artifacts: true
   artifacts:
@@ -61,7 +64,10 @@ prepare-iep-node-artifacts:
 trigger-iep-node-installer:
   stage: publish
   needs: ["prepare-iep-node-artifacts"]
-  when: manual
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH == "master"'
+      when: manual
+      allow_failure: true
   trigger: infinity-economics/iep-node-installer
 
 # Auto-rebuild the deployment package after a new node image is built: iep-docker's
@@ -72,6 +78,8 @@ trigger-iep-node-installer:
 trigger-iep-docker:
   stage: publish
   needs: ["docker-build"]
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH == "master"'
   trigger:
     project: infinity-economics/iep-docker
     branch: $CI_COMMIT_BRANCH
