@@ -1206,14 +1206,14 @@
               case 502:
               	apply("CREATE TABLE IF NOT EXISTS at (db_id IDENTITY, id BIGINT NOT NULL, creator_id BIGINT NOT NULL, name VARCHAR, description VARCHAR, "
               			+ "version SMALLINT NOT NULL, csize INT NOT NULL, dsize INT NOT NULL, c_user_stack_bytes INT NOT NULL, c_call_stack_bytes INT NOT NULL, "
-              			+ "creation_height INT NOT NULL, ap_code BINARY NOT NULL, "
+              			+ "creation_height INT NOT NULL, ap_code VARBINARY NOT NULL, "
               			+ "height INT NOT NULL, latest BOOLEAN NOT NULL DEFAULT TRUE)");
               case 503:
               	apply("CREATE UNIQUE INDEX IF NOT EXISTS at_id_height_idx ON at (id, height DESC)");
               case 504:
               	apply("CREATE INDEX IF NOT EXISTS at_creator_id_height_idx ON at (creator_id, height DESC)");
               case 505:
-              	apply("CREATE TABLE IF NOT EXISTS at_state (db_id IDENTITY, at_id BIGINT NOT NULL, state BINARY NOT NULL, prev_height INT NOT NULL, "
+              	apply("CREATE TABLE IF NOT EXISTS at_state (db_id IDENTITY, at_id BIGINT NOT NULL, state VARBINARY NOT NULL, prev_height INT NOT NULL, "
               			+ "next_height INT NOT NULL, sleep_between INT NOT NULL, "
               			+ "prev_balance BIGINT NOT NULL, freeze_when_same_balance BOOLEAN NOT NULL, min_activate_amount BIGINT NOT NULL, height INT NOT NULL, latest BOOLEAN NOT NULL DEFAULT TRUE)");
               case 506:
