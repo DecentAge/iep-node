@@ -209,6 +209,10 @@ public abstract class EntityDbTable<T> extends DerivedDbTable {
             return getManyBy(con, pstmt, true);
         } catch (SQLException e) {
             DbUtils.close(con);
+            // H2 collapses anything unchecked from the fulltext alias into a bare
+            // "General error"; the RuntimeException below keeps only that message,
+            // so log the exception with its cause chain before it is lost.
+            Logger.logErrorMessage("Fulltext search on " + table + " failed", e);
             throw new RuntimeException(e.toString(), e);
         }
     }
