@@ -444,8 +444,10 @@ public class FullTextTrigger implements Trigger, TransactionalDb.TransactionCall
         SimpleResultSet result = new SimpleResultSet();
         result.addColumn("SCHEMA", Types.VARCHAR, 0, 0);
         result.addColumn("TABLE", Types.VARCHAR, 0, 0);
-        result.addColumn("COLUMNS", Types.ARRAY, 0, 0);
-        result.addColumn("KEYS", Types.ARRAY, 0, 0);
+        // H2 2.x needs a component type on an ARRAY column; the untyped form that
+        // H2 1.4 accepted makes it fail while materialising the row.
+        result.addColumn("COLUMNS", Types.ARRAY, "VARCHAR ARRAY", 0, 0);
+        result.addColumn("KEYS", Types.ARRAY, "BIGINT ARRAY", 0, 0);
         result.addColumn("SCORE", Types.FLOAT, 0, 0);
         //
         // Perform the search
@@ -481,6 +483,11 @@ public class FullTextTrigger implements Trigger, TransactionalDb.TransactionCall
         } catch (IOException exc) {
             Logger.logErrorMessage("Unable to search Lucene index", exc);
             throw new SQLException("Unable to search Lucene index", exc);
+        } catch (RuntimeException exc) {
+            // H2 reports anything unchecked from a function alias as a bare
+            // "General error", losing the cause. Log it before it leaves.
+            Logger.logErrorMessage("Fulltext search failed for query: " + queryText, exc);
+            throw exc;
         } finally {
             indexLock.readLock().unlock();
         }
