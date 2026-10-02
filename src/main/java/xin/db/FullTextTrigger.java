@@ -23,6 +23,8 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.*;
 import org.apache.lucene.index.DirectoryReader;
+import org.apache.lucene.index.IndexFormatTooNewException;
+import org.apache.lucene.index.IndexFormatTooOldException;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.Term;
@@ -138,6 +140,11 @@ public class FullTextTrigger implements Trigger, TransactionalDb.TransactionCall
      * Lucene analyzer (thread-safe)
      */
     private static final Analyzer analyzer = new StandardAnalyzer();
+
+    /**
+     * The index on disk was unreadable and has been discarded; it is empty until rebuilt
+     */
+    private static volatile boolean rebuildRequired = false;
 
     /**
      * Index trigger is enabled
@@ -908,15 +915,22 @@ public class FullTextTrigger implements Trigger, TransactionalDb.TransactionCall
                         directory = FSDirectory.open(indexPath);
                     }
                     if (indexWriter == null) {
-                        IndexWriterConfig config = new IndexWriterConfig(analyzer);
-                        config.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
-                        indexWriter = new IndexWriter(directory, config);
-                        Document document = new Document();
-                        document.add(new StringField("_QUERY", "_CONTROL_DOCUMENT_", Field.Store.YES));
-                        indexWriter.updateDocument(new Term("_QUERY", "_CONTROL_DOCUMENT_"), document);
-                        indexWriter.commit();
-                        indexReader = DirectoryReader.open(directory);
-                        indexSearcher = new IndexSearcher(indexReader);
+                        try {
+                            openIndex();
+                        } catch (IllegalArgumentException | IndexFormatTooOldException | IndexFormatTooNewException exc) {
+                            //
+                            // The index was written by another Lucene major version (a node upgraded from
+                            // Lucene 8.7 fails with "Could not load codec 'Lucene87'").  Lucene reports that
+                            // unchecked, which H2 turns into a failed trigger: every insert into an indexed
+                            // table would fail.  The index only mirrors table data, so start over instead.
+                            //
+                            Logger.logWarningMessage("Lucene index is not readable by this Lucene version and will be rebuilt: "
+                                    + exc.getMessage());
+                            indexWriter = null;
+                            deleteIndexFiles();
+                            openIndex();
+                            rebuildRequired = true;
+                        }
                     }
                 } finally {
                     indexLock.writeLock().unlock();
@@ -929,6 +943,53 @@ public class FullTextTrigger implements Trigger, TransactionalDb.TransactionCall
             if (obtainedUpdateLock) {
                 indexLock.updateLock().unlock();
             }
+        }
+    }
+
+    /**
+     * Open the Lucene index writer, reader and searcher
+     *
+     * @throws IOException Unable to open the Lucene index
+     */
+    private static void openIndex() throws IOException {
+        IndexWriterConfig config = new IndexWriterConfig(analyzer);
+        config.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
+        indexWriter = new IndexWriter(directory, config);
+        Document document = new Document();
+        document.add(new StringField("_QUERY", "_CONTROL_DOCUMENT_", Field.Store.YES));
+        indexWriter.updateDocument(new Term("_QUERY", "_CONTROL_DOCUMENT_"), document);
+        indexWriter.commit();
+        indexReader = DirectoryReader.open(directory);
+        indexSearcher = new IndexSearcher(indexReader);
+    }
+
+    /**
+     * Delete the files in the Lucene index directory
+     *
+     * @throws IOException Unable to delete the index files
+     */
+    private static void deleteIndexFiles() throws IOException {
+        try (Stream<Path> stream = Files.list(indexPath)) {
+            Path[] paths = stream.toArray(Path[]::new);
+            for (Path path : paths) {
+                Files.delete(path);
+            }
+        }
+    }
+
+    /**
+     * Rebuild the Lucene index if the one on disk had to be discarded
+     * <p>
+     * Call once the database is open: only then are all index triggers registered.
+     *
+     * @param conn SQL connection
+     * @throws SQLException Unable to rebuild the Lucene index
+     */
+    public static void rebuildIfRequired(Connection conn) throws SQLException {
+        getIndexAccess(conn);
+        if (rebuildRequired) {
+            reindex(conn);
+            rebuildRequired = false;
         }
     }
 
@@ -973,12 +1034,7 @@ public class FullTextTrigger implements Trigger, TransactionalDb.TransactionCall
             // Delete the index files
             //
             getIndexPath(conn);
-            try (Stream<Path> stream = Files.list(indexPath)) {
-                Path[] paths = stream.toArray(Path[]::new);
-                for (Path path : paths) {
-                    Files.delete(path);
-                }
-            }
+            deleteIndexFiles();
             Logger.logInfoMessage("Lucene search index deleted");
             //
             // Get Lucene index access once more

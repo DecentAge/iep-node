@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+### Fixed
+- Fulltext search and inserts into indexed tables failed on nodes upgraded from 0.3.x with "Could not load codec 'Lucene87'": the Lucene 8.7 search index left on disk is unreadable for Lucene 9. The node now discards such an index and rebuilds it from the tables at startup.
 
 ## [0.4.1] - 2026-07-06
 ### Added
