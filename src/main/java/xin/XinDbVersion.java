@@ -1242,6 +1242,11 @@
               case 516:
                   apply("ALTER TABLE block ADD COLUMN IF NOT EXISTS ats VARBINARY");
               case 517:
+                  // Databases created by 0.4.1 got unbounded BINARY, which H2 2.x makes BINARY(1)
+                  apply("ALTER TABLE at ALTER COLUMN ap_code SET DATA TYPE VARBINARY");
+              case 518:
+                  apply("ALTER TABLE at_state ALTER COLUMN state SET DATA TYPE VARBINARY");
+              case 519:
                   return;
               default:
                   throw new RuntimeException("Blockchain database inconsistent with code, at update " + nextUpdate

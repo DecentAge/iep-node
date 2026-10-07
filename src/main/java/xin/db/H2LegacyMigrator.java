@@ -358,12 +358,12 @@ public final class H2LegacyMigrator {
             }
             if (genSigRewrites > 0) {
                 Logger.logMessage("Rewrote " + genSigRewrites + " generation_signature column DDL: BINARY(64) -> VARBINARY(64)");
-            }
-            if (binaryRewrites > 0) {
-                Logger.logMessage("Rewrote " + binaryRewrites + " length-less BINARY column DDL to VARBINARY");
             } else {
                 Logger.logMessage("WARNING: no generation_signature BINARY(64) DDL found to rewrite — "
                         + "verify the dump's column type; an un-rewritten BINARY(64) padding will break peer sync");
+            }
+            if (binaryRewrites > 0) {
+                Logger.logMessage("Rewrote " + binaryRewrites + " length-less BINARY column DDL to VARBINARY");
             }
 
         } catch (IOException e) {
