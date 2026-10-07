@@ -17,8 +17,13 @@
 package xin;
 
 import xin.db.BasicDb;
+import xin.db.FullTextTrigger;
 import xin.db.H2LegacyMigrator;
 import xin.db.TransactionalDb;
+import xin.util.Logger;
+
+import java.sql.Connection;
+import java.sql.SQLException;
 
 public final class Db {
 
@@ -47,6 +52,12 @@ public final class Db {
                     Xin.getStringProperty(PREFIX + "Password", null, true));
         }
         db.init(new XinDbVersion());
+        try (Connection con = db.getConnection()) {
+            FullTextTrigger.rebuildIfRequired(con);
+        } catch (SQLException e) {
+            // search stays empty until luceneReindex is run; the node itself is unaffected
+            Logger.logErrorMessage("Unable to rebuild the Lucene search index", e);
+        }
     }
 
     static void shutdown() {

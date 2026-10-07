@@ -1,7 +1,7 @@
 include:
-  - project: 'infinity-economics/iep-docker'
-    ref: ${CI_COMMIT_REF_NAME}
-    file: '/gitlab/ci/docker-ci-cd.yml'
+  - project: 'infinity-economics/iep-release'
+    ref: develop
+    file: '/templates/docker-build-publish.yml'
 
 download-artifacts:
   stage: prepare
@@ -11,7 +11,10 @@ download-artifacts:
     - ls -alt build
   needs:
     - project: infinity-economics/iep-wallet-ui
-      ref: ${CI_COMMIT_REF_NAME}
+      # UPSTREAM_REF comes from the iep-release template: this branch on
+      # develop/master, the default branch elsewhere. ${CI_COMMIT_REF_NAME}
+      # would point at a branch that usually does not exist in iep-wallet-ui.
+      ref: $UPSTREAM_REF
       job: docker-build
       artifacts: true
   artifacts:
@@ -31,6 +34,9 @@ docker-build:
     paths:
       - build/iep-node.tar
       - build/iep-node.zip
+      # carry the stamped version forward so dockerhub-/gitlab-publish tag the
+      # candidate (X.Y.Z-rc.<iid>) instead of the committed X.Y.Z
+      - release-version.txt
 prepare-iep-node-artifacts:
   stage: publish
   tags:
@@ -49,7 +55,8 @@ prepare-iep-node-artifacts:
       - cp conf/custom.properties iep-node-artifacts/conf
       - mkdir -p iep-node-artifacts/conf/templates
       - cp conf/templates/installer.properties iep-node-artifacts/conf/templates
-      - cp CHANGELOG-*.md iep-node-artifacts
+      # the installer's info panel opens CHANGELOG-<xin.version>.md
+      - cp CHANGELOG.md "iep-node-artifacts/CHANGELOG-$(sed -n 's/^xin\.version=//p' src/main/resources/system.properties).md"
       - cp LICENSE.txt iep-node-artifacts
   artifacts:
     paths:
@@ -58,17 +65,25 @@ prepare-iep-node-artifacts:
 trigger-iep-node-installer:
   stage: publish
   needs: ["prepare-iep-node-artifacts"]
-  when: manual
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH == "master"'
+      when: manual
+      allow_failure: true
   trigger: infinity-economics/iep-node-installer
 
 # Auto-rebuild the deployment package after a new node image is built: iep-docker's
 # download-docker-images jobs pull this pipeline's docker-build artifact
 # (build/iep-node.tar). Same branch. forward:false so iep-node's variables don't
 # leak into the iep-docker pipeline. iep-docker -> iep-node (build-iep-node) stays
-# manual, so this does not create an auto-trigger loop.
+# manual, so this does not create an auto-trigger loop. develop only: on master the
+# release package comes from merging iep-docker's release MR, after all master
+# images are built (iep-release release-mrs.sh); a package triggered from here
+# would carry iep-docker's previous master.
 trigger-iep-docker:
   stage: publish
   needs: ["docker-build"]
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "develop"'
   trigger:
     project: infinity-economics/iep-docker
     branch: $CI_COMMIT_BRANCH

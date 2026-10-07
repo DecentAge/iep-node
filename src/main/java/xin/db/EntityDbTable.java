@@ -209,6 +209,10 @@ public abstract class EntityDbTable<T> extends DerivedDbTable {
             return getManyBy(con, pstmt, true);
         } catch (SQLException e) {
             DbUtils.close(con);
+            // H2 collapses anything unchecked from the fulltext alias into a bare
+            // "General error"; the RuntimeException below keeps only that message,
+            // so log the exception with its cause chain before it is lost.
+            Logger.logErrorMessage("Fulltext search on " + table + " failed", e);
             throw new RuntimeException(e.toString(), e);
         }
     }
@@ -276,7 +280,10 @@ public abstract class EntityDbTable<T> extends DerivedDbTable {
             con = db.getConnection();
             PreparedStatement pstmt = con.prepareStatement("SELECT " + table + ".*, ft.score FROM " + table +
                     ", ftl_search('PUBLIC', '" + table + "', ?, 2147483647, 0) ft "
-                    + " WHERE " + table + ".db_id = ft.keys[0] "
+                    // H2 2.x indexes arrays from 1 (SQL standard); 1.4.x was 0-based.
+                    // With [0] the fulltext search fails with a General error wrapping
+                    // IllegalArgumentException, which is what every search* API returned.
+                    + " WHERE " + table + ".db_id = ft.keys[1] "
                     + (multiversion ? " AND " + table + ".latest = TRUE " : " ")
                     + " AND " + dbClause.getClause() + sort
                     + DbUtils.limitsClause(from, to));

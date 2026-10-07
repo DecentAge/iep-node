@@ -23,6 +23,7 @@ import org.eclipse.jetty.websocket.api.exceptions.UpgradeException;
 import org.eclipse.jetty.websocket.api.exceptions.WebSocketException;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
+import org.eclipse.jetty.websocket.api.annotations.OnWebSocketError;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 import org.eclipse.jetty.websocket.client.ClientUpgradeRequest;
@@ -34,6 +35,7 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.net.*;
 import java.nio.ByteBuffer;
+import java.nio.channels.ClosedChannelException;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.*;
@@ -404,6 +406,25 @@ public class PeerWebSocket {
             requestMap.clear();
         } finally {
             lock.unlock();
+        }
+    }
+
+    /**
+     * Process a WebSocket error.
+     *
+     * Without this handler Jetty logs every endpoint error at WARN with a full
+     * stack trace. A peer dropping its connection is routine, so those causes
+     * are logged at DEBUG and only unexpected ones stay at WARN.
+     *
+     * @param cause Error cause
+     */
+    @OnWebSocketError
+    public void onError(Throwable cause) {
+        if (cause instanceof ClosedChannelException || cause instanceof EOFException
+                || cause instanceof SocketException) {
+            Logger.logDebugMessage("WebSocket connection closed by peer: " + cause);
+        } else {
+            Logger.logWarningMessage("WebSocket error", cause);
         }
     }
 

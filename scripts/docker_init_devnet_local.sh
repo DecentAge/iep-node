@@ -41,6 +41,19 @@ TEST_ACCOUNT_2_RS="XIN-UCFP-FSBN-Y6R4-A396F"
 TEST_ACCOUNT_1_RS="XIN-WDYP-H647-KPNR-BWWRK"
 CASH_RS="XIN-C28M-7S2E-E9X8-A9ZHF"
 
+# The entrypoint re-runs this on every container start (INIT_DEVNET is a static
+# flag, not a fresh-genesis detector) — bail out if the chain is already seeded.
+accountResponse=$(curl --silent "http://localhost:${API_SERVER_PORT}/api" \
+	-H "Accept: application/json" \
+	--data "requestType=getAccount" \
+	--data "account=${TEST_ACCOUNT_1_RS}" || true)
+seededBalance=$(echo "${accountResponse}" | grep -oE '"balanceTQT":"[0-9]+"' | head -1 | sed -E 's/.*:"([0-9]+)".*/\1/' || true)
+if [ -n "${seededBalance:-}" ] && [ "${seededBalance}" != "0" ]; then
+	echo "e2e test accounts already seeded (${TEST_ACCOUNT_1_RS} balance=${seededBalance} TQT) — skipping devnet bootstrap"
+	remove_secret "CASH_ACCOUNT_PASSPHRASE"
+	exit 0
+fi
+
 echo "Sending 100M XIN from Cash Account to e2e Test Account 1 (${TEST_ACCOUNT_1_RS})"
 sendMoneyResponse=$(curl --silent --show-error --fail "http://localhost:${API_SERVER_PORT}/api" \
 	-H "Accept: application/json" \

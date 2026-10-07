@@ -2,6 +2,19 @@
 
 ## [Unreleased]
 
+## [0.4.2] - 2026-10-05
+### Added
+- Add optional devnet end-to-end account seeding behind `INIT_DEVNET_E2E_ACCOUNTS`.
+
+### Changed
+- Log peer WebSocket disconnects at DEBUG instead of WARN.
+
+### Fixed
+- Databases created by 0.4.1 stored automated-transaction code in BINARY(1) columns, so no AT could be saved ("Value too long"). Database updates 517/518 widen both columns to VARBINARY on the first start.
+- Fulltext search and inserts into indexed tables failed on nodes upgraded from 0.3.x with "Could not load codec 'Lucene87'": the Lucene 8.7 search index left on disk is unreadable for Lucene 9. The node now discards such an index and rebuilds it from the tables at startup.
+- Restore fulltext search under H2 2.x by returning typed ARRAY result columns and indexing the key array from 1.
+- Store AT bytecode in VARBINARY instead of unbounded BINARY.
+
 ## [0.4.1] - 2026-07-06
 ### Added
 - Added the mcapBackendURL environment property (EnvConfigServlet, proxies.properties) exposed to clients.

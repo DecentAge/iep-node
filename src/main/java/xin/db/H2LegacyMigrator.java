@@ -194,6 +194,11 @@ public final class H2LegacyMigrator {
         // when a peer parses the served block. Rewrite the dumped DDL to VARBINARY(64)
         // (group 1 = identifier+space, group 2 = the (64)). See XinDbVersion case 1.
         Pattern genSigBinaryPattern = Pattern.compile("(?i)(\"?generation_signature\"?\\s+)BINARY(\\s*\\(\\s*64\\s*\\))");
+        // Unbounded BINARY was variable-length in H2 1.4 but means BINARY(1) in 2.x, so
+        // every such column overflows on import (at.ap_code and at_state.state hold
+        // AT bytecode). Rewrite any length-less BINARY to VARBINARY; VARBINARY itself is
+        // excluded by the lookbehind, BINARY(n) by the lookahead.
+        Pattern unboundedBinaryPattern = Pattern.compile("(?i)(?<!VAR)\\bBINARY\\b(?!\\s*\\()");
 
         File tempFile = new File(scriptFile.getAbsolutePath() + ".tmp");
 
@@ -249,6 +254,8 @@ public final class H2LegacyMigrator {
             String line;
             int fixedInserts = 0;
             int genSigRewrites = 0;
+            int binaryRewrites = 0;
+            boolean inCreateDdl = false;
             boolean inInsertValues = false;
             List<Integer> currentGenColPositions = null;
             List<Integer> currentArrayPositions = null;
@@ -326,6 +333,22 @@ public final class H2LegacyMigrator {
                     genSigRewrites++;
                 }
 
+                // Same class of problem for length-less BINARY columns, but only inside
+                // a CREATE TABLE — an INSERT may legitimately carry the word elsewhere.
+                if (createTablePattern.matcher(line).find()) {
+                    inCreateDdl = true;
+                }
+                if (inCreateDdl) {
+                    Matcher binMatcher = unboundedBinaryPattern.matcher(line);
+                    if (binMatcher.find()) {
+                        line = binMatcher.replaceAll("VARBINARY");
+                        binaryRewrites++;
+                    }
+                    if (line.trim().endsWith(");")) {
+                        inCreateDdl = false;
+                    }
+                }
+
                 writer.write(line);
                 writer.newLine();
             }
@@ -338,6 +361,9 @@ public final class H2LegacyMigrator {
             } else {
                 Logger.logMessage("WARNING: no generation_signature BINARY(64) DDL found to rewrite — "
                         + "verify the dump's column type; an un-rewritten BINARY(64) padding will break peer sync");
+            }
+            if (binaryRewrites > 0) {
+                Logger.logMessage("Rewrote " + binaryRewrites + " length-less BINARY column DDL to VARBINARY");
             }
 
         } catch (IOException e) {
