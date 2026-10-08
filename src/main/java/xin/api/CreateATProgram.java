@@ -1,6 +1,6 @@
 package xin.api;
 
-import org.apache.cxf.common.util.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import xin.*;
 import xin.at.AT_Constants;
 import xin.util.Convert;
@@ -46,13 +46,13 @@ public final class CreateATProgram extends CreateTransaction {
             return INCORRECT_AUTOMATED_TRANSACTION_DESCRIPTION;
         }
 
-        if(StringUtils.isEmpty(description)){
+        if(StringUtils.isBlank(description)){
         	description="";
 		}
 
         byte[] creationBytes = null;
 
-				if(StringUtils.isEmpty(description)){
+				if(StringUtils.isBlank(description)){
 				  description="";
 				}
 

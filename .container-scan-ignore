@@ -1,0 +1,8 @@
+# Accepted container scanning findings (read by container-scan-gate, iep-release template).
+# One id per line, reason as comment.
+
+# legacy_libs/h2-1.4.191.jar: only run by H2LegacyMigrator as a one-shot subprocess
+# (Script tool) on a local 1.4 database file to migrate pre-0.4 nodes. Not on the
+# node's classpath, no H2 console/web server, no external JDBC URL -> not exploitable.
+CVE-2021-42392
+CVE-2022-23221
