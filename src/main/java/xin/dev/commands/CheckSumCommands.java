@@ -16,10 +16,6 @@
 
 package xin.dev.commands;
 
-import org.springframework.shell.core.CommandMarker;
-import org.springframework.shell.core.annotation.CliCommand;
-import org.springframework.shell.core.annotation.CliOption;
-import org.springframework.stereotype.Component;
 import xin.*;
 import xin.crypto.Crypto;
 import xin.db.DbIterator;
@@ -29,13 +25,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Arrays;
-
-
-@Component
-public class    CheckSumCommands implements CommandMarker {
-
-    @CliCommand(value = "checksum calculate", help = "Will print account details from secret")
-    public String calculateChecksum(@CliOption(key = "from") int fromHeight, @CliOption(key = "to") int toHeight) {
+public class CheckSumCommands {
+    public String calculateChecksum(int fromHeight, int toHeight) {
 
         MessageDigest digest = Crypto.sha256();
         try (Connection con = Db.db.getConnection();

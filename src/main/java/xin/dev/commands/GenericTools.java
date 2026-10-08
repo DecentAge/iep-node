@@ -16,26 +16,14 @@
 
 package xin.dev.commands;
 
-import org.springframework.shell.core.CommandMarker;
-import org.springframework.shell.core.annotation.CliCommand;
-import org.springframework.shell.core.annotation.CliOption;
-import org.springframework.stereotype.Component;
 import xin.crypto.Crypto;
 
 import xin.util.Convert;
 
 import java.util.Arrays;
+public class GenericTools {
 
-
-@Component
-public class GenericTools implements CommandMarker {
-
-    private static final String XIN_TOOLS = "xintools";
-
-    private static final String XIN_SINGATURE_TO_BYTE_ARRAY = XIN_TOOLS + " " + "signToByte";
-
-    @CliCommand(value = XIN_SINGATURE_TO_BYTE_ARRAY, help = "Will print account details from secret")
-    public String stringToByteArray(@CliOption(key = {"string"}, mandatory = true, help = "String that needs to be converted to byte array") final String string) {
+    public String stringToByteArray(final String string) {
         return Arrays.toString( Convert.parseHexString( string )  );
     }
 }
