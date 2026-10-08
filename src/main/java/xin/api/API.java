@@ -51,13 +51,13 @@ import org.eclipse.jetty.server.SecureRequestCustomizer;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.server.SslConnectionFactory;
+import org.eclipse.jetty.server.handler.CrossOriginHandler;
 import org.eclipse.jetty.server.handler.DefaultHandler;
 import org.eclipse.jetty.server.handler.gzip.GzipHandler;
 import org.eclipse.jetty.ee9.servlet.DefaultServlet;
 import org.eclipse.jetty.ee9.servlet.FilterHolder;
 import org.eclipse.jetty.ee9.servlet.ServletContextHandler;
 import org.eclipse.jetty.ee9.servlet.ServletHolder;
-import org.eclipse.jetty.ee9.servlets.CrossOriginFilter;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 
 import xin.Xin;
@@ -239,19 +239,25 @@ public final class API {
             gzipHandler.setIncludedMethods("GET", "POST");
             gzipHandler.setMinGzipSize(xin.peer.Peers.MIN_COMPRESS_SIZE);
 
-            if (Xin.getBooleanProperty("xin.apiServerCORS")) {
-                FilterHolder filterHolder = apiHandler.addFilter(CrossOriginFilter.class, "/*", null);
-                filterHolder.setInitParameter("allowedHeaders", "*");
-                filterHolder.setAsyncSupported(true);
-            }
-
             if (Xin.getBooleanProperty("xin.apiFrameOptionsSameOrigin")) {
                 FilterHolder filterHolder = apiHandler.addFilter(XFrameOptionsFilter.class, "/*", null);
                 filterHolder.setAsyncSupported(true);
             }
 
             gzipHandler.setHandler(apiHandler.get());
-            apiHandlers.addHandler(gzipHandler);
+            if (Xin.getBooleanProperty("xin.apiServerCORS")) {
+                // same behaviour as Jetty 11's CrossOriginFilter with allowedHeaders=*
+                CrossOriginHandler corsHandler = new CrossOriginHandler();
+                corsHandler.setAllowedOriginPatterns(java.util.Set.of("*"));
+                corsHandler.setAllowedHeaders(java.util.Set.of("*"));
+                corsHandler.setAllowCredentials(true);
+                corsHandler.setDeliverPreflightRequests(true);
+                corsHandler.setPreflightMaxAge(java.time.Duration.ofMinutes(30));
+                corsHandler.setHandler(gzipHandler);
+                apiHandlers.addHandler(corsHandler);
+            } else {
+                apiHandlers.addHandler(gzipHandler);
+            }
             apiHandlers.addHandler(new DefaultHandler());
 
             apiServer.setHandler(apiHandlers);
