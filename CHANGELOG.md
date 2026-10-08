@@ -3,6 +3,7 @@
 ## [Unreleased]
 ### Added
 - Docker image usable without the IEP deployment: mainnet/testnet load their peers and ports from `conf/<network>.properties`, so `docker run -e ADMIN_PASSWORD=… -v …:/iep-node/db decentage/iep-node` starts a syncing node. Example `docker/docker-compose.yml` (API bound to localhost, healthcheck).
+- `DOCKER.md` (Docker Hub description) and a Docker section in the README.
 
 ### Fixed
 - Docker entrypoint: unset variables no longer write empty properties (`xin.apiServerPort=` etc.) that override the defaults; `MY_HALLMARK` and `START_FORGER` are optional; `envsubst >-` wrote to a file named `-`.
