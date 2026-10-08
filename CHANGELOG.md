@@ -2,7 +2,7 @@
 
 ## [Unreleased]
 ### Security
-- Container image cleaned of vulnerable libraries (12 critical / 29 high fixable findings before): `tika-parsers` replaced by `tika-core` 3.3.2, unused MySQL/PostgreSQL drivers removed, Spring 4 removed, bcprov 1.86, Jetty 11.0.26, retrofit 3, jackson 2.22, guava 33, protobuf 3.25.9; OS packages upgraded in the image.
+- Container image cleaned of vulnerable libraries (12 critical / 29 high fixable findings before): `tika-parsers` replaced by `tika-core` 3.3.2, unused MySQL/PostgreSQL drivers removed, Spring 4 removed, bcprov 1.86, Jetty 12.1 (ee9; Jetty 11 gets no public security fixes any more), retrofit 3, jackson 2.22, guava 33, protobuf 3.25.9; OS packages upgraded in the image.
 
 ### Changed
 - `bin/dev` (dev tools) no longer uses Spring Shell: same commands (`xAccount details`, `checksum calculate`, `xintools signToByte`, `test`), interactive or as a single command (`bin/dev xAccount details --secret "..."`).
