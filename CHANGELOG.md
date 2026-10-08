@@ -2,6 +2,24 @@
 
 ## [Unreleased]
 
+## [0.4.3] - 2026-10-08
+### Added
+- Docker image usable without the IEP deployment: mainnet/testnet load their peers and ports from `conf/<network>.properties`, so `docker run -e ADMIN_PASSWORD=… -v …:/iep-node/db decentage/iep-node` starts a syncing node. Example `docker/docker-compose.yml` (API bound to localhost, healthcheck).
+- `DOCKER.md` (Docker Hub description) and a Docker section in the README.
+
+### Changed
+- API server CORS: Jetty 12 `CrossOriginHandler` instead of the deprecated `CrossOriginFilter` (any origin, credentials, preflight max age 30 min as before; `Access-Control-Allow-Headers` is now `*` instead of echoing the requested headers).
+- `bin/dev` (dev tools) no longer uses Spring Shell: same commands (`xAccount details`, `checksum calculate`, `xintools signToByte`, `test`), interactive or as a single command (`bin/dev xAccount details --secret "..."`).
+
+### Fixed
+- Docker entrypoint: unset variables no longer write empty properties (`xin.apiServerPort=` etc.) that override the defaults; `MY_HALLMARK` and `START_FORGER` are optional; `envsubst >-` wrote to a file named `-`.
+
+### Removed
+- The bundled H2 1.4 engine (`legacy_libs/h2-1.4.191.jar`, 2 critical CVEs) used to migrate databases of releases before 0.4.1. Nodes still on such a database: start release 0.4.2 once first, or supply the jar yourself (`legacy_libs/` or `-Dxin.legacyH2Jar=<path>`); the node now explains this instead of failing obscurely.
+
+### Security
+- Container image cleaned of vulnerable libraries (12 critical / 29 high fixable findings before): `tika-parsers` replaced by `tika-core` 3.3.2, unused MySQL/PostgreSQL drivers removed, Spring 4 removed, bcprov 1.86, Jetty 12.1 (ee9; Jetty 11 gets no public security fixes any more), retrofit 3, jackson 2.22, guava 33, protobuf 3.25.9, log4j 2.26.1, junit no longer on the runtime classpath (came via json-simple); OS packages upgraded in the image.
+
 ## [0.4.2] - 2026-10-05
 ### Added
 - Add optional devnet end-to-end account seeding behind `INIT_DEVNET_E2E_ACCOUNTS`.

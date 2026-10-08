@@ -16,6 +16,7 @@ RUN gradle DistZip --no-daemon
 FROM eclipse-temurin:21-jre
 WORKDIR /iep-node
 RUN apt-get update \
+    && apt-get upgrade --yes \
     && apt-get install --yes --no-install-recommends unzip \
     && apt-get install --yes --no-install-recommends gettext-base \
     && apt-get install --yes --no-install-recommends curl

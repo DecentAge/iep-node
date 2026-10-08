@@ -20,13 +20,14 @@ import xin.*;
 import xin.api.API;
 import xin.util.*;
 import org.eclipse.jetty.server.Connector;
+import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.server.handler.gzip.GzipHandler;
-import org.eclipse.jetty.servlet.FilterHolder;
-import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.servlet.ServletHolder;
-import org.eclipse.jetty.servlets.DoSFilter;
+import org.eclipse.jetty.ee9.servlet.FilterHolder;
+import org.eclipse.jetty.ee9.servlet.ServletContextHandler;
+import org.eclipse.jetty.ee9.servlet.ServletHolder;
+import org.eclipse.jetty.ee9.servlets.DoSFilter;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONStreamAware;
@@ -365,7 +366,7 @@ public final class Peers {
                 ctxHandler.setContextPath("/");
 
                 // Jetty 11 requires WebSocket components to be explicitly installed
-                org.eclipse.jetty.websocket.server.config.JettyWebSocketServletContainerInitializer.configure(ctxHandler, null);
+                org.eclipse.jetty.ee9.websocket.server.config.JettyWebSocketServletContainerInitializer.configure(ctxHandler, null);
 
                 ServletHolder peerServletHolder = new ServletHolder(new PeerServlet());
                 ctxHandler.addServlet(peerServletHolder, "/*");
@@ -380,15 +381,17 @@ public final class Peers {
                     dosFilterHolder.setAsyncSupported(true);
                 }
 
+                Handler peerHandler = ctxHandler.get();
                 if (isGzipEnabled) {
                     GzipHandler gzipHandler = new GzipHandler();
                     gzipHandler.setIncludedMethods("GET", "POST");
                     gzipHandler.setIncludedPaths("/*");
                     gzipHandler.setMinGzipSize(MIN_COMPRESS_SIZE);
-                    ctxHandler.insertHandler(gzipHandler);
+                    gzipHandler.setHandler(peerHandler);
+                    peerHandler = gzipHandler;
                 }
 
-                peerServer.setHandler(ctxHandler);
+                peerServer.setHandler(peerHandler);
                 peerServer.setStopAtShutdown(true);
                 ThreadPool.runBeforeStart(() -> {
                     try {

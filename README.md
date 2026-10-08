@@ -4,6 +4,7 @@ Infinity Economics is a new kind of cryptocurrency ecosystem equipped with total
 ## Table of Contents
 - [Features](#features)
 - [Prerequisites](#prerequisites)
+- [Docker](#docker)
 - [Operators Guide](#operators-guide)
 - [Node Services](#node-services)
 - [License](#license)
@@ -54,6 +55,19 @@ Installing and configuring Gradle
 
 ### RUN
 ./gradlew run
+
+## Docker
+The node is also available as a Docker image, [`decentage/iep-node`](https://hub.docker.com/r/decentage/iep-node) (from version 0.4.3):
+
+```bash
+docker run -d --name iep-node --restart unless-stopped \
+  -e ADMIN_PASSWORD=<your-admin-password> \
+  -p 23456:23456 -p 127.0.0.1:23457:23457 \
+  -v iep-node-db:/iep-node/db \
+  decentage/iep-node:latest
+```
+
+A Compose example is in [`docker/docker-compose.yml`](docker/docker-compose.yml). Configuration, ports, update and backup: [Run a Node with Docker](https://wiki.infinity-economics.io/latest/how-to-guide/docker/).
 
 ## Node Services
 ### Ubuntu

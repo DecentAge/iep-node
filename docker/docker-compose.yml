@@ -1,0 +1,30 @@
+# IEP node with Docker Compose. Docs: https://wiki.infinity-economics.io/latest/how-to-guide/docker/
+#
+#   echo "ADMIN_PASSWORD=$(openssl rand -hex 16)" > .env
+#   docker compose up -d
+#
+# Testnet: NETWORK_ENVIRONMENT=testnet and ports 8776 (peer) / 9876 (API).
+services:
+  iep-node:
+    image: decentage/iep-node:${IEP_NODE_VERSION:-latest}
+    restart: unless-stopped
+    environment:
+      NETWORK_ENVIRONMENT: mainnet
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?set ADMIN_PASSWORD in .env}
+      # Public IP or host name of this node, so other peers can connect back.
+      MY_ADDRESS: ${MY_ADDRESS:-}
+    ports:
+      - "23456:23456"
+      # API and wallet only on this machine; expose it behind your own proxy if needed.
+      - "127.0.0.1:23457:23457"
+    volumes:
+      - iep-node-db:/iep-node/db
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "http://localhost:23457/api?requestType=getBlockchainStatus"]
+      interval: 30s
+      timeout: 10s
+      start_period: 10m
+      retries: 5
+
+volumes:
+  iep-node-db:
