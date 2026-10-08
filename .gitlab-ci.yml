@@ -3,6 +3,10 @@ include:
     ref: develop
     file: '/templates/docker-build-publish.yml'
 
+variables:
+  # public image on Docker Hub: scan + gate before every push there
+  CONTAINER_SCANNING_ENABLED: "true"
+
 download-artifacts:
   stage: prepare
   tags:
