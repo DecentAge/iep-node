@@ -1,6 +1,12 @@
 # Changelog
 
 ## [Unreleased]
+### Security
+- Container image cleaned of vulnerable libraries (12 critical / 29 high fixable findings before): `tika-parsers` replaced by `tika-core` 3.3.2, unused MySQL/PostgreSQL drivers removed, Spring 4 removed, bcprov 1.86, Jetty 11.0.26, retrofit 3, jackson 2.22, guava 33, protobuf 3.25.9; OS packages upgraded in the image.
+
+### Changed
+- `bin/dev` (dev tools) no longer uses Spring Shell: same commands (`xAccount details`, `checksum calculate`, `xintools signToByte`, `test`), interactive or as a single command (`bin/dev xAccount details --secret "..."`).
+
 ### Added
 - Docker image usable without the IEP deployment: mainnet/testnet load their peers and ports from `conf/<network>.properties`, so `docker run -e ADMIN_PASSWORD=… -v …:/iep-node/db decentage/iep-node` starts a syncing node. Example `docker/docker-compose.yml` (API bound to localhost, healthcheck).
 - `DOCKER.md` (Docker Hub description) and a Docker section in the README.
