@@ -1,6 +1,9 @@
 # Changelog
 
 ## [Unreleased]
+### Removed
+- The bundled H2 1.4 engine (`legacy_libs/h2-1.4.191.jar`, 2 critical CVEs) used to migrate databases of releases before 0.4.1. Nodes still on such a database: start release 0.4.2 once first, or supply the jar yourself (`legacy_libs/` or `-Dxin.legacyH2Jar=<path>`); the node now explains this instead of failing obscurely.
+
 ### Security
 - Container image cleaned of vulnerable libraries (12 critical / 29 high fixable findings before): `tika-parsers` replaced by `tika-core` 3.3.2, unused MySQL/PostgreSQL drivers removed, Spring 4 removed, bcprov 1.86, Jetty 12.1 (ee9; Jetty 11 gets no public security fixes any more), retrofit 3, jackson 2.22, guava 33, protobuf 3.25.9, log4j 2.26.1, junit no longer on the runtime classpath (came via json-simple); OS packages upgraded in the image.
 

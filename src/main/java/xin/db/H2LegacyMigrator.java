@@ -4,9 +4,9 @@
  * H2 2.x cannot open 1.4.x storage files, so the upgrade must run before     *
  * any H2 2.x JDBC connection is opened. This class is invoked from           *
  * xin.Db#init() and is a no-op on fresh installs and on already-migrated    *
- * databases. The legacy h2-1.4.x jar must be packaged in legacy_libs/ and    *
- * is invoked out-of-process so its classes never share a classloader with   *
- * the bundled H2 2.x.                                                       *
+ * databases. The h2-1.4.191 jar is no longer shipped (critical CVEs); the    *
+ * operator supplies it (legacy_libs/ or -Dxin.legacyH2Jar). It runs         *
+ * out-of-process so its classes never share a classloader with H2 2.x.     *
  ******************************************************************************/
 
 package xin.db;
@@ -105,8 +105,12 @@ public final class H2LegacyMigrator {
             }
         } catch (Exception ignore) {
         }
-        throw new RuntimeException("Legacy H2 jar not found. Place h2-1.4.191.jar in legacy_libs/ "
-                + "in the install directory, or set -D" + LEGACY_JAR_PROPERTY + "=<absolute-path>.");
+        throw new RuntimeException("This node found an H2 1.4 database from a release before 0.4.1. "
+                + "Since 0.4.3 the H2 1.4 engine needed to migrate it is no longer shipped. Either upgrade "
+                + "to release 0.4.2 first and start it once (it migrates the database), or download "
+                + "com.h2database:h2:1.4.191 from Maven Central and put it at legacy_libs/h2-1.4.191.jar "
+                + "in the install directory, or pass -D" + LEGACY_JAR_PROPERTY + "=<absolute-path> "
+                + "(e.g. via JAVA_OPTS). See https://wiki.infinity-economics.io/latest/how-to-guide/installation/");
     }
 
     private static void runLegacyDump(File legacyJar, String dbDir, String user, String pwd, File scriptFile) {
