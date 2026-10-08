@@ -6,7 +6,7 @@ source /iep-node/scripts/docker_utils.sh
 
 init_secret "ADMIN_PASSWORD"
 
-if [ -z "${MY_HALLMARK}" ]; then
+if [ -z "${MY_HALLMARK:-}" ]; then
 	export ENABLE_HALLMARK_PROTECTION=false
 else
 	export ENABLE_HALLMARK_PROTECTION=true
@@ -53,6 +53,12 @@ rm -f /iep-node/conf/custom.properties
 # Disabled by default; opt in by setting ENV_DEFAULTS_FILE on the container
 # (only iep-docker-dev sets it today — production iep-docker is unaffected even
 # though mainnet.properties/testnet.properties ship in /iep-node/conf/).
+# Without ENV_DEFAULTS_FILE, mainnet/testnet load the network's peers and ports
+# from conf/<network>.properties, so a plain `docker run` needs no further variables.
+case "${NETWORK_ENVIRONMENT}" in
+	mainnet|testnet) ENV_DEFAULTS_FILE="${ENV_DEFAULTS_FILE:-/iep-node/conf/${NETWORK_ENVIRONMENT}.properties}" ;;
+esac
+
 if [ -n "${ENV_DEFAULTS_FILE:-}" ]; then
 	if [ -f "${ENV_DEFAULTS_FILE}" ]; then
 		echo "Layering env-specific defaults from ${ENV_DEFAULTS_FILE}"
@@ -64,7 +70,7 @@ if [ -n "${ENV_DEFAULTS_FILE:-}" ]; then
 fi
 
 echo "Appending env-substituted docker template to /iep-node/conf/custom.properties"
-envsubst >- '${NETWORK_ENVIRONMENT}
+envsubst '${NETWORK_ENVIRONMENT}
 	${XIN_VERSION}
 	${API_SERVER_SSL_PORT}
 	${API_SERVER_SSL_ENABLED}
@@ -81,7 +87,11 @@ envsubst >- '${NETWORK_ENVIRONMENT}
 	${DEFAULT_PEER_PORT}
 	${NUMBER_OF_FORK_CONFIRMATIONS}
 	${ALLOWED_BOT_LOCALHOST}
-	${DEBUG}' </templates/docker.properties>> /iep-node/conf/custom.properties
+	${DEBUG}' </templates/docker.properties \
+	| grep -vE '^xin\.[A-Za-z.]+=[[:space:]]*$' >> /iep-node/conf/custom.properties
+
+export API_SERVER_PORT="${API_SERVER_PORT:-$(awk -F= '/^xin\.apiServerPort=/ {p=$2} END {print p}' /iep-node/conf/custom.properties)}"
+export API_SERVER_PORT="${API_SERVER_PORT:-23457}"
 
 # cat /iep-node/conf/custom.properties
 

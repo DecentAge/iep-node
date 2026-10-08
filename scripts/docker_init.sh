@@ -9,7 +9,7 @@ source /iep-node/scripts/docker_utils.sh
 
 init_base64_secret "FORGING_ACCOUNT_PASSPHRASE"
 
-if [ ! -z "${FORGING_ACCOUNT_PASSPHRASE-}" ] && [ "${START_FORGER}" == "true" ]; then
+if [ ! -z "${FORGING_ACCOUNT_PASSPHRASE-}" ] && [ "${START_FORGER:-false}" == "true" ]; then
 	echo "Start forging using the Forging Account"
 	startForgingResponse=$(curl --silent --show-error --fail "http://localhost:${API_SERVER_PORT}/api" \
 		--data "requestType=startForging" \
