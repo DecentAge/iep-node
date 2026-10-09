@@ -17,7 +17,7 @@
 package xin.api;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang.math.NumberUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.json.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONStreamAware;

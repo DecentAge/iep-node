@@ -16,8 +16,8 @@
 
 package xin.api;
 
-import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import xin.*;
 import xin.crypto.Crypto;
 import xin.crypto.EncryptedData;

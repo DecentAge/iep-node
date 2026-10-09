@@ -20,7 +20,7 @@ import xin.Xin;
 import xin.XinException;
 import xin.proxies.ProxyClient;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.json.simple.JSONObject;
 import retrofit2.Response;
 

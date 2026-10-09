@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+### Security
+- `commons-lang` 2.6 (unmaintained, CVE-2025-48924) replaced by `commons-lang3` 3.21.0.
 
 ## [0.4.3] - 2026-10-08
 ### Added

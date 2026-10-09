@@ -20,7 +20,7 @@ import java.lang.invoke.ConstantCallSite;
 import java.util.Arrays;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import xin.XinException.NotValidException;
 
 import xin.util.Convert;
