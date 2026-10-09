@@ -1,6 +1,9 @@
 # Changelog
 
 ## [Unreleased]
+### Fixed
+- Requests that use a secret phrase on the node (`startForging`, `signTransaction`, `generateToken`, `encryptTo`, `decryptFrom`, `getSharedKey`, `markHost`, shuffling, `startFundingMonitor`) from a host outside `xin.allowedBotLocalhost` now answer `errorCode 7` "Not allowed from this host…" instead of the misleading `Incorrect "account"` / `Incorrect "host"`.
+- `xin.allowedBotHosts` / `xin.allowedBotLocalhost`: IPv6 entries such as `[0:0:0:0:0:0:0:1]` now match (brackets and address notation are normalised), so `localhost` over IPv6 is accepted again.
 
 ## [0.4.3] - 2026-10-08
 ### Added
