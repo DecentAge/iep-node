@@ -16,7 +16,7 @@
 
 package xin;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import xin.api.API;
 import xin.crypto.Crypto;
 import xin.env.DirProvider;

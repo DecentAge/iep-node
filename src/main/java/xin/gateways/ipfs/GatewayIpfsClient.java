@@ -20,7 +20,7 @@ package xin.gateways.ipfs;
 import xin.Xin;
 import xin.XinException;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.ipfs.api.IPFS;
 import org.ipfs.api.Multihash;
 import org.json.simple.JSONObject;
