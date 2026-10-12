@@ -7,6 +7,8 @@ variables:
   # public image on Docker Hub: scan + gate before every push there
   CONTAINER_SCANNING_ENABLED: "true"
 
+# Scheduled pipelines (nightly scan) only re-scan the published image.
+
 download-artifacts:
   stage: prepare
   tags:
@@ -24,6 +26,10 @@ download-artifacts:
   artifacts:
     paths:
       - build/
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+      when: never
+    - if: '$CI_COMMIT_BRANCH'
 
 docker-build:
   stage: build
@@ -41,11 +47,16 @@ docker-build:
       # carry the stamped version forward so dockerhub-/gitlab-publish tag the
       # candidate (X.Y.Z-rc.<iid>) instead of the committed X.Y.Z
       - release-version.txt
+# installer input, develop/master only (feature branches only build)
 prepare-iep-node-artifacts:
   stage: publish
   tags:
     - ci-cd
   needs: ["docker-build"]
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+      when: never
+    - if: '$CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH == "master"'
   script:
       - mkdir -p iep-node-artifacts/build
       - cp build/iep-node.zip iep-node-artifacts/build
@@ -70,6 +81,8 @@ trigger-iep-node-installer:
   stage: publish
   needs: ["prepare-iep-node-artifacts"]
   rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+      when: never
     - if: '$CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH == "master"'
       when: manual
       allow_failure: true
@@ -87,6 +100,8 @@ trigger-iep-docker:
   stage: publish
   needs: ["docker-build"]
   rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+      when: never
     - if: '$CI_COMMIT_BRANCH == "develop"'
   trigger:
     project: infinity-economics/iep-docker

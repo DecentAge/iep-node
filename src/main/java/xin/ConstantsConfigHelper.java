@@ -18,8 +18,8 @@ package xin;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import org.apache.commons.lang.math.NumberUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -337,7 +337,7 @@ public class ConstantsConfigHelper {
 
     public static int getIntProperty(String name) {
         Object value = getProperty(name);
-        if (NumberUtils.isNumber(value.toString())) {
+        if (NumberUtils.isCreatable(value.toString())) {
             return NumberUtils.createInteger(value.toString());
         }
         throw new XinException.StopException("required property " + name + " is not a valid integer");
@@ -345,7 +345,7 @@ public class ConstantsConfigHelper {
 
     public static long getLongProperty(String name) {
         Object value = getProperty(name);
-        if (NumberUtils.isNumber(value.toString())) {
+        if (NumberUtils.isCreatable(value.toString())) {
             return NumberUtils.createLong(value.toString());
         }
         throw new XinException.StopException("required property " + name + " is not a valid integer");

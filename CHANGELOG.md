@@ -3,6 +3,11 @@
 ## [Unreleased]
 ### Fixed
 - Docker: forging did not start after a container restart on 0.4.3 (testnet stopped producing blocks). The init script called `startForging` via `localhost`, which resolves to `::1` and is rejected; it now uses `127.0.0.1`, and a failed `startForging` is logged as `ERROR: startForging failed: …` instead of being reported as started.
+- Requests that use a secret phrase on the node (`startForging`, `signTransaction`, `generateToken`, `encryptTo`, `decryptFrom`, `getSharedKey`, `markHost`, shuffling, `startFundingMonitor`) from a host outside `xin.allowedBotLocalhost` now answer `errorCode 7` "Not allowed from this host…" instead of the misleading `Incorrect "account"` / `Incorrect "host"`.
+- `xin.allowedBotHosts` / `xin.allowedBotLocalhost`: IPv6 entries such as `[0:0:0:0:0:0:0:1]` now match (brackets and address notation are normalised), so `localhost` over IPv6 is accepted again.
+
+### Security
+- `commons-lang` 2.6 (unmaintained, CVE-2025-48924) replaced by `commons-lang3` 3.21.0.
 
 ## [0.4.3] - 2026-10-08
 ### Added

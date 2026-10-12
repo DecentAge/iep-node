@@ -25,7 +25,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import static xin.api.JSONResponses.INCORRECT_WEBSITE;
 import static xin.api.JSONResponses.MISSING_WEBSITE;
-import static xin.api.JSONResponses.INCORRECT_HOST;
+import static xin.api.JSONResponses.NOT_ALLOWED_FROM_HOST;
 
 
 public final class GenerateToken extends APIServlet.APIRequestHandler {
@@ -39,7 +39,7 @@ public final class GenerateToken extends APIServlet.APIRequestHandler {
     @Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
     	if (!API.isAllowedLocalhost(req.getRemoteHost())) {
-    		return INCORRECT_HOST;
+    		return NOT_ALLOWED_FROM_HOST;
         }
         String secretPhrase = ParameterParser.getSecretPhrase(req, true);
         String website = Convert.emptyToNull(req.getParameter("website"));
