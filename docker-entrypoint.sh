@@ -111,7 +111,7 @@ wait_for_node_ready() {
 	local max_wait="${1:-60}"
 	local elapsed=0
 	while [ $elapsed -lt $max_wait ]; do
-		if curl --silent --fail "http://localhost:${API_SERVER_PORT}/api?requestType=getBlockchainStatus" 2>/dev/null \
+		if curl --silent --fail "http://127.0.0.1:${API_SERVER_PORT}/api?requestType=getBlockchainStatus" 2>/dev/null \
 		    | grep -q '"lastBlock"'; then
 			echo "Node ready after ${elapsed}s"
 			return 0

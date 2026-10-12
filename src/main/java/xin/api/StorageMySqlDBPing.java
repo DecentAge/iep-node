@@ -20,7 +20,7 @@ import xin.Xin;
 import xin.XinException;
 import xin.storage.mysql.MySqlDb;
 import xin.storage.mysql.MySqlUtil;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONStreamAware;
 

@@ -182,6 +182,15 @@ public final class JSONResponses {
         ERROR_NOT_ALLOWED = JSON.prepare(response);
     }
 
+    public static final JSONStreamAware NOT_ALLOWED_FROM_HOST;
+
+    static {
+        JSONObject response = new JSONObject();
+        response.put("errorCode", 7);
+        response.put("errorDescription", "Not allowed from this host: requests that use a secret phrase on the node are only accepted from the hosts in xin.allowedBotLocalhost");
+        NOT_ALLOWED_FROM_HOST = JSON.prepare(response);
+    }
+
     public static final JSONStreamAware ERROR_DISABLED;
 
     static {

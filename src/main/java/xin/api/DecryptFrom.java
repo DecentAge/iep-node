@@ -28,7 +28,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import static xin.api.JSONResponses.DECRYPTION_FAILED;
 import static xin.api.JSONResponses.INCORRECT_ACCOUNT;
-import static xin.api.JSONResponses.INCORRECT_HOST;
+import static xin.api.JSONResponses.NOT_ALLOWED_FROM_HOST;
 
 public final class DecryptFrom extends APIServlet.APIRequestHandler {
 
@@ -46,7 +46,7 @@ public final class DecryptFrom extends APIServlet.APIRequestHandler {
             return INCORRECT_ACCOUNT;
         }
         if (!API.isAllowedLocalhost(req.getRemoteHost())) {
-    		return INCORRECT_HOST;
+    		return NOT_ALLOWED_FROM_HOST;
         }
         String secretPhrase = ParameterParser.getSecretPhrase(req, true);
         byte[] data = Convert.parseHexString(Convert.nullToEmpty(req.getParameter("data")));

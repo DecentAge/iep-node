@@ -1,6 +1,6 @@
 package xin.api;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import xin.*;
 import xin.at.AT_Constants;
 import xin.util.Convert;

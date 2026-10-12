@@ -24,7 +24,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONStreamAware;
 
 import jakarta.servlet.http.HttpServletRequest;
-import static xin.api.JSONResponses.INCORRECT_HOST;
+import static xin.api.JSONResponses.NOT_ALLOWED_FROM_HOST;
 
 public final class StartShuffler extends APIServlet.APIRequestHandler {
 
@@ -37,7 +37,7 @@ public final class StartShuffler extends APIServlet.APIRequestHandler {
     @Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws XinException {
     	if (!API.isAllowedLocalhost(req.getRemoteHost())) {
-    		return INCORRECT_HOST;
+    		return NOT_ALLOWED_FROM_HOST;
         }
     	byte[] shufflingFullHash = ParameterParser.getBytes(req, "shufflingFullHash", true);
         String secretPhrase = ParameterParser.getSecretPhrase(req, true);

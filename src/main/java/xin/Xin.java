@@ -16,7 +16,7 @@
 
 package xin;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import xin.api.API;
 import xin.crypto.Crypto;
 import xin.env.DirProvider;
@@ -45,7 +45,7 @@ import java.util.Properties;
 
 public final class Xin {
 
-    public static final String VERSION = "0.4.3";
+    public static final String VERSION = "0.4.4";
     public static final String APPLICATION = "XIN";
     public static final int STRONG_PASSWORD_LENGTH = 5;
 
