@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+### Fixed
+- Docker: forging did not start after a container restart on 0.4.3 (testnet stopped producing blocks). The init script called `startForging` via `localhost`, which resolves to `::1` and is rejected; it now uses `127.0.0.1`, and a failed `startForging` is logged as `ERROR: startForging failed: …` instead of being reported as started.
 
 ## [0.4.3] - 2026-10-08
 ### Added

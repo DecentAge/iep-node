@@ -29,7 +29,7 @@
 set -eou pipefail
 source /iep-node/scripts/docker_utils.sh
 
-API_URL="http://localhost:${API_SERVER_PORT}/api"
+API_URL="http://127.0.0.1:${API_SERVER_PORT}/api"
 
 # --- 1. Hallmark: generate + print -------------------------------------------
 # markHost signs and RETURNS the hallmark for (host, weight, date) — it does NOT

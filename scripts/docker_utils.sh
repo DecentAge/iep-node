@@ -90,7 +90,7 @@ wait_for_tx() {
 
 	while [ $elapsed -lt $max_wait ]; do
 		local response
-		response=$(curl --silent "http://localhost:${API_SERVER_PORT}/api?requestType=getTransaction&transaction=${tx_id}" 2>/dev/null || true)
+		response=$(curl --silent "http://127.0.0.1:${API_SERVER_PORT}/api?requestType=getTransaction&transaction=${tx_id}" 2>/dev/null || true)
 		if echo "$response" | grep -q '"block":'; then
 			echo "wait_for_tx: ${label} (tx=${tx_id}) confirmed after ${elapsed}s"
 			return 0
