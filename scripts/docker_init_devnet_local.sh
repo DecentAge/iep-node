@@ -43,7 +43,7 @@ CASH_RS="XIN-C28M-7S2E-E9X8-A9ZHF"
 
 # The entrypoint re-runs this on every container start (INIT_DEVNET is a static
 # flag, not a fresh-genesis detector) — bail out if the chain is already seeded.
-accountResponse=$(curl --silent "http://localhost:${API_SERVER_PORT}/api" \
+accountResponse=$(curl --silent "http://127.0.0.1:${API_SERVER_PORT}/api" \
 	-H "Accept: application/json" \
 	--data "requestType=getAccount" \
 	--data "account=${TEST_ACCOUNT_1_RS}" || true)
@@ -55,7 +55,7 @@ if [ -n "${seededBalance:-}" ] && [ "${seededBalance}" != "0" ]; then
 fi
 
 echo "Sending 100M XIN from Cash Account to e2e Test Account 1 (${TEST_ACCOUNT_1_RS})"
-sendMoneyResponse=$(curl --silent --show-error --fail "http://localhost:${API_SERVER_PORT}/api" \
+sendMoneyResponse=$(curl --silent --show-error --fail "http://127.0.0.1:${API_SERVER_PORT}/api" \
 	-H "Accept: application/json" \
 	--data "requestType=sendMoney" \
 	--data "amountTQT=10000000000000000" \
@@ -68,7 +68,7 @@ echo "  broadcast tx ${tx_id:-?} (waiting for confirmation...)"
 wait_for_tx "${tx_id}" "fund e2e test account 1"
 
 echo "Sending 100M XIN from Cash Account to e2e Test Account 2 (${TEST_ACCOUNT_2_RS})"
-sendMoneyResponse=$(curl --silent --show-error --fail "http://localhost:${API_SERVER_PORT}/api" \
+sendMoneyResponse=$(curl --silent --show-error --fail "http://127.0.0.1:${API_SERVER_PORT}/api" \
 	-H "Accept: application/json" \
 	--data "requestType=sendMoney" \
 	--data "amountTQT=10000000000000000" \
@@ -85,7 +85,7 @@ wait_for_tx "${tx_id}" "fund e2e test account 2"
 # tests targeting TEST_ACCOUNT_2 fail with "recipient public key required" —
 # the chain only learns an account's public key when it broadcasts something.
 echo "Registering Test Account 2 public key by sending 1 XIN ${TEST_ACCOUNT_2_RS} -> ${CASH_RS}"
-sendMoneyResponse=$(curl --silent --show-error --fail "http://localhost:${API_SERVER_PORT}/api" \
+sendMoneyResponse=$(curl --silent --show-error --fail "http://127.0.0.1:${API_SERVER_PORT}/api" \
 	-H "Accept: application/json" \
 	--data "requestType=sendMoney" \
 	--data "amountTQT=100000000" \
@@ -103,7 +103,7 @@ wait_for_tx "${tx_id}" "register test account 2 public key"
 # fail with errorCode=8 unless the key is registered first.
 TEST_ACCOUNT_1_PASSPHRASE="steel hand sing dress expect render resource below speed nurse crouch census multiply crack card famous fault equip"
 echo "Registering Test Account 1 public key by sending 1 XIN ${TEST_ACCOUNT_1_RS} -> ${CASH_RS}"
-sendMoneyResponse=$(curl --silent --show-error --fail "http://localhost:${API_SERVER_PORT}/api" \
+sendMoneyResponse=$(curl --silent --show-error --fail "http://127.0.0.1:${API_SERVER_PORT}/api" \
 	-H "Accept: application/json" \
 	--data "requestType=sendMoney" \
 	--data "amountTQT=100000000" \
