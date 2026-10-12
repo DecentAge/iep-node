@@ -19,7 +19,7 @@ package xin.api;
 import xin.Xin;
 import xin.XinException;
 import xin.proxies.ethereum.ProxyEthereumClient;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONStreamAware;
 

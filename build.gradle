@@ -58,7 +58,7 @@ dependencies {
         exclude group: 'junit', module: 'junit'
     }
     implementation group: 'org.json', name: 'json', version: '20240303'
-    implementation group: 'commons-lang', name: 'commons-lang', version: '2.6'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.21.0'
     implementation group: 'com.google.guava', name: 'guava', version: '33.7.2-jre'
     implementation group: 'org.apache.lucene', name: 'lucene-analysis-common', version: '9.11.1'
     implementation group: 'org.apache.lucene', name: 'lucene-queryparser', version: '9.11.1'
