@@ -38,7 +38,7 @@ public final class MarkHost extends APIServlet.APIRequestHandler {
     @Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
     	if (!API.isAllowedLocalhost(req.getRemoteHost())) {
-    		return INCORRECT_HOST;
+    		return NOT_ALLOWED_FROM_HOST;
         }
         String secretPhrase = ParameterParser.getSecretPhrase(req, true);
         String host = Convert.emptyToNull(req.getParameter("host"));

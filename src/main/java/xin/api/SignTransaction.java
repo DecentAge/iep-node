@@ -23,7 +23,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONStreamAware;
 
 import jakarta.servlet.http.HttpServletRequest;
-import static xin.api.JSONResponses.INCORRECT_HOST;
+import static xin.api.JSONResponses.NOT_ALLOWED_FROM_HOST;
 
 public final class SignTransaction extends APIServlet.APIRequestHandler {
 
@@ -36,7 +36,7 @@ public final class SignTransaction extends APIServlet.APIRequestHandler {
     @Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
     	if (!API.isAllowedLocalhost(req.getRemoteHost())) {
-    		return INCORRECT_HOST;
+    		return NOT_ALLOWED_FROM_HOST;
         }
         String transactionJSON = Convert.emptyToNull(req.getParameter("unsignedTransactionJSON"));
         String transactionBytes = Convert.emptyToNull(req.getParameter("unsignedTransactionBytes"));

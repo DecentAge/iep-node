@@ -23,8 +23,7 @@ import org.json.simple.JSONStreamAware;
 import jakarta.servlet.http.HttpServletRequest;
 
 import static xin.api.JSONResponses.UNKNOWN_ACCOUNT;
-import static xin.api.JSONResponses.INCORRECT_HOST;
-import static xin.api.JSONResponses.INCORRECT_ACCOUNT;
+import static xin.api.JSONResponses.NOT_ALLOWED_FROM_HOST;
 
 public final class StartForging extends APIServlet.APIRequestHandler {
 
@@ -37,7 +36,7 @@ public final class StartForging extends APIServlet.APIRequestHandler {
     @Override
     protected JSONStreamAware processRequest(HttpServletRequest req) throws ParameterException {
     	if (!API.isAllowedLocalhost(req.getRemoteHost())) {
-    		return INCORRECT_ACCOUNT;
+    		return NOT_ALLOWED_FROM_HOST;
         }
         String secretPhrase = ParameterParser.getSecretPhrase(req, true);
         Generator generator = Generator.startForging(secretPhrase);

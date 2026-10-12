@@ -108,7 +108,7 @@ public final class API {
                         throw new RuntimeException(e.toString(), e);
                     }
                 } else {
-                    hosts.add(host);
+                    hosts.add(normalizeHost(host));
                 }
             }
             allowedBotHosts = Collections.unmodifiableSet(hosts);
@@ -130,7 +130,7 @@ public final class API {
                     throw new RuntimeException(e.toString(), e);
                 }
             } else {
-                hosts.add(host);
+                hosts.add(normalizeHost(host));
             }
         }
         allowedBotLocalhosts = Collections.unmodifiableSet(hosts);
@@ -337,7 +337,7 @@ public final class API {
 
     static boolean isAllowed(String remoteHost) {
     	
-        if (API.allowedBotHosts == null || API.allowedBotHosts.contains(remoteHost)) {
+        if (API.allowedBotHosts == null || API.allowedBotHosts.contains(normalizeHost(remoteHost))) {
             return true;
         }
         try {
@@ -355,9 +355,24 @@ public final class API {
 
     }
     
+    static String normalizeHost(String host) {
+        String h = host.trim();
+        if (h.startsWith("[") && h.endsWith("]")) {
+            h = h.substring(1, h.length() - 1);
+        }
+        if (h.indexOf(':') >= 0 || h.matches("[0-9.]+")) {
+            try {
+                return InetAddress.getByName(h).getHostAddress();
+            } catch (UnknownHostException e) {
+                return h;
+            }
+        }
+        return h;
+    }
+
     static boolean isAllowedLocalhost(String remoteHost) {
     	
-        if (API.allowedBotLocalhosts == null || API.allowedBotLocalhosts.contains(remoteHost)) {
+        if (API.allowedBotLocalhosts == null || API.allowedBotLocalhosts.contains(normalizeHost(remoteHost))) {
             return true;
         }
         try {
