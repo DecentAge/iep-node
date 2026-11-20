@@ -1,4 +1,4 @@
-FROM gradle:8.12-jdk21 AS gradle-builder
+FROM gradle:8.12.1-jdk21 AS gradle-builder
 WORKDIR /iep-node
 RUN apt-get update \
     && apt-get install --yes --no-install-recommends unzip
@@ -18,7 +18,7 @@ RUN gradle DistZip --no-daemon \
     && unzip -q build/distributions/iep-node.zip -d /dist
 
 
-FROM eclipse-temurin:21-jre
+FROM eclipse-temurin:21.0.13_9-jre
 WORKDIR /iep-node
 RUN apt-get update \
     && apt-get upgrade --yes \
