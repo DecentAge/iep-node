@@ -244,6 +244,13 @@ public final class API {
                 filterHolder.setAsyncSupported(true);
             }
 
+            String walletCsp = Xin.getStringProperty("xin.walletContentSecurityPolicy");
+            if (walletCsp != null && !walletCsp.isBlank()) {
+                FilterHolder cspHolder = new FilterHolder(new ContentSecurityPolicyFilter(walletCsp.trim()));
+                cspHolder.setAsyncSupported(true);
+                apiHandler.addFilter(cspHolder, "/wallet/*", null);
+            }
+
             gzipHandler.setHandler(apiHandler.get());
             if (Xin.getBooleanProperty("xin.apiServerCORS")) {
                 // same behaviour as Jetty 11's CrossOriginFilter with allowedHeaders=*
@@ -427,6 +434,30 @@ public final class API {
         @Override
         public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
             ((HttpServletResponse) response).setHeader("X-FRAME-OPTIONS", "SAMEORIGIN");
+            chain.doFilter(request, response);
+        }
+
+        @Override
+        public void destroy() {
+        }
+
+    }
+
+    public static final class ContentSecurityPolicyFilter implements Filter {
+
+        private final String policy;
+
+        public ContentSecurityPolicyFilter(String policy) {
+            this.policy = policy;
+        }
+
+        @Override
+        public void init(FilterConfig filterConfig) throws ServletException {
+        }
+
+        @Override
+        public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+            ((HttpServletResponse) response).setHeader("Content-Security-Policy", policy);
             chain.doFilter(request, response);
         }
 
