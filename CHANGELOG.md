@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [0.4.5] - 2026-11-22
+### Added
+- Send a Content-Security-Policy header for the wallet.
+
 ## [0.4.4] - 2026-10-12
 ### Fixed
 - Docker: forging did not start after a container restart on 0.4.3 (testnet stopped producing blocks). The init script called `startForging` via `localhost`, which resolves to `::1` and is rejected; it now uses `127.0.0.1`, and a failed `startForging` is logged as `ERROR: startForging failed: …` instead of being reported as started.
